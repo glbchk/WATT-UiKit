@@ -1,0 +1,132 @@
+//
+//  SignInView.swift
+//  WATT
+//
+//  Created by Stas Boiko on 18.01.2024.
+//
+
+import UIKit
+import Combine
+
+class SignInView: UIView {
+    
+    let blueBackgroundView = BlueBackgroundView()
+    
+    let logoView = LogoView()
+    
+    //MARK: Must be placed in ViewModel
+    @Published var showPassword = false
+    
+    var sfPublisher: AnyPublisher<Bool, Never> {
+        $showPassword
+            .eraseToAnyPublisher()
+    }
+    
+    let welcomeLabel: UILabel = {
+        let label = UILabel()
+        label.text = "Welcome back"
+        label.font = .systemFont(ofSize: 22, weight: .bold)
+        label.textColor = .white
+        return label
+    }()
+    
+    let phoneNumberLabel = TextFieldLabel(title: "PHONE NUMBER")
+    
+    let passwordLabel = TextFieldLabel(title: "PASSWORD")
+    
+    let phoneNumberTextField = TextFieldWithPlaceholder("+380")
+    
+    let passwordTextField = TextFieldWithPlaceholder("Type password here")
+    
+    let forgotButton = LinkButton(title: "Forgot password?", size: .init(width: 0, height: 20))
+    
+    let signInButton = MainButton(title: "Sign In", shadowOpacity: 0.3, shRadius: 5, shColor: UIColor(red: 21/255, green: 129/255, blue: 255/255, alpha: 1))
+    
+    let noAccountLabel = SecondaryLabel(text: "Don't have an account?")
+    
+    let signUpButton = LinkButton(title: "Sign up")
+    
+    let guestButton = MainButton(title: "Continue as guest", titleColor: UIColor(red: 61/255, green: 75/255, blue: 97/255, alpha: 1), backgroundColor: .white, shadowOpacity: 0.15, shRadius: 5, shColor: .black)
+
+    init() {
+        super.init(frame: .zero)
+        backgroundColor = .systemBackground
+        setupUI()
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    private func setupUI() {
+        setupBlueHeader()
+        setupHeaderStack()
+        setupMainStack()
+        setupGuestButton()
+    }
+    
+    private func setupBlueHeader() {
+        self.addSubview(blueBackgroundView)
+        
+        blueBackgroundView.anchor(top: self.topAnchor, leading: self.leadingAnchor, trailing: self.trailingAnchor, bottom: nil, size: .init(width: 0, height: UIScreen.main.bounds.height * 0.25))
+    }
+    
+    private func setupHeaderStack() {
+        
+        let headerStack = stack(logoView, welcomeLabel, spacing: 15, alignment: .center)
+        
+        blueBackgroundView.addSubview(headerStack)
+        headerStack.anchor(top: nil, leading: blueBackgroundView.leadingAnchor, trailing: blueBackgroundView.trailingAnchor, bottom: blueBackgroundView.bottomAnchor, padding: .init(top: 0, left: 0, bottom: 20, right: 0))
+    }
+    
+    private func createTextFieldsStack() -> UIStackView {
+        
+        let phoneNumberTextFieldView = TextFieldBackgroundView(tf: phoneNumberTextField)
+        let passwordTextFieldView = TextFieldBackgroundView(tf: passwordTextField, withSecureFieldPublisher: sfPublisher, action: { self.showPassword.toggle() })
+        
+        let phoneNumberStack = stack(phoneNumberLabel, phoneNumberTextFieldView, spacing: 6)
+        let passwordStack = stack(passwordLabel, passwordTextFieldView, spacing: 6)
+        
+        let textFieldsStack = stack(phoneNumberStack, passwordStack, spacing: 20)
+        
+        [phoneNumberTextFieldView, passwordTextFieldView].forEach {
+            $0.anchor(top: nil, leading: textFieldsStack.leadingAnchor, trailing: textFieldsStack.trailingAnchor, bottom: nil)
+        }
+        
+        return textFieldsStack
+    }
+    
+    private func createForgotPasswordStack() -> UIStackView {
+        let underline = UIView()
+        underline.backgroundColor = UIColor(red: 21/255, green: 129/255, blue: 255/255, alpha: 1)
+        underline.constrainHeight(1)
+        let stack = stack(forgotButton, underline, spacing: 2)
+        
+        underline.anchor(top: nil, leading: stack.leadingAnchor, trailing: stack.trailingAnchor, bottom: nil)
+        
+        return stack
+    }
+    
+    private func setupMainStack() {
+        let tfStack = createTextFieldsStack()
+        let forgotPasswordStack = createForgotPasswordStack()
+        let noAccauntStack = hstack(noAccountLabel, signUpButton, spacing: 10)
+        
+        
+        let mainStack = stack(tfStack, forgotPasswordStack, signInButton, noAccauntStack, spacing: 30, alignment: .center)
+        
+        self.addSubview(mainStack)
+        
+        mainStack.anchor(top: blueBackgroundView.bottomAnchor, leading: self.leadingAnchor, trailing: self.trailingAnchor, bottom: nil, padding: .allSides(20))
+        
+        tfStack.anchor(top: nil, leading: mainStack.leadingAnchor, trailing: mainStack.trailingAnchor, bottom: nil)
+        
+        signInButton.anchor(top: nil, leading: mainStack.leadingAnchor, trailing: mainStack.trailingAnchor, bottom: nil)
+    }
+    
+    private func setupGuestButton() {
+        self.addSubview(guestButton)
+        guestButton.anchor(top: nil, leading: self.leadingAnchor, trailing: self.trailingAnchor, bottom: self.bottomAnchor, padding: .init(top: 0, left: 20, bottom: 50, right: 20))
+    }
+    
+}

@@ -83,7 +83,7 @@ class AlertController: UIViewController {
     }
     
     private func setupSubmitButton() {
-        let button = MainButton(title: "Reset", shadowOpacity: 0.3, shRadius: 5, shColor: UIColor(red: 21/255, green: 129/255, blue: 255/255, alpha: 1))
+        let button = MainButton(title: submitButtonTitle, shadowOpacity: 0.3, shRadius: 5, shColor: UIColor(red: 21/255, green: 129/255, blue: 255/255, alpha: 1))
         
         containerView.addSubview(button)
         

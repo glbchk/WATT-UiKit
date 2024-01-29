@@ -28,7 +28,7 @@ class SignInController: UIViewController {
     }
     
     @objc private func openForgotPasswordController() {
-        let vc = AlertController(contentView: ForgotPasswordView(), buttonTitle: "OK")
+        let vc = AlertController(contentView: ForgotPasswordView(), buttonTitle: "Reset")
         vc.modalPresentationStyle = .overFullScreen
         vc.modalTransitionStyle = .crossDissolve
         navigationController?.present(vc, animated: true)

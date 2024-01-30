@@ -36,7 +36,7 @@ class SignInController: UIViewController {
     
     @objc private func openSignUpController() {
         let vc = SignUpController()
-        vc.modalPresentationStyle = .overFullScreen
+        vc.modalPresentationStyle = .fullScreen
         vc.modalTransitionStyle = .crossDissolve
         navigationController?.present(vc, animated: true)
     }

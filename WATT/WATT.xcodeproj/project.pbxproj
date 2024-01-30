@@ -220,7 +220,6 @@
 				29D8B64B2B5567DF00196543 /* SignInController.swift */,
 				29D8B65D2B596AEC00196543 /* SignInView.swift */,
 				29D8B6752B59D3DA00196543 /* ForgotPasswordView.swift */,
-				296C27E22B67F7930052D350 /* SuccessfulAlertView.swift */,
 			);
 			path = SignIn;
 			sourceTree = "<group>";
@@ -238,6 +237,7 @@
 				29D8B6672B5992F800196543 /* BlueBackgroundView.swift */,
 				29D8B66E2B59AB5800196543 /* TextFieldWithPlaceholder.swift */,
 				29D8B6712B59BBD200196543 /* AlertController.swift */,
+				296C27E22B67F7930052D350 /* SuccessfulAlertView.swift */,
 			);
 			path = "ReusableView ";
 			sourceTree = "<group>";

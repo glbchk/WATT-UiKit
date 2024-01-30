@@ -18,9 +18,9 @@ class BlueBackgroundView: UIView {
     }
     
     //MARK: Should be called in ViewController`s viewDidAppear()
-    func setupGradient() {
+    func setupGradient(frame: CGRect) {
         let gradient = CAGradientLayer()
-        gradient.frame = self.bounds
+        gradient.frame = frame
         gradient.colors = [UIColor(red: 21/255, green: 129/255, blue: 255/255, alpha: 1).cgColor, UIColor(red: 0/255, green: 103/255, blue: 224/255, alpha: 1).cgColor]
         self.layer.insertSublayer(gradient, at: 0)
     }

@@ -15,11 +15,15 @@ class SignUpController: UIViewController {
         super.viewDidLoad()
         view.addSubview(contentView)
         contentView.fillSuperview()
+        presentSignInController()
     }
     
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        contentView.blueBackgroundView.setupGradient()
+    private func presentSignInController() {
+        contentView.signInButton.addTarget(self, action: #selector(openSignInController), for: .touchUpInside)
+    }
+    
+    @objc private func openSignInController() {
+        dismiss(animated: true)
     }
 
 }

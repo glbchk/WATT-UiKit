@@ -57,6 +57,7 @@ class SignInView: UIView {
         setupHeaderStack()
         setupMainStack()
         setupGuestButton()
+        blueBackgroundView.setupGradient(frame: .init(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height * 0.25))
     }
     
     private func setupBlueHeader() {

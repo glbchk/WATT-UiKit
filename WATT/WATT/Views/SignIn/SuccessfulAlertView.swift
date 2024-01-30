@@ -52,7 +52,8 @@ class SuccessfulAlertView: UIView {
         
         self.addSubview(mainStack)
         
-        mainStack.fillSuperview(padding: .init(top: 80, left: 0, bottom: 0, right: 0))
+        mainStack.centerYToSuperview()
+        mainStack.anchor(top: nil, leading: self.leadingAnchor, trailing: self.trailingAnchor, bottom: nil)
     }
     
 }

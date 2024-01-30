@@ -58,7 +58,8 @@ class ForgotPasswordView: UIView {
         
         self.addSubview(mainStack)
         
-        mainStack.fillSuperview()
+        mainStack.centerYToSuperview()
+        mainStack.anchor(top: nil, leading: self.leadingAnchor, trailing: self.trailingAnchor, bottom: nil)
     }
     
 }

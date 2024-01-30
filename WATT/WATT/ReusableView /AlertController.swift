@@ -14,14 +14,17 @@ class AlertController: UIViewController {
     
     let contentView: UIView
     
+    let height: CGFloat
+    
     let containerView = UIView()
     
     let closeButton = UIButton()
     
     let submitButtonTitle: String
     
-    init(contentView: UIView, buttonTitle: String, completionSubmit: (() -> Void)? = nil, completionClose: (() -> Void)? = nil) {
+    init(contentView: UIView, buttonTitle: String, height: CGFloat = UIScreen.main.bounds.height / 2, completionSubmit: (() -> Void)? = nil, completionClose: (() -> Void)? = nil) {
         self.contentView = contentView
+        self.height = height
         self.completionSubmit = completionSubmit
         self.completionClose = completionClose
         self.submitButtonTitle = buttonTitle
@@ -56,14 +59,14 @@ class AlertController: UIViewController {
         containerView.layer.cornerRadius = 30
         
         containerView.centerYToSuperview()
-        containerView.anchor(top: nil, leading: view.leadingAnchor, trailing: view.trailingAnchor, bottom: nil, padding: .init(top: 0, left: 20, bottom: 0, right: 20), size: .init(width: 0, height: UIScreen.main.bounds.height / 2))
+        containerView.anchor(top: nil, leading: view.leadingAnchor, trailing: view.trailingAnchor, bottom: nil, padding: .init(top: 0, left: 20, bottom: 0, right: 20), size: .init(width: 0, height: height))
         
         
         setupCloseButton()
-        setupSubmitButton()
+        let sbmButton = setupSubmitButton()
         
         containerView.addSubview(contentView)
-        contentView.anchor(top: containerView.topAnchor, leading: containerView.leadingAnchor, trailing: containerView.trailingAnchor, bottom: nil, padding: .allSides(20))
+        contentView.anchor(top: containerView.topAnchor, leading: containerView.leadingAnchor, trailing: containerView.trailingAnchor, bottom: sbmButton.topAnchor, padding: .allSides(20))
 //        contentView.centerInSuperview()
     }
     
@@ -82,12 +85,14 @@ class AlertController: UIViewController {
         closeButton.addTarget(self, action: #selector(handleClose), for: .touchUpInside)
     }
     
-    private func setupSubmitButton() {
+    private func setupSubmitButton() -> UIButton {
         let button = MainButton(title: submitButtonTitle, shadowOpacity: 0.3, shRadius: 5, shColor: UIColor(red: 21/255, green: 129/255, blue: 255/255, alpha: 1))
         
         containerView.addSubview(button)
         
         button.anchor(top: nil, leading: containerView.leadingAnchor, trailing: containerView.trailingAnchor, bottom: containerView.bottomAnchor, padding: .allSides(20))
+        
+        return button
     }
     
     @objc private func handleClose() {

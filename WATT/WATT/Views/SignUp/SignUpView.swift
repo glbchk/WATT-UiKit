@@ -62,6 +62,7 @@ class SignUpView: UIView {
         setupBlueHeader()
         setupHeaderStack()
         setupMainStack()
+        blueBackgroundView.setupGradient(frame: .init(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height * 0.25))
     }
     
     private func setupBlueHeader() {
@@ -107,7 +108,4 @@ class SignUpView: UIView {
         return stack
     }
   
-    
-    
-    
 }

@@ -16,14 +16,14 @@ struct AppUser: Codable {
     var photoURL: String?
 //    var location: UserLocation?
     
-//    init(user: User) {
-//        self.uid = user.uid
-//        self.email = user.email ?? ""
-//        self.fullName = user.displayName ?? ""
-//        self.phoneNumber = user.phoneNumber
-//        self.photoURL = user.photoURL?.absoluteString
-////        self.location = nil
-//    }
+    init(user: User) {
+        self.uid = user.uid
+        self.email = user.email ?? ""
+        self.fullName = user.displayName ?? ""
+        self.phoneNumber = user.phoneNumber
+        self.photoURL = user.photoURL?.absoluteString
+//        self.location = nil
+    }
     
     
 }

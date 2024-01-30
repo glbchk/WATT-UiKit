@@ -18,8 +18,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     public func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         FirebaseApp.configure()
         dependencyContainer = createAuthDependencies()
-        window?.rootViewController = dependencyContainer.resolve(AppViewController.self)
-        let vm = AppViewModel(appDelegate: dependencyContainer)
+//        window?.rootViewController = dependencyContainer.resolve(AppViewController.self)
+        let vm = AppViewModel(appDelegate: self)
         
         self.window = UIWindow(frame: UIScreen.main.bounds)
         window?.rootViewController = AppViewController(viewModel: vm)

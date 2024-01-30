@@ -28,13 +28,7 @@ class SignUpView: UIView {
     
     let logoView = LogoView()
     
-    let createAccountLabel: UILabel = {
-        let label = UILabel()
-        label.text = "Create an account"
-        label.font = .systemFont(ofSize: 22, weight: .bold)
-        label.textColor = .white
-        return label
-    }()
+    let createAccountLabel = TextLabel(title: "Create an account", font: .systemFont(ofSize: 22, weight: .bold), textColor: .white)
     
     let phoneNumberLabel = TextFieldLabel(title: "PHONE NUMBER")
     let passwordLabel = TextFieldLabel(title: "PASSWORD")

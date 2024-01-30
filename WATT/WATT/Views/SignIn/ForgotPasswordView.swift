@@ -9,23 +9,9 @@ import UIKit
 
 class ForgotPasswordView: UIView {
     
-    let titleLabel: UILabel = {
-        let label = UILabel()
-        label.text = "Forgot your password?"
-        label.font = .systemFont(ofSize: 22, weight: .bold)
-        label.textColor = UIColor(red: 61/255, green: 75/255, blue: 97/255, alpha: 1) //black
-        return label
-    }()
+    let titleLabel = TextLabel(title: "Forgot your password?", font: .systemFont(ofSize: 22, weight: .bold), textColor:  UIColor(red: 61/255, green: 75/255, blue: 97/255, alpha: 1)) //black
     
-    let subtitleLabel: UILabel = {
-        let label = UILabel()
-        label.text = "Enter your phone number or email address to reset your password"
-        label.font = .systemFont(ofSize: 15)
-        label.numberOfLines = 0
-        label.textAlignment = .center
-        label.textColor = UIColor(red: 92/255, green: 108/255, blue: 132/255, alpha: 1) //dark grey
-        return label
-    }()
+    let subtitleLabel = TextLabel(title: "Enter your phone number or email address to reset your password", font: .systemFont(ofSize: 15), textColor: UIColor(red: 92/255, green: 108/255, blue: 132/255, alpha: 1), numberOfLines: 0, textAlignment: .center) //dark grey
     
     let phoneNumberLabel = TextFieldLabel(title: "PHONE NUMBER")
     let emailLabel = TextFieldLabel(title: "EMAIL")

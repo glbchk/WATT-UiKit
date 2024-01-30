@@ -22,13 +22,7 @@ class SignInView: UIView {
             .eraseToAnyPublisher()
     }
     
-    let welcomeLabel: UILabel = {
-        let label = UILabel()
-        label.text = "Welcome back"
-        label.font = .systemFont(ofSize: 22, weight: .bold)
-        label.textColor = .white
-        return label
-    }()
+    let welcomeLabel = TextLabel(title: "Welcome back", font: .systemFont(ofSize: 22, weight: .bold), textColor: .white)
     
     let phoneNumberLabel = TextFieldLabel(title: "PHONE NUMBER")
     

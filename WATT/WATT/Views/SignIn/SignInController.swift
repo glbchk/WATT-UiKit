@@ -17,6 +17,8 @@ class SignInController: UIViewController {
         containerView.fillSuperview()
         presentAlertController()
         presentSignUpController()
+        
+        navigationController?.navigationBar.isHidden = true
     }
     
     private func presentAlertController() {
@@ -36,8 +38,6 @@ class SignInController: UIViewController {
     
     @objc private func openSignUpController() {
         let vc = SignUpController()
-        vc.modalPresentationStyle = .fullScreen
-        vc.modalTransitionStyle = .crossDissolve
-        navigationController?.present(vc, animated: true)
+        navigationController?.pushViewController(vc, animated: true)
     }
 }

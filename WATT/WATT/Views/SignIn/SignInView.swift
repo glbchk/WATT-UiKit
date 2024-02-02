@@ -44,7 +44,7 @@ class SignInView: UIView {
 
     init() {
         super.init(frame: .zero)
-        backgroundColor = .systemBackground
+        backgroundColor = .white
         setupUI()
     }
     

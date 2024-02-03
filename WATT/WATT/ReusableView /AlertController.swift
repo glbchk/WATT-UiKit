@@ -76,7 +76,7 @@ class AlertController: UIViewController {
         closeButton.backgroundColor = .white
         closeButton.layer.cornerRadius = 20
         closeButton.setImage(UIImage(systemName: "xmark"), for: .normal)
-        closeButton.tintColor = UIColor(red: 61/255, green: 75/255, blue: 97/255, alpha: 1)
+        closeButton.tintColor = Asset.Colors.black
         
         closeButton.setupShadow(opacity: 0.3, radius: 5, color: .black)
         
@@ -86,7 +86,7 @@ class AlertController: UIViewController {
     }
     
     private func setupSubmitButton() -> UIButton {
-        let button = MainButton(title: submitButtonTitle, shadowOpacity: 0.3, shRadius: 5, shColor: UIColor(red: 21/255, green: 129/255, blue: 255/255, alpha: 1))
+        let button = MainButton(title: submitButtonTitle, shadowOpacity: 0.3, shRadius: 5, shColor: Asset.Colors.deepBlue)
         
         containerView.addSubview(button)
         

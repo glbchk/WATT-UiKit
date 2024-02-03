@@ -34,13 +34,13 @@ class SignInView: UIView {
     
     let forgotButton = LinkButton(title: "Forgot password?", size: .init(width: 0, height: 20))
     
-    let signInButton = MainButton(title: "Sign In", shadowOpacity: 0.3, shRadius: 5, shColor: UIColor(red: 21/255, green: 129/255, blue: 255/255, alpha: 1))
+    let signInButton = MainButton(title: "Sign In", shadowOpacity: 0.3, shRadius: 5, shColor: Asset.Colors.deepBlue)
     
     let noAccountLabel = SecondaryLabel(text: "Don't have an account?")
     
     let signUpButton = LinkButton(title: "Sign up")
     
-    let guestButton = MainButton(title: "Continue as guest", titleColor: UIColor(red: 61/255, green: 75/255, blue: 97/255, alpha: 1), backgroundColor: .white, shadowOpacity: 0.15, shRadius: 5, shColor: .black)
+    let guestButton = MainButton(title: "Continue as guest", titleColor: Asset.Colors.black, backgroundColor: .white, shadowOpacity: 0.15, shRadius: 5, shColor: .black)
 
     init() {
         super.init(frame: .zero)
@@ -93,7 +93,7 @@ class SignInView: UIView {
     
     private func createForgotPasswordStack() -> UIStackView {
         let underline = UIView()
-        underline.backgroundColor = UIColor(red: 21/255, green: 129/255, blue: 255/255, alpha: 1)
+        underline.backgroundColor = Asset.Colors.deepBlue
         underline.constrainHeight(1)
         let stack = stack(forgotButton, underline, spacing: 2)
         

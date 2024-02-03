@@ -12,7 +12,7 @@ class LogoView: UIView {
     let logoLabel: UILabel = {
         let label = UILabel()
         label.text = "W"
-        label.textColor = UIColor(red: 21/255, green: 129/255, blue: 255/255, alpha: 1)
+        label.textColor = Asset.Colors.deepBlue
         label.font = .systemFont(ofSize: 35, weight: .bold)
         return label
     }()

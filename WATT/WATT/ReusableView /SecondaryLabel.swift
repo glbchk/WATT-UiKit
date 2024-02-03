@@ -9,7 +9,7 @@ import UIKit
 
 class SecondaryLabel: UILabel {
 
-    init(text: String, font: UIFont = .systemFont(ofSize: 15), textColor: UIColor = UIColor(red: 134/255, green: 146/255, blue: 169/255, alpha: 1), numbersOfLines: Int = 1, textAlignment: NSTextAlignment = .natural) {
+    init(text: String, font: UIFont = .systemFont(ofSize: 15), textColor: UIColor = Asset.Colors.grey1, numbersOfLines: Int = 1, textAlignment: NSTextAlignment = .natural) {
         super.init(frame: .zero)
         self.text = text
         self.font = font

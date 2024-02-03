@@ -9,9 +9,9 @@ import UIKit
 
 class ForgotPasswordView: UIView {
     
-    let titleLabel = TextLabel(title: "Forgot your password?", font: .systemFont(ofSize: 22, weight: .bold), textColor:  UIColor(red: 61/255, green: 75/255, blue: 97/255, alpha: 1)) //black
+    let titleLabel = TextLabel(title: "Forgot your password?", font: .systemFont(ofSize: 22, weight: .bold), textColor:  Asset.Colors.black)
     
-    let subtitleLabel = TextLabel(title: "Enter your phone number or email address to reset your password", font: .systemFont(ofSize: 15), textColor: UIColor(red: 92/255, green: 108/255, blue: 132/255, alpha: 1), numberOfLines: 0, textAlignment: .center) //dark grey
+    let subtitleLabel = TextLabel(title: "Enter your phone number or email address to reset your password", font: .systemFont(ofSize: 15), textColor: Asset.Colors.darkGrey, numberOfLines: 0, textAlignment: .center)
     
     let phoneNumberLabel = TextFieldLabel(title: "PHONE NUMBER")
     let emailLabel = TextFieldLabel(title: "EMAIL")
@@ -31,12 +31,12 @@ class ForgotPasswordView: UIView {
     private func setupUI() {
         let divider = UIView()
         divider.constrainHeight(1)
-        divider.backgroundColor = UIColor(red: 244/255, green: 246/255, blue: 249/255, alpha: 1) //grey 4
+        divider.backgroundColor = Asset.Colors.grey4
         
         let dividerLabel = UILabel()
         dividerLabel.text = "Or"
         dividerLabel.font = .systemFont(ofSize: 13)
-        dividerLabel.textColor = UIColor(red: 134/255, green: 146/255, blue: 169/255, alpha: 1) //grey 1
+        dividerLabel.textColor = Asset.Colors.grey1
         dividerLabel.backgroundColor = .white
         dividerLabel.textAlignment = .center
         

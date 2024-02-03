@@ -44,7 +44,7 @@ class SignUpView: UIView {
     
     let termsButton = LinkButton(title: "Terms & Conditions")
 
-    let signUpButton = MainButton(title: "Sign up", shadowOpacity: 0.3, shRadius: 5, shColor: UIColor(red: 21/255, green: 129/255, blue: 255/255, alpha: 1))
+    let signUpButton = MainButton(title: "Sign up", shadowOpacity: 0.3, shRadius: 5, shColor: Asset.Colors.deepBlue)
     
     let haveAccountLabel = SecondaryLabel(text: "Already have an account?")
     

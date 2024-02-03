@@ -17,13 +17,13 @@ class SuccessfulAlertView: UIView {
         circle.layer.cornerRadius = 40
         circle.constrainWidth(80)
         circle.constrainHeight(80)
-        circle.backgroundColor = UIColor(red: 244/255, green: 246/255, blue: 249/255, alpha: 1) //grey 4
+        circle.backgroundColor = Asset.Colors.grey4
         circle.layer.borderWidth = 1
-        circle.layer.borderColor = UIColor(red: 219/255, green: 223/255, blue: 227/255, alpha: 1).cgColor //grey 3
+        circle.layer.borderColor = Asset.Colors.grey3.cgColor
         
         let checkmarkImage = UIImage(systemName: "checkmark")
         let checkmarkView = UIImageView(image: checkmarkImage)
-        checkmarkView.image?.withTintColor(UIColor(red: 21/255, green: 129/255, blue: 255/255, alpha: 1)) //deep blue
+        checkmarkView.image?.withTintColor(Asset.Colors.deepBlue)
 
         circle.addSubview(checkmarkView)
         checkmarkView.centerInSuperview(size: .init(width: 35, height: 27))
@@ -32,8 +32,8 @@ class SuccessfulAlertView: UIView {
     
     init(title: String, subtitle: String) {
         super.init(frame: .zero)
-        titleLabel = TextLabel(title: title, font: .systemFont(ofSize: 22, weight: .bold), textColor: UIColor(red: 61/255, green: 75/255, blue: 97/255, alpha: 1))
-        subtitleLabel = TextLabel(title: subtitle, font: .systemFont(ofSize: 15), textColor: UIColor(red: 92/255, green: 108/255, blue: 132/255, alpha: 1), numberOfLines: 0, textAlignment: .center)
+        titleLabel = TextLabel(title: title, font: .systemFont(ofSize: 22, weight: .bold), textColor: Asset.Colors.black)
+        subtitleLabel = TextLabel(title: subtitle, font: .systemFont(ofSize: 15), textColor: Asset.Colors.darkGrey, numberOfLines: 0, textAlignment: .center)
         setupUI()
     }
     

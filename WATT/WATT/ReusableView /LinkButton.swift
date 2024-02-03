@@ -9,7 +9,7 @@ import UIKit
 
 class LinkButton: UIButton {
 
-    init(title: String, titleColor: UIColor = UIColor(red: 21/255, green: 129/255, blue: 255/255, alpha: 1), font: UIFont = .systemFont(ofSize: 15), size: CGSize = .zero) {
+    init(title: String, titleColor: UIColor = Asset.Colors.deepBlue, font: UIFont = .systemFont(ofSize: 15), size: CGSize = .zero) {
         super.init(frame: .zero)
         self.setTitle(title, for: .normal)
         self.setTitleColor(titleColor, for: .normal)

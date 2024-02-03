@@ -9,7 +9,7 @@ import UIKit
 
 class MainButton: UIButton {
     
-    init(title: String, font: UIFont = .systemFont(ofSize: 18, weight: .bold), titleColor: UIColor = .white, backgroundColor: UIColor = UIColor(red: 21/255, green: 129/255, blue: 255/255, alpha: 1), cornerRadius: CGFloat = 20, size: CGSize = .init(width: 0, height: 60), shadowOpacity: Float = 0, shRadius: CGFloat = 0, shOffset: CGSize = .zero, shColor: UIColor = .black) {
+    init(title: String, font: UIFont = .systemFont(ofSize: 18, weight: .bold), titleColor: UIColor = .white, backgroundColor: UIColor = Asset.Colors.deepBlue, cornerRadius: CGFloat = 20, size: CGSize = .init(width: 0, height: 60), shadowOpacity: Float = 0, shRadius: CGFloat = 0, shOffset: CGSize = .zero, shColor: UIColor = .black) {
         super.init(frame: .zero)
         self.setTitle(title, for: .normal)
         self.setTitleColor(titleColor, for: .normal)

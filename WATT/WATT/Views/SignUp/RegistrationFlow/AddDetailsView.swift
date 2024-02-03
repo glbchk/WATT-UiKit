@@ -26,7 +26,7 @@ class AddDetailsView: UIView {
         view.setupShadow(opacity: 0.15, radius: 5, color: .black)
         
         let accountView = UIView()
-        accountView.backgroundColor = UIColor(red: 244/255, green: 246/255, blue: 249/255, alpha: 1) //grey 4
+        accountView.backgroundColor = Asset.Colors.grey4
         accountView.constrainWidth(40)
         accountView.constrainHeight(40)
         accountView.layer.cornerRadius = 20
@@ -36,13 +36,13 @@ class AddDetailsView: UIView {
         accountIconView.constrainHeight(24)
         accountView.addSubview(accountIconView)
         accountIconView.centerInSuperview()
-        accountIconView.tintColor = UIColor(red: 174/255, green: 184/255, blue: 200/255, alpha: 1) //grey 2
+        accountIconView.tintColor = Asset.Colors.grey2
         
-        let label = TextLabel(title: "Add your name & email", font: .boldSystemFont(ofSize: 15), textColor: UIColor(red: 61/255, green: 74/255, blue: 97/255, alpha: 1)) //black
+        let label = TextLabel(title: "Add your name & email", font: .boldSystemFont(ofSize: 15), textColor: Asset.Colors.black)
         
         let rightArrow = UIImageView(image: Asset.Icons.Navigation.chevronRight)
         rightArrow.contentMode = .scaleAspectFit
-        rightArrow.tintColor = UIColor(red: 134/255, green: 146/255, blue: 169/255, alpha: 1) //grey 1
+        rightArrow.tintColor = Asset.Colors.grey1
         
         let stack = UIStackView(arrangedSubviews: [accountView, label, rightArrow])
         stack.axis = .horizontal

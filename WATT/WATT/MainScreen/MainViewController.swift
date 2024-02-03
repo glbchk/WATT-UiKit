@@ -28,12 +28,22 @@ class MainViewController: UIViewController {
         
         view.backgroundColor = .white
         
-        contentView.nameLabel.text = viewModel.user?.fullName
-        contentView.emailLabel.text = viewModel.user?.email
-        
         setupViewConstratints()
         setupTarget()
     }
+    
+//    private func setData() {
+//        
+//        contentView.emailLabel
+//            .sink { viewModel.user in
+//                self?.viewModel.user = user
+//            }
+//            .store(in: &cancellables)
+//        
+//        contentView.nameLabel.text = viewModel.user?.uid
+//        contentView.emailLabel.text = viewModel.user?.email
+//        
+//    }
     
     private func setupViewConstratints() {
         contentView.translatesAutoresizingMaskIntoConstraints = false

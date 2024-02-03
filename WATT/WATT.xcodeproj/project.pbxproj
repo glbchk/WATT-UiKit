@@ -41,6 +41,8 @@
 		298B7F2A2B6D2FDB003A36C7 /* Asset.swift in Sources */ = {isa = PBXBuildFile; fileRef = 298B7F292B6D2FDB003A36C7 /* Asset.swift */; };
 		298B7F2C2B6D2FF8003A36C7 /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 298B7F2B2B6D2FF8003A36C7 /* Colors.swift */; };
 		298B7F2E2B6D301E003A36C7 /* Icons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 298B7F2D2B6D301E003A36C7 /* Icons.swift */; };
+		298B7F302B6E968A003A36C7 /* AddDetailRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 298B7F2F2B6E968A003A36C7 /* AddDetailRow.swift */; };
+		298B7F322B6E96C7003A36C7 /* DetailsRowType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 298B7F312B6E96C7003A36C7 /* DetailsRowType.swift */; };
 		29D8B64C2B5567DF00196543 /* SignInController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29D8B64B2B5567DF00196543 /* SignInController.swift */; };
 		29D8B64F2B557DFB00196543 /* TextFieldBackgroundView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29D8B64E2B557DFB00196543 /* TextFieldBackgroundView.swift */; };
 		29D8B6542B559EE400196543 /* UIView+Layout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29D8B6532B559EE400196543 /* UIView+Layout.swift */; };
@@ -83,6 +85,8 @@
 		298B7F292B6D2FDB003A36C7 /* Asset.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Asset.swift; sourceTree = "<group>"; };
 		298B7F2B2B6D2FF8003A36C7 /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
 		298B7F2D2B6D301E003A36C7 /* Icons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Icons.swift; sourceTree = "<group>"; };
+		298B7F2F2B6E968A003A36C7 /* AddDetailRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddDetailRow.swift; sourceTree = "<group>"; };
+		298B7F312B6E96C7003A36C7 /* DetailsRowType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailsRowType.swift; sourceTree = "<group>"; };
 		29D8B64B2B5567DF00196543 /* SignInController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInController.swift; sourceTree = "<group>"; };
 		29D8B64E2B557DFB00196543 /* TextFieldBackgroundView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldBackgroundView.swift; sourceTree = "<group>"; };
 		29D8B6532B559EE400196543 /* UIView+Layout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Layout.swift"; sourceTree = "<group>"; };
@@ -225,6 +229,7 @@
 			isa = PBXGroup;
 			children = (
 				062654AC2B4F6F1F007120AD /* AppUser.swift */,
+				298B7F312B6E96C7003A36C7 /* DetailsRowType.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -234,6 +239,7 @@
 			children = (
 				298B7F1E2B697B47003A36C7 /* AddDetailsView.swift */,
 				298B7F202B697DA2003A36C7 /* AddDetailsController.swift */,
+				298B7F2F2B6E968A003A36C7 /* AddDetailRow.swift */,
 			);
 			path = RegistrationFlow;
 			sourceTree = "<group>";
@@ -423,9 +429,11 @@
 				298B7F2C2B6D2FF8003A36C7 /* Colors.swift in Sources */,
 				29D8B6722B59BBD200196543 /* AlertController.swift in Sources */,
 				29D8B64F2B557DFB00196543 /* TextFieldBackgroundView.swift in Sources */,
+				298B7F302B6E968A003A36C7 /* AddDetailRow.swift in Sources */,
 				062654AB2B4F6BEE007120AD /* DependencyInjection.swift in Sources */,
 				29D8B6682B5992F800196543 /* BlueBackgroundView.swift in Sources */,
 				29D8B66B2B599D8A00196543 /* SignUpView.swift in Sources */,
+				298B7F322B6E96C7003A36C7 /* DetailsRowType.swift in Sources */,
 				06A5F4132B3A68DF000C0218 /* MainViewController.swift in Sources */,
 				29D8B66D2B599DA300196543 /* SignUpController.swift in Sources */,
 				298B7F2A2B6D2FDB003A36C7 /* Asset.swift in Sources */,
@@ -589,7 +597,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 3CND7M7GHV;
+				DEVELOPMENT_TEAM = "";
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = WATT/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -618,7 +626,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 3CND7M7GHV;
+				DEVELOPMENT_TEAM = "";
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = WATT/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;

@@ -15,6 +15,12 @@ class AddDetailsController: UIViewController {
         super.viewDidLoad()
         view.addSubview(contentView)
         contentView.fillSuperview()
+        
+        contentView.completeLaterButtont.addTarget(self, action: #selector(handleCompleteLater), for: .touchUpInside)
+    }
+    
+    @objc private func handleCompleteLater() {
+        self.navigationController?.popViewController(animated: true)
     }
     
 }

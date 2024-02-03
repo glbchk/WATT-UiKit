@@ -9,7 +9,7 @@ import UIKit
 
 class MainButton: UIButton {
     
-    init(title: String, font: UIFont = .systemFont(ofSize: 18, weight: .bold), titleColor: UIColor = .white, backgroundColor: UIColor = Asset.Colors.deepBlue, cornerRadius: CGFloat = 20, size: CGSize = .init(width: 0, height: 60), shadowOpacity: Float = 0, shRadius: CGFloat = 0, shOffset: CGSize = .zero, shColor: UIColor = .black) {
+    init(title: String, font: UIFont = .systemFont(ofSize: 18, weight: .bold), titleColor: UIColor = .white, backgroundColor: UIColor = Asset.Colors.deepBlue, cornerRadius: CGFloat = 15, size: CGSize = .init(width: 0, height: 60), shadowOpacity: Float = 0, shRadius: CGFloat = 0, shOffset: CGSize = .zero, shColor: UIColor = .black) {
         super.init(frame: .zero)
         self.setTitle(title, for: .normal)
         self.setTitleColor(titleColor, for: .normal)
@@ -25,7 +25,7 @@ class MainButton: UIButton {
         self.setupShadow(opacity: shadowOpacity, radius: shRadius, offset: shOffset, color: shColor)
     }
     
-    init(image: UIImage, backgroundColor: UIColor = .white, cornerRadius: CGFloat = 20, size: CGSize = .init(width: 0, height: 60), shadowOpacity: Float = 0, shRadius: CGFloat = 0, shOffset: CGSize = .zero, shColor: UIColor = .black) {
+    init(image: UIImage, backgroundColor: UIColor = .white, cornerRadius: CGFloat = 15, size: CGSize = .init(width: 0, height: 60), shadowOpacity: Float = 0, shRadius: CGFloat = 0, shOffset: CGSize = .zero, shColor: UIColor = .black) {
         super.init(frame: .zero)
         self.setImage(image, for: .normal)
         self.backgroundColor = backgroundColor
@@ -40,7 +40,7 @@ class MainButton: UIButton {
     }
     
     
-    init(title: String, titleColor: UIColor = .white, image: UIImage? = nil, font: UIFont = .systemFont(ofSize: 18, weight: .bold), backgroundColor: UIColor = .white, cornerRadius: CGFloat = 20, size: CGSize = .init(width: 0, height: 60), shadowOpacity: Float = 0, shRadius: CGFloat = 0, shOffset: CGSize = .zero, shColor: UIColor = .black) {
+    init(title: String, titleColor: UIColor = .white, image: UIImage? = nil, font: UIFont = .systemFont(ofSize: 18, weight: .bold), backgroundColor: UIColor = .white, cornerRadius: CGFloat = 15, size: CGSize = .init(width: 0, height: 60), shadowOpacity: Float = 0, shRadius: CGFloat = 0, shOffset: CGSize = .zero, shColor: UIColor = .black) {
         super.init(frame: .zero)
         self.setTitle(title, for: .normal)
         self.titleLabel?.textColor = titleColor

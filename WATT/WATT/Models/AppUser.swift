@@ -14,6 +14,7 @@ struct AppUser: Codable {
     var fullName: String
     var phoneNumber: String?
     var photoURL: String?
+//    let dateCreated: Date
 //    var location: UserLocation?
     
     init(user: User) {
@@ -22,8 +23,8 @@ struct AppUser: Codable {
         self.fullName = user.displayName ?? ""
         self.phoneNumber = user.phoneNumber
         self.photoURL = user.photoURL?.absoluteString
+//        self.dateCreated = Date()
 //        self.location = nil
     }
-    
     
 }

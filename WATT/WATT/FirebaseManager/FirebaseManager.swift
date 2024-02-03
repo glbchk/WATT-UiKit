@@ -27,7 +27,7 @@ final class FirebaseManager {
         self.firestore = Firestore.firestore()
     }
     
-    func createUserInDB(user: AppUser) async throws {
+    func createUserInDB(user: DBUser) async throws {
         try firestore.collection(FirebaseConstants.users).document(user.uid).setData(from: user)
     }
     
@@ -42,11 +42,11 @@ final class FirebaseManager {
         }
     }
     
-    func getUserFromDB() async throws -> AppUser {
+    func getUserFromDB() async throws -> DBUser {
         guard let uid = authentication.currentUser?.uid else {
             throw URLError(.badServerResponse)
         }
-        return try await firestore.collection(FirebaseConstants.users).document(uid).getDocument(as: AppUser.self)
+        return try await firestore.collection(FirebaseConstants.users).document(uid).getDocument(as: DBUser.self)
     }
     
 }

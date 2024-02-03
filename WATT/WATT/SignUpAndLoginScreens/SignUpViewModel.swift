@@ -25,11 +25,23 @@ class SignUpViewModel: ObservableObject {
     @Published var phoneNumber = ""
     @Published var profilePhoto: UIImage? = nil
     @Published var isLoading = false
-    @Published var showPassword = false
     @Published var state: TextFieldState = .none
     let validationResult = PassthroughSubject<Void, Error>()
     
     @Published var user: AppUser?
+    
+    @Published var showPassword = true
+    @Published var showRetyped = true
+    
+    var passwordPublisher: AnyPublisher<Bool, Never> {
+        $showPassword
+            .eraseToAnyPublisher()
+    }
+    
+    var retypedPasswordPublisher: AnyPublisher<Bool, Never> {
+        $showRetyped
+            .eraseToAnyPublisher()
+    }
     
     private(set) lazy var isInputValid = Publishers.CombineLatest($email, $password)
         .map { $0.count > 2 && $1.count > 2 }
@@ -71,10 +83,11 @@ class SignUpViewModel: ObservableObject {
     
     func successfulRegistration() {
         guard let user = self.user else { return }
-            Task(priority: .medium) {
-                try await userRepo.createUserInDB(user: user)
-                authenticationRepo.sucess()
-            }
+        let dbUser = DBUser(uid: user.uid, email: email, fullName: fullName)
+        Task(priority: .medium) {
+            try await userRepo.createUserInDB(user: dbUser)
+            authenticationRepo.success()
+        }
     }
     
 //    var isValidUsernamePublisher: AnyPublisher<Bool, Never> {

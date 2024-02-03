@@ -21,6 +21,7 @@ final class AppViewModel: ObservableObject {
     
     private weak var appDelegate: AppDelegate?
     let authorizationDependencies: Resolver
+    var loginViewModel: SignInViewModel?
     var signUpViewModel: SignUpViewModel?
     private(set) var mainViewModel: MainViewModel?
     private var appDependencies: Resolver?
@@ -32,6 +33,7 @@ final class AppViewModel: ObservableObject {
         self.isLoggedIn = false
         authorizationDependencies = appDelegate.dependencyContainer
         authenticationRepo = authorizationDependencies.resolve(AuthenticationRepository.self)!
+        loginViewModel = SignInViewModel(dependencies: authorizationDependencies)
         signUpViewModel = SignUpViewModel(dependencies: authorizationDependencies)
         
         listenForAuth()
@@ -55,7 +57,7 @@ final class AppViewModel: ObservableObject {
             appDependencies = newDependencies
             mainViewModel = MainViewModel(dependencies: newDependencies)
         } else {
-//            loginViewModel = SignInViewModel(dependencies: authorizationDependencies)
+            loginViewModel = SignInViewModel(dependencies: authorizationDependencies)
             signUpViewModel = SignUpViewModel(dependencies: authorizationDependencies)
             
         }

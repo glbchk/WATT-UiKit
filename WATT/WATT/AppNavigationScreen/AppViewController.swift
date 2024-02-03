@@ -36,11 +36,11 @@ class AppViewController: UINavigationController {
             .sink { [self] isLogged in
                 if isLogged == true {
                     if let mainViewModel = viewModel.mainViewModel {
-                        self.navigationController?.pushViewController(MainViewController(viewModel: mainViewModel), animated: true)
+                        self.navigationController?.setViewControllers([MainViewController(viewModel: mainViewModel)], animated: true)
                     }
                 } else {
                     if let signUpViewModel = viewModel.signUpViewModel {
-                        self.navigationController?.pushViewController(SignUpViewController(viewModel: signUpViewModel), animated: true)
+                        self.navigationController?.setViewControllers([SignUpViewController(viewModel: signUpViewModel)], animated: true)
                     }
                 }
             }

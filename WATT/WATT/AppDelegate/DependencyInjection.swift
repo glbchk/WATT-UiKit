@@ -20,6 +20,7 @@ extension AppDelegate {
         .inObjectScope(.container)
         
         registerUserRemoteSource(in: container)
+        registerLoginModel(in: container)
         
         return container
     }
@@ -28,6 +29,7 @@ extension AppDelegate {
         let container = Container()
         
         registerAuthenticationRepository(from: authDependencies, in: container)
+        registerLoginModel(in: container)
         registerUserRemoteSource(in: container)
         
         return container
@@ -39,6 +41,18 @@ extension AppDelegate {
                 resolver.resolve(AuthenticationRepository.self)!
             }
             .inObjectScope(.container)
+    }
+    
+    private func registerLoginModel(in container: Container) {
+        let registeredContainer = Container()
+        
+        registeredContainer.register(LoginRemoteSource.self) { _ in
+            LoginRemoteSourceImpl()
+        }
+        container.register(LoginRepository.self) { _ in
+            LoginRepositoryImpl(dependencies: registeredContainer)
+        }
+        .inObjectScope(.container)
     }
     
     private func registerUserRemoteSource(in container: Container) {

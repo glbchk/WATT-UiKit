@@ -8,8 +8,8 @@
 import Foundation
 
 protocol UserRemoteSource {
-    func createUserInDB(user: AppUser) async throws
-    func getUserFromDB() async throws -> AppUser
+    func createUserInDB(user: DBUser) async throws
+    func getUserFromDB() async throws -> DBUser
     func checkIfUserExist(user: AppUser, completion: @escaping ((Bool) -> Void))
 }
 
@@ -17,11 +17,11 @@ final class UserRemoteSourceImpl: UserRemoteSource {
     
     private var firebaseManager = FirebaseManager()
     
-    func createUserInDB(user: AppUser) async throws {
+    func createUserInDB(user: DBUser) async throws {
         try await firebaseManager.createUserInDB(user: user)
     }
     
-    func getUserFromDB() async throws -> AppUser {
+    func getUserFromDB() async throws -> DBUser {
         return try await firebaseManager.getUserFromDB()
     }
     

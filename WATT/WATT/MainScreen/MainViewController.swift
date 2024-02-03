@@ -6,32 +6,49 @@
 //
 
 import UIKit
+import Combine
 
 class MainViewController: UIViewController {
-
-    lazy private var sampleLabel: UILabel = {
-            let label = UILabel()
-            label.translatesAutoresizingMaskIntoConstraints = false
-            label.text = "Hello World!"
-            label.textColor = UIColor.black
-            return label
-        }()
-
-        override func viewDidLoad() {
-            super.viewDidLoad()
-            self.view.backgroundColor = UIColor.white
-            self.view.addSubview(self.sampleLabel)
-            self.setUpConstraints()
-        }
-
-        func setUpConstraints() {
-            let sampleLabelConstraints = [
-                self.sampleLabel.centerXAnchor.constraint(equalTo: self.view.centerXAnchor),
-                self.sampleLabel.centerYAnchor.constraint(equalTo: self.view.centerYAnchor)
-            ]
-            NSLayoutConstraint.activate(sampleLabelConstraints)
-        }
-
-
+    
+    private lazy var contentView = MainView()
+    private var viewModel: MainViewModel
+    private var cancellables = Set<AnyCancellable>()
+    
+    init(viewModel: MainViewModel) {
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        setupViewConstratints()
+        setupTarget()
+    }
+    
+    private func setupViewConstratints() {
+        contentView.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(contentView)
+        
+        NSLayoutConstraint.activate([
+            contentView.topAnchor.constraint(equalTo: view.topAnchor),
+            contentView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            contentView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            contentView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+        ])
+    }
+    
+    private func setupTarget() {
+        contentView.signOutButton.addTarget(self, action: #selector(onPressButton), for: .touchUpInside)
+    }
+    
+    @objc private func onPressButton() {
+        viewModel.signOut()
+    }
+    
 }
 

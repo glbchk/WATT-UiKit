@@ -10,7 +10,7 @@ import Combine
 
 class SignUpView: UIView {
     
-    //MARK: Must be placed in ViewModel
+    //MARK: Must be placed in ViewModel <- alreadt added
     @Published var showPassword = true
     @Published var showRetyped = true
     

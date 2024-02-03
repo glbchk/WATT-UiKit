@@ -14,7 +14,7 @@ class SignInView: UIView {
     
     let logoView = LogoView()
     
-    //MARK: Must be placed in ViewModel
+    //MARK: Must be placed in ViewModel <- alreadt added
     @Published var showPassword = false
     
     var sfPublisher: AnyPublisher<Bool, Never> {

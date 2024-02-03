@@ -10,17 +10,17 @@ import Combine
 import Swinject
 
 protocol UserRepository {
-    var user: AnyPublisher<AppUser?, Never> { get }
+    var user: AnyPublisher<DBUser?, Never> { get }
     
-    func createUserInDB(user: AppUser) async throws
+    func createUserInDB(user: DBUser) async throws
     func checkIfUserExist(user: AppUser, completion: @escaping ((Bool) -> Void))
 }
 
 final class UserRepositoryImpl: UserRepository {
     
-    @Published private var userPublisher: AppUser?
+    @Published private var userPublisher: DBUser?
     
-    var user: AnyPublisher<AppUser?, Never> {
+    var user: AnyPublisher<DBUser?, Never> {
         $userPublisher.eraseToAnyPublisher()
     }
     
@@ -38,7 +38,7 @@ final class UserRepositoryImpl: UserRepository {
         }
     }
     
-    func createUserInDB(user: AppUser) async throws {
+    func createUserInDB(user: DBUser) async throws {
         try await remoteSource.createUserInDB(user: user)
     }
     

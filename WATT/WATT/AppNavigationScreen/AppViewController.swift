@@ -14,9 +14,13 @@ class AppViewController: UINavigationController {
     private var viewModel: AppViewModel
     private var cancellables = Set<AnyCancellable>()
     
-    init(viewModel: AppViewModel) {
+    private var window: UIWindow?
+    
+    init(viewModel: AppViewModel, window: UIWindow?) {
         self.viewModel = viewModel
+        self.window = window
         super.init(nibName: nil, bundle: nil)
+        loginState()
     }
     
     required init?(coder: NSCoder) {
@@ -26,7 +30,6 @@ class AppViewController: UINavigationController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        loginState()
     }
     
     
@@ -36,11 +39,11 @@ class AppViewController: UINavigationController {
             .sink { [self] isLogged in
                 if isLogged == true {
                     if let mainViewModel = viewModel.mainViewModel {
-                        self.navigationController?.pushViewController(MainViewController(viewModel: mainViewModel), animated: true)
+                        self.window?.rootViewController = UINavigationController(rootViewController: MainViewController(viewModel: mainViewModel))
                     }
                 } else {
                     if let signUpViewModel = viewModel.signUpViewModel {
-                        self.navigationController?.pushViewController(SignUpViewController(viewModel: signUpViewModel), animated: true)
+                        self.window?.rootViewController = UINavigationController(rootViewController: SignUpViewController(viewModel: signUpViewModel))
                     }
                 }
             }

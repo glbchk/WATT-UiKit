@@ -26,9 +26,24 @@ class MainViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        view.backgroundColor = .white
+        
         setupViewConstratints()
         setupTarget()
     }
+    
+//    private func setData() {
+//        
+//        contentView.emailLabel
+//            .sink { viewModel.user in
+//                self?.viewModel.user = user
+//            }
+//            .store(in: &cancellables)
+//        
+//        contentView.nameLabel.text = viewModel.user?.uid
+//        contentView.emailLabel.text = viewModel.user?.email
+//        
+//    }
     
     private func setupViewConstratints() {
         contentView.translatesAutoresizingMaskIntoConstraints = false

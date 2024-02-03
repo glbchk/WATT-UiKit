@@ -12,7 +12,7 @@ import FirebaseAuth
 protocol AuthenticationRepository {
     var isAuthenticated: AnyPublisher<Bool, Never> { get }
     func sucess()
-    func logout()
+    func logOut()
 }
 
 final class AuthenticationRepositoryImpl: AuthenticationRepository {
@@ -28,7 +28,7 @@ final class AuthenticationRepositoryImpl: AuthenticationRepository {
         authenticatedPublisher = true
     }
     
-    func logout() {
+    func logOut() {
         authenticatedPublisher = false
     }
     

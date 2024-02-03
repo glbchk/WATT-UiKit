@@ -19,7 +19,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         FirebaseApp.configure()
         dependencyContainer = createAuthDependencies()
 //        window?.rootViewController = dependencyContainer.resolve(AppViewController.self)
-//        let vm = AppViewModel(appDelegate: dependencyContainer)
+
+        let vm = AppViewModel(appDelegate: self)
         
         self.window = UIWindow(frame: UIScreen.main.bounds)
         window?.rootViewController = UINavigationController(rootViewController: SignInController())

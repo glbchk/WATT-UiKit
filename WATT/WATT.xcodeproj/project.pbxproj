@@ -7,6 +7,15 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		060363F42B688EFB005B48ED /* AuthenticationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 060363F32B688EFB005B48ED /* AuthenticationManager.swift */; };
+		060363F62B688F10005B48ED /* LoginRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 060363F52B688F10005B48ED /* LoginRepository.swift */; };
+		060363F82B688F29005B48ED /* LoginRemoteSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 060363F72B688F29005B48ED /* LoginRemoteSource.swift */; };
+		060363FB2B688FD9005B48ED /* UserRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 060363FA2B688FD9005B48ED /* UserRepository.swift */; };
+		060363FD2B688FF3005B48ED /* UserRemoteSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 060363FC2B688FF3005B48ED /* UserRemoteSource.swift */; };
+		060363FF2B689131005B48ED /* SignUpViewGlib.swift in Sources */ = {isa = PBXBuildFile; fileRef = 060363FE2B689131005B48ED /* SignUpViewGlib.swift */; };
+		060364012B68920B005B48ED /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 060364002B68920B005B48ED /* MainView.swift */; };
+		060364042B6892F3005B48ED /* AppViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 060364032B6892F3005B48ED /* AppViewController.swift */; };
+		060364062B689304005B48ED /* AppViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 060364052B689304005B48ED /* AppViewModel.swift */; };
 		062654992B4F6761007120AD /* Swinject in Frameworks */ = {isa = PBXBuildFile; productRef = 062654982B4F6761007120AD /* Swinject */; };
 		0626549B2B4F6762007120AD /* Swinject-Dynamic in Frameworks */ = {isa = PBXBuildFile; productRef = 0626549A2B4F6762007120AD /* Swinject-Dynamic */; };
 		062654A02B4F6A0F007120AD /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 0626549F2B4F6A0F007120AD /* FirebaseAnalytics */; };
@@ -62,6 +71,15 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		060363F32B688EFB005B48ED /* AuthenticationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationManager.swift; sourceTree = "<group>"; };
+		060363F52B688F10005B48ED /* LoginRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginRepository.swift; sourceTree = "<group>"; };
+		060363F72B688F29005B48ED /* LoginRemoteSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginRemoteSource.swift; sourceTree = "<group>"; };
+		060363FA2B688FD9005B48ED /* UserRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserRepository.swift; sourceTree = "<group>"; };
+		060363FC2B688FF3005B48ED /* UserRemoteSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserRemoteSource.swift; sourceTree = "<group>"; };
+		060363FE2B689131005B48ED /* SignUpViewGlib.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewGlib.swift; sourceTree = "<group>"; };
+		060364002B68920B005B48ED /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
+		060364032B6892F3005B48ED /* AppViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppViewController.swift; sourceTree = "<group>"; };
+		060364052B689304005B48ED /* AppViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppViewModel.swift; sourceTree = "<group>"; };
 		062654AA2B4F6BEE007120AD /* DependencyInjection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DependencyInjection.swift; sourceTree = "<group>"; };
 		062654AC2B4F6F1F007120AD /* AppUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppUser.swift; sourceTree = "<group>"; };
 		062654AE2B4F7171007120AD /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
@@ -129,6 +147,24 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		060363F92B688FAB005B48ED /* AppUserRepository */ = {
+			isa = PBXGroup;
+			children = (
+				060363FA2B688FD9005B48ED /* UserRepository.swift */,
+				060363FC2B688FF3005B48ED /* UserRemoteSource.swift */,
+			);
+			path = AppUserRepository;
+			sourceTree = "<group>";
+		};
+		060364022B6892CA005B48ED /* AppNavigationScreen */ = {
+			isa = PBXGroup;
+			children = (
+				060364032B6892F3005B48ED /* AppViewController.swift */,
+				060364052B689304005B48ED /* AppViewModel.swift */,
+			);
+			path = AppNavigationScreen;
+			sourceTree = "<group>";
+		};
 		0608E86A2B61EF9000948DAA /* AuthenticationRepository */ = {
 			isa = PBXGroup;
 			children = (
@@ -158,6 +194,9 @@
 			isa = PBXGroup;
 			children = (
 				0608E86A2B61EF9000948DAA /* AuthenticationRepository */,
+				060363F32B688EFB005B48ED /* AuthenticationManager.swift */,
+				060363F52B688F10005B48ED /* LoginRepository.swift */,
+				060363F72B688F29005B48ED /* LoginRemoteSource.swift */,
 			);
 			path = Authentication;
 			sourceTree = "<group>";
@@ -167,6 +206,7 @@
 			children = (
 				06A5F4122B3A68DF000C0218 /* MainViewController.swift */,
 				065F72AB2B50CB8000CF9C5F /* MainViewModel.swift */,
+				060364002B68920B005B48ED /* MainView.swift */,
 			);
 			path = MainScreen;
 			sourceTree = "<group>";
@@ -176,6 +216,7 @@
 			children = (
 				065F72A92B50C98E00CF9C5F /* SignUpViewController.swift */,
 				065F72AE2B50CCC900CF9C5F /* SignUpViewModel.swift */,
+				060363FE2B689131005B48ED /* SignUpViewGlib.swift */,
 			);
 			path = SignUpAndLoginScreens;
 			sourceTree = "<group>";
@@ -204,11 +245,13 @@
 				29D8B6522B559ED000196543 /* Extensions */,
 				29D8B64D2B557DC300196543 /* ReusableView  */,
 				06EA12B32B3E2A1D001979E9 /* Models */,
-				062654B02B4F7487007120AD /* FirebaseManager */,
 				062654B32B4F753C007120AD /* Authentication */,
+				060363F92B688FAB005B48ED /* AppUserRepository */,
+				062654B02B4F7487007120AD /* FirebaseManager */,
 				062654A92B4F6BCE007120AD /* AppDelegate */,
 				065F72AD2B50CCA900CF9C5F /* MainScreen */,
 				065F72B02B50CCCE00CF9C5F /* SignUpAndLoginScreens */,
+				060364022B6892CA005B48ED /* AppNavigationScreen */,
 				29D8B6702B59BB4600196543 /* Views */,
 				062654AE2B4F7171007120AD /* GoogleService-Info.plist */,
 				06A5F4172B3A68E4000C0218 /* Assets.xcassets */,
@@ -423,6 +466,8 @@
 				296C27E32B67F7930052D350 /* SuccessfulAlertView.swift in Sources */,
 				062654B22B4F74B9007120AD /* FirebaseManager.swift in Sources */,
 				298B7F2E2B6D301E003A36C7 /* Icons.swift in Sources */,
+				060363FF2B689131005B48ED /* SignUpViewGlib.swift in Sources */,
+				060363FF2B689131005B48ED /* SignUpViewGlib.swift in Sources */,
 				065F72AA2B50C98E00CF9C5F /* SignUpViewController.swift in Sources */,
 				065F72AF2B50CCC900CF9C5F /* SignUpViewModel.swift in Sources */,
 				29D8B6662B5984DE00196543 /* SecondaryLabel.swift in Sources */,
@@ -431,6 +476,8 @@
 				29D8B64F2B557DFB00196543 /* TextFieldBackgroundView.swift in Sources */,
 				298B7F302B6E968A003A36C7 /* AddDetailRow.swift in Sources */,
 				062654AB2B4F6BEE007120AD /* DependencyInjection.swift in Sources */,
+				060363F42B688EFB005B48ED /* AuthenticationManager.swift in Sources */,
+				060364012B68920B005B48ED /* MainView.swift in Sources */,
 				29D8B6682B5992F800196543 /* BlueBackgroundView.swift in Sources */,
 				29D8B66B2B599D8A00196543 /* SignUpView.swift in Sources */,
 				298B7F322B6E96C7003A36C7 /* DetailsRowType.swift in Sources */,
@@ -443,14 +490,20 @@
 				29D8B65C2B59574E00196543 /* UIView+Stacking.swift in Sources */,
 				29D8B6642B5983F700196543 /* TextFieldLabel.swift in Sources */,
 				296C27E52B67F9DB0052D350 /* TextLabel.swift in Sources */,
+				060364042B6892F3005B48ED /* AppViewController.swift in Sources */,
+				060363FD2B688FF3005B48ED /* UserRemoteSource.swift in Sources */,
 				065F72AC2B50CB8000CF9C5F /* MainViewModel.swift in Sources */,
 				29D8B6542B559EE400196543 /* UIView+Layout.swift in Sources */,
+				060363F62B688F10005B48ED /* LoginRepository.swift in Sources */,
 				06A5F40F2B3A68DF000C0218 /* AppDelegate.swift in Sources */,
+				060363FB2B688FD9005B48ED /* UserRepository.swift in Sources */,
+				060364062B689304005B48ED /* AppViewModel.swift in Sources */,
 				29D8B6562B55AB6900196543 /* LogoView.swift in Sources */,
 				29D8B6762B59D3DA00196543 /* ForgotPasswordView.swift in Sources */,
 				29D8B6602B597B1D00196543 /* MainButton.swift in Sources */,
 				062654AD2B4F6F1F007120AD /* AppUser.swift in Sources */,
 				29D8B6622B59815F00196543 /* LinkButton.swift in Sources */,
+				060363F82B688F29005B48ED /* LoginRemoteSource.swift in Sources */,
 				29D8B66F2B59AB5800196543 /* TextFieldWithPlaceholder.swift in Sources */,
 				29D8B65E2B596AEC00196543 /* SignInView.swift in Sources */,
 				29D8B64C2B5567DF00196543 /* SignInController.swift in Sources */,

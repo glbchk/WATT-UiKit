@@ -1,0 +1,51 @@
+//
+//  DBUser.swift
+//  WATT
+//
+//  Created by Glib Galchenko on 03/02/24.
+//
+
+import Foundation
+import Firebase
+
+struct DBUser: Codable {
+    let uid: String
+    var email: String
+    var fullName: String
+    var phoneNumber: String?
+    var photoURL: String?
+    var dateCreated: Date = Date()
+//    var location: UserLocation?
+    
+    init(user: AppUser) {
+        self.uid = user.uid
+        self.email = user.email
+        self.fullName = user.fullName
+        self.phoneNumber = user.phoneNumber
+        self.photoURL = user.photoURL
+//        self.location = nil
+    }
+    
+    init(
+        uid: String,
+        email: String,
+        fullName: String,
+        phoneNumber: String? = nil,
+        photoURL: String? = nil
+    ) {
+        self.uid = uid
+        self.email = email
+        self.fullName = fullName
+        self.phoneNumber = phoneNumber
+        self.photoURL = photoURL
+    }
+    
+    enum CodingKeys: String, CodingKey {
+        case uid, email
+        case fullName = "full_name"
+        case phoneNumber = "phone_number"
+        case dateCreated = "date_created"
+        case photoURL = "photo_url"
+    }
+    
+}

@@ -11,7 +11,7 @@ import FirebaseAuth
 
 protocol AuthenticationRepository {
     var isAuthenticated: AnyPublisher<Bool, Never> { get }
-    func sucess()
+    func success()
     func logOut()
 }
 
@@ -24,7 +24,7 @@ final class AuthenticationRepositoryImpl: AuthenticationRepository {
     
     init(dependencies: Resolver) { }
     
-    func sucess() {
+    func success() {
         authenticatedPublisher = true
     }
     

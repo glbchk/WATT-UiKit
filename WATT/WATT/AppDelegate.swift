@@ -24,6 +24,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         self.window = UIWindow(frame: UIScreen.main.bounds)
         window?.rootViewController = UINavigationController(rootViewController: SignInController())
+//        window?.rootViewController = AppViewController(viewModel: vm, window: self.window)
         window?.makeKeyAndVisible()
 
         return true

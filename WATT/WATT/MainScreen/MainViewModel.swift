@@ -16,7 +16,7 @@ final class MainViewModel: ObservableObject {
     private let loginRepo: LoginRepository
     private let userRepo: UserRepository
     
-    @Published var user: AppUser?
+    @Published var user: DBUser?
     
     init(dependencies: Resolver) {
         authenticationRepo = dependencies.resolve(AuthenticationRepository.self)!

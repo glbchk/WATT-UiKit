@@ -80,25 +80,13 @@ class SignUpViewController: UIViewController {
             .assign(to: \.isValid, on: contentView.signUpButton)
             .store(in: &cancellables)
         
-        viewModel.validationResult
-            .sink { completion in
-                switch completion {
-                    case .failure:
-                        //To do and the error handling
-                        return
-                    case .finished:
-                        return
-                }
-            } receiveValue: { [weak self] _ in
-                self?.viewModel.successfulRegistration()
-            }
-            .store(in: &cancellables)
     }
     
     @objc private func onPressButton() {
         viewModel.createUser { isActive, error in
             DispatchQueue.main.async {
                 self.contentView.signUpButton.isEnabled = isActive
+                self.viewModel.successfulRegistration()
                 if !error.isEmpty {
                     self.contentView.errorLabel.alpha = 1
                     self.contentView.errorLabel.text = error
@@ -106,11 +94,6 @@ class SignUpViewController: UIViewController {
             }
         }
     }
-    
-//    private func navigateToMainScreen() {
-//        let mainViewController = MainViewController(viewModel: MainViewModel(dependencies: Resolver))
-//        navigationController?.pushViewController(mainViewController, animated: true)
-//    }
     
 }
 

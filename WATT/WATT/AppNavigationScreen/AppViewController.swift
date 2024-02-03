@@ -8,7 +8,7 @@
 import UIKit
 import Combine
 
-class AppViewController: UINavigationController {
+class AppViewController: UIViewController {
     
     //    private lazy var navigationView = AppView()
     private var viewModel: AppViewModel

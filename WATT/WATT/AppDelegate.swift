@@ -22,7 +22,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let vm = AppViewModel(appDelegate: self)
         
         self.window = UIWindow(frame: UIScreen.main.bounds)
-        window?.rootViewController = UINavigationController(rootViewController: AppViewController(viewModel: vm))
+        window?.rootViewController = AppViewController(viewModel: vm, window: self.window)
         window?.makeKeyAndVisible()
 
         return true

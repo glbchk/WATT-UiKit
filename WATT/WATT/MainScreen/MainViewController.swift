@@ -26,6 +26,11 @@ class MainViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        view.backgroundColor = .white
+        
+        contentView.nameLabel.text = viewModel.user?.fullName
+        contentView.emailLabel.text = viewModel.user?.email
+        
         setupViewConstratints()
         setupTarget()
     }

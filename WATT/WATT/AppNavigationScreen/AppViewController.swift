@@ -8,15 +8,19 @@
 import UIKit
 import Combine
 
-class AppViewController: UIViewController {
+class AppViewController: UINavigationController {
     
     //    private lazy var navigationView = AppView()
     private var viewModel: AppViewModel
     private var cancellables = Set<AnyCancellable>()
     
-    init(viewModel: AppViewModel) {
+    private var window: UIWindow?
+    
+    init(viewModel: AppViewModel, window: UIWindow?) {
         self.viewModel = viewModel
+        self.window = window
         super.init(nibName: nil, bundle: nil)
+        loginState()
     }
     
     required init?(coder: NSCoder) {
@@ -26,7 +30,6 @@ class AppViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        loginState()
     }
     
     
@@ -36,11 +39,11 @@ class AppViewController: UIViewController {
             .sink { [self] isLogged in
                 if isLogged == true {
                     if let mainViewModel = viewModel.mainViewModel {
-                        self.navigationController?.setViewControllers([MainViewController(viewModel: mainViewModel)], animated: true)
+                        self.window?.rootViewController = UINavigationController(rootViewController: MainViewController(viewModel: mainViewModel))
                     }
                 } else {
                     if let signUpViewModel = viewModel.signUpViewModel {
-                        self.navigationController?.setViewControllers([SignUpViewController(viewModel: signUpViewModel)], animated: true)
+                        self.window?.rootViewController = UINavigationController(rootViewController: SignUpViewController(viewModel: signUpViewModel))
                     }
                 }
             }

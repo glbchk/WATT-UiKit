@@ -15,23 +15,29 @@ class SignInController: UIViewController {
         super.viewDidLoad()
         view.addSubview(containerView)
         containerView.fillSuperview()
-        setupAlertController()
+        presentAlertController()
+        presentSignUpController()
+        
+        navigationController?.navigationBar.isHidden = true
     }
     
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        containerView.blueBackgroundView.setupGradient()
-    }
-    
-    private func setupAlertController() {
+    private func presentAlertController() {
         containerView.forgotButton.addTarget(self, action: #selector(openForgotPasswordController), for: .touchUpInside)
     }
     
+    private func presentSignUpController() {
+        containerView.signUpButton.addTarget(self, action: #selector(openSignUpController), for: .touchUpInside)
+    }
+    
     @objc private func openForgotPasswordController() {
-        let vc = AlertController(contentView: ForgotPasswordView(), buttonTitle: "OK")
+        let vc = AlertController(contentView: ForgotPasswordView(), buttonTitle: "Reset")
         vc.modalPresentationStyle = .overFullScreen
         vc.modalTransitionStyle = .crossDissolve
         navigationController?.present(vc, animated: true)
-        
+    }
+    
+    @objc private func openSignUpController() {
+        let vc = SignUpController()
+        navigationController?.pushViewController(vc, animated: true)
     }
 }

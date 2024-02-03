@@ -26,15 +26,11 @@ class SignUpView: UIView {
 
     let blueBackgroundView = BlueBackgroundView()
     
+    let blueBackgroundHeight = UIScreen.main.bounds.height * 0.25
+    
     let logoView = LogoView()
     
-    let createAccountLabel: UILabel = {
-        let label = UILabel()
-        label.text = "Create an account"
-        label.font = .systemFont(ofSize: 22, weight: .bold)
-        label.textColor = .white
-        return label
-    }()
+    let createAccountLabel = TextLabel(title: "Create an account", font: .systemFont(ofSize: 22, weight: .bold), textColor: .white)
     
     let phoneNumberLabel = TextFieldLabel(title: "PHONE NUMBER")
     let passwordLabel = TextFieldLabel(title: "PASSWORD")
@@ -48,7 +44,7 @@ class SignUpView: UIView {
     
     let termsButton = LinkButton(title: "Terms & Conditions")
 
-    let signUpButton = MainButton(title: "Sign up", shadowOpacity: 0.3, shRadius: 5, shColor: UIColor(red: 21/255, green: 129/255, blue: 255/255, alpha: 1))
+    let signUpButton = MainButton(title: "Sign up", shadowOpacity: 0.3, shRadius: 5, shColor: Asset.Colors.deepBlue)
     
     let haveAccountLabel = SecondaryLabel(text: "Already have an account?")
     
@@ -56,7 +52,7 @@ class SignUpView: UIView {
     
     init() {
         super.init(frame: .zero)
-        backgroundColor = .systemBackground
+        backgroundColor = .white
         setupUI()
     }
     
@@ -68,11 +64,12 @@ class SignUpView: UIView {
         setupBlueHeader()
         setupHeaderStack()
         setupMainStack()
+        blueBackgroundView.setupGradient(frame: .init(x: 0, y: 0, width: UIScreen.main.bounds.width, height: blueBackgroundHeight))
     }
     
     private func setupBlueHeader() {
         self.addSubview(blueBackgroundView)
-        blueBackgroundView.anchor(top: self.topAnchor, leading: self.leadingAnchor, trailing: self.trailingAnchor, bottom: nil, size: .init(width: 0, height: UIScreen.main.bounds.height * 0.25))
+        blueBackgroundView.anchor(top: self.topAnchor, leading: self.leadingAnchor, trailing: self.trailingAnchor, bottom: nil, size: .init(width: 0, height: blueBackgroundHeight))
     }
     
     private func setupHeaderStack() {
@@ -113,7 +110,4 @@ class SignUpView: UIView {
         return stack
     }
   
-    
-    
-    
 }

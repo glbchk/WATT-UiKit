@@ -49,9 +49,9 @@ class TextFieldBackgroundView: UIView {
         
         textField.fillSuperview(padding: .init(top: 12, left: 15, bottom: 12, right: 15))
         
-        self.backgroundColor = UIColor(red: 244/255, green: 246/255, blue: 249/255, alpha: 1)
+        self.backgroundColor = Asset.Colors.grey4
         self.layer.borderWidth = 1
-        self.layer.borderColor = UIColor(red: 219/255, green: 223/255, blue: 227/255, alpha: 1).cgColor
+        self.layer.borderColor = Asset.Colors.grey3.cgColor
         self.layer.cornerRadius = 10
     
     }
@@ -60,7 +60,7 @@ class TextFieldBackgroundView: UIView {
         addSubview(sfButton)
         sfButton.anchor(top: self.topAnchor, leading: nil, trailing: self.trailingAnchor, bottom: self.bottomAnchor, padding: .allSides(10), size: .init(width: 24, height: 0))
         
-        sfButton.tintColor = UIColor(red: 134/255, green: 146/255, blue: 169/255, alpha: 1)
+        sfButton.tintColor = Asset.Colors.grey1
         
         sfButton.addTarget(self, action: #selector(buttonTapped), for: .touchUpInside)
     }

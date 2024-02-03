@@ -13,7 +13,6 @@ class AddDetailRow: UIView {
     
     let accountView: UIView = {
         let view = UIView()
-        view.backgroundColor = Asset.Colors.grey4
         view.constrainWidth(40)
         view.constrainHeight(40)
         view.layer.cornerRadius = 20
@@ -24,7 +23,6 @@ class AddDetailRow: UIView {
         let imgView = UIImageView()
         imgView.constrainWidth(24)
         imgView.constrainHeight(24)
-        imgView.tintColor = Asset.Colors.grey2
         return imgView
     }()
     

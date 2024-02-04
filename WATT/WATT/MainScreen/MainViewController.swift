@@ -17,6 +17,7 @@ class MainViewController: UIViewController {
     init(viewModel: MainViewModel) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
+        setData()
     }
     
     required init?(coder: NSCoder) {
@@ -32,18 +33,16 @@ class MainViewController: UIViewController {
         setupTarget()
     }
     
-//    private func setData() {
-//        
-//        contentView.emailLabel
-//            .sink { viewModel.user in
-//                self?.viewModel.user = user
-//            }
-//            .store(in: &cancellables)
-//        
-//        contentView.nameLabel.text = viewModel.user?.uid
-//        contentView.emailLabel.text = viewModel.user?.email
-//        
-//    }
+    private func setData() {
+        viewModel.$user
+            .sink { user in
+                if user != nil {
+                    self.contentView.nameLabel.text = user?.fullName
+                    self.contentView.emailLabel.text = user?.email
+                }
+            }
+            .store(in: &cancellables)
+    }
     
     private func setupViewConstratints() {
         contentView.translatesAutoresizingMaskIntoConstraints = false

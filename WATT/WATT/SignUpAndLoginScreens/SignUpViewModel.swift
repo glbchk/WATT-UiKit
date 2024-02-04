@@ -26,7 +26,7 @@ class SignUpViewModel: ObservableObject {
     @Published var profilePhoto: UIImage? = nil
     @Published var isLoading = false
     @Published var state: TextFieldState = .none
-    let validationResult = PassthroughSubject<Void, Error>()
+    private var cancellables = Set<AnyCancellable>()
     
     @Published var user: AppUser?
     
@@ -90,52 +90,52 @@ class SignUpViewModel: ObservableObject {
         }
     }
     
-//    var isValidUsernamePublisher: AnyPublisher<Bool, Never> {
-//        $email
-//            .map { $0.isValidEmail }
-//            .eraseToAnyPublisher()
-//    }
-//
-//    var isValidPasswordPublisher: AnyPublisher<Bool, Never> {
-//        $password
-//            .map { !$0.isEmpty }
-//            .eraseToAnyPublisher()
-//    }
-//    // 5
-//    var isSubmitEnabled: AnyPublisher<Bool, Never> {
-//        Publishers.CombineLatest(isValidUsernamePublisher, isValidPasswordPublisher)
-//            .map { $0 && $1 }
-//            .eraseToAnyPublisher()
-//    }
-//    // 6
-//    func submitLogin() {
-//        state = .loading
-//        // hardcoded 2 seconds delay, to simulate request
-//        DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(1)) { [weak self] in
-//            guard let self = self else { return }
-//            // 7
-//            if self.isCorrectLogin() {
-//                self.state = .success
-//            } else {
-//                self.state = .failed
-//            }
-//        }
-//    }
-//
-//    func isCorrectLogin() -> Bool {
-//        // hardcoded example
-//        return email == "john@example.com" && password == "12345"
-//    }
+    var isValidUsernamePublisher: AnyPublisher<Bool, Never> {
+        $email
+            .map { $0.isValidEmail }
+            .eraseToAnyPublisher()
+    }
+
+    var isValidPasswordPublisher: AnyPublisher<Bool, Never> {
+        $password
+            .map { !$0.isEmpty }
+            .eraseToAnyPublisher()
+    }
+
+    var isSubmitEnabled: AnyPublisher<Bool, Never> {
+        Publishers.CombineLatest(isValidUsernamePublisher, isValidPasswordPublisher)
+            .map { $0 && $1 }
+            .eraseToAnyPublisher()
+    }
+
+    func submitLogin() {
+        state = .loading
+        DispatchQueue.main.async { [weak self] in
+            guard let self = self else { return }
+
+            if self.isCorrectLogin() {
+                self.state = .success
+            } else {
+                self.state = .failed
+            }
+        }
+    }
+
+    func isCorrectLogin() -> Bool {
+        if email.contains("@") && password.count >= 6 {
+            return true
+        }
+        return false
+    }
     
 }
 
 
-//extension String {
-//    // 8
-//    var isValidEmail: Bool {
-//        return NSPredicate(
-//            format: "SELF MATCHES %@", "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}"
-//        )
-//        .evaluate(with: self)
-//    }
-//}
+extension String {
+    var isValidEmail: Bool {
+        return NSPredicate(
+            format: "SELF MATCHES %@", "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}"
+        )
+        .evaluate(with: self)
+    }
+}

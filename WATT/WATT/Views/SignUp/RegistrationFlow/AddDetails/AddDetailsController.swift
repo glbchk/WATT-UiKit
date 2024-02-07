@@ -16,11 +16,18 @@ class AddDetailsController: UIViewController {
         view.addSubview(contentView)
         contentView.fillSuperview()
         
+        contentView.nameEmailRow.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleNameRowTap)))
+        
         contentView.completeLaterButtont.addTarget(self, action: #selector(handleCompleteLater), for: .touchUpInside)
     }
     
     @objc private func handleCompleteLater() {
         self.navigationController?.popViewController(animated: true)
+    }
+    
+    @objc private func handleNameRowTap() {
+        let vc = AddNameAndEmailController()
+        self.navigationController?.pushViewController(vc, animated: true)
     }
     
 }

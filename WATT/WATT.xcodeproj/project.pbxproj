@@ -45,6 +45,8 @@
 		06B4D8E32B4F7BD300DD78CB /* AutenticationRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06B4D8E22B4F7BD300DD78CB /* AutenticationRepository.swift */; };
 		296C27E32B67F7930052D350 /* SuccessfulAlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 296C27E22B67F7930052D350 /* SuccessfulAlertView.swift */; };
 		296C27E52B67F9DB0052D350 /* TextLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 296C27E42B67F9DB0052D350 /* TextLabel.swift */; };
+		298406CA2B73A11B00AE44F7 /* AddNameAndEmailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 298406C92B73A11B00AE44F7 /* AddNameAndEmailView.swift */; };
+		298406CC2B73A17000AE44F7 /* AddNameAndEmailController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 298406CB2B73A17000AE44F7 /* AddNameAndEmailController.swift */; };
 		298B7F1F2B697B47003A36C7 /* AddDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 298B7F1E2B697B47003A36C7 /* AddDetailsView.swift */; };
 		298B7F212B697DA2003A36C7 /* AddDetailsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 298B7F202B697DA2003A36C7 /* AddDetailsController.swift */; };
 		298B7F262B6D2F94003A36C7 /* Colors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 298B7F252B6D2F94003A36C7 /* Colors.xcassets */; };
@@ -100,6 +102,8 @@
 		06B4D8E22B4F7BD300DD78CB /* AutenticationRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutenticationRepository.swift; sourceTree = "<group>"; };
 		296C27E22B67F7930052D350 /* SuccessfulAlertView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SuccessfulAlertView.swift; sourceTree = "<group>"; };
 		296C27E42B67F9DB0052D350 /* TextLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextLabel.swift; sourceTree = "<group>"; };
+		298406C92B73A11B00AE44F7 /* AddNameAndEmailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddNameAndEmailView.swift; sourceTree = "<group>"; };
+		298406CB2B73A17000AE44F7 /* AddNameAndEmailController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddNameAndEmailController.swift; sourceTree = "<group>"; };
 		298B7F1E2B697B47003A36C7 /* AddDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddDetailsView.swift; sourceTree = "<group>"; };
 		298B7F202B697DA2003A36C7 /* AddDetailsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddDetailsController.swift; sourceTree = "<group>"; };
 		298B7F252B6D2F94003A36C7 /* Colors.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Colors.xcassets; sourceTree = "<group>"; };
@@ -282,12 +286,30 @@
 			path = Models;
 			sourceTree = "<group>";
 		};
-		298B7F1D2B697AEA003A36C7 /* RegistrationFlow */ = {
+		298406C72B739FAA00AE44F7 /* AddDetails */ = {
 			isa = PBXGroup;
 			children = (
 				298B7F1E2B697B47003A36C7 /* AddDetailsView.swift */,
 				298B7F202B697DA2003A36C7 /* AddDetailsController.swift */,
 				298B7F2F2B6E968A003A36C7 /* AddDetailRow.swift */,
+			);
+			path = AddDetails;
+			sourceTree = "<group>";
+		};
+		298406C82B739FD100AE44F7 /* AddNameEmail */ = {
+			isa = PBXGroup;
+			children = (
+				298406C92B73A11B00AE44F7 /* AddNameAndEmailView.swift */,
+				298406CB2B73A17000AE44F7 /* AddNameAndEmailController.swift */,
+			);
+			path = AddNameEmail;
+			sourceTree = "<group>";
+		};
+		298B7F1D2B697AEA003A36C7 /* RegistrationFlow */ = {
+			isa = PBXGroup;
+			children = (
+				298406C72B739FAA00AE44F7 /* AddDetails */,
+				298406C82B739FD100AE44F7 /* AddNameEmail */,
 			);
 			path = RegistrationFlow;
 			sourceTree = "<group>";
@@ -488,6 +510,7 @@
 				29D8B66B2B599D8A00196543 /* SignUpView.swift in Sources */,
 				298B7F322B6E96C7003A36C7 /* DetailsRowType.swift in Sources */,
 				06A5F4132B3A68DF000C0218 /* MainViewController.swift in Sources */,
+				298406CC2B73A17000AE44F7 /* AddNameAndEmailController.swift in Sources */,
 				29D8B66D2B599DA300196543 /* SignUpController.swift in Sources */,
 				298B7F2A2B6D2FDB003A36C7 /* Asset.swift in Sources */,
 				06B4D8E32B4F7BD300DD78CB /* AutenticationRepository.swift in Sources */,
@@ -496,6 +519,7 @@
 				29D8B65C2B59574E00196543 /* UIView+Stacking.swift in Sources */,
 				29D8B6642B5983F700196543 /* TextFieldLabel.swift in Sources */,
 				296C27E52B67F9DB0052D350 /* TextLabel.swift in Sources */,
+				298406CA2B73A11B00AE44F7 /* AddNameAndEmailView.swift in Sources */,
 				060364042B6892F3005B48ED /* AppViewController.swift in Sources */,
 				060363FD2B688FF3005B48ED /* UserRemoteSource.swift in Sources */,
 				06A5A4572B6DF89A00C05BCC /* DBUser.swift in Sources */,

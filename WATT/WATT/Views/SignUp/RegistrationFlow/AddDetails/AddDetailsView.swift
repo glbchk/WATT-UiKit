@@ -41,6 +41,10 @@ class AddDetailsView: UIView {
     let subtitleLable = SecondaryLabel(text: "We need details to provide a convenient Watt app experience for you", textColor: .white, numbersOfLines: 0, textAlignment: .center)
 
     let completeLaterButtont = MainButton(title: "Complete later", titleColor: Asset.Colors.black, backgroundColor: .white, shadowOpacity: 0.15, shRadius: 5, shColor: .black)
+
+    let nameEmailRow = AddDetailRow(.nameAndEmail, publisher: nil)
+    let carRow = AddDetailRow(.car, publisher: nil)
+    let paymentMethodRow = AddDetailRow(.paymentMethod, publisher: nil)
     
     init() {
         super.init(frame: .zero)
@@ -57,13 +61,12 @@ class AddDetailsView: UIView {
         setupHeaderStack()
         setupNavigationRows()
         setupCompleteLeterButton()
-        
-        blueBackgroundView.setupGradient(frame: .init(x: 0, y: 0, width: UIScreen.main.bounds.width, height: blueBackgroundHeight))
     }
     
     private func setupBlueHeader() {
         self.addSubview(blueBackgroundView)
         blueBackgroundView.anchor(top: self.topAnchor, leading: self.leadingAnchor, trailing: self.trailingAnchor, bottom: nil, size: .init(width: 0, height: blueBackgroundHeight))
+        blueBackgroundView.setupGradient(frame: .init(x: 0, y: 0, width: UIScreen.main.bounds.width, height: blueBackgroundHeight))
     }
     
     private func setupHeaderStack() {
@@ -78,9 +81,9 @@ class AddDetailsView: UIView {
     
     private func setupNavigationRows() {
         
-        let nameEmailRow = AddDetailRow(.nameAndEmail, publisher: namePublisher)
-        let carRow = AddDetailRow(.car, publisher: carPublisher)
-        let paymentMethodRow = AddDetailRow(.paymentMethod, publisher: cardPublisher)
+        nameEmailRow.publisher = namePublisher
+        carRow.publisher = carPublisher
+        paymentMethodRow.publisher = cardPublisher
         
         let stack = stack(nameEmailRow, carRow, paymentMethodRow, spacing: 10)
         self.addSubview(stack)
@@ -88,18 +91,11 @@ class AddDetailsView: UIView {
         stack.arrangedSubviews.forEach {
             $0.anchor(top: nil, leading: stack.leadingAnchor, trailing: stack.trailingAnchor, bottom: nil)
         }
-        
-        nameEmailRow.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleNameRowTap)))
     }
     
     private func setupCompleteLeterButton() {
         self.addSubview(completeLaterButtont)
         completeLaterButtont.anchor(top: nil, leading: self.leadingAnchor, trailing: self.trailingAnchor, bottom: self.bottomAnchor, padding: .init(top: 0, left: 20, bottom: 50, right: 20))
     }
-    
-    @objc private func handleNameRowTap() {
-        nameExist.toggle()
-    }
-    
     
 }

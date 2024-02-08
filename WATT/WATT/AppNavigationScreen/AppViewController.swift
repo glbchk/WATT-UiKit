@@ -42,8 +42,8 @@ class AppViewController: UINavigationController {
                         self.window?.rootViewController = UINavigationController(rootViewController: MainViewController(viewModel: mainViewModel))
                     }
                 } else {
-                    if let signUpViewModel = viewModel.signUpViewModel {
-                        self.window?.rootViewController = UINavigationController(rootViewController: SignUpViewController(viewModel: signUpViewModel))
+                    if let signUpViewModel = viewModel.signUpViewModel, let signInViewModel = viewModel.loginViewModel {
+                        self.window?.rootViewController = UINavigationController(rootViewController: SignUpController(viewModel: signUpViewModel, signInViewModel: signInViewModel))
                     }
                 }
             }

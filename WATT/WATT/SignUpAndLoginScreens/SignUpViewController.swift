@@ -14,9 +14,9 @@ class SignUpViewController: UIViewController {
     private var viewModel: SignUpViewModel
     var cancellables = Set<AnyCancellable>()
     
-    private var stackView: UIStackView!
+//    private var stackView: UIStackView!
 //    private var signUpTitle: UILabel!
-    private var nameTextField: UITextField!
+//    private var nameTextField: UITextField!
 //    private var emailTextField: UITextField!
 //    private var passwordTextField: UITextField!
     @IBOutlet private var signUpButton: UIButton!

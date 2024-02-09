@@ -11,7 +11,7 @@ import Firebase
 struct AppUser: Codable {
     let uid: String
     let email: String
-    var fullName: String
+    var fullName: String?
     var phoneNumber: String?
     var photoURL: String?
     let dateCreated: Date

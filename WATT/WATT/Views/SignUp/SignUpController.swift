@@ -12,12 +12,11 @@ class SignUpController: UIViewController {
     
     let contentView = SignUpView()
     private var viewModel: SignUpViewModel
-    private var signInViewModel: SignInViewModel
+    private var signInViewModel: SignInViewModel?
     var cancellables = Set<AnyCancellable>()
 
-    init(viewModel: SignUpViewModel, signInViewModel: SignInViewModel) {
+    init(viewModel: SignUpViewModel) {
         self.viewModel = viewModel
-        self.signInViewModel = signInViewModel
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -30,7 +29,7 @@ class SignUpController: UIViewController {
         view.addSubview(contentView)
         contentView.fillSuperview()
         presentSignInController()
-        presentAddDetailsController()
+        signUp()
     }
     
     private func presentSignInController() {
@@ -38,15 +37,28 @@ class SignUpController: UIViewController {
     }
     
     @objc private func openSignInController() {
-        let vc = SignInController(viewModel: signInViewModel, signUpViewModel: viewModel)
-        self.navigationController?.pushViewController(vc, animated: true)
+        if let signInViewModel = signInViewModel {
+            let vc = SignInController(viewModel: signInViewModel)
+            self.navigationController?.pushViewController(vc, animated: true)
+        }
     }
     
-    private func presentAddDetailsController() {
-        contentView.signUpButton.addTarget(self, action: #selector(openAddDetailsController), for: .touchUpInside)
+    private func signUp() {
+        contentView.signUpButton.addTarget(self, action: #selector(registerAndOpenDetails), for: .touchUpInside)
     }
     
-    @objc private func openAddDetailsController() {
+    @objc private func registerAndOpenDetails() {
+        viewModel.createUser { isActive, error in
+            DispatchQueue.main.async {
+                self.contentView.signUpButton.isEnabled = isActive
+                self.viewModel.successfulRegistration()
+//                if !error.isEmpty {
+//                    self.contentView.errorLabel.alpha = 1
+//                    self.contentView.errorLabel.text = error
+//                }
+            }
+        }
+        
         let vc = AddDetailsController(viewModel: viewModel)
         self.navigationController?.pushViewController(vc, animated: true)
     }

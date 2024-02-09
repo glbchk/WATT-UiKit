@@ -11,7 +11,7 @@ import Firebase
 struct DBUser: Codable {
     let uid: String
     var email: String
-    var fullName: String
+    var fullName: String?
     var phoneNumber: String?
     var photoURL: String?
     var dateCreated: Date = Date()
@@ -29,7 +29,7 @@ struct DBUser: Codable {
     init(
         uid: String,
         email: String,
-        fullName: String,
+        fullName: String? = nil,
         phoneNumber: String? = nil,
         photoURL: String? = nil
     ) {

@@ -32,10 +32,12 @@ class SignUpView: UIView {
     
     let createAccountLabel = TextLabel(title: "Create an account", font: .systemFont(ofSize: 22, weight: .bold), textColor: .white)
     
+    let emailLabel = TextFieldLabel(title: "EMAIL")
     let phoneNumberLabel = TextFieldLabel(title: "PHONE NUMBER")
     let passwordLabel = TextFieldLabel(title: "PASSWORD")
     let retypePasswordLabel = TextFieldLabel(title: "RETYPE PASSWORD")
     
+    let emailTextField = TextFieldWithPlaceholder("name@email.com...")
     let phoneNumberTextField = TextFieldWithPlaceholder("+380")
     let passwordTextField = TextFieldWithPlaceholder("Type password here")
     let retypePasswordTextField = TextFieldWithPlaceholder("Retype password here")
@@ -94,17 +96,19 @@ class SignUpView: UIView {
     
     private func createTextFieldsStack() -> UIStackView {
         
+        let emailTextFieldView = TextFieldBackgroundView(tf: emailTextField)
         let phoneNumberTextFieldView = TextFieldBackgroundView(tf: phoneNumberTextField)
         let passwordTextFieldView = TextFieldBackgroundView(tf: passwordTextField, withSecureFieldPublisher: passwordPublisher, action: { self.showPassword.toggle() })
         let retryTextFieldView = TextFieldBackgroundView(tf: retypePasswordTextField, withSecureFieldPublisher: retypedPasswordPublisher, action: { self.showRetyped.toggle() })
         
+        let emailStack = stack(emailLabel, emailTextFieldView, spacing: 6)
         let phoneNumberStack = stack(phoneNumberLabel, phoneNumberTextFieldView, spacing: 6)
         let passwordStack = stack(passwordLabel, passwordTextFieldView, spacing: 6)
         let retypeStack = stack(retypePasswordLabel, retryTextFieldView, spacing: 6)
         
-        let stack = stack(phoneNumberStack, passwordStack, retypeStack, spacing: 20)
+        let stack = stack(emailStack, phoneNumberStack, passwordStack, retypeStack, spacing: 20)
         
-        [phoneNumberTextFieldView, passwordTextFieldView, retryTextFieldView].forEach {
+        [emailTextFieldView, phoneNumberTextFieldView, passwordTextFieldView, retryTextFieldView].forEach {
             $0.anchor(top: nil, leading: stack.leadingAnchor, trailing: stack.trailingAnchor, bottom: nil)
         }
         return stack

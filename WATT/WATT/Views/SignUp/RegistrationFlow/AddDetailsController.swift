@@ -12,6 +12,7 @@ class AddDetailsController: UIViewController {
     
     let contentView = AddDetailsView()
     private var viewModel: SignUpViewModel
+    private var mainViewModel: MainViewModel?
     var cancellables = Set<AnyCancellable>()
 
     init(viewModel: SignUpViewModel) {
@@ -37,16 +38,23 @@ class AddDetailsController: UIViewController {
     }
     
     @objc private func onPressButton() {
-        viewModel.createUser { isActive, error in
-            DispatchQueue.main.async {
-                self.contentView.completeLaterButtont.isEnabled = isActive
-                self.viewModel.successfulRegistration()
-//                if !error.isEmpty {
-//                    self.contentView.errorLabel.alpha = 1
-//                    self.contentView.errorLabel.text = error
-//                }
-            }
+        if let mainViewModel = mainViewModel {
+            let vc = MainViewController(viewModel: mainViewModel)
+            self.navigationController?.popViewController(animated: true)
         }
     }
+    
+//    @objc private func onPressButton() {
+//        viewModel.createUser { isActive, error in
+//            DispatchQueue.main.async {
+//                self.contentView.completeLaterButtont.isEnabled = isActive
+//                self.viewModel.successfulRegistration()
+////                if !error.isEmpty {
+////                    self.contentView.errorLabel.alpha = 1
+////                    self.contentView.errorLabel.text = error
+////                }
+//            }
+//        }
+//    }
     
 }

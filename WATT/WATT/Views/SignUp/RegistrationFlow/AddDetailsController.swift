@@ -40,7 +40,7 @@ class AddDetailsController: UIViewController {
     @objc private func onPressButton() {
         if let mainViewModel = mainViewModel {
             let vc = MainViewController(viewModel: mainViewModel)
-            self.navigationController?.popViewController(animated: true)
+            self.navigationController?.pushViewController(vc, animated: true)
         }
     }
     

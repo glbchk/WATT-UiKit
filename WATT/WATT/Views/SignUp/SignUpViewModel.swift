@@ -25,10 +25,12 @@ class SignUpViewModel: ObservableObject {
     @Published var phoneNumber = ""
     @Published var profilePhoto: UIImage? = nil
     @Published var isLoading = false
-    @Published var state: TextFieldState = .none
+    @Published var bindButton = true
+//    @Published var state: TextFieldState = .none
     private var cancellables = Set<AnyCancellable>()
     
     @Published var user: AppUser?
+    
     
     @Published var showPassword = true
     @Published var showRetyped = true
@@ -40,6 +42,11 @@ class SignUpViewModel: ObservableObject {
     
     var retypedPasswordPublisher: AnyPublisher<Bool, Never> {
         $showRetyped
+            .eraseToAnyPublisher()
+    }
+    
+    var signInButtonPublisher: AnyPublisher<Bool, Never> {
+        $bindButton
             .eraseToAnyPublisher()
     }
     
@@ -108,18 +115,18 @@ class SignUpViewModel: ObservableObject {
             .eraseToAnyPublisher()
     }
 
-    func submitLogin() {
-        state = .loading
-        DispatchQueue.main.async { [weak self] in
-            guard let self = self else { return }
-
-            if self.isCorrectLogin() {
-                self.state = .success
-            } else {
-                self.state = .failed
-            }
-        }
-    }
+//    func submitLogin() {
+//        state = .loading
+//        DispatchQueue.main.async { [weak self] in
+//            guard let self = self else { return }
+//
+//            if self.isCorrectLogin() {
+//                self.state = .success
+//            } else {
+//                self.state = .failed
+//            }
+//        }
+//    }
 
     func isCorrectLogin() -> Bool {
         if email.contains("@") && password.count >= 6 {

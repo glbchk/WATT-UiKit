@@ -11,6 +11,7 @@ import Swinject
 
 class SignInViewModel: ObservableObject {
     
+    //Need to do something
     @Published var email = ""
     @Published var password = ""
     

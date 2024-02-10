@@ -17,7 +17,6 @@ class MainViewController: UIViewController {
     init(viewModel: MainViewModel) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
-        setData()
     }
     
     required init?(coder: NSCoder) {
@@ -29,6 +28,7 @@ class MainViewController: UIViewController {
         
         view.backgroundColor = .white
         
+        setData()
         setupViewConstratints()
         setupTarget()
     }

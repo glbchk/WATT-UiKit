@@ -28,33 +28,15 @@ class AddDetailsController: UIViewController {
         super.viewDidLoad()
         view.addSubview(contentView)
         contentView.fillSuperview()
-        
-        contentView.completeLaterButtont.addTarget(self, action: #selector(onPressButton), for: .touchUpInside)
+        setupTarget()
+    }
+    
+    private func setupTarget() {
+        contentView.completeLaterButton.addTarget(self, action: #selector(handleCompleteLater), for: .touchUpInside)
     }
     
     @objc private func handleCompleteLater() {
-        
-        self.navigationController?.popViewController(animated: true)
+        viewModel.successfulRegistration()
     }
-    
-    @objc private func onPressButton() {
-        if let mainViewModel = mainViewModel {
-            let vc = MainViewController(viewModel: mainViewModel)
-            self.navigationController?.pushViewController(vc, animated: true)
-        }
-    }
-    
-//    @objc private func onPressButton() {
-//        viewModel.createUser { isActive, error in
-//            DispatchQueue.main.async {
-//                self.contentView.completeLaterButtont.isEnabled = isActive
-//                self.viewModel.successfulRegistration()
-////                if !error.isEmpty {
-////                    self.contentView.errorLabel.alpha = 1
-////                    self.contentView.errorLabel.text = error
-////                }
-//            }
-//        }
-//    }
     
 }

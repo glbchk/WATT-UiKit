@@ -12,7 +12,6 @@ class SignUpController: UIViewController {
     
     let contentView = SignUpView()
     private var viewModel: SignUpViewModel
-    private var signInViewModel: SignInViewModel?
     var cancellables = Set<AnyCancellable>()
 
     private(set) lazy var isInputValid = Publishers.CombineLatest(viewModel.$email, viewModel.$password)
@@ -43,26 +42,17 @@ class SignUpController: UIViewController {
     }
     
     @objc private func openSignInButton() {
-        if let signInViewModel = signInViewModel {
-            let vc = SignInController(viewModel: signInViewModel)
-            self.navigationController?.pushViewController(vc, animated: true)
-        }
+        self.dismiss(animated: true)
     }
     
     @objc private func openAddDetailsButton() {
-        viewModel.createUser { isActive, error in
+        viewModel.createUser { [weak self] isActive, error in
             DispatchQueue.main.async {
-                self.contentView.signUpButton.isEnabled = isActive
-                self.viewModel.successfulRegistration()
-//                if !error.isEmpty {
-//                    self.contentView.errorLabel.alpha = 1
-//                    self.contentView.errorLabel.text = error
-//                }
+                guard let vm = self?.viewModel else { return }
+                let vc = AddDetailsController(viewModel: vm)
+                self?.navigationController?.pushViewController(vc, animated: true)
             }
         }
-        
-        let vc = AddDetailsController(viewModel: viewModel)
-        self.navigationController?.pushViewController(vc, animated: true)
     }
     
     private func bindViewToViewModel() {
@@ -84,11 +74,6 @@ class SignUpController: UIViewController {
         contentView.retypePasswordTextField.textPublisher
             .receive(on: DispatchQueue.main)
             .assign(to: \.password, on: viewModel)
-            .store(in: &cancellables)
-        
-        viewModel.signInButtonPublisher
-            .receive(on: DispatchQueue.main)
-            .assign(to: \.isValid , on: contentView.signInButton)
             .store(in: &cancellables)
     }
     

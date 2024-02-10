@@ -40,7 +40,7 @@ class AddDetailsView: UIView {
     
     let subtitleLable = SecondaryLabel(text: "We need details to provide a convenient Watt app experience for you", textColor: .white, numbersOfLines: 0, textAlignment: .center)
 
-    let completeLaterButtont = MainButton(title: "Complete later", titleColor: Asset.Colors.black, backgroundColor: .white, shadowOpacity: 0.15, shRadius: 5, shColor: .black)
+    let completeLaterButton = MainButton(title: "Complete later", titleColor: Asset.Colors.black, backgroundColor: .white, shadowOpacity: 0.15, shRadius: 5, shColor: .black)
     
     init() {
         super.init(frame: .zero)
@@ -93,8 +93,8 @@ class AddDetailsView: UIView {
     }
     
     private func setupCompleteLeterButton() {
-        self.addSubview(completeLaterButtont)
-        completeLaterButtont.anchor(top: nil, leading: self.leadingAnchor, trailing: self.trailingAnchor, bottom: self.bottomAnchor, padding: .init(top: 0, left: 20, bottom: 50, right: 20))
+        self.addSubview(completeLaterButton)
+        completeLaterButton.anchor(top: nil, leading: self.leadingAnchor, trailing: self.trailingAnchor, bottom: self.bottomAnchor, padding: .init(top: 0, left: 20, bottom: 50, right: 20))
     }
     
     @objc private func handleNameRowTap() {

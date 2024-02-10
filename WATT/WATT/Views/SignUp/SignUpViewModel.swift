@@ -25,12 +25,11 @@ class SignUpViewModel: ObservableObject {
     @Published var phoneNumber = ""
     @Published var profilePhoto: UIImage? = nil
     @Published var isLoading = false
-    @Published var bindButton = true
+//    @Published var bindButton = true
 //    @Published var state: TextFieldState = .none
     private var cancellables = Set<AnyCancellable>()
     
     @Published var user: AppUser?
-    
     
     @Published var showPassword = true
     @Published var showRetyped = true
@@ -45,10 +44,10 @@ class SignUpViewModel: ObservableObject {
             .eraseToAnyPublisher()
     }
     
-    var signInButtonPublisher: AnyPublisher<Bool, Never> {
-        $bindButton
-            .eraseToAnyPublisher()
-    }
+//    var signInButtonPublisher: AnyPublisher<Bool, Never> {
+//        $bindButton
+//            .eraseToAnyPublisher()
+//    }
     
     private(set) lazy var isInputValid = Publishers.CombineLatest($email, $password)
         .map { $0.count > 2 && $1.count > 2 }

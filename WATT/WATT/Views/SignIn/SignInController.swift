@@ -12,7 +12,6 @@ class SignInController: UIViewController {
     
     let containerView = SignInView()
     private var viewModel: SignInViewModel
-    private var signUpViewModel: SignUpViewModel?
     var cancellables = Set<AnyCancellable>()
 
     init(viewModel: SignInViewModel) {
@@ -50,7 +49,7 @@ class SignInController: UIViewController {
     }
     
     @objc private func openSignUpController() {
-        if let signUpViewModel = signUpViewModel {
+        if let signUpViewModel = viewModel.signUpViewModel {
             let vc = SignUpController(viewModel: signUpViewModel)
             navigationController?.pushViewController(vc, animated: true)
         }

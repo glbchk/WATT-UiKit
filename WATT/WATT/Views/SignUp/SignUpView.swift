@@ -10,21 +10,21 @@ import Combine
 
 class SignUpView: UIView {
     
-    private let viewModel: SignUpViewModel?
+//    private let viewModel: SignUpViewModel?
     
 //    //MARK: Must be placed in ViewModel <- alreadt added
-//    @Published var showPassword = true
-//    @Published var showRetyped = true
-//    
-//    var passwordPublisher: AnyPublisher<Bool, Never> {
-//        $showPassword
-//            .eraseToAnyPublisher()
-//    }
-//    
-//    var retypedPasswordPublisher: AnyPublisher<Bool, Never> {
-//        $showRetyped
-//            .eraseToAnyPublisher()
-//    }
+    @Published var showPassword = true
+    @Published var showRetyped = true
+    
+    var passwordPublisher: AnyPublisher<Bool, Never> {
+        $showPassword
+            .eraseToAnyPublisher()
+    }
+    
+    var retypedPasswordPublisher: AnyPublisher<Bool, Never> {
+        $showRetyped
+            .eraseToAnyPublisher()
+    }
 
     let blueBackgroundView = BlueBackgroundView()
     
@@ -100,8 +100,8 @@ class SignUpView: UIView {
         
         let emailTextFieldView = TextFieldBackgroundView(tf: emailTextField)
         let phoneNumberTextFieldView = TextFieldBackgroundView(tf: phoneNumberTextField)
-        let passwordTextFieldView = TextFieldBackgroundView(tf: passwordTextField, withSecureFieldPublisher: viewModel?.passwordPublisher ?? AnyPublisher<Bool, Never>, action: { [self] in viewModel?.showPassword.toggle() })
-        let retryTextFieldView = TextFieldBackgroundView(tf: retypePasswordTextField, withSecureFieldPublisher: viewModel.retypedPasswordPublisher, action: { self.viewModel.showRetyped.toggle() })
+        let passwordTextFieldView = TextFieldBackgroundView(tf: passwordTextField, withSecureFieldPublisher: passwordPublisher, action: { self.showPassword.toggle() })
+        let retryTextFieldView = TextFieldBackgroundView(tf: retypePasswordTextField, withSecureFieldPublisher: retypedPasswordPublisher, action: { self.showRetyped.toggle() })
         
         let emailStack = stack(emailLabel, emailTextFieldView, spacing: 6)
         let phoneNumberStack = stack(phoneNumberLabel, phoneNumberTextFieldView, spacing: 6)

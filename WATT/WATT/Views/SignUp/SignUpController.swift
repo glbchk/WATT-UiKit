@@ -10,6 +10,7 @@ import Combine
 
 class SignUpController: UIViewController {
     
+    //Need to check
     let contentView = SignUpView()
     private var viewModel: SignUpViewModel
     var cancellables = Set<AnyCancellable>()

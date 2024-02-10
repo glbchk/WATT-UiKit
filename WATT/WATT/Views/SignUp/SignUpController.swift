@@ -10,7 +10,7 @@ import Combine
 
 class SignUpController: UIViewController {
     
-    //Need to check
+    //Need to double check
     let contentView = SignUpView()
     private var viewModel: SignUpViewModel
     var cancellables = Set<AnyCancellable>()

@@ -10,6 +10,8 @@ import Combine
 
 class AddDetailsView: UIView {
     
+
+    //try fix
     // should be placed in viewModel like user publisher
     @Published var nameExist = false
     @Published var carExist = false

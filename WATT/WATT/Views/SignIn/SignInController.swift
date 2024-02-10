@@ -6,11 +6,23 @@
 //
 
 import UIKit
+import Combine
 
 class SignInController: UIViewController {
     
     let containerView = SignInView()
+    private var viewModel: SignInViewModel
+    var cancellables = Set<AnyCancellable>()
 
+    init(viewModel: SignInViewModel) {
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.addSubview(containerView)
@@ -37,7 +49,9 @@ class SignInController: UIViewController {
     }
     
     @objc private func openSignUpController() {
-        let vc = SignUpController()
-        navigationController?.pushViewController(vc, animated: true)
+        if let signUpViewModel = viewModel.signUpViewModel {
+            let vc = SignUpController(viewModel: signUpViewModel)
+            navigationController?.pushViewController(vc, animated: true)
+        }
     }
 }

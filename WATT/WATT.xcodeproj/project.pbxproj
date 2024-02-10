@@ -208,8 +208,8 @@
 		065F72AD2B50CCA900CF9C5F /* MainScreen */ = {
 			isa = PBXGroup;
 			children = (
-				06A5F4122B3A68DF000C0218 /* MainViewController.swift */,
 				065F72AB2B50CB8000CF9C5F /* MainViewModel.swift */,
+				06A5F4122B3A68DF000C0218 /* MainViewController.swift */,
 				060364002B68920B005B48ED /* MainView.swift */,
 			);
 			path = MainScreen;
@@ -219,7 +219,6 @@
 			isa = PBXGroup;
 			children = (
 				065F72A92B50C98E00CF9C5F /* SignUpViewController.swift */,
-				065F72AE2B50CCC900CF9C5F /* SignUpViewModel.swift */,
 				060363FE2B689131005B48ED /* SignUpViewGlib.swift */,
 			);
 			path = SignUpAndLoginScreens;
@@ -276,8 +275,8 @@
 			isa = PBXGroup;
 			children = (
 				062654AC2B4F6F1F007120AD /* AppUser.swift */,
-				298B7F312B6E96C7003A36C7 /* DetailsRowType.swift */,
 				06A5A4562B6DF89A00C05BCC /* DBUser.swift */,
+				298B7F312B6E96C7003A36C7 /* DetailsRowType.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -323,8 +322,8 @@
 		29D8B64A2B5567A800196543 /* SignIn */ = {
 			isa = PBXGroup;
 			children = (
-				29D8B64B2B5567DF00196543 /* SignInController.swift */,
 				06A5A4582B6DFB7300C05BCC /* SignInViewModel.swift */,
+				29D8B64B2B5567DF00196543 /* SignInController.swift */,
 				29D8B65D2B596AEC00196543 /* SignInView.swift */,
 				29D8B6752B59D3DA00196543 /* ForgotPasswordView.swift */,
 			);
@@ -361,8 +360,9 @@
 		29D8B6692B599D7300196543 /* SignUp */ = {
 			isa = PBXGroup;
 			children = (
-				29D8B66A2B599D8A00196543 /* SignUpView.swift */,
+				065F72AE2B50CCC900CF9C5F /* SignUpViewModel.swift */,
 				29D8B66C2B599DA300196543 /* SignUpController.swift */,
+				29D8B66A2B599D8A00196543 /* SignUpView.swift */,
 				298B7F1D2B697AEA003A36C7 /* RegistrationFlow */,
 			);
 			path = SignUp;

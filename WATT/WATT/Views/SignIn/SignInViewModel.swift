@@ -11,6 +11,7 @@ import Swinject
 
 class SignInViewModel: ObservableObject {
     
+    //Need to do something
     @Published var email = ""
     @Published var password = ""
     
@@ -24,11 +25,13 @@ class SignInViewModel: ObservableObject {
     private let authRepo: AuthenticationRepository
     private let loginRepo: LoginRepository
     private let userRepo: UserRepository
+    let signUpViewModel: SignUpViewModel?
     
     init(dependencies: Resolver) {
         authRepo = dependencies.resolve(AuthenticationRepository.self)!
         loginRepo = dependencies.resolve(LoginRepository.self)!
         userRepo = dependencies.resolve(UserRepository.self)!
+        signUpViewModel = SignUpViewModel(dependencies: dependencies)
     }
     
     func logIn(completion: @escaping ((String) -> Void)) {

@@ -50,7 +50,11 @@ class AddDetailRow: UIView {
     
     let type: DetailsRowType
     // should be user publisher
-    let publisher: AnyPublisher<Bool, Never>?
+    var publisher: AnyPublisher<Bool, Never>? {
+        didSet {
+            bindPublisher()
+        }
+    }
     
     init(_ type: DetailsRowType, publisher: AnyPublisher<Bool, Never>?) {
         self.type = type

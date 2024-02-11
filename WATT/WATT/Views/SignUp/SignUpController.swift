@@ -35,6 +35,7 @@ class SignUpController: UIViewController {
         setupTarget()
         bindViewToViewModel()
         bindViewModelToView()
+        bindSecureFieldPublishers()
     }
     
     private func setupTarget() {

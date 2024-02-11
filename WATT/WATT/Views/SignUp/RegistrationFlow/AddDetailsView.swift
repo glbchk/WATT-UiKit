@@ -42,9 +42,9 @@ class AddDetailsView: UIView {
 
     let completeLaterButton = MainButton(title: "Complete later", titleColor: Asset.Colors.black, backgroundColor: .white, shadowOpacity: 0.15, shRadius: 5, shColor: .black)
 
-    let nameEmailRow = AddDetailRow(.nameAndEmail, publisher: nil)
-    let carRow = AddDetailRow(.car, publisher: nil)
-    let paymentMethodRow = AddDetailRow(.paymentMethod, publisher: nil)
+    let nameEmailRow = AddDetailRow(.nameAndEmail)
+    let carRow = AddDetailRow(.car)
+    let paymentMethodRow = AddDetailRow(.paymentMethod)
     
     init() {
         super.init(frame: .zero)

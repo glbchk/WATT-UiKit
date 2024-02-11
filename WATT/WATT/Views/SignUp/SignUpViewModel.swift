@@ -31,8 +31,8 @@ class SignUpViewModel: ObservableObject {
     
     @Published var user: AppUser?
     
-    @Published var showPassword = true
-    @Published var showRetyped = true
+    @Published var showPassword = false
+    @Published var showRetyped = false
     
     var passwordPublisher: AnyPublisher<Bool, Never> {
         $showPassword

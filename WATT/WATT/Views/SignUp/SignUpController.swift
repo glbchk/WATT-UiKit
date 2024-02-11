@@ -85,6 +85,14 @@ class SignUpController: UIViewController {
             .store(in: &cancellables)
     }
     
+    private func bindSecureFieldPublishers() {
+        contentView.passwordTextFieldView.secureFieldPublisher = viewModel.passwordPublisher
+        contentView.passwordTextFieldView.action =  { self.viewModel.showPassword.toggle() }
+        
+        contentView.retypePasswordTextFieldView.secureFieldPublisher = viewModel.retypedPasswordPublisher
+        contentView.retypePasswordTextFieldView.action = { self.viewModel.showRetyped.toggle() }
+    }
+    
 }
 
 extension UITextField {

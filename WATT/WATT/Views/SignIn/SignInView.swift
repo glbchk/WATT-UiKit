@@ -14,23 +14,16 @@ class SignInView: UIView {
     
     let logoView = LogoView()
     
-    //MARK: Must be placed in ViewModel <- alreadt added
-    @Published var showPassword = false
-    
-    var sfPublisher: AnyPublisher<Bool, Never> {
-        $showPassword
-            .eraseToAnyPublisher()
-    }
-    
     let welcomeLabel = TextLabel(title: "Welcome back", font: .systemFont(ofSize: 22, weight: .bold), textColor: .white)
     
     let emailLabel = TextFieldLabel(title: "EMAIL")
-    
     let passwordLabel = TextFieldLabel(title: "PASSWORD")
     
     let emailTextField = TextFieldWithPlaceholder("example@email.com")
-    
     let passwordTextField = TextFieldWithPlaceholder("Type password here")
+    
+    let emailTextFieldView = TextFieldBackgroundView()
+    let passwordTextFieldView = TextFieldBackgroundView()
     
     let forgotButton = LinkButton(title: "Forgot password?", size: .init(width: 0, height: 20))
     
@@ -76,15 +69,15 @@ class SignInView: UIView {
     
     private func createTextFieldsStack() -> UIStackView {
         
-        let phoneNumberTextFieldView = TextFieldBackgroundView(tf: emailTextField)
-        let passwordTextFieldView = TextFieldBackgroundView(tf: passwordTextField, withSecureFieldPublisher: sfPublisher, action: { self.showPassword.toggle() })
+        emailTextFieldView.textField = emailTextField
+        passwordTextFieldView.textField = passwordTextField
         
-        let phoneNumberStack = stack(emailLabel, phoneNumberTextFieldView, spacing: 6)
+        let emailStack = stack(emailLabel, emailTextFieldView, spacing: 6)
         let passwordStack = stack(passwordLabel, passwordTextFieldView, spacing: 6)
         
-        let textFieldsStack = stack(phoneNumberStack, passwordStack, spacing: 20)
+        let textFieldsStack = stack(emailStack, passwordStack, spacing: 20)
         
-        [phoneNumberTextFieldView, passwordTextFieldView].forEach {
+        [emailTextFieldView, passwordTextFieldView].forEach {
             $0.anchor(top: nil, leading: textFieldsStack.leadingAnchor, trailing: textFieldsStack.trailingAnchor, bottom: nil)
         }
         

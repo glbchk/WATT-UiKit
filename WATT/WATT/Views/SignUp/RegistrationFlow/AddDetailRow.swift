@@ -56,7 +56,7 @@ class AddDetailRow: UIView {
         }
     }
     
-    init(_ type: DetailsRowType, publisher: AnyPublisher<Bool, Never>?) {
+    init(_ type: DetailsRowType, publisher: AnyPublisher<Bool, Never>? = nil) {
         self.type = type
         self.publisher = publisher
         super.init(frame: .zero)

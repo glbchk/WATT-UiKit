@@ -33,8 +33,8 @@ class SignUpController: UIViewController {
         view.addSubview(contentView)
         contentView.fillSuperview()
         setupTarget()
-        bindViewToViewModel()
-        bindViewModelToView()
+//        bindViewToViewModel()
+//        bindViewModelToView()
         bindSecureFieldPublishers()
     }
     
@@ -48,13 +48,15 @@ class SignUpController: UIViewController {
     }
     
     @objc private func openAddDetailsButton() {
-        viewModel.createUser { [weak self] isActive, error in
-            DispatchQueue.main.async {
-                guard let vm = self?.viewModel else { return }
-                let vc = AddDetailsController(viewModel: vm)
-                self?.navigationController?.pushViewController(vc, animated: true)
-            }
-        }
+//        viewModel.createUser { [weak self] isActive, error in
+//            DispatchQueue.main.async {
+//                guard let vm = self?.viewModel else { return }
+//                let vc = AddDetailsController(viewModel: vm)
+//                self?.navigationController?.pushViewController(vc, animated: true)
+//            }
+//        }
+        let vc = AddDetailsController(viewModel: viewModel)
+        self.navigationController?.pushViewController(vc, animated: true)
     }
     
     private func bindViewToViewModel() {
@@ -63,10 +65,10 @@ class SignUpController: UIViewController {
             .assign(to: \.email, on: viewModel)
             .store(in: &cancellables)
         
-        contentView.phoneNumberTextField.textPublisher
-            .receive(on: DispatchQueue.main)
-            .assign(to: \.phoneNumber, on: viewModel)
-            .store(in: &cancellables)
+//        contentView.phoneNumberTextField.textPublisher
+//            .receive(on: DispatchQueue.main)
+//            .assign(to: \.phoneNumber, on: viewModel)
+//            .store(in: &cancellables)
         
         contentView.passwordTextField.textPublisher
             .receive(on: DispatchQueue.main)

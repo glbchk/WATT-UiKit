@@ -42,7 +42,7 @@ class AddDetailsView: UIView {
 
     let completeLaterButton = MainButton(title: "Complete later", titleColor: Asset.Colors.black, backgroundColor: .white, shadowOpacity: 0.15, shRadius: 5, shColor: .black)
 
-    let nameEmailRow = AddDetailRow(.nameAndEmail)
+    let nameAndPhoneNumberRow = AddDetailRow(.nameAndPhoneNumber)
     let carRow = AddDetailRow(.car)
     let paymentMethodRow = AddDetailRow(.paymentMethod)
     
@@ -81,11 +81,11 @@ class AddDetailsView: UIView {
     
     private func setupNavigationRows() {
         
-        nameEmailRow.publisher = namePublisher
+        nameAndPhoneNumberRow.publisher = namePublisher
         carRow.publisher = carPublisher
         paymentMethodRow.publisher = cardPublisher
         
-        let stack = stack(nameEmailRow, carRow, paymentMethodRow, spacing: 10)
+        let stack = stack(nameAndPhoneNumberRow, carRow, paymentMethodRow, spacing: 10)
         self.addSubview(stack)
         stack.anchor(top: subtitleLable.bottomAnchor, leading: self.leadingAnchor, trailing: self.trailingAnchor, bottom: nil, padding: .init(top: 25, left: 20, bottom: 0, right: 20))
         stack.arrangedSubviews.forEach {

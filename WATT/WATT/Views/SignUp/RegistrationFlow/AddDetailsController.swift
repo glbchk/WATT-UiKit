@@ -30,7 +30,7 @@ class AddDetailsController: UIViewController {
         contentView.fillSuperview()
         setupTarget()
         
-        contentView.nameEmailRow.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleNameRowTap)))
+        contentView.nameAndPhoneNumberRow.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleNameRowTap)))
     }
     
     private func setupTarget() {

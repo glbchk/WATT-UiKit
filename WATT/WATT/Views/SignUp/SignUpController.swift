@@ -43,7 +43,7 @@ class SignUpController: UIViewController {
     }
     
     @objc private func openSignInButton() {
-        self.dismiss(animated: true)
+        self.navigationController?.popViewController(animated: true)
     }
     
     @objc private func openAddDetailsButton() {

@@ -13,8 +13,8 @@ class SignUpView: UIView {
 //    private let viewModel: SignUpViewModel?
     
 //    //MARK: Must be placed in ViewModel <- alreadt added
-    @Published var showPassword = true
-    @Published var showRetyped = true
+    @Published var showPassword = false
+    @Published var showRetyped = false
     
     var passwordPublisher: AnyPublisher<Bool, Never> {
         $showPassword

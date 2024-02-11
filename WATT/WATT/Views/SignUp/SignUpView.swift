@@ -39,9 +39,9 @@ class SignUpView: UIView {
     let passwordLabel = TextFieldLabel(title: "PASSWORD")
     let retypePasswordLabel = TextFieldLabel(title: "RETYPE PASSWORD")
     
-    let emailTextField = TextFieldWithPlaceholder("name@email.com...")
+    let emailTextField = TextFieldWithPlaceholder("example@email.com")
     let phoneNumberTextField = TextFieldWithPlaceholder("+380")
-    let passwordTextField = TextFieldWithPlaceholder("Type password here")
+    let passwordTextField = TextFieldWithPlaceholder("At least 6 characters")
     let retypePasswordTextField = TextFieldWithPlaceholder("Retype password here")
     
     let termsLabel: SecondaryLabel = SecondaryLabel(text: "Creating account you accept")

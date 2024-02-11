@@ -24,11 +24,11 @@ class SignInView: UIView {
     
     let welcomeLabel = TextLabel(title: "Welcome back", font: .systemFont(ofSize: 22, weight: .bold), textColor: .white)
     
-    let phoneNumberLabel = TextFieldLabel(title: "PHONE NUMBER")
+    let emailLabel = TextFieldLabel(title: "EMAIL")
     
     let passwordLabel = TextFieldLabel(title: "PASSWORD")
     
-    let phoneNumberTextField = TextFieldWithPlaceholder("+380")
+    let emailTextField = TextFieldWithPlaceholder("example@email.com")
     
     let passwordTextField = TextFieldWithPlaceholder("Type password here")
     
@@ -76,10 +76,10 @@ class SignInView: UIView {
     
     private func createTextFieldsStack() -> UIStackView {
         
-        let phoneNumberTextFieldView = TextFieldBackgroundView(tf: phoneNumberTextField)
+        let phoneNumberTextFieldView = TextFieldBackgroundView(tf: emailTextField)
         let passwordTextFieldView = TextFieldBackgroundView(tf: passwordTextField, withSecureFieldPublisher: sfPublisher, action: { self.showPassword.toggle() })
         
-        let phoneNumberStack = stack(phoneNumberLabel, phoneNumberTextFieldView, spacing: 6)
+        let phoneNumberStack = stack(emailLabel, phoneNumberTextFieldView, spacing: 6)
         let passwordStack = stack(passwordLabel, passwordTextFieldView, spacing: 6)
         
         let textFieldsStack = stack(phoneNumberStack, passwordStack, spacing: 20)

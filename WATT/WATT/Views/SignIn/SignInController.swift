@@ -28,32 +28,52 @@ class SignInController: UIViewController {
         view.addSubview(contentView)
         contentView.fillSuperview()
         presentAlertController()
-        presentSignUpController()
+        setupTargets()
+        bindViewsToViewModel()
         bindSecureFieldPublisher()
         
         navigationController?.navigationBar.isHidden = true
     }
     
     private func presentAlertController() {
-        contentView.forgotButton.addTarget(self, action: #selector(openForgotPasswordController), for: .touchUpInside)
+        contentView.forgotButton.addTarget(self, action: #selector(forgotPasswordButtonPressed), for: .touchUpInside)
     }
     
-    private func presentSignUpController() {
-        contentView.signUpButton.addTarget(self, action: #selector(openSignUpController), for: .touchUpInside)
+    private func setupTargets() {
+        contentView.signInButton.addTarget(self, action: #selector(signInButtonPressed), for: .touchUpInside)
+        contentView.signUpButton.addTarget(self, action: #selector(signUpButtonPressed), for: .touchUpInside)
     }
     
-    @objc private func openForgotPasswordController() {
+    @objc private func forgotPasswordButtonPressed() {
         let vc = AlertController(contentView: ForgotPasswordView(), buttonTitle: "Reset")
         vc.modalPresentationStyle = .overFullScreen
         vc.modalTransitionStyle = .crossDissolve
         navigationController?.present(vc, animated: true)
     }
     
-    @objc private func openSignUpController() {
+    @objc private func signUpButtonPressed() {
         if let signUpViewModel = viewModel.signUpViewModel {
             let vc = SignUpController(viewModel: signUpViewModel)
             navigationController?.pushViewController(vc, animated: true)
         }
+    }
+    
+    @objc private func signInButtonPressed() {
+        viewModel.logIn { error in
+            self.viewModel.error = error
+        }
+    }
+    
+    private func bindViewsToViewModel() {
+        contentView.emailTextField.textPublisher
+            .receive(on: DispatchQueue.main)
+            .assign(to: \.email, on: viewModel)
+            .store(in: &cancellables)
+        
+        contentView.passwordTextField.textPublisher
+            .receive(on: DispatchQueue.main)
+            .assign(to: \.password, on: viewModel)
+            .store(in: &cancellables)
     }
     
     private func bindSecureFieldPublisher() {

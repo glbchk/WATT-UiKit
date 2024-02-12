@@ -14,6 +14,8 @@ protocol UserRepository {
     
     func createUserInDB(user: DBUser) async throws
     func checkIfUserExist(user: AppUser, completion: @escaping ((Bool) -> Void))
+    func editUserNameInDB(name: String) async throws
+    func editPhoneNumberInDB(phoneNumber: String) async throws
 }
 
 final class UserRepositoryImpl: UserRepository {
@@ -45,8 +47,16 @@ final class UserRepositoryImpl: UserRepository {
     func checkIfUserExist(user: AppUser, completion: @escaping ((Bool) -> Void)) {
         remoteSource.checkIfUserExist(user: user, completion: completion)
     }
-
     
+    func editUserNameInDB(name: String) async throws {
+        try await remoteSource.editUserNameInDB(name: name)
+        getUser()
+    }
+    
+    func editPhoneNumberInDB(phoneNumber: String) async throws {
+        try await remoteSource.editPhoneNumberInDB(phoneNumber: phoneNumber)
+        getUser()
+    }
     
 }
 

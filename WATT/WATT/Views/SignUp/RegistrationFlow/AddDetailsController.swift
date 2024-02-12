@@ -12,7 +12,6 @@ class AddDetailsController: UIViewController {
     
     let contentView = AddDetailsView()
     private var viewModel: SignUpViewModel
-    private var mainViewModel: MainViewModel?
     var cancellables = Set<AnyCancellable>()
 
     init(viewModel: SignUpViewModel) {
@@ -42,7 +41,7 @@ class AddDetailsController: UIViewController {
     }
     
     @objc private func handleNameRowTap() {
-        let vc = AddNameAndEmailController()
+        let vc = AddNameAndEmailController(viewModel: viewModel)
         self.navigationController?.pushViewController(vc, animated: true)
     }
     

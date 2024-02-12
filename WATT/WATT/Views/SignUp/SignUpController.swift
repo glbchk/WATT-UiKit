@@ -9,15 +9,10 @@ import UIKit
 import Combine
 
 class SignUpController: UIViewController {
-    
-    //Need to double check
+
     let contentView = SignUpView()
     private var viewModel: SignUpViewModel
     var cancellables = Set<AnyCancellable>()
-
-    private(set) lazy var isInputValid = Publishers.CombineLatest(viewModel.$email, viewModel.$password)
-        .map { $0.count > 2 && $1.count > 6 }
-        .eraseToAnyPublisher()
     
     init(viewModel: SignUpViewModel) {
         self.viewModel = viewModel
@@ -32,43 +27,44 @@ class SignUpController: UIViewController {
         super.viewDidLoad()
         view.addSubview(contentView)
         contentView.fillSuperview()
-        setupTarget()
-//        bindViewToViewModel()
+        setupTargets()
+        bindViewsToViewModel()
 //        bindViewModelToView()
         bindSecureFieldPublishers()
     }
     
-    private func setupTarget() {
-        contentView.signInButton.addTarget(self, action: #selector(openSignInButton), for: .touchUpInside)
-        contentView.signUpButton.addTarget(self, action: #selector(openAddDetailsButton), for: .touchUpInside)
+    private func setupTargets() {
+        contentView.signInButton.addTarget(self, action: #selector(signInButtonTapped), for: .touchUpInside)
+        
+        viewModel.isSignUpValid
+            .sink { [self] _ in
+                contentView.signUpButton.addTarget(self, action: #selector(addDetailsButtonTapped), for: .touchUpInside)
+            }
+            .store(in: &cancellables)
     }
     
-    @objc private func openSignInButton() {
+    @objc private func signInButtonTapped() {
         self.navigationController?.popViewController(animated: true)
+//        self.dismiss(animated: false, completion: nil)
     }
     
-    @objc private func openAddDetailsButton() {
-//        viewModel.createUser { [weak self] isActive, error in
-//            DispatchQueue.main.async {
-//                guard let vm = self?.viewModel else { return }
-//                let vc = AddDetailsController(viewModel: vm)
-//                self?.navigationController?.pushViewController(vc, animated: true)
-//            }
-//        }
+    @objc private func addDetailsButtonTapped() {
+        viewModel.createUser { [weak self] isActive, error in
+            DispatchQueue.main.async {
+                guard let vm = self?.viewModel else { return }
+                let vc = AddDetailsController(viewModel: vm)
+                self?.navigationController?.pushViewController(vc, animated: true)
+            }
+        }
         let vc = AddDetailsController(viewModel: viewModel)
         self.navigationController?.pushViewController(vc, animated: true)
     }
     
-    private func bindViewToViewModel() {
+    private func bindViewsToViewModel() {
         contentView.emailTextField.textPublisher
             .receive(on: DispatchQueue.main)
             .assign(to: \.email, on: viewModel)
             .store(in: &cancellables)
-        
-//        contentView.phoneNumberTextField.textPublisher
-//            .receive(on: DispatchQueue.main)
-//            .assign(to: \.phoneNumber, on: viewModel)
-//            .store(in: &cancellables)
         
         contentView.passwordTextField.textPublisher
             .receive(on: DispatchQueue.main)
@@ -77,20 +73,20 @@ class SignUpController: UIViewController {
         
         contentView.retypePasswordTextField.textPublisher
             .receive(on: DispatchQueue.main)
-            .assign(to: \.password, on: viewModel)
+            .assign(to: \.retypedPassword, on: viewModel)
             .store(in: &cancellables)
     }
     
-    private func bindViewModelToView() {
-        viewModel.isInputValid
-            .receive(on: DispatchQueue.main)
-            .assign(to: \.isEnabled, on: contentView.signUpButton)
-            .store(in: &cancellables)
-    }
+//    private func bindViewModelToView() {
+//        viewModel.isInputValid
+//            .receive(on: DispatchQueue.main)
+//            .assign(to: \.isEnabled, on: contentView.signUpButton)
+//            .store(in: &cancellables)
+//    }
     
     private func bindSecureFieldPublishers() {
         contentView.passwordTextFieldView.secureFieldPublisher = viewModel.passwordPublisher
-        contentView.passwordTextFieldView.action =  { self.viewModel.showPassword.toggle() }
+        contentView.passwordTextFieldView.action = { self.viewModel.showPassword.toggle() }
         
         contentView.retypePasswordTextFieldView.secureFieldPublisher = viewModel.retypedPasswordPublisher
         contentView.retypePasswordTextFieldView.action = { self.viewModel.showRetyped.toggle() }

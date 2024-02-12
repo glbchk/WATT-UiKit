@@ -12,13 +12,21 @@ import Combine
 class TextFieldBackgroundView: UIView {
     private var cancellables = Set<AnyCancellable>()
     
-    let textField: UITextField
-    let secureFieldPublisher: AnyPublisher<Bool, Never>?
-    let action: (() -> Void)?
+    var textField: UITextField? {
+        didSet {
+            setupUI()
+        }
+    }
+    var secureFieldPublisher: AnyPublisher<Bool, Never>? {
+        didSet {
+            bindSFButton()
+        }
+    }
+    var action: (() -> Void)?
     
     let sfButton = UIButton()
     
-    init(tf: UITextField) {
+    init(tf: UITextField? = nil) {
         self.textField = tf
         self.secureFieldPublisher = nil
         self.action = nil
@@ -26,13 +34,13 @@ class TextFieldBackgroundView: UIView {
         setupUI()
     }
 
-    init(tf: UITextField, withSecureFieldPublisher: AnyPublisher<Bool, Never>, action: @escaping (() -> Void)) {
+    init(tf: UITextField?, withSecureFieldPublisher: AnyPublisher<Bool, Never>? = nil, action: @escaping (() -> Void)) {
         self.textField = tf
         self.secureFieldPublisher = withSecureFieldPublisher
         self.action = action
         super.init(frame: .zero)
         setupUI()
-        setupSecureFieldButton()
+//        setupSecureFieldButton()
         bindSFButton()
     }
     
@@ -41,6 +49,7 @@ class TextFieldBackgroundView: UIView {
     }
     
     private func setupUI() {
+        guard let textField = textField else { return }
         
         addSubview(textField)
         
@@ -70,15 +79,18 @@ class TextFieldBackgroundView: UIView {
     }
     
     private func bindSFButton() {
-        guard let sfPublisher = secureFieldPublisher else { return }
+        
+        setupSecureFieldButton()
+        
+        guard let textField = textField, let sfPublisher = secureFieldPublisher else { return }
         sfPublisher
             .sink { showPassword in
                 if showPassword {
                     self.sfButton.setImage(UIImage(systemName: "eye.fill"), for: .normal)
-                    self.textField.isSecureTextEntry = false
+                    textField.isSecureTextEntry = false
                 } else {
                     self.sfButton.setImage(UIImage(systemName: "eye.slash.fill"), for: .normal)
-                    self.textField.isSecureTextEntry = true
+                    textField.isSecureTextEntry = true
                 }
             }
             .store(in: &cancellables)

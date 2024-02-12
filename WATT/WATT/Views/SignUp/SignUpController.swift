@@ -33,8 +33,9 @@ class SignUpController: UIViewController {
         view.addSubview(contentView)
         contentView.fillSuperview()
         setupTarget()
-        bindViewToViewModel()
-        bindViewModelToView()
+//        bindViewToViewModel()
+//        bindViewModelToView()
+        bindSecureFieldPublishers()
     }
     
     private func setupTarget() {
@@ -43,17 +44,19 @@ class SignUpController: UIViewController {
     }
     
     @objc private func openSignInButton() {
-        self.dismiss(animated: true)
+        self.navigationController?.popViewController(animated: true)
     }
     
     @objc private func openAddDetailsButton() {
-        viewModel.createUser { [weak self] isActive, error in
-            DispatchQueue.main.async {
-                guard let vm = self?.viewModel else { return }
-                let vc = AddDetailsController(viewModel: vm)
-                self?.navigationController?.pushViewController(vc, animated: true)
-            }
-        }
+//        viewModel.createUser { [weak self] isActive, error in
+//            DispatchQueue.main.async {
+//                guard let vm = self?.viewModel else { return }
+//                let vc = AddDetailsController(viewModel: vm)
+//                self?.navigationController?.pushViewController(vc, animated: true)
+//            }
+//        }
+        let vc = AddDetailsController(viewModel: viewModel)
+        self.navigationController?.pushViewController(vc, animated: true)
     }
     
     private func bindViewToViewModel() {
@@ -62,10 +65,10 @@ class SignUpController: UIViewController {
             .assign(to: \.email, on: viewModel)
             .store(in: &cancellables)
         
-        contentView.phoneNumberTextField.textPublisher
-            .receive(on: DispatchQueue.main)
-            .assign(to: \.phoneNumber, on: viewModel)
-            .store(in: &cancellables)
+//        contentView.phoneNumberTextField.textPublisher
+//            .receive(on: DispatchQueue.main)
+//            .assign(to: \.phoneNumber, on: viewModel)
+//            .store(in: &cancellables)
         
         contentView.passwordTextField.textPublisher
             .receive(on: DispatchQueue.main)
@@ -83,6 +86,14 @@ class SignUpController: UIViewController {
             .receive(on: DispatchQueue.main)
             .assign(to: \.isEnabled, on: contentView.signUpButton)
             .store(in: &cancellables)
+    }
+    
+    private func bindSecureFieldPublishers() {
+        contentView.passwordTextFieldView.secureFieldPublisher = viewModel.passwordPublisher
+        contentView.passwordTextFieldView.action =  { self.viewModel.showPassword.toggle() }
+        
+        contentView.retypePasswordTextFieldView.secureFieldPublisher = viewModel.retypedPasswordPublisher
+        contentView.retypePasswordTextFieldView.action = { self.viewModel.showRetyped.toggle() }
     }
     
 }

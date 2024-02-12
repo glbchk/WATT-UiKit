@@ -11,7 +11,7 @@ import Combine
 class AddDetailRow: UIView {
     private var cancellable = Set<AnyCancellable>()
     
-    let accountView: UIView = {
+    let rowView: UIView = {
         let view = UIView()
         view.constrainWidth(40)
         view.constrainHeight(40)
@@ -19,7 +19,7 @@ class AddDetailRow: UIView {
         return view
     }()
     
-    let accountImageView: UIImageView = {
+    let rowImageView: UIImageView = {
         let imgView = UIImageView()
         imgView.constrainWidth(24)
         imgView.constrainHeight(24)
@@ -30,6 +30,8 @@ class AddDetailRow: UIView {
         let label = UILabel()
         label.font = .boldSystemFont(ofSize: 15)
         label.textColor = Asset.Colors.black
+        label.adjustsFontSizeToFitWidth = true
+        label.minimumScaleFactor = 0.5
         return label
     }()
     
@@ -37,6 +39,8 @@ class AddDetailRow: UIView {
         let label = UILabel()
         label.font = .systemFont(ofSize: 13)
         label.textColor = Asset.Colors.grey1
+        label.adjustsFontSizeToFitWidth = true
+        label.minimumScaleFactor = 0.5
         return label
     }()
     
@@ -56,7 +60,7 @@ class AddDetailRow: UIView {
         }
     }
     
-    init(_ type: DetailsRowType, publisher: AnyPublisher<Bool, Never>?) {
+    init(_ type: DetailsRowType, publisher: AnyPublisher<Bool, Never>? = nil) {
         self.type = type
         self.publisher = publisher
         super.init(frame: .zero)
@@ -75,14 +79,16 @@ class AddDetailRow: UIView {
         
         self.constrainHeight(70)
         
-        accountImageView.image = type.icon
+        rowImageView.image = type.icon
         
         label.text = type.title
         
-        accountView.addSubview(accountImageView)
-        accountImageView.centerInSuperview()
+        rowView.addSubview(rowImageView)
+        rowImageView.centerInSuperview()
         
-        let stack = hstack(accountView, stack(label, detailsLabel), rightArrow, spacing: 15)
+        let labelsStack = stack(label, detailsLabel)
+        
+        let stack = hstack(rowView, labelsStack, rightArrow, spacing: 15)
         
         self.addSubview(stack)
         stack.anchor(top: self.topAnchor, leading: self.leadingAnchor, trailing: self.trailingAnchor, bottom: self.bottomAnchor, padding: .allSides(15))
@@ -95,12 +101,12 @@ class AddDetailRow: UIView {
             .sink { [weak self] exist in
                 guard let self = self else { return }
                 if exist {
-                    self.accountView.backgroundColor = Asset.Colors.deepBlue
-                    self.accountImageView.tintColor = .white
-                    self.detailsLabel.text = "jf@gmail.com"
+                    self.rowView.backgroundColor = Asset.Colors.deepBlue
+                    self.rowImageView.tintColor = .white
+                    self.detailsLabel.text = "jf@gmail.com/dvvjdcdjcdsdc"
                 } else {
-                    self.accountView.backgroundColor = Asset.Colors.grey4
-                    self.accountImageView.tintColor = Asset.Colors.grey2
+                    self.rowView.backgroundColor = Asset.Colors.grey4
+                    self.rowImageView.tintColor = Asset.Colors.grey2
                     self.detailsLabel.text = ""
                 }
             }

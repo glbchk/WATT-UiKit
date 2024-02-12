@@ -8,12 +8,12 @@
 import UIKit
 
 enum DetailsRowType {
-    case nameAndEmail, car, paymentMethod
+    case nameAndPhoneNumber, car, paymentMethod
     
     var title: String {
         switch self {
-        case .nameAndEmail:
-            return "Add your name & email"
+        case .nameAndPhoneNumber:
+            return "Add your name & phone number"
         case .car:
             return "Add your car"
         case .paymentMethod:
@@ -23,7 +23,7 @@ enum DetailsRowType {
     
     var icon: UIImage? {
         switch self {
-        case .nameAndEmail:
+        case .nameAndPhoneNumber:
             return Asset.Icons.account
         case .car:
             return Asset.Icons.car

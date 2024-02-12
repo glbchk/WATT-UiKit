@@ -9,22 +9,6 @@ import UIKit
 import Combine
 
 class SignUpView: UIView {
-    
-//    private let viewModel: SignUpViewModel?
-    
-//    //MARK: Must be placed in ViewModel <- alreadt added
-    @Published var showPassword = true
-    @Published var showRetyped = true
-    
-    var passwordPublisher: AnyPublisher<Bool, Never> {
-        $showPassword
-            .eraseToAnyPublisher()
-    }
-    
-    var retypedPasswordPublisher: AnyPublisher<Bool, Never> {
-        $showRetyped
-            .eraseToAnyPublisher()
-    }
 
     let blueBackgroundView = BlueBackgroundView()
     
@@ -35,14 +19,16 @@ class SignUpView: UIView {
     let createAccountLabel = TextLabel(title: "Create an account", font: .systemFont(ofSize: 22, weight: .bold), textColor: .white)
     
     let emailLabel = TextFieldLabel(title: "EMAIL")
-    let phoneNumberLabel = TextFieldLabel(title: "PHONE NUMBER")
     let passwordLabel = TextFieldLabel(title: "PASSWORD")
     let retypePasswordLabel = TextFieldLabel(title: "RETYPE PASSWORD")
     
-    let emailTextField = TextFieldWithPlaceholder("name@email.com...")
-    let phoneNumberTextField = TextFieldWithPlaceholder("+380")
-    let passwordTextField = TextFieldWithPlaceholder("Type password here")
+    let emailTextField = TextFieldWithPlaceholder("example@email.com")
+    let passwordTextField = TextFieldWithPlaceholder("At least 6 characters")
     let retypePasswordTextField = TextFieldWithPlaceholder("Retype password here")
+    
+    let emailTextFieldView = TextFieldBackgroundView()
+    let passwordTextFieldView = TextFieldBackgroundView()
+    let retypePasswordTextFieldView = TextFieldBackgroundView()
     
     let termsLabel: SecondaryLabel = SecondaryLabel(text: "Creating account you accept")
     
@@ -98,19 +84,17 @@ class SignUpView: UIView {
     
     private func createTextFieldsStack() -> UIStackView {
         
-        let emailTextFieldView = TextFieldBackgroundView(tf: emailTextField)
-        let phoneNumberTextFieldView = TextFieldBackgroundView(tf: phoneNumberTextField)
-        let passwordTextFieldView = TextFieldBackgroundView(tf: passwordTextField, withSecureFieldPublisher: passwordPublisher, action: { self.showPassword.toggle() })
-        let retryTextFieldView = TextFieldBackgroundView(tf: retypePasswordTextField, withSecureFieldPublisher: retypedPasswordPublisher, action: { self.showRetyped.toggle() })
+        emailTextFieldView.textField = emailTextField
+        passwordTextFieldView.textField = passwordTextField
+        retypePasswordTextFieldView.textField = retypePasswordTextField
         
         let emailStack = stack(emailLabel, emailTextFieldView, spacing: 6)
-        let phoneNumberStack = stack(phoneNumberLabel, phoneNumberTextFieldView, spacing: 6)
         let passwordStack = stack(passwordLabel, passwordTextFieldView, spacing: 6)
-        let retypeStack = stack(retypePasswordLabel, retryTextFieldView, spacing: 6)
+        let retypeStack = stack(retypePasswordLabel, retypePasswordTextFieldView, spacing: 6)
         
-        let stack = stack(emailStack, phoneNumberStack, passwordStack, retypeStack, spacing: 20)
+        let stack = stack(emailStack, passwordStack, retypeStack, spacing: 20)
         
-        [emailTextFieldView, phoneNumberTextFieldView, passwordTextFieldView, retryTextFieldView].forEach {
+        [emailTextFieldView, passwordTextFieldView, retypePasswordTextFieldView].forEach {
             $0.anchor(top: nil, leading: stack.leadingAnchor, trailing: stack.trailingAnchor, bottom: nil)
         }
         return stack

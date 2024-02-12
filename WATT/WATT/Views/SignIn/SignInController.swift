@@ -10,7 +10,7 @@ import Combine
 
 class SignInController: UIViewController {
     
-    let containerView = SignInView()
+    let contentView = SignInView()
     private var viewModel: SignInViewModel
     var cancellables = Set<AnyCancellable>()
 
@@ -25,20 +25,21 @@ class SignInController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.addSubview(containerView)
-        containerView.fillSuperview()
+        view.addSubview(contentView)
+        contentView.fillSuperview()
         presentAlertController()
         presentSignUpController()
+        bindSecureFieldPublisher()
         
         navigationController?.navigationBar.isHidden = true
     }
     
     private func presentAlertController() {
-        containerView.forgotButton.addTarget(self, action: #selector(openForgotPasswordController), for: .touchUpInside)
+        contentView.forgotButton.addTarget(self, action: #selector(openForgotPasswordController), for: .touchUpInside)
     }
     
     private func presentSignUpController() {
-        containerView.signUpButton.addTarget(self, action: #selector(openSignUpController), for: .touchUpInside)
+        contentView.signUpButton.addTarget(self, action: #selector(openSignUpController), for: .touchUpInside)
     }
     
     @objc private func openForgotPasswordController() {
@@ -53,5 +54,10 @@ class SignInController: UIViewController {
             let vc = SignUpController(viewModel: signUpViewModel)
             navigationController?.pushViewController(vc, animated: true)
         }
+    }
+    
+    private func bindSecureFieldPublisher() {
+        contentView.passwordTextFieldView.secureFieldPublisher = viewModel.sfPublisher
+        contentView.passwordTextFieldView.action = { self.viewModel.showPassword.toggle() }
     }
 }

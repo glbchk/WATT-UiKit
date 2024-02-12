@@ -40,8 +40,13 @@ class SignInController: UIViewController {
     }
     
     private func setupTargets() {
-        contentView.signInButton.addTarget(self, action: #selector(signInButtonPressed), for: .touchUpInside)
         contentView.signUpButton.addTarget(self, action: #selector(signUpButtonPressed), for: .touchUpInside)
+        
+        viewModel.isSubmitEnabled
+            .sink { [self] _ in
+                contentView.signInButton.addTarget(self, action: #selector(signInButtonPressed), for: .touchUpInside)
+            }
+            .store(in: &cancellables)
     }
     
     @objc private func forgotPasswordButtonPressed() {

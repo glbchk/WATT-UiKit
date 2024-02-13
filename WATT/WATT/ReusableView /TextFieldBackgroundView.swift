@@ -50,6 +50,9 @@ class TextFieldBackgroundView: UIView {
     
     private func setupUI() {
         guard let textField = textField else { return }
+        textField.autocorrectionType = .no
+        textField.autocapitalizationType = .none
+        textField.spellCheckingType = .no
         
         addSubview(textField)
         
@@ -62,7 +65,6 @@ class TextFieldBackgroundView: UIView {
         self.layer.borderWidth = 1
         self.layer.borderColor = Asset.Colors.grey3.cgColor
         self.layer.cornerRadius = 10
-    
     }
     
     private func setupSecureFieldButton() {

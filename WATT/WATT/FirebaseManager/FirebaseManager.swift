@@ -49,4 +49,20 @@ final class FirebaseManager {
         return try await firestore.collection(FirebaseConstants.users).document(uid).getDocument(as: DBUser.self)
     }
     
+    func editUserNameInDB(name: String) async throws {
+        guard let uid = authentication.currentUser?.uid else { return }
+        
+        try await firestore.collection(FirebaseConstants.users).document(uid).updateData([
+            "name" : name
+        ])
+    }
+    
+    func editPhoneNumberInDB(phoneNumber: String) async throws {
+        guard let uid = authentication.currentUser?.uid else { return }
+        
+        try await firestore.collection(FirebaseConstants.users).document(uid).updateData([
+            "phone_number" : phoneNumber
+        ])
+    }
+    
 }

@@ -27,6 +27,10 @@ final class FirebaseManager {
         self.firestore = Firestore.firestore()
     }
     
+    func createAnonymousUserInDB(user: DBUser) async throws {
+        try firestore.collection(FirebaseConstants.users).document(user.uid).setData(from: user)
+    }
+    
     func createUserInDB(user: DBUser) async throws {
         try firestore.collection(FirebaseConstants.users).document(user.uid).setData(from: user)
     }

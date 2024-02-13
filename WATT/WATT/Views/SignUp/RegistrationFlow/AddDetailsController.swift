@@ -33,10 +33,10 @@ class AddDetailsController: UIViewController {
     }
     
     private func setupTarget() {
-        contentView.completeLaterButton.addTarget(self, action: #selector(handleCompleteLater), for: .touchUpInside)
+        contentView.completeLaterButton.addTarget(self, action: #selector(completeLaterPressed), for: .touchUpInside)
     }
     
-    @objc private func handleCompleteLater() {
+    @objc private func completeLaterPressed() {
         viewModel.successfulRegistration()
     }
     

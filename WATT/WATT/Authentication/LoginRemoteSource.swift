@@ -9,6 +9,7 @@ import Foundation
 import Firebase
 
 protocol LoginRemoteSource {
+    func signInAnonymously() async throws -> AppUser
     func createUser(email: String, password: String) async throws -> AppUser?
     func getAuthenticatedUser() throws -> AppUser
     func logIn(email: String, password: String) async throws -> AppUser?
@@ -21,6 +22,11 @@ final class LoginRemoteSourceImpl: LoginRemoteSource {
     
     private var authenticationManager: AuthenticationManager {
         AuthenticationManager()
+    }
+    
+    func signInAnonymously() async throws -> AppUser {
+        let user = try await authenticationManager.signInAnonymously()
+        return user
     }
     
     func createUser(email: String, password: String) async throws -> AppUser? {

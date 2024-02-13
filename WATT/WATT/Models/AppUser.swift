@@ -10,11 +10,12 @@ import Firebase
 
 struct AppUser: Codable {
     let uid: String
-    let email: String
+    let email: String?
     var fullName: String?
     var phoneNumber: String?
     var photoURL: String?
     let dateCreated: Date
+    let isAnonymous: Bool
 //    var location: UserLocation?
     
     init(user: User) {
@@ -24,6 +25,7 @@ struct AppUser: Codable {
         self.phoneNumber = user.phoneNumber
         self.photoURL = user.photoURL?.absoluteString
         self.dateCreated = Date()
+        self.isAnonymous = user.isAnonymous
 //        self.location = nil
     }
     

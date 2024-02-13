@@ -70,11 +70,12 @@ class SignUpController: UIViewController {
             .store(in: &cancellables)
         
         viewModel.isSignUpValid
-            .sink { [self] isValid in
+            .sink { [weak self] isValid in
+                guard let self = self else { return }
                 if isValid {
-                    contentView.signUpButton.isEnabled = true
+                    self.contentView.signUpButton.isEnabled = true
                 } else {
-                    contentView.signUpButton.isEnabled = false
+                    self.contentView.signUpButton.isEnabled = false
                 }
             }
             .store(in: &cancellables)

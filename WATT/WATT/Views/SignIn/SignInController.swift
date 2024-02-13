@@ -27,7 +27,6 @@ class SignInController: UIViewController {
         super.viewDidLoad()
         view.addSubview(contentView)
         contentView.fillSuperview()
-        presentAlertController()
         setupTargets()
         bindViewsToViewModel()
         bindSecureFieldPublisher()
@@ -35,18 +34,10 @@ class SignInController: UIViewController {
         navigationController?.navigationBar.isHidden = true
     }
     
-    private func presentAlertController() {
-        contentView.forgotButton.addTarget(self, action: #selector(forgotPasswordButtonPressed), for: .touchUpInside)
-    }
-    
     private func setupTargets() {
+        contentView.forgotButton.addTarget(self, action: #selector(forgotPasswordButtonPressed), for: .touchUpInside)
         contentView.signUpButton.addTarget(self, action: #selector(signUpButtonPressed), for: .touchUpInside)
-        
-        viewModel.isSubmitEnabled
-            .sink { [self] _ in
-                contentView.signInButton.addTarget(self, action: #selector(signInButtonPressed), for: .touchUpInside)
-            }
-            .store(in: &cancellables)
+        contentView.signInButton.addTarget(self, action: #selector(signInButtonPressed), for: .touchUpInside)
     }
     
     @objc private func forgotPasswordButtonPressed() {
@@ -78,6 +69,16 @@ class SignInController: UIViewController {
         contentView.passwordTextField.textPublisher
             .receive(on: DispatchQueue.main)
             .assign(to: \.password, on: viewModel)
+            .store(in: &cancellables)
+        
+        viewModel.isSubmitEnabled
+            .sink { [self] isValid in
+                if isValid {
+                    contentView.signInButton.isEnabled = true
+                } else {
+                    contentView.signInButton.isEnabled = false
+                }
+            }
             .store(in: &cancellables)
     }
     

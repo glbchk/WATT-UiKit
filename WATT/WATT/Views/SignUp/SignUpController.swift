@@ -34,30 +34,23 @@ class SignUpController: UIViewController {
     }
     
     private func setupTargets() {
-        contentView.signInButton.addTarget(self, action: #selector(signInButtonTapped), for: .touchUpInside)
-        
-        viewModel.isSignUpValid
-            .sink { [self] _ in
-                contentView.signUpButton.addTarget(self, action: #selector(addDetailsButtonTapped), for: .touchUpInside)
-            }
-            .store(in: &cancellables)
+        contentView.signInButton.addTarget(self, action: #selector(signInButtonPressed), for: .touchUpInside)
+        contentView.signUpButton.addTarget(self, action: #selector(signUpButtonPressed), for: .touchUpInside)
     }
     
-    @objc private func signInButtonTapped() {
+    @objc private func signInButtonPressed() {
         self.navigationController?.popViewController(animated: true)
 //        self.dismiss(animated: false, completion: nil)
     }
     
-    @objc private func addDetailsButtonTapped() {
+    @objc private func signUpButtonPressed() {
         viewModel.createUser { [weak self] isActive, error in
             DispatchQueue.main.async {
-                guard let vm = self?.viewModel else { return }
-                let vc = AddDetailsController(viewModel: vm)
-                self?.navigationController?.pushViewController(vc, animated: true)
+                guard let self = self else { return }
+                let vc = AddDetailsController(viewModel: self.viewModel)
+                self.navigationController?.pushViewController(vc, animated: true)
             }
         }
-        let vc = AddDetailsController(viewModel: viewModel)
-        self.navigationController?.pushViewController(vc, animated: true)
     }
     
     private func bindViewsToViewModel() {
@@ -74,6 +67,16 @@ class SignUpController: UIViewController {
         contentView.retypePasswordTextField.textPublisher
             .receive(on: DispatchQueue.main)
             .assign(to: \.retypedPassword, on: viewModel)
+            .store(in: &cancellables)
+        
+        viewModel.isSignUpValid
+            .sink { [self] isValid in
+                if isValid {
+                    contentView.signUpButton.isEnabled = true
+                } else {
+                    contentView.signUpButton.isEnabled = false
+                }
+            }
             .store(in: &cancellables)
     }
     

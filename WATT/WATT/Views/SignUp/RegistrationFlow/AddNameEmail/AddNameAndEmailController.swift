@@ -35,14 +35,14 @@ class AddNameAndEmailController: UIViewController {
     
     private func setupTargets() {
         contentView.backButton.addTarget(self, action: #selector(handleBackTap), for: .touchUpInside)
-        contentView.saveButton.addTarget(self, action: #selector(saveButtonTapped), for: .touchUpInside)
+        contentView.saveButton.addTarget(self, action: #selector(saveButtonPressed), for: .touchUpInside)
     }
     
     @objc private func handleBackTap() {
         self.navigationController?.popViewController(animated: true)
     }
     
-    @objc private func saveButtonTapped() {
+    @objc private func saveButtonPressed() {
         self.navigationController?.popViewController(animated: true)
     }
     

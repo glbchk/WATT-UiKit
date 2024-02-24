@@ -38,10 +38,31 @@ class SignInController: UIViewController {
         contentView.forgotButton.addTarget(self, action: #selector(forgotPasswordButtonPressed), for: .touchUpInside)
         contentView.signUpButton.addTarget(self, action: #selector(signUpButtonPressed), for: .touchUpInside)
         contentView.signInButton.addTarget(self, action: #selector(signInButtonPressed), for: .touchUpInside)
+        contentView.guestButton.addTarget(self, action: #selector(guestButtonPressed), for: .touchUpInside)
+    }
+    
+    @objc private func guestButtonPressed() {
+        Task {
+            do {
+                try await viewModel.signInAnonymously()
+                try await viewModel.successfulRegistration()
+                self.navigationController?.popViewController(animated: true)
+            } catch {
+                print("Error: \(error)")
+            }
+        }
     }
     
     @objc private func forgotPasswordButtonPressed() {
-        let vc = AlertController(contentView: ForgotPasswordView(), buttonTitle: "Reset")
+        let vc = AlertController(contentView: ForgotPasswordView(), buttonTitle: "Reset", completionSubmit:  {
+            Task {
+                do {
+                    try await self.viewModel.successfulRegistration()
+                } catch {
+                    print(error)
+                }
+            }
+        })
         vc.modalPresentationStyle = .overFullScreen
         vc.modalTransitionStyle = .crossDissolve
         navigationController?.present(vc, animated: true)
@@ -72,11 +93,12 @@ class SignInController: UIViewController {
             .store(in: &cancellables)
         
         viewModel.isSubmitEnabled
-            .sink { [self] isValid in
+            .sink { [weak self] isValid in
+                guard let self = self else { return }
                 if isValid {
-                    contentView.signInButton.isEnabled = true
+                    self.contentView.signInButton.isEnabled = true
                 } else {
-                    contentView.signInButton.isEnabled = false
+                    self.contentView.signInButton.isEnabled = false
                 }
             }
             .store(in: &cancellables)

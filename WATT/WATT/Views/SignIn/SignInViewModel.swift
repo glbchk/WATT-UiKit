@@ -11,10 +11,11 @@ import Swinject
 
 class SignInViewModel: ObservableObject {
     
-    //Need to do something
     @Published var email = ""
     @Published var password = ""
     @Published var error = ""
+    
+    @Published var user: AppUser?
     
     @Published var showPassword = false
     
@@ -41,6 +42,26 @@ class SignInViewModel: ObservableObject {
             }
             
         }
+    }
+    
+    func signInAnonymously() async throws {
+        Task(priority: .medium) { [loginRepo] in
+            do {
+                let user = try await loginRepo.signInAnonymously()
+                DispatchQueue.main.async {
+                    self.user = user
+                }
+            } catch {
+                print("Error:", error)
+            }
+        }
+    }
+    
+    func successfulRegistration() async throws {
+        guard let user = self.user else { return }
+        let dbUser = DBUser(uid: user.uid, isAnonymous: user.isAnonymous)
+        try await userRepo.createUserInDB(user: dbUser)
+        authRepo.success()
     }
     
     var sfPublisher: AnyPublisher<Bool, Never> {

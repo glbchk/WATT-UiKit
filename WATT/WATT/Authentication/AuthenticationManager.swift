@@ -11,6 +11,21 @@ import FirebaseAuth
 
 final class AuthenticationManager {
     
+    func signInAnonymously() async throws -> AppUser {
+        let authResult = try await Auth.auth().signInAnonymously()
+        return AppUser(user: authResult.user)
+    }
+    
+    func linkEmail(email: String, password: String) async throws -> AppUser {
+        let credential = EmailAuthProvider.credential(withEmail: email, password: password)
+        guard let user = Auth.auth().currentUser else {
+            throw URLError(.badServerResponse)
+        }
+        
+        let authResult = try await user.link(with: credential)
+        return AppUser(user: authResult.user)
+    }
+    
     func createUser(email: String, password: String) async throws -> AppUser {
         let authDataResult = try await Auth.auth().createUser(withEmail: email, password: password)
         return AppUser(user: authDataResult.user)
@@ -30,10 +45,10 @@ final class AuthenticationManager {
         return AppUser(user: authDataResult.user)
     }
     
-    func signInWith(credential: AuthCredential) async throws -> AppUser {
-        let authDataResult = try await Auth.auth().signIn(with: credential)
-        return AppUser(user: authDataResult.user)
-    }
+//    func signInWith(credential: AuthCredential) async throws -> AppUser {
+//        let authDataResult = try await Auth.auth().signIn(with: credential)
+//        return AppUser(user: authDataResult.user)
+//    }
     
     func signOut() throws {
         try Auth.auth().signOut()

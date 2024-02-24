@@ -92,6 +92,8 @@ class AlertController: UIViewController {
         
         button.anchor(top: nil, leading: containerView.leadingAnchor, trailing: containerView.trailingAnchor, bottom: containerView.bottomAnchor, padding: .allSides(20))
         
+        button.addTarget(self, action: #selector(handleSubmitButton), for: .touchUpInside)
+        
         return button
     }
     
@@ -99,5 +101,8 @@ class AlertController: UIViewController {
         closeClicked()
     }
     
+    @objc private func handleSubmitButton() {
+        submitClicked()
+    }
 
 }

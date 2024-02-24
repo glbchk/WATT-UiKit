@@ -53,7 +53,7 @@ class SignUpViewModel: ObservableObject {
     
     func successfulRegistration() {
         guard let user = self.user else { return }
-        let dbUser = DBUser(uid: user.uid, email: email, fullName: fullName, phoneNumber: phoneNumber)
+        let dbUser = DBUser(uid: user.uid, email: email, fullName: fullName, phoneNumber: phoneNumber, isAnonymous: user.isAnonymous)
         Task(priority: .medium) {
             try await userRepo.createUserInDB(user: dbUser)
             authenticationRepo.success()

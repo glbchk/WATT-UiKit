@@ -28,22 +28,22 @@ final class FirebaseManager {
     }
     
     
-    func createAnonymousUserInDB(user: DBUser) async throws {
-//        var userData: [String:Any] = [
-//            "user_id" : user.uid,
-//            "is_anonymous" : user.isAnonymous,
-//            "data_created" : user.dateCreated
-//        ]
-        
-//        if let email = user.email, let fullName = user.fullName, let phoneNumber = user.phoneNumber, let photoURL = user.photoURL {
-//            userData["email"] = email
-//            userData["full_name"] = fullName
-//            userData["phone_number"] = phoneNumber
-//            userData["photo_url"] = photoURL
-//        }
-        
-        try firestore.collection(FirebaseConstants.users).document(user.uid).setData(from: user)
-    }
+//    func createAnonymousUserInDB(user: DBUser) async throws {
+////        var userData: [String:Any] = [
+////            "user_id" : user.uid,
+////            "is_anonymous" : user.isAnonymous,
+////            "data_created" : user.dateCreated
+////        ]
+//        
+////        if let email = user.email, let fullName = user.fullName, let phoneNumber = user.phoneNumber, let photoURL = user.photoURL {
+////            userData["email"] = email
+////            userData["full_name"] = fullName
+////            userData["phone_number"] = phoneNumber
+////            userData["photo_url"] = photoURL
+////        }
+//        
+//        try firestore.collection(FirebaseConstants.users).document(user.uid).setData(from: user)
+//    }
     
     func createUserInDB(user: DBUser) async throws {
         try firestore.collection(FirebaseConstants.users).document(user.uid).setData(from: user)

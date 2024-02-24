@@ -12,7 +12,6 @@ import Swinject
 protocol UserRepository {
     var user: AnyPublisher<DBUser?, Never> { get }
     
-    func createAnonymousUserInDB(user: DBUser) async throws
     func createUserInDB(user: DBUser) async throws
     func checkIfUserExist(user: AppUser, completion: @escaping ((Bool) -> Void))
     func editUserNameInDB(name: String) async throws
@@ -39,10 +38,6 @@ final class UserRepositoryImpl: UserRepository {
             let user = try await remoteSource.getUserFromDB()
             self?.userPublisher = user
         }
-    }
-    
-    func createAnonymousUserInDB(user: DBUser) async throws {
-        try await remoteSource.createAnonymousUserInDB(user: user)
     }
     
     func createUserInDB(user: DBUser) async throws {

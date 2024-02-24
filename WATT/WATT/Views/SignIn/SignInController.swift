@@ -54,7 +54,15 @@ class SignInController: UIViewController {
     }
     
     @objc private func forgotPasswordButtonPressed() {
-        let vc = AlertController(contentView: ForgotPasswordView(), buttonTitle: "Reset")
+        let vc = AlertController(contentView: ForgotPasswordView(), buttonTitle: "Reset", completionSubmit:  {
+            Task {
+                do {
+                    try await self.viewModel.successfulRegistration()
+                } catch {
+                    print(error)
+                }
+            }
+        })
         vc.modalPresentationStyle = .overFullScreen
         vc.modalTransitionStyle = .crossDissolve
         navigationController?.present(vc, animated: true)

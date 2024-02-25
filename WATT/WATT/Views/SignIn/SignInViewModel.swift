@@ -44,15 +44,17 @@ class SignInViewModel: ObservableObject {
         }
     }
     
-    func signInAnonymously() async throws {
+    func signInAnonymously(completion: @escaping ((Result<Bool, Error>) async throws -> Void)) async throws {
         Task(priority: .medium) { [loginRepo] in
             do {
                 let user = try await loginRepo.signInAnonymously()
                 DispatchQueue.main.async {
                     self.user = user
                 }
+                try await completion(.success(true))
             } catch {
                 print("Error:", error)
+                try await completion(.failure(error))
             }
         }
     }

@@ -53,14 +53,14 @@ class AddDetailRow: UIView {
     }()
     
     let type: DetailsRowType
-    // should be user publisher
-    var publisher: AnyPublisher<Bool, Never>? {
+    
+    var publisher: AnyPublisher<String, Never>? {
         didSet {
             bindPublisher()
         }
     }
     
-    init(_ type: DetailsRowType, publisher: AnyPublisher<Bool, Never>? = nil) {
+    init(_ type: DetailsRowType, publisher: AnyPublisher<String, Never>? = nil) {
         self.type = type
         self.publisher = publisher
         super.init(frame: .zero)
@@ -86,7 +86,7 @@ class AddDetailRow: UIView {
         rowView.addSubview(rowImageView)
         rowImageView.centerInSuperview()
         
-        let labelsStack = stack(label, detailsLabel)
+        let labelsStack = stack(label, detailsLabel, spacing: 3)
         
         let stack = hstack(rowView, labelsStack, rightArrow, spacing: 15)
         
@@ -94,16 +94,15 @@ class AddDetailRow: UIView {
         stack.anchor(top: self.topAnchor, leading: self.leadingAnchor, trailing: self.trailingAnchor, bottom: self.bottomAnchor, padding: .allSides(15))
     }
     
-    // should be changed due to user publisher
     private func bindPublisher() {
         guard let publisher = publisher else { return }
         publisher
-            .sink { [weak self] exist in
+            .sink { [weak self] text in
                 guard let self = self else { return }
-                if exist {
+                if !text.isEmpty {
                     self.rowView.backgroundColor = Asset.Colors.deepBlue
                     self.rowImageView.tintColor = .white
-                    self.detailsLabel.text = "jf@gmail.com/dvvjdcdjcdsdc"
+                    self.detailsLabel.text = text
                 } else {
                     self.rowView.backgroundColor = Asset.Colors.grey4
                     self.rowImageView.tintColor = Asset.Colors.grey2

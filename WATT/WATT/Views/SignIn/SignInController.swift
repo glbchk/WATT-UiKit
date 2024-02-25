@@ -46,7 +46,7 @@ class SignInController: UIViewController {
             do {
                 try await viewModel.signInAnonymously { result in
                     switch result {
-                    case .success(let success):
+                    case .success(_):
                         try await self.viewModel.successfulRegistration()
                     case .failure(let failure):
                         print("Error in anonymously sign in:", failure.localizedDescription)

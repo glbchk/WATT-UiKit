@@ -28,6 +28,7 @@ class AddDetailsController: UIViewController {
         view.addSubview(contentView)
         contentView.fillSuperview()
         setupTarget()
+        bindViewModel()
         
         contentView.nameAndPhoneNumberRow.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleNameRowTap)))
     }
@@ -41,8 +42,13 @@ class AddDetailsController: UIViewController {
     }
     
     @objc private func handleNameRowTap() {
-        let vc = AddNameAndEmailController(viewModel: viewModel)
+        let vc = AddNameAndPhoneNumberController(viewModel: viewModel)
         self.navigationController?.pushViewController(vc, animated: true)
+    }
+    
+    private func bindViewModel() {
+        //add here car and payment method publishers
+        contentView.nameAndPhoneNumberRow.publisher = viewModel.createNameAndPhoneNumberPublisher()
     }
     
 }

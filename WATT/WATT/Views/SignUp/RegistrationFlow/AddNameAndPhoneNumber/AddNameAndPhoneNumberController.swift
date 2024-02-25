@@ -1,5 +1,5 @@
 //
-//  AddNameAndEmailController.swift
+//  AddNameAndPhoneNumberController.swift
 //  WATT
 //
 //  Created by Stas Boiko on 10.02.2024.
@@ -8,9 +8,9 @@
 import UIKit
 import Combine
 
-class AddNameAndEmailController: UIViewController {
+class AddNameAndPhoneNumberController: UIViewController {
     
-    let contentView = AddNameAndEmailView()
+    let contentView = AddNameAndPhoneNumberView()
     private var viewModel: SignUpViewModel
     var cancellables = Set<AnyCancellable>()
     
@@ -56,6 +56,9 @@ class AddNameAndEmailController: UIViewController {
             .receive(on: DispatchQueue.main)
             .assign(to: \.phoneNumber, on: viewModel)
             .store(in: &cancellables)
+        
+        contentView.nameTextField.inputText = viewModel.fullName
+        contentView.phoneNumberTextField.inputText = viewModel.phoneNumber
     }
     
 }

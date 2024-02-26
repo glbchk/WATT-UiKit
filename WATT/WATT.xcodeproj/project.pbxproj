@@ -40,8 +40,8 @@
 		06B4D8DF2B4F769E00DD78CB /* FirebaseFirestoreSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 06B4D8DE2B4F769E00DD78CB /* FirebaseFirestoreSwift */; };
 		06B4D8E12B4F76B300DD78CB /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = 06B4D8E02B4F76B300DD78CB /* FirebaseStorage */; };
 		06B4D8E32B4F7BD300DD78CB /* AutenticationRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06B4D8E22B4F7BD300DD78CB /* AutenticationRepository.swift */; };
-		2953A4462B77D1870020F8AC /* AddNameAndEmailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2953A4452B77D1870020F8AC /* AddNameAndEmailView.swift */; };
-		2953A4482B77D1DC0020F8AC /* AddNameAndEmailController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2953A4472B77D1DC0020F8AC /* AddNameAndEmailController.swift */; };
+		2953A4462B77D1870020F8AC /* AddNameAndPhoneNumberView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2953A4452B77D1870020F8AC /* AddNameAndPhoneNumberView.swift */; };
+		2953A4482B77D1DC0020F8AC /* AddNameAndPhoneNumberController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2953A4472B77D1DC0020F8AC /* AddNameAndPhoneNumberController.swift */; };
 		296C27E32B67F7930052D350 /* SuccessfulAlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 296C27E22B67F7930052D350 /* SuccessfulAlertView.swift */; };
 		296C27E52B67F9DB0052D350 /* TextLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 296C27E42B67F9DB0052D350 /* TextLabel.swift */; };
 		298B7F1F2B697B47003A36C7 /* AddDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 298B7F1E2B697B47003A36C7 /* AddDetailsView.swift */; };
@@ -95,8 +95,8 @@
 		06A5F41A2B3A68E4000C0218 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		06A5F41C2B3A68E4000C0218 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		06B4D8E22B4F7BD300DD78CB /* AutenticationRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutenticationRepository.swift; sourceTree = "<group>"; };
-		2953A4452B77D1870020F8AC /* AddNameAndEmailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddNameAndEmailView.swift; sourceTree = "<group>"; };
-		2953A4472B77D1DC0020F8AC /* AddNameAndEmailController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddNameAndEmailController.swift; sourceTree = "<group>"; };
+		2953A4452B77D1870020F8AC /* AddNameAndPhoneNumberView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddNameAndPhoneNumberView.swift; sourceTree = "<group>"; };
+		2953A4472B77D1DC0020F8AC /* AddNameAndPhoneNumberController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddNameAndPhoneNumberController.swift; sourceTree = "<group>"; };
 		296C27E22B67F7930052D350 /* SuccessfulAlertView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SuccessfulAlertView.swift; sourceTree = "<group>"; };
 		296C27E42B67F9DB0052D350 /* TextLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextLabel.swift; sourceTree = "<group>"; };
 		298B7F1E2B697B47003A36C7 /* AddDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddDetailsView.swift; sourceTree = "<group>"; };
@@ -269,13 +269,13 @@
 			path = Models;
 			sourceTree = "<group>";
 		};
-		2953A4442B77D1660020F8AC /* AddNameEmail */ = {
+		2953A4442B77D1660020F8AC /* AddNameAndPhoneNumber */ = {
 			isa = PBXGroup;
 			children = (
-				2953A4452B77D1870020F8AC /* AddNameAndEmailView.swift */,
-				2953A4472B77D1DC0020F8AC /* AddNameAndEmailController.swift */,
+				2953A4452B77D1870020F8AC /* AddNameAndPhoneNumberView.swift */,
+				2953A4472B77D1DC0020F8AC /* AddNameAndPhoneNumberController.swift */,
 			);
-			path = AddNameEmail;
+			path = AddNameAndPhoneNumber;
 			sourceTree = "<group>";
 		};
 		298B7F1D2B697AEA003A36C7 /* RegistrationFlow */ = {
@@ -284,7 +284,7 @@
 				298B7F1E2B697B47003A36C7 /* AddDetailsView.swift */,
 				298B7F202B697DA2003A36C7 /* AddDetailsController.swift */,
 				298B7F2F2B6E968A003A36C7 /* AddDetailRow.swift */,
-				2953A4442B77D1660020F8AC /* AddNameEmail */,
+				2953A4442B77D1660020F8AC /* AddNameAndPhoneNumber */,
 			);
 			path = RegistrationFlow;
 			sourceTree = "<group>";
@@ -482,7 +482,7 @@
 				29D8B66B2B599D8A00196543 /* SignUpView.swift in Sources */,
 				298B7F322B6E96C7003A36C7 /* DetailsRowType.swift in Sources */,
 				06A5F4132B3A68DF000C0218 /* MainViewController.swift in Sources */,
-				2953A4482B77D1DC0020F8AC /* AddNameAndEmailController.swift in Sources */,
+				2953A4482B77D1DC0020F8AC /* AddNameAndPhoneNumberController.swift in Sources */,
 				29D8B66D2B599DA300196543 /* SignUpController.swift in Sources */,
 				298B7F2A2B6D2FDB003A36C7 /* Asset.swift in Sources */,
 				06B4D8E32B4F7BD300DD78CB /* AutenticationRepository.swift in Sources */,
@@ -491,7 +491,7 @@
 				29D8B65C2B59574E00196543 /* UIView+Stacking.swift in Sources */,
 				29D8B6642B5983F700196543 /* TextFieldLabel.swift in Sources */,
 				296C27E52B67F9DB0052D350 /* TextLabel.swift in Sources */,
-				2953A4462B77D1870020F8AC /* AddNameAndEmailView.swift in Sources */,
+				2953A4462B77D1870020F8AC /* AddNameAndPhoneNumberView.swift in Sources */,
 				060364042B6892F3005B48ED /* AppViewController.swift in Sources */,
 				060363FD2B688FF3005B48ED /* UserRemoteSource.swift in Sources */,
 				06A5A4572B6DF89A00C05BCC /* DBUser.swift in Sources */,

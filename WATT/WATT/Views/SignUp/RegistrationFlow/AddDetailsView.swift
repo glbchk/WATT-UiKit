@@ -10,26 +10,6 @@ import Combine
 
 class AddDetailsView: UIView {
     
-    // should be placed in viewModel like user publisher
-    @Published var nameExist = false
-    @Published var carExist = false
-    @Published var cardExist = false
-    
-    private var namePublisher: AnyPublisher<Bool, Never> {
-        $nameExist
-            .eraseToAnyPublisher()
-    }
-    
-    private var carPublisher: AnyPublisher<Bool, Never> {
-        $carExist
-            .eraseToAnyPublisher()
-    }
-    
-    private var cardPublisher: AnyPublisher<Bool, Never> {
-        $cardExist
-            .eraseToAnyPublisher()
-    }
-    
     let blueBackgroundView = BlueBackgroundView()
     
     let blueBackgroundHeight = UIScreen.main.bounds.height * 0.35
@@ -80,10 +60,6 @@ class AddDetailsView: UIView {
     }
     
     private func setupNavigationRows() {
-        
-        nameAndPhoneNumberRow.publisher = namePublisher
-        carRow.publisher = carPublisher
-        paymentMethodRow.publisher = cardPublisher
         
         let stack = stack(nameAndPhoneNumberRow, carRow, paymentMethodRow, spacing: 10)
         self.addSubview(stack)

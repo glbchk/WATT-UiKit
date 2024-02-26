@@ -44,9 +44,14 @@ class SignInController: UIViewController {
     @objc private func guestButtonPressed() {
         Task {
             do {
-                try await viewModel.signInAnonymously()
-                try await viewModel.successfulRegistration()
-                self.navigationController?.popViewController(animated: true)
+                try await viewModel.signInAnonymously { result in
+                    switch result {
+                    case .success(_):
+                        try await self.viewModel.successfulRegistration()
+                    case .failure(let failure):
+                        print("Error in anonymously sign in:", failure.localizedDescription)
+                    }
+                }
             } catch {
                 print("Error: \(error)")
             }

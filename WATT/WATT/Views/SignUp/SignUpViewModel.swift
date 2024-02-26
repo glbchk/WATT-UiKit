@@ -59,6 +59,36 @@ class SignUpViewModel: ObservableObject {
             authenticationRepo.success()
         }
     }
+    
+    func createNameAndPhoneNumberPublisher() -> AnyPublisher<String, Never> {
+        var namePublisher: AnyPublisher<String, Never> {
+            $fullName
+                .eraseToAnyPublisher()
+        }
+        
+        var phoneNumberPublisher: AnyPublisher<String, Never> {
+            $phoneNumber
+                .eraseToAnyPublisher()
+        }
+        
+        var nameAndPhoneNumberPublisher: AnyPublisher<String, Never> {
+            Publishers.CombineLatest(namePublisher, phoneNumberPublisher)
+                .map {
+                    if $1 == "" {
+                        return $0
+                    } else if $0 == "" {
+                        return $1
+                    } else if $0 != "" && $1 != "" {
+                        return "\($0), \($1)"
+                    } else {
+                        return ""
+                    }
+                }
+                .eraseToAnyPublisher()
+        }
+        
+        return nameAndPhoneNumberPublisher
+    }
 
     var passwordPublisher: AnyPublisher<Bool, Never> {
         $showPassword

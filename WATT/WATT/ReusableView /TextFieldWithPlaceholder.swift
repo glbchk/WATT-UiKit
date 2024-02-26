@@ -8,10 +8,17 @@
 import UIKit
 
 class TextFieldWithPlaceholder: UITextField {
+    
+    var inputText: String? {
+        didSet {
+            self.text = inputText
+        }
+    }
 
-    init(_ placeholder: String) {
+    init(_ placeholder: String, inputText: String? = nil) {
         super.init(frame: .zero)
         self.placeholder = placeholder
+        self.inputText = inputText
     }
     
     required init?(coder: NSCoder) {

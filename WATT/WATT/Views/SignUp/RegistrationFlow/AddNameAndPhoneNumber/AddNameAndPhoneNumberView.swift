@@ -1,5 +1,5 @@
 //
-//  AddNameAndEmailView.swift
+//  AddNameAndPhoneNumberView.swift
 //  WATT
 //
 //  Created by Stas Boiko on 10.02.2024.
@@ -7,7 +7,7 @@
 
 import UIKit
 
-class AddNameAndEmailView: UIView {
+class AddNameAndPhoneNumberView: UIView {
     
     let blueBackgroundView = BlueBackgroundView()
     

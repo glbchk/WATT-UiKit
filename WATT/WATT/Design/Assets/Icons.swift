@@ -15,7 +15,7 @@ extension Asset {
         static let evStation = UIImage(named: "ev.station")
         static let card = UIImage(systemName: "creditcard")
         static let magnifyingglass = UIImage(systemName: "magnifyingglass")
-        static let xmark = UIImage(systemName: "xmark")
+        static let xmark = UIImage(named: "xmark")
         static let filters = UIImage(named: "filters")
         static let location = UIImage(named: "location")
         

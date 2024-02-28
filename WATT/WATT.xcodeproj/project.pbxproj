@@ -40,6 +40,8 @@
 		06B4D8DF2B4F769E00DD78CB /* FirebaseFirestoreSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 06B4D8DE2B4F769E00DD78CB /* FirebaseFirestoreSwift */; };
 		06B4D8E12B4F76B300DD78CB /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = 06B4D8E02B4F76B300DD78CB /* FirebaseStorage */; };
 		06B4D8E32B4F7BD300DD78CB /* AutenticationRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06B4D8E22B4F7BD300DD78CB /* AutenticationRepository.swift */; };
+		29282FAD2B8F68ED0056A185 /* SearchFieldView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29282FAC2B8F68EC0056A185 /* SearchFieldView.swift */; };
+		29282FAF2B8F811C0056A185 /* RoundedButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29282FAE2B8F811B0056A185 /* RoundedButton.swift */; };
 		2953A4462B77D1870020F8AC /* AddNameAndPhoneNumberView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2953A4452B77D1870020F8AC /* AddNameAndPhoneNumberView.swift */; };
 		2953A4482B77D1DC0020F8AC /* AddNameAndPhoneNumberController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2953A4472B77D1DC0020F8AC /* AddNameAndPhoneNumberController.swift */; };
 		296C27E32B67F7930052D350 /* SuccessfulAlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 296C27E22B67F7930052D350 /* SuccessfulAlertView.swift */; };
@@ -95,6 +97,8 @@
 		06A5F41A2B3A68E4000C0218 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		06A5F41C2B3A68E4000C0218 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		06B4D8E22B4F7BD300DD78CB /* AutenticationRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutenticationRepository.swift; sourceTree = "<group>"; };
+		29282FAC2B8F68EC0056A185 /* SearchFieldView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchFieldView.swift; sourceTree = "<group>"; };
+		29282FAE2B8F811B0056A185 /* RoundedButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundedButton.swift; sourceTree = "<group>"; };
 		2953A4452B77D1870020F8AC /* AddNameAndPhoneNumberView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddNameAndPhoneNumberView.swift; sourceTree = "<group>"; };
 		2953A4472B77D1DC0020F8AC /* AddNameAndPhoneNumberController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddNameAndPhoneNumberController.swift; sourceTree = "<group>"; };
 		296C27E22B67F7930052D350 /* SuccessfulAlertView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SuccessfulAlertView.swift; sourceTree = "<group>"; };
@@ -342,6 +346,8 @@
 				29D8B66E2B59AB5800196543 /* TextFieldWithPlaceholder.swift */,
 				29D8B6712B59BBD200196543 /* AlertController.swift */,
 				296C27E22B67F7930052D350 /* SuccessfulAlertView.swift */,
+				29282FAC2B8F68EC0056A185 /* SearchFieldView.swift */,
+				29282FAE2B8F811B0056A185 /* RoundedButton.swift */,
 			);
 			path = "ReusableView ";
 			sourceTree = "<group>";
@@ -495,12 +501,14 @@
 				060364042B6892F3005B48ED /* AppViewController.swift in Sources */,
 				060363FD2B688FF3005B48ED /* UserRemoteSource.swift in Sources */,
 				06A5A4572B6DF89A00C05BCC /* DBUser.swift in Sources */,
+				29282FAF2B8F811C0056A185 /* RoundedButton.swift in Sources */,
 				065F72AC2B50CB8000CF9C5F /* MainViewModel.swift in Sources */,
 				29D8B6542B559EE400196543 /* UIView+Layout.swift in Sources */,
 				060363F62B688F10005B48ED /* LoginRepository.swift in Sources */,
 				06A5F40F2B3A68DF000C0218 /* AppDelegate.swift in Sources */,
 				060363FB2B688FD9005B48ED /* UserRepository.swift in Sources */,
 				060364062B689304005B48ED /* AppViewModel.swift in Sources */,
+				29282FAD2B8F68ED0056A185 /* SearchFieldView.swift in Sources */,
 				29D8B6562B55AB6900196543 /* LogoView.swift in Sources */,
 				29D8B6762B59D3DA00196543 /* ForgotPasswordView.swift in Sources */,
 				29D8B6602B597B1D00196543 /* MainButton.swift in Sources */,

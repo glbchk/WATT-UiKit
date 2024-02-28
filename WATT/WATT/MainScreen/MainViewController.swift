@@ -26,10 +26,10 @@ class MainViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        view.backgroundColor = .white
+        view.addSubview(contentView)
+        contentView.fillSuperview()
         
         setData()
-        setupViewConstratints()
         setupTarget()
     }
     
@@ -37,23 +37,10 @@ class MainViewController: UIViewController {
         viewModel.$user
             .sink { user in
                 if user != nil {
-                    self.contentView.nameLabel.text = user?.fullName
-                    self.contentView.emailLabel.text = user?.email
+
                 }
             }
             .store(in: &cancellables)
-    }
-    
-    private func setupViewConstratints() {
-        contentView.translatesAutoresizingMaskIntoConstraints = false
-        view.addSubview(contentView)
-        
-        NSLayoutConstraint.activate([
-            contentView.topAnchor.constraint(equalTo: view.topAnchor),
-            contentView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            contentView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            contentView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
-        ])
     }
     
     private func setupTarget() {

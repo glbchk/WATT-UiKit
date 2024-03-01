@@ -18,7 +18,7 @@ class AlertController: UIViewController {
     
     let containerView = UIView()
     
-    let closeButton = UIButton()
+    let closeButton = RoundedButton(image: Asset.Icons.xmark, size: 40, tintColor: Asset.Colors.black)
     
     let submitButtonTitle: String
     
@@ -73,14 +73,14 @@ class AlertController: UIViewController {
     private func setupCloseButton() {
         containerView.addSubview(closeButton)
         
-        closeButton.backgroundColor = .white
-        closeButton.layer.cornerRadius = 20
-        closeButton.setImage(UIImage(systemName: "xmark"), for: .normal)
-        closeButton.tintColor = Asset.Colors.black
+//        closeButton.backgroundColor = .white
+//        closeButton.layer.cornerRadius = 20
+//        closeButton.setImage(Asset.Icons.xmark, for: .normal)
+//        closeButton.tintColor = Asset.Colors.black
+//        
+//        closeButton.setupShadow(opacity: 0.3, radius: 5, color: .black)
         
-        closeButton.setupShadow(opacity: 0.3, radius: 5, color: .black)
-        
-        closeButton.anchor(top: containerView.topAnchor, leading: nil, trailing: containerView.trailingAnchor, bottom: nil, padding: .init(top: -8, left: 0, bottom: 0, right: -8), size: .init(width: 40, height: 40))
+        closeButton.anchor(top: containerView.topAnchor, leading: nil, trailing: containerView.trailingAnchor, bottom: nil, padding: .init(top: -8, left: 0, bottom: 0, right: -8))
         
         closeButton.addTarget(self, action: #selector(handleClose), for: .touchUpInside)
     }

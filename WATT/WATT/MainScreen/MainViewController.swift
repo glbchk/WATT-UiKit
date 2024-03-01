@@ -10,16 +10,16 @@ import Combine
 
 class MainViewController: UIViewController {
     
-    private lazy var contentView = MainView()
+    private let contentView = MainView()
     private var viewModel: MainViewModel
     private var cancellables = Set<AnyCancellable>()
-    
-    private let sideMenuView = UIView()
     
     private let width = UIScreen.main.bounds.width - 100
     private let height = UIScreen.main.bounds.height
     
-    private var showController = false
+    private lazy var sideMenuView: SideMenuView = SideMenuView(viewWidth: width)
+    
+    private var isSideMenuShown = false
     
     init(viewModel: MainViewModel) {
         self.viewModel = viewModel
@@ -35,68 +35,105 @@ class MainViewController: UIViewController {
         
         view.addSubview(contentView)
         contentView.fillSuperview()
-        
-        setData()
+    
         setupTarget()
         setupSideMenuView()
+        bindViewModel()
     }
     
-    private func setupSideMenuView() {
-        sideMenuView.frame = .init(x: -width, y: height / 2, width: width, height: height)
-        sideMenuView.backgroundColor = .red
-        sideMenuView.layer.cornerRadius = 30
-        view.addSubview(sideMenuView)
+    private func setupTarget() {
+        contentView.menuButton.addTarget(self, action: #selector(menuButtonPressed), for: .touchUpInside)
+        contentView.mapView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(hideSideMenuOnMapPressed)))
+        
+        sideMenuView.handleSideMenuRowPressed = { [weak self] rowType in
+            guard let self = self,
+                  let rowType = rowType else { return }
+            switch rowType {
+            case .profile:
+                print(rowType.title)
+            case .bookings:
+                print(rowType.title)
+            case .myChargings:
+                print(rowType.title)
+            case .myCars:
+                print(rowType.title)
+            case .listYourCharger:
+                print(rowType.title)
+            case .paymentMethod:
+                print(rowType.title)
+            case .inviteFriends:
+                print(rowType.title)
+            case .help:
+                print(rowType.title)
+            case .feedback:
+                print(rowType.title)
+            case .signOut:
+                self.viewModel.signOut()
+            }
+        }
+        
     }
     
-    private func setData() {
+    private func bindViewModel() {
         viewModel.$user
-            .sink { user in
-                if user != nil {
-
-                }
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] user in
+                guard let self = self,
+                      let user = user else { return }
+                self.sideMenuView.nameLabel.text = !user.isAnonymous ? user.fullName : "Anonymous user"
+                self.sideMenuView.emailLabel.text = !user.isAnonymous ? user.email : ""
             }
             .store(in: &cancellables)
     }
     
-    private func setupTarget() {
-        contentView.signOutButton.addTarget(self, action: #selector(onPressButton), for: .touchUpInside)
-        contentView.menuButton.addTarget(self, action: #selector(menuButtonPressed), for: .touchUpInside)
-    }
-    
-    @objc private func onPressButton() {
-        viewModel.signOut()
-    }
-    
     @objc private func menuButtonPressed() {
-        showSideMenuController()
+        showSideMenuView()
     }
     
-    func showSideMenuController() {
+    @objc private func hideSideMenuOnMapPressed() {
+        if isSideMenuShown {
+            showSideMenuView()
+        }
+    }
+    
+}
+
+//MARK: Side menu + animation
+extension MainViewController {
+    
+    private func setupSideMenuView() {
+        sideMenuView.frame = .init(x: -width, y: height / 2, width: width, height: height)
+        sideMenuView.layer.cornerRadius = 30
+        view.addSubview(sideMenuView)
+        sideMenuView.clipsToBounds = true
+    }
+    
+    func showSideMenuView() {
         let sideMenuAnimation = CABasicAnimation()
         sideMenuAnimation.keyPath = "position.x"
-        sideMenuAnimation.fromValue = showController ? width / 2 : -(width / 2)
-        sideMenuAnimation.toValue = showController ? -(width / 2) : width / 2
+        sideMenuAnimation.fromValue = isSideMenuShown ? width / 2 : -(width / 2)
+        sideMenuAnimation.toValue = isSideMenuShown ? -(width / 2) : width / 2
         sideMenuAnimation.duration = 0.3
         
         self.sideMenuView.layer.add(sideMenuAnimation, forKey: "basic")
-        self.sideMenuView.layer.position = .init(x: showController ? -(width / 2) : width / 2, y: height / 2)
+        self.sideMenuView.layer.position = .init(x: isSideMenuShown ? -(width / 2) : width / 2, y: height / 2)
         
         let menuButtonAnimation = CABasicAnimation()
         menuButtonAnimation.keyPath = "position.x"
-        menuButtonAnimation.fromValue = showController ? 20 + width : 20
-        menuButtonAnimation.toValue = showController ? 20 : 20 + width
+        menuButtonAnimation.fromValue = isSideMenuShown ? 20 + width : 20
+        menuButtonAnimation.toValue = isSideMenuShown ? 20 : 20 + width
         menuButtonAnimation.duration = 0.3
         
         self.contentView.menuButton.layer.add(menuButtonAnimation, forKey: "basic")
-        self.contentView.menuButton.layer.position = .init(x: showController ? 20 : 20 + width, y: contentView.menuButton.frame.midY)
+        self.contentView.menuButton.layer.position = .init(x: isSideMenuShown ? 20 : 20 + width, y: contentView.menuButton.frame.midY)
         
-        if showController {
-            showController = false
+        if isSideMenuShown {
+            isSideMenuShown = false
             UIView.animate(withDuration: 0.1, delay: 0.25) {
                 self.contentView.searchField.alpha = 1
             }
             contentView.mapView.alpha = 1
-            contentView.mapView.isUserInteractionEnabled = true
+            allowMapInteraction(true)
             UIView.animate(withDuration: 0.5) {
                 self.contentView.locationButton.alpha = 1
             }
@@ -105,10 +142,10 @@ class MainViewController: UIViewController {
             }
             
         } else {
-            showController = true
+            isSideMenuShown = true
             contentView.searchField.alpha = 0
             contentView.mapView.alpha = 0.3
-            contentView.mapView.isUserInteractionEnabled = false
+            allowMapInteraction(false)
             self.contentView.locationButton.alpha = 0
             UIView.animate(withDuration: 2) {
                 self.contentView.menuButton.setImage(Asset.Icons.xmark, for: .normal)
@@ -116,6 +153,13 @@ class MainViewController: UIViewController {
             
         }
         
+    }
+    
+    private func allowMapInteraction(_ interaction: Bool) {
+        contentView.mapView.isZoomEnabled = interaction
+        contentView.mapView.isPitchEnabled = interaction
+        contentView.mapView.isRotateEnabled = interaction
+        contentView.mapView.isScrollEnabled = interaction
     }
     
 }

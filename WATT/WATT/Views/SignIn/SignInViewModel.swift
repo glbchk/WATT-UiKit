@@ -79,7 +79,7 @@ class SignInViewModel: ObservableObject {
     
     var isValidPasswordPublisher: AnyPublisher<Bool, Never> {
         $password
-            .map { !$0.isEmpty && $0.count > 6 }
+            .map { !$0.isEmpty && $0.count >= 6 }
             .eraseToAnyPublisher()
     }
     

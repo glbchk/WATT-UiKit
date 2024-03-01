@@ -13,7 +13,7 @@ extension Asset {
         static let account = UIImage(named: "account.circle")
         static let car = UIImage(named: "car")
         static let evStation = UIImage(named: "ev.station")
-        static let card = UIImage(systemName: "creditcard")
+        static let card = UIImage(named: "card")
         static let magnifyingglass = UIImage(systemName: "magnifyingglass")
         static let xmark = UIImage(named: "xmark")
         static let filters = UIImage(named: "filters")
@@ -26,6 +26,13 @@ extension Asset {
         
         public enum SideMenu {
             static let menu = UIImage(named: "menu")
+            static let userPhoto = UIImage(named: "user.photo")
+            static let bookings = UIImage(named: "today")
+            static let myChargings = UIImage(named: "bolt")
+            static let inviteFriends = UIImage(named: "paperplane")
+            static let help = UIImage(named: "support")
+            static let feedback = UIImage(named: "feedback")
+            static let signOut = UIImage(named: "logout")
         }
     }
 }

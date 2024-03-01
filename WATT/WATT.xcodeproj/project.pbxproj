@@ -43,7 +43,8 @@
 		29282FAD2B8F68ED0056A185 /* SearchFieldView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29282FAC2B8F68EC0056A185 /* SearchFieldView.swift */; };
 		29282FAF2B8F811C0056A185 /* RoundedButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29282FAE2B8F811B0056A185 /* RoundedButton.swift */; };
 		29282FB22B8FBA570056A185 /* SideMenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29282FB12B8FBA570056A185 /* SideMenuView.swift */; };
-		29282FB42B8FBA6D0056A185 /* SideMenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29282FB32B8FBA6D0056A185 /* SideMenuViewController.swift */; };
+		29282FB82B90F3510056A185 /* SideMenuRowType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29282FB72B90F3510056A185 /* SideMenuRowType.swift */; };
+		29282FBA2B91CAFC0056A185 /* SideMenuRowTap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29282FB92B91CAFC0056A185 /* SideMenuRowTap.swift */; };
 		2953A4462B77D1870020F8AC /* AddNameAndPhoneNumberView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2953A4452B77D1870020F8AC /* AddNameAndPhoneNumberView.swift */; };
 		2953A4482B77D1DC0020F8AC /* AddNameAndPhoneNumberController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2953A4472B77D1DC0020F8AC /* AddNameAndPhoneNumberController.swift */; };
 		296C27E32B67F7930052D350 /* SuccessfulAlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 296C27E22B67F7930052D350 /* SuccessfulAlertView.swift */; };
@@ -102,7 +103,8 @@
 		29282FAC2B8F68EC0056A185 /* SearchFieldView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchFieldView.swift; sourceTree = "<group>"; };
 		29282FAE2B8F811B0056A185 /* RoundedButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundedButton.swift; sourceTree = "<group>"; };
 		29282FB12B8FBA570056A185 /* SideMenuView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideMenuView.swift; sourceTree = "<group>"; };
-		29282FB32B8FBA6D0056A185 /* SideMenuViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideMenuViewController.swift; sourceTree = "<group>"; };
+		29282FB72B90F3510056A185 /* SideMenuRowType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideMenuRowType.swift; sourceTree = "<group>"; };
+		29282FB92B91CAFC0056A185 /* SideMenuRowTap.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideMenuRowTap.swift; sourceTree = "<group>"; };
 		2953A4452B77D1870020F8AC /* AddNameAndPhoneNumberView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddNameAndPhoneNumberView.swift; sourceTree = "<group>"; };
 		2953A4472B77D1DC0020F8AC /* AddNameAndPhoneNumberController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddNameAndPhoneNumberController.swift; sourceTree = "<group>"; };
 		296C27E22B67F7930052D350 /* SuccessfulAlertView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SuccessfulAlertView.swift; sourceTree = "<group>"; };
@@ -274,6 +276,7 @@
 				062654AC2B4F6F1F007120AD /* AppUser.swift */,
 				06A5A4562B6DF89A00C05BCC /* DBUser.swift */,
 				298B7F312B6E96C7003A36C7 /* DetailsRowType.swift */,
+				29282FB72B90F3510056A185 /* SideMenuRowType.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -282,7 +285,7 @@
 			isa = PBXGroup;
 			children = (
 				29282FB12B8FBA570056A185 /* SideMenuView.swift */,
-				29282FB32B8FBA6D0056A185 /* SideMenuViewController.swift */,
+				29282FB92B91CAFC0056A185 /* SideMenuRowTap.swift */,
 			);
 			path = SideMenu;
 			sourceTree = "<group>";
@@ -502,6 +505,8 @@
 				29D8B66B2B599D8A00196543 /* SignUpView.swift in Sources */,
 				298B7F322B6E96C7003A36C7 /* DetailsRowType.swift in Sources */,
 				06A5F4132B3A68DF000C0218 /* MainViewController.swift in Sources */,
+				29282FBA2B91CAFC0056A185 /* SideMenuRowTap.swift in Sources */,
+				29282FB82B90F3510056A185 /* SideMenuRowType.swift in Sources */,
 				2953A4482B77D1DC0020F8AC /* AddNameAndPhoneNumberController.swift in Sources */,
 				29D8B66D2B599DA300196543 /* SignUpController.swift in Sources */,
 				29282FB22B8FBA570056A185 /* SideMenuView.swift in Sources */,
@@ -525,7 +530,6 @@
 				060364062B689304005B48ED /* AppViewModel.swift in Sources */,
 				29282FAD2B8F68ED0056A185 /* SearchFieldView.swift in Sources */,
 				29D8B6562B55AB6900196543 /* LogoView.swift in Sources */,
-				29282FB42B8FBA6D0056A185 /* SideMenuViewController.swift in Sources */,
 				29D8B6762B59D3DA00196543 /* ForgotPasswordView.swift in Sources */,
 				29D8B6602B597B1D00196543 /* MainButton.swift in Sources */,
 				062654AD2B4F6F1F007120AD /* AppUser.swift in Sources */,

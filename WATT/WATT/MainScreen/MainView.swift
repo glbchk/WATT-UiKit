@@ -11,7 +11,6 @@ import MapKit
 final class MainView: UIView {
     
     let mapView = MKMapView()
-    let signOutButton = UIButton(type: .system)
     
     let searchField = SearchFieldView(height: 50)
     
@@ -23,14 +22,7 @@ final class MainView: UIView {
     
     init() {
         super.init(frame: .zero)
-        
         setupUI()
-        
-        self.addSubview(signOutButton)
-        signOutButton.anchor(top: nil, leading: nil, trailing: self.trailingAnchor, bottom: self.bottomAnchor, padding: .allSides(60), size: .init(width: 100, height: 20))
-        
-        signOutButton.setTitle("Sign out", for: .normal)
-        signOutButton.backgroundColor = .white
     }
     
     required init?(coder: NSCoder) {

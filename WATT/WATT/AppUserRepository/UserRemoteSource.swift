@@ -13,6 +13,8 @@ protocol UserRemoteSource {
     func checkIfUserExist(user: AppUser, completion: @escaping ((Bool) -> Void))
     func editUserNameInDB(name: String) async throws
     func editPhoneNumberInDB(phoneNumber: String) async throws
+    func updatePaymentMethods(card: PaymentMethod, actionType: ActionType) async throws
+    func updateSelectedPaymentMethods(_ paymentMethod: PaymentMethod) async throws
 }
 
 final class UserRemoteSourceImpl: UserRemoteSource {
@@ -39,21 +41,13 @@ final class UserRemoteSourceImpl: UserRemoteSource {
         try await firebaseManager.editPhoneNumberInDB(phoneNumber: phoneNumber)
     }
     
-//    func editUserNameInDB(name: String) async throws {
-//        guard let uid = authentication.currentUser?.uid else { return }
-//        
-//        try await firestore.collection(FirebaseConstants.users).document(uid).updateData([
-//            "name" : name
-//        ])
-//    }
-//    
-//    func editPhoneNumberInDB(phoneNumber: String) async throws {
-//        guard let uid = authentication.currentUser?.uid else { return }
-//        
-//        try await firestore.collection(FirebaseConstants.users).document(uid).updateData([
-//            "phone_number" : phoneNumber
-//        ])
-//    }
+    func updatePaymentMethods(card: PaymentMethod, actionType: ActionType) async throws {
+        try await firebaseManager.updatePaymentMethods(card: card, actionType: actionType)
+    }
+    
+    func updateSelectedPaymentMethods(_ paymentMethod: PaymentMethod) async throws {
+        try await firebaseManager.updateSelectedPaymentMethods(paymentMethod)
+    }
     
     
 }

@@ -8,27 +8,31 @@
 import UIKit
 
 enum DetailsRowType {
-    case nameAndPhoneNumber, car, paymentMethod
+    case nameAndPhoneNumber, car, paymentMethod, creditCard
     
     var title: String {
         switch self {
-        case .nameAndPhoneNumber:
-            return "Add your name & phone number"
-        case .car:
-            return "Add your car"
-        case .paymentMethod:
-            return "Add payment method"
+            case .nameAndPhoneNumber:
+                return "Add your name & phone number"
+            case .car:
+                return "Add your car"
+            case .paymentMethod:
+                return "Add payment method"
+            case .creditCard:
+                return "Credit card"
         }
     }
     
     var icon: UIImage? {
         switch self {
-        case .nameAndPhoneNumber:
-            return Asset.Icons.account
-        case .car:
-            return Asset.Icons.car
-        case .paymentMethod:
-            return Asset.Icons.card
+            case .nameAndPhoneNumber:
+                return Asset.Icons.account
+            case .car:
+                return Asset.Icons.car
+            case .paymentMethod:
+                return Asset.Icons.card
+            case .creditCard:
+                return Asset.Icons.card
         }
     }
 }

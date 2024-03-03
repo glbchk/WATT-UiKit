@@ -11,20 +11,24 @@ import Firebase
 struct DBUser: Codable {
     let uid: String
     var email: String?
+//    var isEmailConfirmed: Bool?
     var fullName: String?
     var phoneNumber: String?
     var photoURL: String?
     var dateCreated: Date = Date()
     let isAnonymous: Bool
+    var paymentMethods: [PaymentMethod]?
 //    var location: UserLocation?
     
     init(user: AppUser) {
         self.uid = user.uid
         self.email = user.email
+//        self.isEmailConfirmed = user.isEmailConfirmed
         self.fullName = user.fullName
         self.phoneNumber = user.phoneNumber
         self.photoURL = user.photoURL
         self.isAnonymous = user.isAnonymous
+        self.paymentMethods = [.init(provider: .americanExpress, cardName: "", cardNumber: "", expiryDate: "", cvv: "", isDefault: false)]
 //        self.location = nil
     }
     
@@ -34,7 +38,8 @@ struct DBUser: Codable {
         fullName: String? = nil,
         phoneNumber: String? = nil,
         photoURL: String? = nil,
-        isAnonymous: Bool
+        isAnonymous: Bool,
+        paymentMethods: [PaymentMethod]? = []
     ) {
         self.uid = uid
         self.email = email
@@ -42,15 +47,18 @@ struct DBUser: Codable {
         self.phoneNumber = phoneNumber
         self.photoURL = photoURL
         self.isAnonymous = isAnonymous
+        self.paymentMethods = paymentMethods
     }
     
     enum CodingKeys: String, CodingKey {
         case uid, email
+//        case isEmailConfirmed = "is_email_confirmed"
         case fullName = "full_name"
         case phoneNumber = "phone_number"
         case dateCreated = "date_created"
         case photoURL = "photo_url"
         case isAnonymous = "is_anonymous"
+        case paymentMethods = "payment_methods"
     }
     
 }

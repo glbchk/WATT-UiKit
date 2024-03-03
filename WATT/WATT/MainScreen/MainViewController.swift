@@ -9,10 +9,10 @@ import UIKit
 import Combine
 
 class MainViewController: UIViewController {
+    private var cancellables = Set<AnyCancellable>()
     
     private let contentView = MainView()
     private var viewModel: MainViewModel
-    private var cancellables = Set<AnyCancellable>()
     
     private let width = UIScreen.main.bounds.width - 100
     private let height = UIScreen.main.bounds.height
@@ -42,6 +42,7 @@ class MainViewController: UIViewController {
     }
     
     private func setupTarget() {
+        contentView.filterButton.addTarget(self, action: #selector(filterButtonPressed), for: .touchUpInside)
         contentView.menuButton.addTarget(self, action: #selector(menuButtonPressed), for: .touchUpInside)
         contentView.mapView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(hideSideMenuOnMapPressed)))
         
@@ -84,6 +85,11 @@ class MainViewController: UIViewController {
                 self.sideMenuView.emailLabel.text = !user.isAnonymous ? user.email : ""
             }
             .store(in: &cancellables)
+    }
+    
+    @objc private func filterButtonPressed() {
+        let vc = ProfileViewController(viewModel: viewModel.settingsViewModel)
+        self.navigationController?.pushViewController(vc, animated: true)
     }
     
     @objc private func menuButtonPressed() {

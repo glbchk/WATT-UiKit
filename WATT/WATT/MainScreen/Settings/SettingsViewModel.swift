@@ -1,34 +1,40 @@
 //
-//  MainScreenViewModel.swift
+//  SettingsViewModel.swift
 //  WATT
 //
-//  Created by Glib Galchenko on 11/01/24.
+//  Created by Glib Galchenko on 01/03/24.
 //
 
+import UIKit
 import Foundation
-import Swinject
 import Combine
+import Swinject
 
-final class MainViewModel: ObservableObject {
+class SettingsViewModel: ObservableObject {
     private var cancellables = Set<AnyCancellable>()
+    
+    @Published var email = ""
+    @Published var fullName = ""
+    @Published var phoneNumber = ""
+    @Published var langauge = ""
+    @Published var profilePhoto: UIImage? = nil
+    
+    @Published var user: DBUser?
     
     private let authenticationRepo: AuthenticationRepository
     private let loginRepo: LoginRepository
-    private let userRepo: UserRepository
-    let settingsViewModel: SettingsViewModel
+    private var userRepo: UserRepository
     
-    @Published var user: DBUser?
     
     init(dependencies: Resolver) {
         authenticationRepo = dependencies.resolve(AuthenticationRepository.self)!
         loginRepo = dependencies.resolve(LoginRepository.self)!
         userRepo = dependencies.resolve(UserRepository.self)!
-        settingsViewModel = SettingsViewModel(dependencies: dependencies)
         
         listenForUser()
     }
     
-    private func listenForUser() {
+    func listenForUser() {
         userRepo.user
             .receive(on: DispatchQueue.main)
             .sink { [weak self] user in
@@ -36,7 +42,7 @@ final class MainViewModel: ObservableObject {
             }
             .store(in: &cancellables)
     }
-    
+
     func signOut() {
         Task(priority: .medium) { [authenticationRepo, loginRepo] in
             do {

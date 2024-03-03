@@ -9,10 +9,10 @@ import UIKit
 import Combine
 
 class AddDetailsController: UIViewController {
+    var cancellables = Set<AnyCancellable>()
     
     let contentView = AddDetailsView()
     private var viewModel: SignUpViewModel
-    var cancellables = Set<AnyCancellable>()
 
     init(viewModel: SignUpViewModel) {
         self.viewModel = viewModel
@@ -29,16 +29,27 @@ class AddDetailsController: UIViewController {
         contentView.fillSuperview()
         setupTarget()
         bindViewModel()
-        
-        contentView.nameAndPhoneNumberRow.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleNameRowTap)))
     }
     
     private func setupTarget() {
+        contentView.carRow.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleAddCarRowTap)))
+        contentView.paymentMethodRow.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleAddPaymentRowTap)))
+        contentView.nameAndPhoneNumberRow.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleNameRowTap)))
         contentView.completeLaterButton.addTarget(self, action: #selector(completeLaterPressed), for: .touchUpInside)
     }
     
     @objc private func completeLaterPressed() {
         viewModel.successfulRegistration()
+    }
+    
+    @objc private func handleAddCarRowTap() {
+        let vc = AddCarController(viewModel: viewModel)
+        self.navigationController?.pushViewController(vc, animated: true)
+    }
+    
+    @objc private func handleAddPaymentRowTap() {
+        let vc = PaymentMethodController(viewModel: viewModel)
+        self.navigationController?.pushViewController(vc, animated: true)
     }
     
     @objc private func handleNameRowTap() {
@@ -48,6 +59,7 @@ class AddDetailsController: UIViewController {
     
     private func bindViewModel() {
         //add here car and payment method publishers
+        contentView.paymentMethodRow.publisher = viewModel.createPaymentMethodPublisher()
         contentView.nameAndPhoneNumberRow.publisher = viewModel.createNameAndPhoneNumberPublisher()
     }
     

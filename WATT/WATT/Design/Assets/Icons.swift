@@ -39,11 +39,12 @@ extension Asset {
         }
         
         public enum BankCards {
-            static let americanExpress = UIImage(named: "ic_ae")
-            static let chase = UIImage(named: "ic_chase")
-            static let discover = UIImage(named: "ic_discover")
-            static let mastercard = UIImage(named: "ic_mastercard")
-            static let visa = UIImage(named: "ic_visa")
+            static let americanExpress = UIImage(named: "ic.ae")
+            static let chase = UIImage(named: "ic.chase")
+            static let discover = UIImage(named: "ic.discover")
+            static let mastercard = UIImage(named: "ic.mastercard")
+            static let visa = UIImage(named: "ic.visa")
+            static let unknown = UIImage(systemName: "dollarsign.circle.fill")
         }
         
         public enum Menu {

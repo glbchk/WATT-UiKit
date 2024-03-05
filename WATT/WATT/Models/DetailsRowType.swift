@@ -8,7 +8,7 @@
 import UIKit
 
 enum DetailsRowType {
-    case nameAndPhoneNumber, car, paymentMethod, creditCard
+    case nameAndPhoneNumber, car, paymentMethod
     
     var title: String {
         switch self {
@@ -18,8 +18,6 @@ enum DetailsRowType {
                 return "Add your car"
             case .paymentMethod:
                 return "Add payment method"
-            case .creditCard:
-                return "Credit card"
         }
     }
     
@@ -30,8 +28,6 @@ enum DetailsRowType {
             case .car:
                 return Asset.Icons.car
             case .paymentMethod:
-                return Asset.Icons.card
-            case .creditCard:
                 return Asset.Icons.card
         }
     }

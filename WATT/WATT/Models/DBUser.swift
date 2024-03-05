@@ -18,6 +18,7 @@ struct DBUser: Codable {
     var dateCreated: Date = Date()
     let isAnonymous: Bool
     var paymentMethods: [PaymentMethod]?
+    var defaultPaymentMethod: PaymentMethod?
 //    var location: UserLocation?
     
     init(user: AppUser) {
@@ -29,6 +30,7 @@ struct DBUser: Codable {
         self.photoURL = user.photoURL
         self.isAnonymous = user.isAnonymous
         self.paymentMethods = [.init(provider: .americanExpress, cardName: "", cardNumber: "", expiryDate: "", cvv: "", isDefault: false)]
+        self.defaultPaymentMethod = paymentMethods?.first
 //        self.location = nil
     }
     
@@ -39,7 +41,8 @@ struct DBUser: Codable {
         phoneNumber: String? = nil,
         photoURL: String? = nil,
         isAnonymous: Bool,
-        paymentMethods: [PaymentMethod]? = []
+        paymentMethods: [PaymentMethod]? = nil,
+        defaultPaymentMethod: PaymentMethod? = nil
     ) {
         self.uid = uid
         self.email = email
@@ -48,6 +51,7 @@ struct DBUser: Codable {
         self.photoURL = photoURL
         self.isAnonymous = isAnonymous
         self.paymentMethods = paymentMethods
+        self.defaultPaymentMethod = defaultPaymentMethod
     }
     
     enum CodingKeys: String, CodingKey {
@@ -59,6 +63,7 @@ struct DBUser: Codable {
         case photoURL = "photo_url"
         case isAnonymous = "is_anonymous"
         case paymentMethods = "payment_methods"
+        case defaultPaymentMethod = "default_payment_method"
     }
     
 }

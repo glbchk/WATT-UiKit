@@ -20,23 +20,13 @@ class SignUpViewModel: ObservableObject {
     @Published var phoneNumber = ""
     @Published var profilePhoto: UIImage? = nil
     
-    @Published var cardProvider: PaymentMethodRowType? = nil
-    @Published var cardName: String = ""
-    @Published var cardNumber: String = ""
-    @Published var expiry: String = ""
-    @Published var cvv: String = ""
-    @Published var paymentMethods: [PaymentMethod] = [
-//        PaymentMethod(provider: .visa, cardName: "rlgjnelgnkle", cardNumber: "37863474673698", expiryDate: "12/25", cvv: "123"),
-//        PaymentMethod(provider: .mastercard, cardName: "ekjgnlteh;rt", cardNumber: "47863474673698", expiryDate: "12/25", cvv: "123")
-    ]
+    @Published var paymentMethods: [PaymentMethod] = []
     @Published var defaultPaymentMethod: Bool = false
     
     @Published var user: AppUser?
     
     @Published var showPassword = false
     @Published var showRetyped = false
-    
-    @Published var showCvv = false
     
     @Published var fakeDataTable = [
         "Audi X8",
@@ -47,11 +37,13 @@ class SignUpViewModel: ObservableObject {
     private let authenticationRepo: AuthenticationRepository
     private let loginRepo: LoginRepository
     private var userRepo: UserRepository
+    let paymentMethodViewModel: PaymentMethodViewModel?
     
     init(dependencies: Resolver) {
         authenticationRepo = dependencies.resolve(AuthenticationRepository.self)!
         loginRepo = dependencies.resolve(LoginRepository.self)!
         userRepo = dependencies.resolve(UserRepository.self)!
+        paymentMethodViewModel = PaymentMethodViewModel(dependencies: dependencies)
     }
     
     func createUser(completion: @escaping ((Bool, String) -> Void)) {
@@ -83,7 +75,7 @@ class SignUpViewModel: ObservableObject {
     
     func successfulRegistration() {
         guard let user = self.user else { return }
-        let dbUser = DBUser(uid: user.uid, email: email, fullName: fullName, phoneNumber: phoneNumber, isAnonymous: user.isAnonymous)
+        let dbUser = DBUser(uid: user.uid, email: email, fullName: fullName, phoneNumber: phoneNumber, isAnonymous: user.isAnonymous, paymentMethods: paymentMethods, defaultPaymentMethod: paymentMethods.first)
         Task(priority: .medium) {
             try await userRepo.createUserInDB(user: dbUser)
             authenticationRepo.success()
@@ -100,13 +92,6 @@ class SignUpViewModel: ObservableObject {
         if !phoneNumber.isEmpty {
             try await userRepo.editPhoneNumberInDB(phoneNumber: phoneNumber)
         }
-    }
-    
-    func savePaymentMethod(paymentMethod: PaymentMethod) {
-        cardProvider = cardNumber.checkBankProvider(number: cardNumber)
-        
-        let paymentMethod = PaymentMethod(provider: cardProvider, cardName: cardName, cardNumber: cardNumber, expiryDate: expiry, cvv: cvv, isDefault: defaultPaymentMethod)
-        paymentMethods.append(paymentMethod)
     }
     
     func createNameAndPhoneNumberPublisher() -> AnyPublisher<String, Never> {
@@ -179,54 +164,6 @@ class SignUpViewModel: ObservableObject {
             .eraseToAnyPublisher()
     }
     
-    var cvvPublisher: AnyPublisher<Bool, Never> {
-        $showCvv
-            .eraseToAnyPublisher()
-    }
-    
-    func createPaymentMethodPublisher() -> AnyPublisher<String, Never> {
-        
-        var cardNamePublisher: AnyPublisher<String, Never> {
-            $cardName
-                .eraseToAnyPublisher()
-        }
-        
-        var cardNumberPublisher: AnyPublisher<String, Never> {
-            $cardNumber
-                .eraseToAnyPublisher()
-        }
-        
-        var expiryPublisher: AnyPublisher<String, Never> {
-            $expiry
-                .eraseToAnyPublisher()
-        }
-        
-        var cvvPublisher: AnyPublisher<String, Never> {
-            $cvv
-                .eraseToAnyPublisher()
-        }
-        
-        var paymentMethodPublisher: AnyPublisher<String, Never> {
-            Publishers.CombineLatest4(cardNamePublisher, cardNumberPublisher, expiryPublisher, cvvPublisher)
-                .map { cardName, cardNumber, expiry, cvv in
-                    if !cardName.isEmpty {
-                        return "\(cardName)"
-                    } else if !cardNumber.isEmpty {
-                        return "\(cardNumber)"
-                    } else if !expiry.isEmpty {
-                        return "\(expiry)"
-                    } else if !cvv.isEmpty && cvv.count == 3 {
-                        return "\(cvv)"
-                    } else {
-                        return "Card data is invalid"
-                    }
-                }
-                .eraseToAnyPublisher()
-        }
-        
-        return paymentMethodPublisher
-    }
-    
 }
 
 
@@ -239,25 +176,3 @@ extension String {
     }
 }
 
-extension String {
-    
-    func checkBankProvider(number: String) -> PaymentMethodRowType {
-        var result = PaymentMethodRowType.americanExpress
-        
-        if number.prefix(2) == "34" || number.prefix(2) == "37" {
-            result = PaymentMethodRowType.americanExpress
-        } else if number.prefix(1) == "4" {
-            result = PaymentMethodRowType.visa
-            if number.prefix(6) == "483312" {
-                result = PaymentMethodRowType.chase
-            }
-        } else if number.prefix(1) == "5" {
-            result = PaymentMethodRowType.mastercard
-        } else if number.prefix(1) == "6" {
-            result = PaymentMethodRowType.discover
-        }
-        
-        return result
-    }
-    
-}

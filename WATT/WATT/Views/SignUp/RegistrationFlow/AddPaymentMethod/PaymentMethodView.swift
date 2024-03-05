@@ -26,17 +26,12 @@ class PaymentMethodView: UIView {
 
     let anotherMethodLabel = TextFieldLabel(title: "ADD ANOTHER PAYMENT METHOD")
 
-//    var bankProvider: PaymentMethodType?
     let paymentMethodsTableView = UITableView()
-//    var tableViewHeight: CGFloat
-//    var tableViewCount: Int
-    let addCreditCardRow = AddDetailRow(DetailsRowType.creditCard)
+    let addCreditCardRow = AddCreditCardRow()
     
-    let completeLaterButton = MainButton(title: "Complete later", titleColor: Asset.Colors.black, backgroundColor: .white, shadowOpacity: 0.15, shRadius: 5, shColor: .black)
+    let continueButton = MainButton(title: "Continue")
     
     init() {
-//        self.tableViewHeight = 0
-//        self.tableViewCount = 0
         super.init(frame: .zero)
         
         setupUI()
@@ -53,9 +48,7 @@ class PaymentMethodView: UIView {
         setupBackButton()
         setupLabels()
         setupTableView()
-        setupCompleteLeterButton()
-//        setupTableView()
-//        setupRowAddCreditCard()
+        setupButtons()
     }
     
     private func setupBlueHeader() {
@@ -83,43 +76,94 @@ class PaymentMethodView: UIView {
         paymentMethodsTableView.anchor(top: subtitleLable.bottomAnchor, leading: self.leadingAnchor, trailing: self.trailingAnchor, bottom: self.bottomAnchor, padding: .init(top: 20, left: 20, bottom: 0, right: 20))
     }
     
-//    private func setupRowAddCreditCard() {
-//        self.addSubview(addCreditCardRow)
-//        addCreditCardRow.anchor(top: paymentMethodsTableView.bottomAnchor, leading: self.leadingAnchor, trailing: self.trailingAnchor, bottom: nil, padding: .init(top: 0, left: 20, bottom: 0, right: 20))
-//    }
-    
-    func setupCompleteLeterButton() {
-        let stack = stack(addCreditCardRow, completeLaterButton, spacing: 20)
+    func setupButtons() {
+        let stack = stack(addCreditCardRow, continueButton, spacing: 20)
         
         self.addSubview(stack)
         stack.anchor(top: nil, leading: self.leadingAnchor, trailing: self.trailingAnchor, bottom: self.bottomAnchor, padding: .init(top: 0, left: 20, bottom: 50, right: 20))
-        [addCreditCardRow, completeLaterButton].forEach {
+        [addCreditCardRow, continueButton].forEach {
             $0.anchor(top: nil, leading: stack.leadingAnchor, trailing: stack.trailingAnchor, bottom: nil)
         }
     }
     
-//    private func setupAddedMethodsRows() {
-//
-//        var firstStack = stack()
-//
-//        if !addedMethods.isEmpty {
-//            for method in addedMethods {
-//                firstStack.addArrangedSubview(method)
-//            }
-//            firstStack = stack(spacing: 10)
-//            self.addSubview(firstStack)
-//            firstStack.anchor(top: subtitleLable.bottomAnchor, leading: self.leadingAnchor, trailing: self.trailingAnchor, bottom: nil, padding: .init(top: 25, left: 20, bottom: 0, right: 20))
-//            firstStack.arrangedSubviews.forEach {
-//                $0.anchor(top: nil, leading: firstStack.leadingAnchor, trailing: firstStack.trailingAnchor, bottom: nil)
-//            }
-//        }
-//
-//        let secondStack = stack(anotherMethodLabel, addCreditCardRow, spacing: 10)
-//        self.addSubview(secondStack)
-//        secondStack.anchor(top: firstStack.bottomAnchor, leading: self.leadingAnchor, trailing: self.trailingAnchor, bottom: nil, padding: .init(top: 25, left: 20, bottom: 0, right: 20))
-//        secondStack.arrangedSubviews.forEach {
-//            $0.anchor(top: nil, leading: secondStack.leadingAnchor, trailing: secondStack.trailingAnchor, bottom: nil)
-//        }
-//    }
+}
+
+
+class AddCreditCardRow: UIView {
+    
+    let rowView: UIView = {
+        let view = UIView()
+        view.constrainWidth(60)
+        view.constrainHeight(60)
+        view.backgroundColor = Asset.Colors.grey4
+        view.layer.cornerRadius = 5
+        return view
+    }()
+    
+    let rowImageView: UIImageView = {
+        let imgView = UIImageView()
+        imgView.constrainWidth(30)
+        imgView.constrainHeight(30)
+        imgView.tintColor = Asset.Colors.deepBlue
+        return imgView
+    }()
+    
+    let label: UILabel = {
+        let label = UILabel()
+        label.font = .boldSystemFont(ofSize: 15)
+        label.textColor = Asset.Colors.black
+        label.adjustsFontSizeToFitWidth = true
+        label.minimumScaleFactor = 0.5
+        return label
+    }()
+    
+    let detailsLabel: UILabel = {
+        let label = UILabel()
+        label.font = .systemFont(ofSize: 13)
+        label.textColor = Asset.Colors.grey1
+        label.adjustsFontSizeToFitWidth = true
+        label.minimumScaleFactor = 0.5
+        return label
+    }()
+    
+    let rightArrow: UIImageView = {
+        let view = UIImageView(image: Asset.Icons.Navigation.chevronRight)
+        view.contentMode = .scaleAspectFit
+        view.tintColor = Asset.Colors.grey1
+        view.constrainWidth(24)
+        return view
+    }()
+    
+    init() {
+        super.init(frame: .zero)
+        setupUI()
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    func setupUI() {
+        self.backgroundColor = .white
+        self.layer.cornerRadius = 15
+        self.setupShadow(opacity: 0.15, radius: 5, color: .black)
+        
+        self.constrainHeight(90)
+        
+        rowImageView.image = Asset.Icons.card
+        rowImageView.tintColor = Asset.Colors.deepBlue
+        
+        label.text = "Add credit card"
+        
+        rowView.addSubview(rowImageView)
+        rowImageView.centerInSuperview()
+        
+        let labelsStack = stack(label, detailsLabel, spacing: 3)
+        
+        let stack = hstack(rowView, labelsStack, rightArrow, spacing: 15)
+        
+        self.addSubview(stack)
+        stack.anchor(top: self.topAnchor, leading: self.leadingAnchor, trailing: self.trailingAnchor, bottom: self.bottomAnchor, padding: .allSides(15))
+    }
     
 }

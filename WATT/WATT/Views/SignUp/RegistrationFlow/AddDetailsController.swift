@@ -48,7 +48,10 @@ class AddDetailsController: UIViewController {
     }
     
     @objc private func handleAddPaymentRowTap() {
-        let vc = PaymentMethodController(viewModel: viewModel)
+        guard let paymentMethodViewModel = viewModel.paymentMethodViewModel else { return }
+        let vc = PaymentMethodController(viewModel: viewModel, paymentMethodViewModel: paymentMethodViewModel, action: {
+            self.viewModel.paymentMethods = paymentMethodViewModel.addedPaymentMethods
+        })
         self.navigationController?.pushViewController(vc, animated: true)
     }
     
@@ -59,7 +62,7 @@ class AddDetailsController: UIViewController {
     
     private func bindViewModel() {
         //add here car and payment method publishers
-        contentView.paymentMethodRow.publisher = viewModel.createPaymentMethodPublisher()
+        contentView.paymentMethodRow.publisher = viewModel.paymentMethodViewModel?.createPaymentMethodPublisher()
         contentView.nameAndPhoneNumberRow.publisher = viewModel.createNameAndPhoneNumberPublisher()
     }
     

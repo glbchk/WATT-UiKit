@@ -13,6 +13,7 @@ enum PaymentMethodRowType: String, Codable {
     case discover
     case mastercard
     case visa
+    case unknown
     
     var title: String {
         switch self {
@@ -26,6 +27,8 @@ enum PaymentMethodRowType: String, Codable {
                 return "Mastercard"
             case .visa:
                 return "Visa"
+            case .unknown:
+                return "Unknown payment method"
         }
     }
     
@@ -41,6 +44,8 @@ enum PaymentMethodRowType: String, Codable {
                 return Asset.Icons.BankCards.mastercard
             case .visa:
                 return Asset.Icons.BankCards.visa
+            case .unknown:
+                return Asset.Icons.BankCards.unknown
         }
         
     }

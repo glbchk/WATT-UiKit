@@ -17,16 +17,16 @@ class PaymentMethodCell: UITableViewCell {
     
     let methodLogoView: UIImageView = {
         let view = UIImageView()
-        view.constrainWidth(24)
-        view.constrainHeight(24)
+        view.constrainWidth(30)
+        view.constrainHeight(30)
         view.contentMode = .scaleAspectFit
         return view
     }()
     
     let titleLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 15)
-        label.textColor = UIColor.black
+        label.font = UIFont.boldSystemFont(ofSize: 15)
+        label.textColor = Asset.Colors.black
         
         return label
     }()
@@ -34,7 +34,7 @@ class PaymentMethodCell: UITableViewCell {
     let subtitleLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 13)
-        label.textColor = UIColor.systemGray
+        label.textColor = Asset.Colors.grey1
         
         return label
     }()
@@ -64,14 +64,12 @@ class PaymentMethodCell: UITableViewCell {
 //    }
 
     func setupUI() {
-        self.backgroundColor = .white
-        self.layer.cornerRadius = 15
-        self.setupShadow(opacity: 0.15, radius: 5, color: .black)
+        self.backgroundColor = .clear
         
         let imageView = UIView()
         imageView.constrainHeight(60)
         imageView.constrainWidth(60)
-        imageView.backgroundColor = .lightGray
+        imageView.backgroundColor = Asset.Colors.grey4
         imageView.layer.cornerRadius = 5
         imageView.addSubview(methodLogoView)
         methodLogoView.centerInSuperview()
@@ -87,8 +85,15 @@ class PaymentMethodCell: UITableViewCell {
         let labelsStack = stack(titleLabel, subtitleLabel, spacing: 4)
         let mainStack = hstack(imageView, labelsStack, rightArrow, spacing: 15, alignment: .center, distribution: .fill)
         
-        self.addSubview(mainStack)
-        mainStack.anchor(top: self.topAnchor, leading: self.leadingAnchor, trailing: self.trailingAnchor, bottom: self.bottomAnchor, padding: .allSides(15))
+        let someView = UIView()
+        someView.backgroundColor = .white
+        someView.layer.cornerRadius = 15
+        someView.setupShadow(opacity: 0.15, radius: 5, color: .black)
+        someView.addSubview(mainStack)
+        
+        self.addSubview(someView)
+        mainStack.anchor(top: someView.topAnchor, leading: someView.leadingAnchor, trailing: someView.trailingAnchor, bottom: someView.bottomAnchor, padding: .allSides(15))
+        someView.fillSuperview(padding: .init(top: 5, left: 0, bottom: 5, right: 0))
     }
 
 }

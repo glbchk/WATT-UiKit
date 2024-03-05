@@ -13,16 +13,17 @@ class PaymentMethodController: UIViewController {
     
     let contentView = PaymentMethodView()
     private var viewModel: SignUpViewModel
+    private var paymentMethodViewModel: PaymentMethodViewModel
     
-    let cellHeight: CGFloat = 90
+    let cellHeight: CGFloat = 100
     
-    init(viewModel: SignUpViewModel) {
+    let action: (() -> Void)?
+    
+    init(viewModel: SignUpViewModel, paymentMethodViewModel: PaymentMethodViewModel, action: (() -> Void)?) {
         self.viewModel = viewModel
+        self.paymentMethodViewModel = paymentMethodViewModel
+        self.action = action
         super.init(nibName: nil, bundle: nil)
-//        contentView.tableViewCount = viewModel.paymentMethods.count
-//        contentView.paymentMethodsTableView.reloadData()
-//        contentView.tableViewHeight = CGFloat(viewModel.paymentMethods.count) * cellHeight
-//        setupMethods()
     }
     
     required init?(coder: NSCoder) {
@@ -40,29 +41,28 @@ class PaymentMethodController: UIViewController {
         contentView.paymentMethodsTableView.dataSource = self
         contentView.paymentMethodsTableView.delegate = self
         contentView.paymentMethodsTableView.register(PaymentMethodCell.self, forCellReuseIdentifier: "payment_method")
-//        contentView.setupTableView(tableView: viewModel.paymentMethods.count)
+        contentView.paymentMethodsTableView.separatorStyle = .none
+        
     }
     
-//    override func updateViewConstraints() {
-//        tableHeightConstraint.constant = tableView.contentSize.height
-//        super.updateViewConstraints()
-//    }
-    
     private func setupTargets() {
+        contentView.continueButton.addTarget(self, action: #selector(handleContinueButton), for: .touchUpInside)
         contentView.addCreditCardRow.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleCreditCardRowTap)))
         contentView.backButton.addTarget(self, action: #selector(handleBackTap), for: .touchUpInside)
     }
     
-    @objc private func handleCompleteLater() {
-        viewModel.successfulRegistration()
+    @objc private func handleContinueButton() {
+        action?()
+        self.navigationController?.popViewController(animated: true)
     }
     
     @objc private func handleBackTap() {
+        action?()
         self.navigationController?.popViewController(animated: true)
     }
     
     @objc private func handleCreditCardRowTap() {
-        let vc = AddCreditCardController(viewModel: viewModel, action: {
+        let vc = AddCreditCardController(viewModel: paymentMethodViewModel, action: {
             self.contentView.paymentMethodsTableView.reloadData()
         })
         self.navigationController?.pushViewController(vc, animated: true)
@@ -72,20 +72,16 @@ class PaymentMethodController: UIViewController {
 
 extension PaymentMethodController: UITableViewDelegate, UITableViewDataSource {
     
-    func numberOfSections(in tableView: UITableView) -> Int {
-        return viewModel.paymentMethods.count
-    }
-    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 1
+        return paymentMethodViewModel.addedPaymentMethods.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "payment_method", for: indexPath) as! PaymentMethodCell
         
-        cell.methodLogoView.image = viewModel.paymentMethods[indexPath.item].provider?.icon
-        cell.titleLabel.text = viewModel.paymentMethods[indexPath.item].cardName
-        cell.subtitleLabel.text = viewModel.paymentMethods[indexPath.item].cardNumber
+        cell.methodLogoView.image = paymentMethodViewModel.addedPaymentMethods[indexPath.item].provider?.icon
+        cell.titleLabel.text = paymentMethodViewModel.addedPaymentMethods[indexPath.item].cardName
+        cell.subtitleLabel.text = paymentMethodViewModel.addedPaymentMethods[indexPath.item].cardNumber
         
         return cell
     }
@@ -94,14 +90,18 @@ extension PaymentMethodController: UITableViewDelegate, UITableViewDataSource {
         return cellHeight
     }
     
-    func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-        return 10
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let vc = EditCreditCardController(viewModel: paymentMethodViewModel, action: {
+            self.contentView.paymentMethodsTableView.reloadData()
+        })
+        
+        vc.contentView.cardNameTextField.text = viewModel.paymentMethodViewModel?.addedPaymentMethods[indexPath.row].cardName
+        vc.contentView.cardNumberTextField.text = viewModel.paymentMethodViewModel?.addedPaymentMethods[indexPath.row].cardNumber
+        vc.contentView.expiryTextField.text = viewModel.paymentMethodViewModel?.addedPaymentMethods[indexPath.row].expiryDate
+        vc.contentView.cvvTextField.text = viewModel.paymentMethodViewModel?.addedPaymentMethods[indexPath.row].cvv
+        
+        self.navigationController?.pushViewController(vc, animated: true)
     }
     
-    func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
-        let headerView = UIView()
-        headerView.backgroundColor = UIColor.clear
-        return headerView
-    }
     
 }

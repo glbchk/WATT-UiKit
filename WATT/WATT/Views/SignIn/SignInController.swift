@@ -50,7 +50,7 @@ class SignInController: UIViewController {
                 try await viewModel.signInAnonymously { result in
                     switch result {
                     case .success(_):
-                        try await self.viewModel.successfulRegistration()
+                        try await self.viewModel.successfulAnonymousRegistration()
                     case .failure(let failure):
                         print("Error in anonymously sign in:", failure.localizedDescription)
                     }
@@ -86,8 +86,10 @@ class SignInController: UIViewController {
     }
     
     @objc private func addPaymentMethodTempButtonPressed() {
-        if let signUpViewModel = viewModel.signUpViewModel {
-            let vc = PaymentMethodController(viewModel: signUpViewModel)
+        if let paymentMethodViewModel = viewModel.signUpViewModel?.paymentMethodViewModel, let signUpViewModel = viewModel.signUpViewModel {
+            let vc = PaymentMethodController(viewModel: signUpViewModel, paymentMethodViewModel: paymentMethodViewModel, action: {
+                self.viewModel.signUpViewModel?.paymentMethods = paymentMethodViewModel.addedPaymentMethods
+            })
             navigationController?.pushViewController(vc, animated: true)
         }
     }

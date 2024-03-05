@@ -59,10 +59,10 @@ class SignInViewModel: ObservableObject {
         }
     }
     
-    func successfulRegistration() async throws {
+    func successfulAnonymousRegistration() async throws {
         guard let user = self.user else { return }
         let dbUser = DBUser(uid: user.uid, isAnonymous: user.isAnonymous)
-        try await userRepo.createUserInDB(user: dbUser)
+        try await userRepo.createAnonymousUserInDB(user: dbUser)
         authRepo.success()
     }
     

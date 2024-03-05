@@ -55,21 +55,21 @@ final class AuthenticationManager {
         try await authentication.currentUser?.sendEmailVerification()
     }
     
-    func checkIsEmailVerified(completion: @escaping ((Bool) -> Void)) throws {
-        guard let isVerified = authentication.currentUser?.isEmailVerified else {
-            throw URLError(.badServerResponse)
-        }
-        
-        if isVerified {
-            print("Email is varified: \(isVerified)")
-        } else {
-            print("Email is not varified: \(isVerified)")
-        }
-    }
-    
-    func reloadUser(completion: @escaping ((Bool) -> Void)) async throws {
-        try await authentication.currentUser?.reload()
-    }
+//    func checkIsEmailVerified(completion: @escaping ((Bool) -> Void)) throws {
+//        guard let isVerified = authentication.currentUser?.isEmailVerified else {
+//            throw URLError(.badServerResponse)
+//        }
+//        
+//        if isVerified {
+//            print("Email is varified: \(isVerified)")
+//        } else {
+//            print("Email is not varified: \(isVerified)")
+//        }
+//    }
+//    
+//    func reloadUser(completion: @escaping ((Bool) -> Void)) async throws {
+//        try await authentication.currentUser?.reload()
+//    }
     
     func sendPasswordReset(email: String, completion: @escaping ((Bool) -> Void)) async throws {
         try await authentication.sendPasswordReset(withEmail: email)

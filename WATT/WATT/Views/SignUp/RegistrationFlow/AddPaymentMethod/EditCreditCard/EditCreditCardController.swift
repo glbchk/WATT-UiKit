@@ -1,17 +1,17 @@
 //
-//  AddCreditCardController.swift
+//  EditCreditCardController.swift
 //  WATT
 //
-//  Created by Glib Galchenko on 01/03/24.
+//  Created by Glib Galchenko on 05/03/24.
 //
 
 import UIKit
 import Combine
 
-class AddCreditCardController: UIViewController {
+class EditCreditCardController: UIViewController {
     var cancellables = Set<AnyCancellable>()
     
-    let contentView = AddCreditCardView()
+    let contentView = EditCreditCardView()
     let paymentMethodContentView = PaymentMethodView()
     private var viewModel: PaymentMethodViewModel
     

@@ -13,22 +13,27 @@ class SideMenuView: UIView {
         .profile, .bookings, .myChargings, .myCars, .listYourCharger, .paymentMethod, .inviteFriends, .help, .feedback, .signOut
     ]
     
+    let menuBackgroundView = UIView()
+    
     let blueBackgroundView = BlueBackgroundView()
     
     private let blueBackgroundHeight = UIScreen.main.bounds.height * 0.25
-    let viewWidth: CGFloat
+    private let viewWidth: CGFloat
     
     let userPhotoView = UIImageView(image: Asset.Icons.SideMenu.userPhoto?.withRenderingMode(.alwaysTemplate))
     
     let nameLabel = TextLabel(title: "Name", font: .boldSystemFont(ofSize: 18), textColor: .white)
     let emailLabel = TextLabel(title: "Email", font: .systemFont(ofSize: 13), textColor: .white)
     
+    let closeButton = RoundedButton(image: Asset.Icons.xmark, size: 50)
+    
     var handleSideMenuRowPressed: ((SideMenuRowType?) -> Void)?
     
     init(viewWidth: CGFloat) {
         self.viewWidth = viewWidth
         super.init(frame: .zero)
-        self.backgroundColor = .white
+        self.backgroundColor = .clear
+        self.isUserInteractionEnabled = false
         setupUI()
     }
     
@@ -37,13 +42,31 @@ class SideMenuView: UIView {
     }
     
     private func setupUI() {
+        setupMenuBackgroundView()
+        setupCloseButton()
         setupBlueHeader()
         setupHeaderStack()
         setupMenuRows()
     }
     
+    private func setupMenuBackgroundView() {
+        menuBackgroundView.layer.cornerRadius = 30
+        menuBackgroundView.clipsToBounds = true
+        menuBackgroundView.backgroundColor = .white
+        
+        
+        self.addSubview(menuBackgroundView)
+        menuBackgroundView.anchor(top: self.topAnchor, leading: self.leadingAnchor, trailing: nil, bottom: self.bottomAnchor, size: .init(width: viewWidth, height: 0))
+    }
+    
+    private func setupCloseButton() {
+        self.addSubview(closeButton)
+        closeButton.anchor(top: self.safeAreaLayoutGuide.topAnchor, leading: menuBackgroundView.trailingAnchor, trailing: nil, bottom: nil, padding: .init(top: 0, left: 20, bottom: 0, right: 0))
+        closeButton.isHidden = true
+    }
+    
     private func setupBlueHeader() {
-        self.addSubview(blueBackgroundView)
+        menuBackgroundView.addSubview(blueBackgroundView)
         blueBackgroundView.anchor(top: self.topAnchor, leading: self.leadingAnchor, trailing: self.trailingAnchor, bottom: nil, size: .init(width: 0, height: blueBackgroundHeight))
         blueBackgroundView.setupGradient(frame: .init(x: 0, y: 0, width: viewWidth, height: blueBackgroundHeight))
     }
@@ -72,9 +95,9 @@ class SideMenuView: UIView {
             view.addGestureRecognizer(rowTap)
         }
         
-        self.addSubview(stack)
+        menuBackgroundView.addSubview(stack)
         
-        stack.anchor(top: blueBackgroundView.bottomAnchor, leading: self.leadingAnchor, trailing: self.trailingAnchor, bottom: nil, padding: .init(top: 15, left: 35, bottom: 0, right: 35))
+        stack.anchor(top: blueBackgroundView.bottomAnchor, leading: menuBackgroundView.leadingAnchor, trailing: menuBackgroundView.trailingAnchor, bottom: nil, padding: .init(top: 15, left: 35, bottom: 0, right: 35))
     }
     
     @objc private func sideMenuRowPressed(_ sender: Any) {

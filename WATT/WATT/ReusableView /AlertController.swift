@@ -29,7 +29,6 @@ class AlertController: BaseViewController {
         self.completionClose = completionClose
         self.submitButtonTitle = buttonTitle
         super.init(nibName: nil, bundle: nil)
-        setupUI()
     }
     
     required init?(coder: NSCoder) {
@@ -38,6 +37,8 @@ class AlertController: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        setupUI()
+        handleKeyboardAppearance()
     }
     
     private func submitClicked() {
@@ -73,13 +74,6 @@ class AlertController: BaseViewController {
     private func setupCloseButton() {
         containerView.addSubview(closeButton)
         
-//        closeButton.backgroundColor = .white
-//        closeButton.layer.cornerRadius = 20
-//        closeButton.setImage(Asset.Icons.xmark, for: .normal)
-//        closeButton.tintColor = Asset.Colors.black
-//        
-//        closeButton.setupShadow(opacity: 0.3, radius: 5, color: .black)
-        
         closeButton.anchor(top: containerView.topAnchor, leading: nil, trailing: containerView.trailingAnchor, bottom: nil, padding: .init(top: -8, left: 0, bottom: 0, right: -8))
         
         closeButton.addTarget(self, action: #selector(handleClose), for: .touchUpInside)
@@ -103,6 +97,17 @@ class AlertController: BaseViewController {
     
     @objc private func handleSubmitButton() {
         submitClicked()
+    }
+    
+    private func handleKeyboardAppearance() {
+        handleKeyboardAppearanceAction = { [weak self] keyboardAppeared, keyboardHeight in
+            guard let self = self else { return }
+            if keyboardAppeared {
+                view.frame.origin.y = -keyboardHeight / 2.5
+            } else {
+                view.frame.origin.y = 0
+            }
+        }
     }
 
 }

@@ -13,6 +13,8 @@ class SignInController: BaseViewController {
     let contentView = SignInView()
     private var viewModel: SignInViewModel
     var cancellables = Set<AnyCancellable>()
+    
+    var isAlertShown = false
 
     init(viewModel: SignInViewModel) {
         self.viewModel = viewModel
@@ -30,6 +32,7 @@ class SignInController: BaseViewController {
         setupTargets()
         bindViewsToViewModel()
         bindSecureFieldPublisher()
+        handleKeyboardAppearance()
         
         navigationController?.navigationBar.isHidden = true
     }
@@ -39,6 +42,21 @@ class SignInController: BaseViewController {
         contentView.signUpButton.addTarget(self, action: #selector(signUpButtonPressed), for: .touchUpInside)
         contentView.signInButton.addTarget(self, action: #selector(signInButtonPressed), for: .touchUpInside)
         contentView.guestButton.addTarget(self, action: #selector(guestButtonPressed), for: .touchUpInside)
+    }
+    
+    private func handleKeyboardAppearance() {
+        handleKeyboardAppearanceAction = { [weak self] keyboardAppeared, keyboardHeight in
+            guard let self = self else { return }
+            if !isAlertShown {
+                if keyboardAppeared {
+                    contentView.frame.origin.y = -(UIScreen.main.bounds.height * 0.12)
+                    contentView.logoView.alpha = 0
+                } else {
+                    contentView.frame.origin.y = 0
+                    contentView.logoView.alpha = 1
+                }
+            }
+        }
     }
     
     @objc private func guestButtonPressed() {
@@ -59,7 +77,7 @@ class SignInController: BaseViewController {
     }
     
     @objc private func forgotPasswordButtonPressed() {
-        let vc = AlertController(contentView: ForgotPasswordView(), buttonTitle: "Reset", completionSubmit:  {
+        let vc = AlertController(contentView: ForgotPasswordView(), buttonTitle: "Reset") {
             Task {
                 do {
                     try await self.viewModel.successfulRegistration()
@@ -67,7 +85,11 @@ class SignInController: BaseViewController {
                     print(error)
                 }
             }
-        })
+        } completionClose: {
+            self.isAlertShown = false
+        }
+        
+        isAlertShown = true
         vc.modalPresentationStyle = .overFullScreen
         vc.modalTransitionStyle = .crossDissolve
         navigationController?.present(vc, animated: true)

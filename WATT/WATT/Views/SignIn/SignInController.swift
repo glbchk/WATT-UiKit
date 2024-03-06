@@ -8,7 +8,7 @@
 import UIKit
 import Combine
 
-class SignInController: UIViewController {
+class SignInController: BaseViewController {
     
     let contentView = SignInView()
     private var viewModel: SignInViewModel

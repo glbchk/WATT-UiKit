@@ -7,7 +7,7 @@
 
 import UIKit
 
-class AlertController: UIViewController {
+class AlertController: BaseViewController {
     
     let completionSubmit: (() -> Void)?
     let completionClose: (() -> Void)?

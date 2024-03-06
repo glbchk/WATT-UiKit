@@ -45,6 +45,8 @@
 		29282FB22B8FBA570056A185 /* SideMenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29282FB12B8FBA570056A185 /* SideMenuView.swift */; };
 		29282FB82B90F3510056A185 /* SideMenuRowType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29282FB72B90F3510056A185 /* SideMenuRowType.swift */; };
 		29282FBA2B91CAFC0056A185 /* SideMenuRowTap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29282FB92B91CAFC0056A185 /* SideMenuRowTap.swift */; };
+		29282FBC2B98B33E0056A185 /* UIViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29282FBB2B98B33E0056A185 /* UIViewController.swift */; };
+		29282FBF2B98B6EA0056A185 /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29282FBE2B98B6EA0056A185 /* BaseViewController.swift */; };
 		2953A4462B77D1870020F8AC /* AddNameAndPhoneNumberView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2953A4452B77D1870020F8AC /* AddNameAndPhoneNumberView.swift */; };
 		2953A4482B77D1DC0020F8AC /* AddNameAndPhoneNumberController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2953A4472B77D1DC0020F8AC /* AddNameAndPhoneNumberController.swift */; };
 		296C27E32B67F7930052D350 /* SuccessfulAlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 296C27E22B67F7930052D350 /* SuccessfulAlertView.swift */; };
@@ -105,6 +107,8 @@
 		29282FB12B8FBA570056A185 /* SideMenuView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideMenuView.swift; sourceTree = "<group>"; };
 		29282FB72B90F3510056A185 /* SideMenuRowType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideMenuRowType.swift; sourceTree = "<group>"; };
 		29282FB92B91CAFC0056A185 /* SideMenuRowTap.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideMenuRowTap.swift; sourceTree = "<group>"; };
+		29282FBB2B98B33E0056A185 /* UIViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewController.swift; sourceTree = "<group>"; };
+		29282FBE2B98B6EA0056A185 /* BaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
 		2953A4452B77D1870020F8AC /* AddNameAndPhoneNumberView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddNameAndPhoneNumberView.swift; sourceTree = "<group>"; };
 		2953A4472B77D1DC0020F8AC /* AddNameAndPhoneNumberController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddNameAndPhoneNumberController.swift; sourceTree = "<group>"; };
 		296C27E22B67F7930052D350 /* SuccessfulAlertView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SuccessfulAlertView.swift; sourceTree = "<group>"; };
@@ -247,6 +251,7 @@
 				298B7F222B6D2F56003A36C7 /* Design */,
 				29D8B6522B559ED000196543 /* Extensions */,
 				29D8B64D2B557DC300196543 /* ReusableView  */,
+				29282FBD2B98B6C90056A185 /* BaseElements */,
 				06EA12B32B3E2A1D001979E9 /* Models */,
 				062654B32B4F753C007120AD /* Authentication */,
 				060363F92B688FAB005B48ED /* AppUserRepository */,
@@ -288,6 +293,14 @@
 				29282FB92B91CAFC0056A185 /* SideMenuRowTap.swift */,
 			);
 			path = SideMenu;
+			sourceTree = "<group>";
+		};
+		29282FBD2B98B6C90056A185 /* BaseElements */ = {
+			isa = PBXGroup;
+			children = (
+				29282FBE2B98B6EA0056A185 /* BaseViewController.swift */,
+			);
+			path = BaseElements;
 			sourceTree = "<group>";
 		};
 		2953A4442B77D1660020F8AC /* AddNameAndPhoneNumber */ = {
@@ -374,6 +387,7 @@
 			children = (
 				29D8B6532B559EE400196543 /* UIView+Layout.swift */,
 				29D8B65B2B59574E00196543 /* UIView+Stacking.swift */,
+				29282FBB2B98B33E0056A185 /* UIViewController.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -497,10 +511,12 @@
 				298B7F2C2B6D2FF8003A36C7 /* Colors.swift in Sources */,
 				29D8B6722B59BBD200196543 /* AlertController.swift in Sources */,
 				29D8B64F2B557DFB00196543 /* TextFieldBackgroundView.swift in Sources */,
+				29282FBC2B98B33E0056A185 /* UIViewController.swift in Sources */,
 				298B7F302B6E968A003A36C7 /* AddDetailRow.swift in Sources */,
 				062654AB2B4F6BEE007120AD /* DependencyInjection.swift in Sources */,
 				060363F42B688EFB005B48ED /* AuthenticationManager.swift in Sources */,
 				060364012B68920B005B48ED /* MainView.swift in Sources */,
+				29282FBF2B98B6EA0056A185 /* BaseViewController.swift in Sources */,
 				29D8B6682B5992F800196543 /* BlueBackgroundView.swift in Sources */,
 				29D8B66B2B599D8A00196543 /* SignUpView.swift in Sources */,
 				298B7F322B6E96C7003A36C7 /* DetailsRowType.swift in Sources */,

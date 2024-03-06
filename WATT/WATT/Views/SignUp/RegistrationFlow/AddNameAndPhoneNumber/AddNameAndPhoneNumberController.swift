@@ -8,7 +8,7 @@
 import UIKit
 import Combine
 
-class AddNameAndPhoneNumberController: UIViewController {
+class AddNameAndPhoneNumberController: BaseViewController {
     
     let contentView = AddNameAndPhoneNumberView()
     private var viewModel: SignUpViewModel

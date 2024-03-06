@@ -8,7 +8,7 @@
 import UIKit
 import Combine
 
-class MainViewController: UIViewController {
+class MainViewController: BaseViewController {
     
     private let contentView = MainView()
     private var viewModel: MainViewModel

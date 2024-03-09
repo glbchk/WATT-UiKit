@@ -14,7 +14,7 @@ class TextFieldBackgroundView: UIView {
     
     var textField: UITextField? {
         didSet {
-            setupUI()
+            setupTextField()
         }
     }
     var secureFieldPublisher: AnyPublisher<Bool, Never>? {
@@ -40,7 +40,6 @@ class TextFieldBackgroundView: UIView {
         self.action = action
         super.init(frame: .zero)
         setupUI()
-//        setupSecureFieldButton()
         bindSFButton()
     }
     
@@ -49,6 +48,17 @@ class TextFieldBackgroundView: UIView {
     }
     
     private func setupUI() {
+        self.constrainHeight(50)
+        
+        self.backgroundColor = Asset.Colors.grey4
+        self.layer.borderWidth = 1
+        self.layer.borderColor = Asset.Colors.grey3.cgColor
+        self.layer.cornerRadius = 10
+        
+        setupTextField()
+    }
+    
+    private func setupTextField() {
         guard let textField = textField else { return }
         textField.autocorrectionType = .no
         textField.autocapitalizationType = .none
@@ -56,15 +66,7 @@ class TextFieldBackgroundView: UIView {
         
         addSubview(textField)
         
-        self.constrainHeight(50)
-//        self.constrainWidth(UIScreen.main.bounds.width - 40)
-        
         textField.fillSuperview(padding: .init(top: 12, left: 15, bottom: 12, right: 15))
-        
-        self.backgroundColor = Asset.Colors.grey4
-        self.layer.borderWidth = 1
-        self.layer.borderColor = Asset.Colors.grey3.cgColor
-        self.layer.cornerRadius = 10
     }
     
     private func setupSecureFieldButton() {

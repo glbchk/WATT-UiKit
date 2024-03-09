@@ -79,7 +79,7 @@ class AddDetailRow: UIView {
         
         self.constrainHeight(70)
         
-        rowImageView.image = type.icon
+        rowImageView.image = type.icon?.withRenderingMode(.alwaysTemplate)
         
         label.text = type.title
         

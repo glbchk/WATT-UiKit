@@ -8,7 +8,8 @@
 import UIKit
 import Combine
 
-class AddNameAndPhoneNumberController: UIViewController {
+
+class AddNameAndPhoneNumberController: BaseViewController {
     var cancellables = Set<AnyCancellable>()
     
     let contentView = AddNameAndPhoneNumberView()

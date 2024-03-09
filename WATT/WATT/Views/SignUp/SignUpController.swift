@@ -8,7 +8,8 @@
 import UIKit
 import Combine
 
-class SignUpController: UIViewController {
+
+class SignUpController: BaseViewController {
     var cancellables = Set<AnyCancellable>()
     
     let contentView = SignUpView()
@@ -31,11 +32,25 @@ class SignUpController: UIViewController {
         bindViewsToViewModel()
 //        bindViewModelToView()
         bindSecureFieldPublishers()
+        handleKeyboardAppearance()
     }
     
     private func setupTargets() {
         contentView.signInButton.addTarget(self, action: #selector(signInButtonPressed), for: .touchUpInside)
         contentView.signUpButton.addTarget(self, action: #selector(signUpButtonPressed), for: .touchUpInside)
+    }
+    
+    private func handleKeyboardAppearance() {
+        handleKeyboardAppearanceAction = { [weak self] keyboardAppeared, keyboardHeight in
+            guard let self = self else { return }
+            if keyboardAppeared {
+                contentView.frame.origin.y = -(UIScreen.main.bounds.height * 0.12)
+                contentView.logoView.alpha = 0
+            } else {
+                contentView.frame.origin.y = 0
+                contentView.logoView.alpha = 1
+            }
+        }
     }
     
     @objc private func signInButtonPressed() {

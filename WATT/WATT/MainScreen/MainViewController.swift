@@ -8,8 +8,10 @@
 import UIKit
 import Combine
 
-class MainViewController: UIViewController {
+
+class MainViewController: BaseViewController {
     private var cancellables = Set<AnyCancellable>()
+
     
     private let contentView = MainView()
     private var viewModel: MainViewModel

@@ -49,6 +49,7 @@ final class MainView: UIView {
         searchField.isActiveSearch = { [weak self] isActive in
             guard let self = self else { return }
             if isActive {
+                mapView.isUserInteractionEnabled = false
                 
                 animate {
                     self.menuButton.isHidden = true
@@ -56,6 +57,8 @@ final class MainView: UIView {
                 }
                 
             } else {
+                mapView.isUserInteractionEnabled = false
+                
                 animate {
                     self.menuButton.isHidden = false
                     self.menuButton.alpha = 1

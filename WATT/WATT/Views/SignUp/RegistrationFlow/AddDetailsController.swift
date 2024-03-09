@@ -8,8 +8,10 @@
 import UIKit
 import Combine
 
-class AddDetailsController: UIViewController {
+
+class AddDetailsController: BaseViewController {
     var cancellables = Set<AnyCancellable>()
+
     
     let contentView = AddDetailsView()
     private var viewModel: SignUpViewModel

@@ -8,12 +8,14 @@
 import UIKit
 import Combine
 
-class SignInController: UIViewController {
+class SignInController: BaseViewController {
     
     let contentView = SignInView()
     let forgotPasswordView = ForgotPasswordView()
     private var viewModel: SignInViewModel
     var cancellables = Set<AnyCancellable>()
+    
+    var isAlertShown = false
 
     init(viewModel: SignInViewModel) {
         self.viewModel = viewModel
@@ -31,6 +33,7 @@ class SignInController: UIViewController {
         setupTargets()
         bindViewsToViewModel()
         bindSecureFieldPublisher()
+        handleKeyboardAppearance()
         
         navigationController?.navigationBar.isHidden = true
     }
@@ -42,6 +45,21 @@ class SignInController: UIViewController {
         contentView.signUpButton.addTarget(self, action: #selector(signUpButtonPressed), for: .touchUpInside)
         contentView.signInButton.addTarget(self, action: #selector(signInButtonPressed), for: .touchUpInside)
         contentView.guestButton.addTarget(self, action: #selector(guestButtonPressed), for: .touchUpInside)
+    }
+    
+    private func handleKeyboardAppearance() {
+        handleKeyboardAppearanceAction = { [weak self] keyboardAppeared, keyboardHeight in
+            guard let self = self else { return }
+            if !isAlertShown {
+                if keyboardAppeared {
+                    contentView.frame.origin.y = -(UIScreen.main.bounds.height * 0.12)
+                    contentView.logoView.alpha = 0
+                } else {
+                    contentView.frame.origin.y = 0
+                    contentView.logoView.alpha = 1
+                }
+            }
+        }
     }
     
     @objc private func guestButtonPressed() {
@@ -62,7 +80,7 @@ class SignInController: UIViewController {
     }
     
     @objc private func forgotPasswordButtonPressed() {
-        let vc = AlertController(contentView: ForgotPasswordView(), buttonTitle: "Reset", completionSubmit:  {
+        let vc = AlertController(contentView: ForgotPasswordView(), buttonTitle: "Reset") {
             Task {
                 self.viewModel.sendPasswordReset(email: self.viewModel.email) { error in
                     if !error {
@@ -72,7 +90,11 @@ class SignInController: UIViewController {
                     }
                 }
             }
-        })
+        } completionClose: {
+            self.isAlertShown = false
+        }
+        
+        isAlertShown = true
         vc.modalPresentationStyle = .overFullScreen
         vc.modalTransitionStyle = .crossDissolve
         navigationController?.present(vc, animated: true)

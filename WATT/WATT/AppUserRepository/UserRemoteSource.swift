@@ -8,16 +8,23 @@
 import Foundation
 
 protocol UserRemoteSource {
+    func createAnonymousUserInDB(user: DBUser) async throws
     func createUserInDB(user: DBUser) async throws
     func getUserFromDB() async throws -> DBUser
     func checkIfUserExist(user: AppUser, completion: @escaping ((Bool) -> Void))
     func editUserNameInDB(name: String) async throws
     func editPhoneNumberInDB(phoneNumber: String) async throws
+    func updatePaymentMethods(card: PaymentMethod, actionType: ActionType) async throws
+    func updateSelectedPaymentMethods(_ paymentMethod: PaymentMethod) async throws
 }
 
 final class UserRemoteSourceImpl: UserRemoteSource {
     
     private var firebaseManager = FirebaseManager()
+    
+    func createAnonymousUserInDB(user: DBUser) async throws {
+        try await firebaseManager.createAnonymousUserInDB(user: user)
+    }
     
     func createUserInDB(user: DBUser) async throws {
         try await firebaseManager.createUserInDB(user: user)
@@ -39,21 +46,13 @@ final class UserRemoteSourceImpl: UserRemoteSource {
         try await firebaseManager.editPhoneNumberInDB(phoneNumber: phoneNumber)
     }
     
-//    func editUserNameInDB(name: String) async throws {
-//        guard let uid = authentication.currentUser?.uid else { return }
-//        
-//        try await firestore.collection(FirebaseConstants.users).document(uid).updateData([
-//            "name" : name
-//        ])
-//    }
-//    
-//    func editPhoneNumberInDB(phoneNumber: String) async throws {
-//        guard let uid = authentication.currentUser?.uid else { return }
-//        
-//        try await firestore.collection(FirebaseConstants.users).document(uid).updateData([
-//            "phone_number" : phoneNumber
-//        ])
-//    }
+    func updatePaymentMethods(card: PaymentMethod, actionType: ActionType) async throws {
+        try await firebaseManager.updatePaymentMethods(card: card, actionType: actionType)
+    }
+    
+    func updateSelectedPaymentMethods(_ paymentMethod: PaymentMethod) async throws {
+        try await firebaseManager.updateSelectedPaymentMethods(paymentMethod)
+    }
     
     
 }

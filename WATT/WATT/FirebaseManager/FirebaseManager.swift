@@ -11,8 +11,14 @@ import FirebaseFirestore
 import FirebaseStorage
 import FirebaseAuth
 
+enum ActionType {
+    case add
+    case remove
+}
+
 struct FirebaseConstants {
     static let users = "users"
+    static let anonymousUsers = "anonymous"
 }
 
 final class FirebaseManager {
@@ -25,6 +31,10 @@ final class FirebaseManager {
         self.authentication = Auth.auth()
         self.storage = Storage.storage()
         self.firestore = Firestore.firestore()
+    }
+    
+    func createAnonymousUserInDB(user: DBUser) async throws {
+        try firestore.collection(FirebaseConstants.anonymousUsers).document(user.uid).setData(from: user)
     }
     
     func createUserInDB(user: DBUser) async throws {
@@ -64,5 +74,35 @@ final class FirebaseManager {
             "phone_number" : phoneNumber
         ])
     }
+    
+    func updatePaymentMethods(card: PaymentMethod, actionType: ActionType) async throws {
+        guard let user = authentication.currentUser else { return }
+        let cardData = try Firestore.Encoder().encode(card)
+        if actionType == .add {
+            try await firestore.collection(FirebaseConstants.users).document(user.uid).updateData([
+                "payment_methods" : FieldValue.arrayUnion([cardData])
+            ])
+        } else if actionType == .remove {
+            try await firestore.collection(FirebaseConstants.users).document(user.uid).updateData([
+                "payment_methods" : FieldValue.arrayRemove([cardData])
+            ])
+        }
+    }
+    
+    func updateSelectedPaymentMethods(_ paymentMethod: PaymentMethod) async throws {
+        guard let user = authentication.currentUser else { return }
+        let paymentMethod = try Firestore.Encoder().encode(paymentMethod)
+        try await firestore.collection(FirebaseConstants.users).document(user.uid).updateData([
+            "payment_methods" : paymentMethod
+        ])
+    }
+    
+//    func editEmailConfirmedInDB(isEmailConfirmed: Bool) async throws {
+//        guard let uid = authentication.currentUser?.uid else { return }
+//        
+//        try await firestore.collection(FirebaseConstants.users).document(uid).updateData([
+//            "is_email_confirmed" : isEmailConfirmed
+//        ])
+//    }
     
 }

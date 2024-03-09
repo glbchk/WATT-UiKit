@@ -8,11 +8,12 @@
 import UIKit
 import Combine
 
-class SignUpController: BaseViewController {
 
+class SignUpController: BaseViewController {
+    var cancellables = Set<AnyCancellable>()
+    
     let contentView = SignUpView()
     private var viewModel: SignUpViewModel
-    var cancellables = Set<AnyCancellable>()
     
     init(viewModel: SignUpViewModel) {
         self.viewModel = viewModel

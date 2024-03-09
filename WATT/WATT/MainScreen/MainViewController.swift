@@ -8,16 +8,19 @@
 import UIKit
 import Combine
 
+
 class MainViewController: BaseViewController {
+    private var cancellables = Set<AnyCancellable>()
+
     
     private let contentView = MainView()
     private var viewModel: MainViewModel
-    private var cancellables = Set<AnyCancellable>()
     
-    private let width = UIScreen.main.bounds.width - 100
+    private let width = UIScreen.main.bounds.width * 0.75
     private let height = UIScreen.main.bounds.height
     
-    private lazy var sideMenuView: SideMenuView = SideMenuView(viewWidth: width)
+    private lazy var sideMenuView = SideMenuView(viewWidth: width)
+    private let sideMenuBackgroundView = UIView()
     
     private var isSideMenuShown = false
     
@@ -37,13 +40,16 @@ class MainViewController: BaseViewController {
         contentView.fillSuperview()
     
         setupTarget()
+        setupSideMenuBackgroundView()
         setupSideMenuView()
         bindViewModel()
     }
     
     private func setupTarget() {
+        contentView.filterButton.addTarget(self, action: #selector(filterButtonPressed), for: .touchUpInside)
         contentView.menuButton.addTarget(self, action: #selector(menuButtonPressed), for: .touchUpInside)
-        contentView.mapView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(hideSideMenuOnMapPressed)))
+        sideMenuView.closeButton.addTarget(self, action: #selector(closeMenuButtonPressed), for: .touchUpInside)
+        sideMenuView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(outsideMenuAreaPressed)))
         
         sideMenuView.handleSideMenuRowPressed = { [weak self] rowType in
             guard let self = self,
@@ -71,7 +77,6 @@ class MainViewController: BaseViewController {
                 self.viewModel.signOut()
             }
         }
-        
     }
     
     private func bindViewModel() {
@@ -86,13 +91,25 @@ class MainViewController: BaseViewController {
             .store(in: &cancellables)
     }
     
-    @objc private func menuButtonPressed() {
-        showSideMenuView()
+    @objc private func filterButtonPressed() {
+        let vc = ProfileViewController(viewModel: viewModel.settingsViewModel)
+        self.navigationController?.pushViewController(vc, animated: true)
     }
     
-    @objc private func hideSideMenuOnMapPressed() {
+    @objc private func menuButtonPressed() {
+        animateSideMenuView()
+    }
+    
+    @objc private func outsideMenuAreaPressed(sender: UITapGestureRecognizer) {
+        let point = sender.location(in: sideMenuView)
+        if point.x > width && isSideMenuShown {
+            animateSideMenuView()
+        }
+    }
+    
+    @objc private func closeMenuButtonPressed() {
         if isSideMenuShown {
-            showSideMenuView()
+            animateSideMenuView()
         }
     }
     
@@ -102,65 +119,40 @@ class MainViewController: BaseViewController {
 extension MainViewController {
     
     private func setupSideMenuView() {
-        sideMenuView.frame = .init(x: -width, y: height / 2, width: width, height: height)
-        sideMenuView.layer.cornerRadius = 30
+        sideMenuView.frame = .init(x: -width, y: 0, width: UIScreen.main.bounds.width, height: height)
         view.addSubview(sideMenuView)
-        sideMenuView.clipsToBounds = true
     }
     
-    func showSideMenuView() {
-        let sideMenuAnimation = CABasicAnimation()
-        sideMenuAnimation.keyPath = "position.x"
-        sideMenuAnimation.fromValue = isSideMenuShown ? width / 2 : -(width / 2)
-        sideMenuAnimation.toValue = isSideMenuShown ? -(width / 2) : width / 2
-        sideMenuAnimation.duration = 0.3
+    private func setupSideMenuBackgroundView() {
+        sideMenuBackgroundView.backgroundColor = .black.withAlphaComponent(0.7)
+        sideMenuBackgroundView.isHidden = true
         
-        self.sideMenuView.layer.add(sideMenuAnimation, forKey: "basic")
-        self.sideMenuView.layer.position = .init(x: isSideMenuShown ? -(width / 2) : width / 2, y: height / 2)
-        
-        let menuButtonAnimation = CABasicAnimation()
-        menuButtonAnimation.keyPath = "position.x"
-        menuButtonAnimation.fromValue = isSideMenuShown ? 20 + width : 20
-        menuButtonAnimation.toValue = isSideMenuShown ? 20 : 20 + width
-        menuButtonAnimation.duration = 0.3
-        
-        self.contentView.menuButton.layer.add(menuButtonAnimation, forKey: "basic")
-        self.contentView.menuButton.layer.position = .init(x: isSideMenuShown ? 20 : 20 + width, y: contentView.menuButton.frame.midY)
-        
+        view.addSubview(sideMenuBackgroundView)
+        sideMenuBackgroundView.anchor(top: view.topAnchor, leading: view.leadingAnchor, trailing: view.trailingAnchor, bottom: view.bottomAnchor)
+    }
+    
+    func animateSideMenuView() {
         if isSideMenuShown {
             isSideMenuShown = false
-            UIView.animate(withDuration: 0.1, delay: 0.25) {
-                self.contentView.searchField.alpha = 1
-            }
-            contentView.mapView.alpha = 1
-            allowMapInteraction(true)
-            UIView.animate(withDuration: 0.5) {
-                self.contentView.locationButton.alpha = 1
-            }
-            UIView.animate(withDuration: 2) {
-                self.contentView.menuButton.setImage(Asset.Icons.SideMenu.menu, for: .normal)
-            }
+            sideMenuView.isUserInteractionEnabled = false
             
+            UIView.animate(withDuration: 0.3, delay: .zero, options: .curveEaseIn) {
+                self.sideMenuView.frame.origin.x = -self.width
+            } completion: { _ in
+                self.sideMenuBackgroundView.isHidden = true
+                self.sideMenuView.closeButton.isHidden = true
+            }
         } else {
             isSideMenuShown = true
-            contentView.searchField.alpha = 0
-            contentView.mapView.alpha = 0.3
-            allowMapInteraction(false)
-            self.contentView.locationButton.alpha = 0
-            UIView.animate(withDuration: 2) {
-                self.contentView.menuButton.setImage(Asset.Icons.xmark, for: .normal)
-            }
+            sideMenuBackgroundView.isHidden = false
+            sideMenuView.isUserInteractionEnabled = true
+            sideMenuView.closeButton.isHidden = false
             
+            UIView.animate(withDuration: 0.3, delay: .zero, options: .curveEaseIn) {
+                self.sideMenuView.frame.origin.x = 0
+            }
         }
         
     }
-    
-    private func allowMapInteraction(_ interaction: Bool) {
-        contentView.mapView.isZoomEnabled = interaction
-        contentView.mapView.isPitchEnabled = interaction
-        contentView.mapView.isRotateEnabled = interaction
-        contentView.mapView.isScrollEnabled = interaction
-    }
-    
 }
 

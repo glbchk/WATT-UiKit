@@ -8,11 +8,12 @@
 import UIKit
 import Combine
 
+
 class AddNameAndPhoneNumberController: BaseViewController {
+    var cancellables = Set<AnyCancellable>()
     
     let contentView = AddNameAndPhoneNumberView()
     private var viewModel: SignUpViewModel
-    var cancellables = Set<AnyCancellable>()
     
     init(viewModel: SignUpViewModel) {
         self.viewModel = viewModel

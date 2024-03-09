@@ -15,6 +15,7 @@ final class MainViewModel: ObservableObject {
     private let authenticationRepo: AuthenticationRepository
     private let loginRepo: LoginRepository
     private let userRepo: UserRepository
+    let settingsViewModel: SettingsViewModel
     
     @Published var user: DBUser?
     
@@ -22,6 +23,7 @@ final class MainViewModel: ObservableObject {
         authenticationRepo = dependencies.resolve(AuthenticationRepository.self)!
         loginRepo = dependencies.resolve(LoginRepository.self)!
         userRepo = dependencies.resolve(UserRepository.self)!
+        settingsViewModel = SettingsViewModel(dependencies: dependencies)
         
         listenForUser()
     }

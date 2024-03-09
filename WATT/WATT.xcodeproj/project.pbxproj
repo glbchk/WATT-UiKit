@@ -15,6 +15,26 @@
 		060364012B68920B005B48ED /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 060364002B68920B005B48ED /* MainView.swift */; };
 		060364042B6892F3005B48ED /* AppViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 060364032B6892F3005B48ED /* AppViewController.swift */; };
 		060364062B689304005B48ED /* AppViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 060364052B689304005B48ED /* AppViewModel.swift */; };
+		06102B9E2B94259C0063FEC5 /* AddCarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06102B9D2B94259C0063FEC5 /* AddCarController.swift */; };
+		06102BA02B9425A70063FEC5 /* AddCarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06102B9F2B9425A70063FEC5 /* AddCarView.swift */; };
+		06102BA32B9426140063FEC5 /* ChooseModelController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06102BA22B9426140063FEC5 /* ChooseModelController.swift */; };
+		06102BA52B9426200063FEC5 /* ChooseModelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06102BA42B9426200063FEC5 /* ChooseModelView.swift */; };
+		06102BA72B9429160063FEC5 /* Car.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06102BA62B9429160063FEC5 /* Car.swift */; };
+		0614777C2B9551A800A585A0 /* PaymentMethodViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0614777B2B9551A800A585A0 /* PaymentMethodViewModel.swift */; };
+		0622D9042B92390700A84437 /* ToggleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0622D9032B92390700A84437 /* ToggleView.swift */; };
+		0622D9072B92393900A84437 /* PaymentMethodCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0622D9062B92393900A84437 /* PaymentMethodCell.swift */; };
+		0622D9092B923A4700A84437 /* PaymentMethod.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0622D9082B923A4700A84437 /* PaymentMethod.swift */; };
+		0622D90B2B923A9800A84437 /* PaymentMethodRowType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0622D90A2B923A9800A84437 /* PaymentMethodRowType.swift */; };
+		0622D90D2B923AB800A84437 /* PaymentProviders.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0622D90C2B923AB800A84437 /* PaymentProviders.swift */; };
+		0622D9102B923CA300A84437 /* SettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0622D90F2B923CA300A84437 /* SettingsViewModel.swift */; };
+		0622D9132B923CDA00A84437 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0622D9122B923CDA00A84437 /* ProfileViewController.swift */; };
+		0622D9152B923CE900A84437 /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0622D9142B923CE900A84437 /* ProfileView.swift */; };
+		0622D9172B923CF700A84437 /* ProfileRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0622D9162B923CF700A84437 /* ProfileRow.swift */; };
+		0622D91A2B9242BC00A84437 /* PaymentMethodController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0622D9192B9242BC00A84437 /* PaymentMethodController.swift */; };
+		0622D91C2B9242CD00A84437 /* PaymentMethodView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0622D91B2B9242CD00A84437 /* PaymentMethodView.swift */; };
+		0622D91F2B92431600A84437 /* AddCreditCardController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0622D91E2B92431600A84437 /* AddCreditCardController.swift */; };
+		0622D9212B92431F00A84437 /* AddCreditCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0622D9202B92431F00A84437 /* AddCreditCardView.swift */; };
+		0622D9232B924D1000A84437 /* CustomTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0622D9222B924D1000A84437 /* CustomTableView.swift */; };
 		062654992B4F6761007120AD /* Swinject in Frameworks */ = {isa = PBXBuildFile; productRef = 062654982B4F6761007120AD /* Swinject */; };
 		0626549B2B4F6762007120AD /* Swinject-Dynamic in Frameworks */ = {isa = PBXBuildFile; productRef = 0626549A2B4F6762007120AD /* Swinject-Dynamic */; };
 		062654A02B4F6A0F007120AD /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 0626549F2B4F6A0F007120AD /* FirebaseAnalytics */; };
@@ -24,6 +44,8 @@
 		062654AB2B4F6BEE007120AD /* DependencyInjection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 062654AA2B4F6BEE007120AD /* DependencyInjection.swift */; };
 		062654AD2B4F6F1F007120AD /* AppUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 062654AC2B4F6F1F007120AD /* AppUser.swift */; };
 		062654B22B4F74B9007120AD /* FirebaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 062654B12B4F74B9007120AD /* FirebaseManager.swift */; };
+		063105382B96CF230042B130 /* EditCreditCardController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 063105372B96CF230042B130 /* EditCreditCardController.swift */; };
+		0631053A2B96CF2F0042B130 /* EditCreditCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 063105392B96CF2F0042B130 /* EditCreditCardView.swift */; };
 		064A90312B79B341003E1734 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 064A90302B79B341003E1734 /* GoogleService-Info.plist */; };
 		065F72AC2B50CB8000CF9C5F /* MainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 065F72AB2B50CB8000CF9C5F /* MainViewModel.swift */; };
 		065F72AF2B50CCC900CF9C5F /* SignUpViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 065F72AE2B50CCC900CF9C5F /* SignUpViewModel.swift */; };
@@ -87,9 +109,31 @@
 		060364002B68920B005B48ED /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
 		060364032B6892F3005B48ED /* AppViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppViewController.swift; sourceTree = "<group>"; };
 		060364052B689304005B48ED /* AppViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppViewModel.swift; sourceTree = "<group>"; };
+		06102B9D2B94259C0063FEC5 /* AddCarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddCarController.swift; sourceTree = "<group>"; };
+		06102B9F2B9425A70063FEC5 /* AddCarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddCarView.swift; sourceTree = "<group>"; };
+		06102BA22B9426140063FEC5 /* ChooseModelController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChooseModelController.swift; sourceTree = "<group>"; };
+		06102BA42B9426200063FEC5 /* ChooseModelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChooseModelView.swift; sourceTree = "<group>"; };
+		06102BA62B9429160063FEC5 /* Car.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Car.swift; sourceTree = "<group>"; };
+		0614777B2B9551A800A585A0 /* PaymentMethodViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentMethodViewModel.swift; sourceTree = "<group>"; };
+		0622D9032B92390700A84437 /* ToggleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToggleView.swift; sourceTree = "<group>"; };
+		0622D9062B92393900A84437 /* PaymentMethodCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentMethodCell.swift; sourceTree = "<group>"; };
+		0622D9082B923A4700A84437 /* PaymentMethod.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentMethod.swift; sourceTree = "<group>"; };
+		0622D90A2B923A9800A84437 /* PaymentMethodRowType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentMethodRowType.swift; sourceTree = "<group>"; };
+		0622D90C2B923AB800A84437 /* PaymentProviders.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentProviders.swift; sourceTree = "<group>"; };
+		0622D90F2B923CA300A84437 /* SettingsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewModel.swift; sourceTree = "<group>"; };
+		0622D9122B923CDA00A84437 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
+		0622D9142B923CE900A84437 /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
+		0622D9162B923CF700A84437 /* ProfileRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileRow.swift; sourceTree = "<group>"; };
+		0622D9192B9242BC00A84437 /* PaymentMethodController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentMethodController.swift; sourceTree = "<group>"; };
+		0622D91B2B9242CD00A84437 /* PaymentMethodView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentMethodView.swift; sourceTree = "<group>"; };
+		0622D91E2B92431600A84437 /* AddCreditCardController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddCreditCardController.swift; sourceTree = "<group>"; };
+		0622D9202B92431F00A84437 /* AddCreditCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddCreditCardView.swift; sourceTree = "<group>"; };
+		0622D9222B924D1000A84437 /* CustomTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTableView.swift; sourceTree = "<group>"; };
 		062654AA2B4F6BEE007120AD /* DependencyInjection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DependencyInjection.swift; sourceTree = "<group>"; };
 		062654AC2B4F6F1F007120AD /* AppUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppUser.swift; sourceTree = "<group>"; };
 		062654B12B4F74B9007120AD /* FirebaseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseManager.swift; sourceTree = "<group>"; };
+		063105372B96CF230042B130 /* EditCreditCardController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditCreditCardController.swift; sourceTree = "<group>"; };
+		063105392B96CF2F0042B130 /* EditCreditCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditCreditCardView.swift; sourceTree = "<group>"; };
 		064A90302B79B341003E1734 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		065F72AB2B50CB8000CF9C5F /* MainViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewModel.swift; sourceTree = "<group>"; };
 		065F72AE2B50CCC900CF9C5F /* SignUpViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewModel.swift; sourceTree = "<group>"; };
@@ -189,6 +233,74 @@
 			path = AuthenticationRepository;
 			sourceTree = "<group>";
 		};
+		06102B9C2B9425530063FEC5 /* AddCar */ = {
+			isa = PBXGroup;
+			children = (
+				06102B9D2B94259C0063FEC5 /* AddCarController.swift */,
+				06102B9F2B9425A70063FEC5 /* AddCarView.swift */,
+				06102BA12B9425D50063FEC5 /* ChooseModel */,
+			);
+			path = AddCar;
+			sourceTree = "<group>";
+		};
+		06102BA12B9425D50063FEC5 /* ChooseModel */ = {
+			isa = PBXGroup;
+			children = (
+				06102BA22B9426140063FEC5 /* ChooseModelController.swift */,
+				06102BA42B9426200063FEC5 /* ChooseModelView.swift */,
+			);
+			path = ChooseModel;
+			sourceTree = "<group>";
+		};
+		0622D9052B92392000A84437 /* TableView */ = {
+			isa = PBXGroup;
+			children = (
+				0622D9222B924D1000A84437 /* CustomTableView.swift */,
+				0622D9062B92393900A84437 /* PaymentMethodCell.swift */,
+			);
+			path = TableView;
+			sourceTree = "<group>";
+		};
+		0622D90E2B923C8800A84437 /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				0622D90F2B923CA300A84437 /* SettingsViewModel.swift */,
+				0622D9112B923CA800A84437 /* Profile */,
+			);
+			path = Settings;
+			sourceTree = "<group>";
+		};
+		0622D9112B923CA800A84437 /* Profile */ = {
+			isa = PBXGroup;
+			children = (
+				0622D9122B923CDA00A84437 /* ProfileViewController.swift */,
+				0622D9142B923CE900A84437 /* ProfileView.swift */,
+				0622D9162B923CF700A84437 /* ProfileRow.swift */,
+			);
+			path = Profile;
+			sourceTree = "<group>";
+		};
+		0622D9182B92429B00A84437 /* AddPaymentMethod */ = {
+			isa = PBXGroup;
+			children = (
+				0614777B2B9551A800A585A0 /* PaymentMethodViewModel.swift */,
+				0622D9192B9242BC00A84437 /* PaymentMethodController.swift */,
+				0622D91B2B9242CD00A84437 /* PaymentMethodView.swift */,
+				0622D91D2B9242F700A84437 /* AddCreditCard */,
+				063105362B96CEFE0042B130 /* EditCreditCard */,
+			);
+			path = AddPaymentMethod;
+			sourceTree = "<group>";
+		};
+		0622D91D2B9242F700A84437 /* AddCreditCard */ = {
+			isa = PBXGroup;
+			children = (
+				0622D91E2B92431600A84437 /* AddCreditCardController.swift */,
+				0622D9202B92431F00A84437 /* AddCreditCardView.swift */,
+			);
+			path = AddCreditCard;
+			sourceTree = "<group>";
+		};
 		062654A92B4F6BCE007120AD /* AppDelegate */ = {
 			isa = PBXGroup;
 			children = (
@@ -217,6 +329,15 @@
 			path = Authentication;
 			sourceTree = "<group>";
 		};
+		063105362B96CEFE0042B130 /* EditCreditCard */ = {
+			isa = PBXGroup;
+			children = (
+				063105372B96CF230042B130 /* EditCreditCardController.swift */,
+				063105392B96CF2F0042B130 /* EditCreditCardView.swift */,
+			);
+			path = EditCreditCard;
+			sourceTree = "<group>";
+		};
 		065F72AD2B50CCA900CF9C5F /* MainScreen */ = {
 			isa = PBXGroup;
 			children = (
@@ -224,6 +345,7 @@
 				06A5F4122B3A68DF000C0218 /* MainViewController.swift */,
 				060364002B68920B005B48ED /* MainView.swift */,
 				29282FB02B8FBA240056A185 /* SideMenu */,
+				0622D90E2B923C8800A84437 /* Settings */,
 			);
 			path = MainScreen;
 			sourceTree = "<group>";
@@ -282,6 +404,10 @@
 				06A5A4562B6DF89A00C05BCC /* DBUser.swift */,
 				298B7F312B6E96C7003A36C7 /* DetailsRowType.swift */,
 				29282FB72B90F3510056A185 /* SideMenuRowType.swift */,
+				0622D9082B923A4700A84437 /* PaymentMethod.swift */,
+				0622D90A2B923A9800A84437 /* PaymentMethodRowType.swift */,
+				0622D90C2B923AB800A84437 /* PaymentProviders.swift */,
+				06102BA62B9429160063FEC5 /* Car.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -306,8 +432,8 @@
 		2953A4442B77D1660020F8AC /* AddNameAndPhoneNumber */ = {
 			isa = PBXGroup;
 			children = (
-				2953A4452B77D1870020F8AC /* AddNameAndPhoneNumberView.swift */,
 				2953A4472B77D1DC0020F8AC /* AddNameAndPhoneNumberController.swift */,
+				2953A4452B77D1870020F8AC /* AddNameAndPhoneNumberView.swift */,
 			);
 			path = AddNameAndPhoneNumber;
 			sourceTree = "<group>";
@@ -315,10 +441,12 @@
 		298B7F1D2B697AEA003A36C7 /* RegistrationFlow */ = {
 			isa = PBXGroup;
 			children = (
-				298B7F1E2B697B47003A36C7 /* AddDetailsView.swift */,
 				298B7F202B697DA2003A36C7 /* AddDetailsController.swift */,
+				298B7F1E2B697B47003A36C7 /* AddDetailsView.swift */,
 				298B7F2F2B6E968A003A36C7 /* AddDetailRow.swift */,
 				2953A4442B77D1660020F8AC /* AddNameAndPhoneNumber */,
+				0622D9182B92429B00A84437 /* AddPaymentMethod */,
+				06102B9C2B9425530063FEC5 /* AddCar */,
 			);
 			path = RegistrationFlow;
 			sourceTree = "<group>";
@@ -378,6 +506,8 @@
 				296C27E22B67F7930052D350 /* SuccessfulAlertView.swift */,
 				29282FAC2B8F68EC0056A185 /* SearchFieldView.swift */,
 				29282FAE2B8F811B0056A185 /* RoundedButton.swift */,
+				0622D9032B92390700A84437 /* ToggleView.swift */,
+				0622D9052B92392000A84437 /* TableView */,
 			);
 			path = "ReusableView ";
 			sourceTree = "<group>";
@@ -504,17 +634,25 @@
 			buildActionMask = 2147483647;
 			files = (
 				296C27E32B67F7930052D350 /* SuccessfulAlertView.swift in Sources */,
+				0622D90D2B923AB800A84437 /* PaymentProviders.swift in Sources */,
 				062654B22B4F74B9007120AD /* FirebaseManager.swift in Sources */,
 				298B7F2E2B6D301E003A36C7 /* Icons.swift in Sources */,
+				0622D91F2B92431600A84437 /* AddCreditCardController.swift in Sources */,
 				065F72AF2B50CCC900CF9C5F /* SignUpViewModel.swift in Sources */,
+				0622D90B2B923A9800A84437 /* PaymentMethodRowType.swift in Sources */,
 				29D8B6662B5984DE00196543 /* SecondaryLabel.swift in Sources */,
 				298B7F2C2B6D2FF8003A36C7 /* Colors.swift in Sources */,
+				0622D9212B92431F00A84437 /* AddCreditCardView.swift in Sources */,
 				29D8B6722B59BBD200196543 /* AlertController.swift in Sources */,
+				06102B9E2B94259C0063FEC5 /* AddCarController.swift in Sources */,
+				0622D9132B923CDA00A84437 /* ProfileViewController.swift in Sources */,
 				29D8B64F2B557DFB00196543 /* TextFieldBackgroundView.swift in Sources */,
 				29282FBC2B98B33E0056A185 /* UIViewController.swift in Sources */,
 				298B7F302B6E968A003A36C7 /* AddDetailRow.swift in Sources */,
 				062654AB2B4F6BEE007120AD /* DependencyInjection.swift in Sources */,
 				060363F42B688EFB005B48ED /* AuthenticationManager.swift in Sources */,
+				06102BA72B9429160063FEC5 /* Car.swift in Sources */,
+				06102BA52B9426200063FEC5 /* ChooseModelView.swift in Sources */,
 				060364012B68920B005B48ED /* MainView.swift in Sources */,
 				29282FBF2B98B6EA0056A185 /* BaseViewController.swift in Sources */,
 				29D8B6682B5992F800196543 /* BlueBackgroundView.swift in Sources */,
@@ -525,10 +663,15 @@
 				29282FB82B90F3510056A185 /* SideMenuRowType.swift in Sources */,
 				2953A4482B77D1DC0020F8AC /* AddNameAndPhoneNumberController.swift in Sources */,
 				29D8B66D2B599DA300196543 /* SignUpController.swift in Sources */,
+				0622D91A2B9242BC00A84437 /* PaymentMethodController.swift in Sources */,
 				29282FB22B8FBA570056A185 /* SideMenuView.swift in Sources */,
 				298B7F2A2B6D2FDB003A36C7 /* Asset.swift in Sources */,
+				0622D9042B92390700A84437 /* ToggleView.swift in Sources */,
+				06102BA32B9426140063FEC5 /* ChooseModelController.swift in Sources */,
+				0631053A2B96CF2F0042B130 /* EditCreditCardView.swift in Sources */,
 				06B4D8E32B4F7BD300DD78CB /* AutenticationRepository.swift in Sources */,
 				298B7F212B697DA2003A36C7 /* AddDetailsController.swift in Sources */,
+				0622D9072B92393900A84437 /* PaymentMethodCell.swift in Sources */,
 				298B7F1F2B697B47003A36C7 /* AddDetailsView.swift in Sources */,
 				29D8B65C2B59574E00196543 /* UIView+Stacking.swift in Sources */,
 				29D8B6642B5983F700196543 /* TextFieldLabel.swift in Sources */,
@@ -537,10 +680,15 @@
 				060364042B6892F3005B48ED /* AppViewController.swift in Sources */,
 				060363FD2B688FF3005B48ED /* UserRemoteSource.swift in Sources */,
 				06A5A4572B6DF89A00C05BCC /* DBUser.swift in Sources */,
+				0622D9172B923CF700A84437 /* ProfileRow.swift in Sources */,
 				29282FAF2B8F811C0056A185 /* RoundedButton.swift in Sources */,
+				0614777C2B9551A800A585A0 /* PaymentMethodViewModel.swift in Sources */,
 				065F72AC2B50CB8000CF9C5F /* MainViewModel.swift in Sources */,
 				29D8B6542B559EE400196543 /* UIView+Layout.swift in Sources */,
+				0622D9152B923CE900A84437 /* ProfileView.swift in Sources */,
 				060363F62B688F10005B48ED /* LoginRepository.swift in Sources */,
+				0622D9232B924D1000A84437 /* CustomTableView.swift in Sources */,
+				063105382B96CF230042B130 /* EditCreditCardController.swift in Sources */,
 				06A5F40F2B3A68DF000C0218 /* AppDelegate.swift in Sources */,
 				060363FB2B688FD9005B48ED /* UserRepository.swift in Sources */,
 				060364062B689304005B48ED /* AppViewModel.swift in Sources */,
@@ -549,12 +697,16 @@
 				29D8B6762B59D3DA00196543 /* ForgotPasswordView.swift in Sources */,
 				29D8B6602B597B1D00196543 /* MainButton.swift in Sources */,
 				062654AD2B4F6F1F007120AD /* AppUser.swift in Sources */,
+				0622D9092B923A4700A84437 /* PaymentMethod.swift in Sources */,
+				06102BA02B9425A70063FEC5 /* AddCarView.swift in Sources */,
 				29D8B6622B59815F00196543 /* LinkButton.swift in Sources */,
 				060363F82B688F29005B48ED /* LoginRemoteSource.swift in Sources */,
 				06A5A4592B6DFB7300C05BCC /* SignInViewModel.swift in Sources */,
 				29D8B66F2B59AB5800196543 /* TextFieldWithPlaceholder.swift in Sources */,
 				29D8B65E2B596AEC00196543 /* SignInView.swift in Sources */,
+				0622D91C2B9242CD00A84437 /* PaymentMethodView.swift in Sources */,
 				29D8B64C2B5567DF00196543 /* SignInController.swift in Sources */,
+				0622D9102B923CA300A84437 /* SettingsViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

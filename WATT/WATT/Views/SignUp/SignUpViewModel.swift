@@ -11,6 +11,7 @@ import Combine
 import Swinject
 
 class SignUpViewModel: ObservableObject {
+    private var cancellables = Set<AnyCancellable>()
     
     @Published var email = ""
     @Published var fullName = ""
@@ -18,21 +19,35 @@ class SignUpViewModel: ObservableObject {
     @Published var retypedPassword = ""
     @Published var phoneNumber = ""
     @Published var profilePhoto: UIImage? = nil
-    private var cancellables = Set<AnyCancellable>()
+    
+    @Published var paymentMethods: [PaymentMethod] = [
+//        PaymentMethod(provider: .americanExpress, cardName: "First method", cardNumber: "3786 3474 6736 9812", expiryDate: "12/25", cvv: "123", isDefault: true),
+//        PaymentMethod(provider: .visa, cardName: "Second method", cardNumber: "4786 3474 6736 9833", expiryDate: "12/25", cvv: "123", isDefault: false),
+//        PaymentMethod(provider: .mastercard, cardName: "Third method", cardNumber: "5664 3474 6736 9833", expiryDate: "12/27", cvv: "123", isDefault: false)
+    ]
+//    @Published var defaultPaymentMethod: Bool = false
     
     @Published var user: AppUser?
     
     @Published var showPassword = false
     @Published var showRetyped = false
     
+    @Published var fakeDataTable = [
+        "Audi X8",
+        "BMW M9",
+        "Tesla Sport Shos..."
+    ]
+    
     private let authenticationRepo: AuthenticationRepository
     private let loginRepo: LoginRepository
     private var userRepo: UserRepository
+    let paymentMethodViewModel: PaymentMethodViewModel?
     
     init(dependencies: Resolver) {
         authenticationRepo = dependencies.resolve(AuthenticationRepository.self)!
         loginRepo = dependencies.resolve(LoginRepository.self)!
         userRepo = dependencies.resolve(UserRepository.self)!
+        paymentMethodViewModel = PaymentMethodViewModel(dependencies: dependencies)
     }
     
     func createUser(completion: @escaping ((Bool, String) -> Void)) {
@@ -51,12 +66,49 @@ class SignUpViewModel: ObservableObject {
         }
     }
     
+    func sendEmailVerification(completion: @escaping ((Bool) -> Void)) {
+        Task(priority: .medium) { [loginRepo] in
+            do {
+                try await loginRepo.sendEmailVerification(completion: completion)
+            } catch {
+                print("Error:", error)
+            }
+            
+        }
+    }
+    
+//    func checkForDefaultPaymentMethod() -> PaymentMethod {
+//        var isDefaultPaymentMethod = PaymentMethod(cardName: "", cardNumber: "", expiryDate: "", cvv: "")
+//        
+//        if !paymentMethods.isEmpty {
+//            for method in paymentMethods {
+//                if method.isDefault == true {
+//                    isDefaultPaymentMethod = method
+//                }
+//            }
+//        }
+//        
+//        return isDefaultPaymentMethod
+//    }
+    
     func successfulRegistration() {
         guard let user = self.user else { return }
-        let dbUser = DBUser(uid: user.uid, email: email, fullName: fullName, phoneNumber: phoneNumber, isAnonymous: user.isAnonymous)
+        let dbUser = DBUser(uid: user.uid, email: email, fullName: fullName, phoneNumber: phoneNumber, isAnonymous: user.isAnonymous, paymentMethods: paymentMethods, defaultPaymentMethod: paymentMethods.first)
         Task(priority: .medium) {
             try await userRepo.createUserInDB(user: dbUser)
             authenticationRepo.success()
+        }
+    }
+    
+    func updateNameInDB() async throws {
+        if !fullName.isEmpty {
+            try await userRepo.editUserNameInDB(name: fullName)
+        }
+    }
+    
+    func updatePhoneNumberInDB() async throws {
+        if !phoneNumber.isEmpty {
+            try await userRepo.editPhoneNumberInDB(phoneNumber: phoneNumber)
         }
     }
     
@@ -114,13 +166,13 @@ class SignUpViewModel: ObservableObject {
     
     var isValidPasswordPublisher: AnyPublisher<Bool, Never> {
         $password
-            .map { !$0.isEmpty && $0.count > 6 }
+            .map { !$0.isEmpty && $0.count >= 6 }
             .eraseToAnyPublisher()
     }
     
     var isValidRetypedPasswordPublisher: AnyPublisher<Bool, Never> {
         $retypedPassword
-            .map { !$0.isEmpty && $0.count > 6 }
+            .map { !$0.isEmpty && $0.count >= 6 }
             .eraseToAnyPublisher()
     }
     
@@ -129,7 +181,6 @@ class SignUpViewModel: ObservableObject {
             .map { $0 == $1 }
             .eraseToAnyPublisher()
     }
-
     
 }
 
@@ -142,3 +193,4 @@ extension String {
         .evaluate(with: self)
     }
 }
+

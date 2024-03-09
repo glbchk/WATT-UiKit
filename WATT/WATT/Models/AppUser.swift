@@ -11,6 +11,7 @@ import Firebase
 struct AppUser: Codable {
     let uid: String
     let email: String?
+//    let isEmailConfirmed: Bool?
     var fullName: String?
     var phoneNumber: String?
     var photoURL: String?
@@ -21,6 +22,7 @@ struct AppUser: Codable {
     init(user: User) {
         self.uid = user.uid
         self.email = user.email ?? ""
+//        self.isEmailConfirmed = user.isEmailVerified
         self.fullName = user.displayName ?? ""
         self.phoneNumber = user.phoneNumber
         self.photoURL = user.photoURL?.absoluteString

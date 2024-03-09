@@ -11,6 +11,7 @@ import Combine
 class SignInController: UIViewController {
     
     let contentView = SignInView()
+    let forgotPasswordView = ForgotPasswordView()
     private var viewModel: SignInViewModel
     var cancellables = Set<AnyCancellable>()
 
@@ -35,6 +36,8 @@ class SignInController: UIViewController {
     }
     
     private func setupTargets() {
+        contentView.addCarTempButton.addTarget(self, action: #selector(addCarTempButtonPressed), for: .touchUpInside)
+        contentView.addPaymentMethodTempButton.addTarget(self, action: #selector(addPaymentMethodTempButtonPressed), for: .touchUpInside)
         contentView.forgotButton.addTarget(self, action: #selector(forgotPasswordButtonPressed), for: .touchUpInside)
         contentView.signUpButton.addTarget(self, action: #selector(signUpButtonPressed), for: .touchUpInside)
         contentView.signInButton.addTarget(self, action: #selector(signInButtonPressed), for: .touchUpInside)
@@ -47,7 +50,7 @@ class SignInController: UIViewController {
                 try await viewModel.signInAnonymously { result in
                     switch result {
                     case .success(_):
-                        try await self.viewModel.successfulRegistration()
+                        try await self.viewModel.successfulAnonymousRegistration()
                     case .failure(let failure):
                         print("Error in anonymously sign in:", failure.localizedDescription)
                     }
@@ -61,16 +64,34 @@ class SignInController: UIViewController {
     @objc private func forgotPasswordButtonPressed() {
         let vc = AlertController(contentView: ForgotPasswordView(), buttonTitle: "Reset", completionSubmit:  {
             Task {
-                do {
-                    try await self.viewModel.successfulRegistration()
-                } catch {
-                    print(error)
+                self.viewModel.sendPasswordReset(email: self.viewModel.email) { error in
+                    if !error {
+                        print("Successfully sent to reset email...")
+                    } else {
+                        print("Error: \(error)")
+                    }
                 }
             }
         })
         vc.modalPresentationStyle = .overFullScreen
         vc.modalTransitionStyle = .crossDissolve
         navigationController?.present(vc, animated: true)
+    }
+    
+    @objc private func addCarTempButtonPressed() {
+        if let signUpViewModel = viewModel.signUpViewModel {
+            let vc = AddCarController(viewModel: signUpViewModel)
+            navigationController?.pushViewController(vc, animated: true)
+        }
+    }
+    
+    @objc private func addPaymentMethodTempButtonPressed() {
+        if let paymentMethodViewModel = viewModel.signUpViewModel?.paymentMethodViewModel, let signUpViewModel = viewModel.signUpViewModel {
+            let vc = PaymentMethodController(viewModel: signUpViewModel, paymentMethodViewModel: paymentMethodViewModel, action: {
+                
+            })
+            navigationController?.pushViewController(vc, animated: true)
+        }
     }
     
     @objc private func signUpButtonPressed() {
@@ -106,6 +127,11 @@ class SignInController: UIViewController {
                     self.contentView.signInButton.isEnabled = false
                 }
             }
+            .store(in: &cancellables)
+        
+        forgotPasswordView.emailTextField.textPublisher
+            .receive(on: DispatchQueue.main)
+            .assign(to: \.email, on: viewModel)
             .store(in: &cancellables)
     }
     

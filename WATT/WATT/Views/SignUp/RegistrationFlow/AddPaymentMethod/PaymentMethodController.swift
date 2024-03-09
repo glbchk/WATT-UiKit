@@ -42,7 +42,7 @@ class PaymentMethodController: UIViewController {
         contentView.paymentMethodsTableView.delegate = self
         contentView.paymentMethodsTableView.register(PaymentMethodCell.self, forCellReuseIdentifier: "payment_method")
         contentView.paymentMethodsTableView.separatorStyle = .none
-        
+
     }
     
     private func setupTargets() {
@@ -62,9 +62,20 @@ class PaymentMethodController: UIViewController {
     }
     
     @objc private func handleCreditCardRowTap() {
-        let vc = AddCreditCardController(viewModel: paymentMethodViewModel, action: {
-            self.contentView.paymentMethodsTableView.reloadData()
+        let vc = AddCreditCardController(viewModel: paymentMethodViewModel, actionToggle: { [self] in
+            viewModel.paymentMethods = paymentMethodViewModel.defaultMethodToggle(paymentMethods: viewModel.paymentMethods)
+            
+            contentView.paymentMethodsTableView.reloadData()
+        }, action: { [self] in
+            viewModel.paymentMethods = paymentMethodViewModel.savePaymentMethod(paymentMethods: viewModel.paymentMethods)
+            
+            contentView.paymentMethodsTableView.reloadData()
         })
+        if viewModel.paymentMethods.isEmpty {
+            vc.contentView.toggle.isOn = true
+            paymentMethodViewModel.defaultPaymentMethod = vc.contentView.toggle.isOn
+        }
+        
         self.navigationController?.pushViewController(vc, animated: true)
     }
     
@@ -73,15 +84,16 @@ class PaymentMethodController: UIViewController {
 extension PaymentMethodController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return paymentMethodViewModel.addedPaymentMethods.count
+        return viewModel.paymentMethods.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "payment_method", for: indexPath) as! PaymentMethodCell
         
-        cell.methodLogoView.image = paymentMethodViewModel.addedPaymentMethods[indexPath.item].provider?.icon
-        cell.titleLabel.text = paymentMethodViewModel.addedPaymentMethods[indexPath.item].cardName
-        cell.subtitleLabel.text = paymentMethodViewModel.addedPaymentMethods[indexPath.item].cardNumber
+        cell.methodLogoView.image = viewModel.paymentMethods[indexPath.item].provider?.icon
+        cell.titleLabel.text = viewModel.paymentMethods[indexPath.item].cardName
+        cell.subtitleLabel.text = viewModel.paymentMethods[indexPath.item].cardNumber
+        cell.selectionStyle = .none
         
         return cell
     }
@@ -91,17 +103,25 @@ extension PaymentMethodController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let vc = EditCreditCardController(viewModel: paymentMethodViewModel, action: {
-            self.contentView.paymentMethodsTableView.reloadData()
+        let vc = EditCreditCardController(viewModel: paymentMethodViewModel, editAction: { [self] in
+            viewModel.paymentMethods = paymentMethodViewModel.editPaymentMethod(paymentMethods: viewModel.paymentMethods)
+            contentView.paymentMethodsTableView.reloadData()
+        }, deleteAction: { [self] in
+            viewModel.paymentMethods = paymentMethodViewModel.deletePaymentMethod(paymentMethods: viewModel.paymentMethods)
+            contentView.paymentMethodsTableView.reloadData()
         })
         
-        vc.contentView.cardNameTextField.text = viewModel.paymentMethodViewModel?.addedPaymentMethods[indexPath.row].cardName
-        vc.contentView.cardNumberTextField.text = viewModel.paymentMethodViewModel?.addedPaymentMethods[indexPath.row].cardNumber
-        vc.contentView.expiryTextField.text = viewModel.paymentMethodViewModel?.addedPaymentMethods[indexPath.row].expiryDate
-        vc.contentView.cvvTextField.text = viewModel.paymentMethodViewModel?.addedPaymentMethods[indexPath.row].cvv
+        let selectedIndex = viewModel.paymentMethods[indexPath.item]
+        
+        paymentMethodViewModel.selectedPaymentMethod = selectedIndex
+        
+        vc.contentView.cardNameTextField.text = selectedIndex.cardName
+        vc.contentView.cardNumberTextField.text = selectedIndex.cardNumber
+        vc.contentView.expiryTextField.text = selectedIndex.expiryDate
+        vc.contentView.cvvTextField.text = selectedIndex.cvv
+        vc.contentView.toggle.isOn = selectedIndex.isDefault
         
         self.navigationController?.pushViewController(vc, animated: true)
     }
-    
     
 }

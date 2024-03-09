@@ -22,18 +22,95 @@ class PaymentMethodViewModel: ObservableObject {
     
     @Published var showCvv = false
     
-    @Published var addedPaymentMethods: [PaymentMethod] = [
-//        PaymentMethod(provider: .americanExpress, cardName: "rlgjnelgnkle", cardNumber: "37863474673698", expiryDate: "12/25", cvv: "123"),
-//        PaymentMethod(provider: .visa, cardName: "ekjgnlteh;rt", cardNumber: "47863474673698", expiryDate: "12/25", cvv: "123")
-    ]
+    @Published var selectedPaymentMethod: PaymentMethod?
+    
+//    @Published var addedPaymentMethods: [PaymentMethod] = [
+//        PaymentMethod(provider: .americanExpress, cardName: "rlgjnelgnkle", cardNumber: "3786347467369812", expiryDate: "12/25", cvv: "123", isDefault: true),
+//        PaymentMethod(provider: .visa, cardName: "ekjgnlteh;rt", cardNumber: "4786347467369833", expiryDate: "12/25", cvv: "123", isDefault: false)
+//    ]
     
     init(dependencies: Resolver) {
 //        signUpViewModel = SignUpViewModel(dependencies: dependencies)
     }
     
-    func savePaymentMethod(provider bank: PaymentMethodRowType) {
-        let savedPaymentMethod = PaymentMethod(provider: bank, cardName: cardName, cardNumber: cardNumber, expiryDate: expiry, cvv: cvv, isDefault: defaultPaymentMethod)
-        addedPaymentMethods.append(savedPaymentMethod)
+    func deletePaymentMethod(paymentMethods: [PaymentMethod]) -> [PaymentMethod] {
+        var methods = paymentMethods
+        
+        for index in 0..<methods.count {
+            if methods[index].id == selectedPaymentMethod?.id {
+                methods.remove(at: index)
+            }
+        }
+        
+        return methods
+    }
+    
+    func indexForDefaultPaymentMethod(in paymentMethods: [PaymentMethod]) -> Int {
+        var indexResult = 0
+        
+        for index in 0..<paymentMethods.count {
+            if paymentMethods[index].isDefault == true {
+                indexResult = index
+            }
+        }
+        
+        return indexResult
+
+    }
+    
+    func editPaymentMethod(paymentMethods: [PaymentMethod]) -> [PaymentMethod] {
+        var methods = paymentMethods
+        
+        for index in 0..<methods.count {
+            if methods[index].id == selectedPaymentMethod?.id {
+                if methods[index].cardName != cardName{
+                    methods[index].cardName = cardName
+                }
+                if methods[index].cvv != cvv {
+                    methods[index].cvv = cvv
+                }
+                if methods[index].isDefault != defaultPaymentMethod {
+                    methods[indexForDefaultPaymentMethod(in: methods)].isDefault = false
+                    methods[index].isDefault = defaultPaymentMethod
+                }
+                if methods[index].isDefault == false {
+                    methods[0].isDefault = true
+                }
+            }
+        }
+        
+        return methods
+    }
+    
+    func defaultMethodToggle(paymentMethods: [PaymentMethod]) -> [PaymentMethod] {
+        var methods = paymentMethods
+        
+        for index in 0..<methods.count {
+            if methods[index].isDefault == true {
+                methods[index].isDefault = false
+            }
+        }
+        
+        return methods
+    }
+    
+    func savePaymentMethod(paymentMethods: [PaymentMethod]) -> [PaymentMethod] {
+        var methods = paymentMethods
+        
+        let cardProvider = checkBankProvider(number: cardNumber)
+        let savedPaymentMethod = PaymentMethod(provider: cardProvider, cardName: cardName, cardNumber: cardNumber, expiryDate: expiry, cvv: cvv, isDefault: defaultPaymentMethod)
+        
+        methods.append(savedPaymentMethod)
+        
+        for index in 0..<methods.count {
+            if methods[index].id == savedPaymentMethod.id {
+                if defaultPaymentMethod == false {
+                    methods[index].isDefault = true
+                }
+            }
+        }
+        
+        return methods
     }
     
     var cardNamePublisher: AnyPublisher<Bool, Never> {
@@ -44,7 +121,7 @@ class PaymentMethodViewModel: ObservableObject {
 
     var cardNumberPublisher: AnyPublisher<Bool, Never> {
         $cardNumber
-            .map { !$0.isEmpty && $0.count == 16 }
+            .map { !$0.isEmpty && $0.count == 19 }
             .eraseToAnyPublisher()
     }
 
@@ -55,15 +132,14 @@ class PaymentMethodViewModel: ObservableObject {
     }
 
     var cvvPublisher: AnyPublisher<Bool, Never> {
-        $cvv
-            .map { !$0.isEmpty && $0.count == 3 }
+        $showCvv
             .eraseToAnyPublisher()
     }
     
     var isCardValid: AnyPublisher<Bool, Never> {
-        Publishers.CombineLatest4(cardNamePublisher, cardNumberPublisher, expiryPublisher, cvvPublisher)
+        Publishers.CombineLatest4(cardNamePublisher, cardNumberPublisher, expiryPublisher, $cvv)
             .map { cardName, cardNumber, expiry, cvv in
-                if cardName == true, cardNumber == true, expiry == true, cvv == true {
+                if cardName == true, cardNumber == true, expiry == true, cvv.count == 3 {
                     return true
                 } else {
                     return false
@@ -72,24 +148,19 @@ class PaymentMethodViewModel: ObservableObject {
             .eraseToAnyPublisher()
     }
     
-    func createPaymentMethodPublisher() -> AnyPublisher<String, Never> {
-        
-        var cardProviderPublisher: AnyPublisher<PaymentMethodRowType, Never> {
-            $cardProvider
-                .eraseToAnyPublisher()
-        }
+    func createPaymentMethodPublisher(methods: [PaymentMethod]) -> AnyPublisher<String, Never> {
         
         var paymentMethodPublisher: AnyPublisher<String, Never> {
-            cardProviderPublisher
+            $cardProvider
                 .map { _ in
                     var result: String = ""
                     
-                    for method in self.addedPaymentMethods {
-                        if !self.addedPaymentMethods.isEmpty {
+                    for method in methods {
+                        if !methods.isEmpty {
                             result = "\(method.provider?.title ?? "") credit card"
-                            if self.addedPaymentMethods.count <= 2 {
+                            if methods.count <= 2 {
                                 result += ", \(method.provider?.title ?? "") credit card"
-                            } else if self.addedPaymentMethods.count >= 3 {
+                            } else if methods.count >= 3 {
                                 
                             }
                             return result
@@ -120,6 +191,40 @@ class PaymentMethodViewModel: ObservableObject {
             return PaymentMethodRowType.unknown
         }
 
+    }
+    
+    func formatTextWithSpaces(text: String) -> String {
+        
+        let sanitizedText = text.replacingOccurrences(of: " ", with: "")
+        
+        var formattedText = ""
+        var index = 0
+        for character in sanitizedText {
+            if index > 0 && index % 4 == 0 {
+                formattedText.append(" ")
+            }
+            formattedText.append(character)
+            index += 1
+        }
+        
+        return formattedText
+    }
+    
+    func formatDateWithSlash(text: String) -> String {
+        
+        let sanitizedText = text.replacingOccurrences(of: "/", with: "")
+        
+        var formattedText = ""
+        var index = 0
+        for character in sanitizedText {
+            if index > 0 && index % 2 == 0 {
+                formattedText.append("/")
+            }
+            formattedText.append(character)
+            index += 1
+        }
+        
+        return formattedText
     }
     
 }

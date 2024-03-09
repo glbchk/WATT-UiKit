@@ -88,7 +88,7 @@ class SignInController: UIViewController {
     @objc private func addPaymentMethodTempButtonPressed() {
         if let paymentMethodViewModel = viewModel.signUpViewModel?.paymentMethodViewModel, let signUpViewModel = viewModel.signUpViewModel {
             let vc = PaymentMethodController(viewModel: signUpViewModel, paymentMethodViewModel: paymentMethodViewModel, action: {
-                self.viewModel.signUpViewModel?.paymentMethods = paymentMethodViewModel.addedPaymentMethods
+                
             })
             navigationController?.pushViewController(vc, animated: true)
         }

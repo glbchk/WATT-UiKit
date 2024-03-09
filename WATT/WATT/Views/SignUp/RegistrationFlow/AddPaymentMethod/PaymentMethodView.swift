@@ -151,6 +151,7 @@ class AddCreditCardRow: UIView {
         self.constrainHeight(90)
         
         rowImageView.image = Asset.Icons.card
+        rowImageView.image?.withRenderingMode(.alwaysTemplate)
         rowImageView.tintColor = Asset.Colors.deepBlue
         
         label.text = "Add credit card"

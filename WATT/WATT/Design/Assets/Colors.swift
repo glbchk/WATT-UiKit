@@ -16,5 +16,6 @@ extension Asset {
         static let grey2 = UIColor(red: 174/255, green: 184/255, blue: 200/255, alpha: 1)
         static let grey4 = UIColor(red: 244/255, green: 246/255, blue: 249/255, alpha: 1)
         static let grey3 = UIColor(red: 219/255, green: 223/255, blue: 227/255, alpha: 1)
+        static let red = UIColor(red: 235/255, green: 87/255, blue: 87/255, alpha: 1)
     }
 }

@@ -15,11 +15,13 @@ class EditCreditCardController: UIViewController {
     let paymentMethodContentView = PaymentMethodView()
     private var viewModel: PaymentMethodViewModel
     
-    let action: (() -> Void)?
+    let editAction: (() -> Void)?
+    let deleteAction: (() -> Void)?
     
-    init(viewModel: PaymentMethodViewModel, action: (() -> Void)?) {
+    init(viewModel: PaymentMethodViewModel, editAction: (() -> Void)?, deleteAction: (() -> Void)?) {
         self.viewModel = viewModel
-        self.action = action
+        self.editAction = editAction
+        self.deleteAction = deleteAction
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -40,6 +42,7 @@ class EditCreditCardController: UIViewController {
     
     private func setupTargets() {
         contentView.backButton.addTarget(self, action: #selector(handleBackTap), for: .touchUpInside)
+        contentView.deleteButton.addTarget(self, action: #selector(deleteButtonPressed), for: .touchUpInside)
         contentView.saveButton.addTarget(self, action: #selector(saveButtonPressed), for: .touchUpInside)
         contentView.toggle.addTarget(self, action: #selector(switchValueDidChange), for: .valueChanged)
     }
@@ -48,22 +51,21 @@ class EditCreditCardController: UIViewController {
         self.navigationController?.popViewController(animated: true)
     }
     
+    @objc private func deleteButtonPressed() {
+        deleteAction?()
+        self.navigationController?.popViewController(animated: true)
+    }
+    
     @objc private func saveButtonPressed() {
-        let cardProvider = viewModel.checkBankProvider(number: contentView.cardNumberTextField.text ?? "")
-        
-        viewModel.savePaymentMethod(provider: cardProvider)
-        action?()
+        editAction?()
+        contentView.toggle.isOn = false
         self.navigationController?.popViewController(animated: true)
     }
     
     @objc private func switchValueDidChange() {
-        if contentView.toggle.isOn == true {
-            self.viewModel.defaultPaymentMethod = contentView.toggle.isOn
-            print("1 \(viewModel.defaultPaymentMethod)")
-        } else {
-            self.viewModel.defaultPaymentMethod = contentView.toggle.isOn
-            print("2 \(viewModel.defaultPaymentMethod)")
-        }
+        viewModel.defaultPaymentMethod = isToggleStateOn(isDefault: contentView.toggle.isOn)
+        
+        print("\(viewModel.defaultPaymentMethod)")
     }
     
     private func bindViewsToViewModel() {
@@ -99,7 +101,6 @@ class EditCreditCardController: UIViewController {
                     self.contentView.saveButton.isEnabled = true
                 } else {
                     self.contentView.saveButton.isEnabled = false
-//                    self.contentView.saveButton.
                 }
             }
             .store(in: &cancellables)
@@ -108,6 +109,18 @@ class EditCreditCardController: UIViewController {
     private func bindCvvFieldPublisher() {
         contentView.cvvTextFieldView.secureFieldPublisher = viewModel.cvvPublisher
         contentView.cvvTextFieldView.action = { self.viewModel.showCvv.toggle() }
+    }
+    
+    private func isToggleStateOn(isDefault: Bool) -> Bool {
+        var result = false
+        
+        if isDefault == true {
+            result = isDefault
+        } else {
+            result = isDefault
+        }
+        
+        return result
     }
     
 }

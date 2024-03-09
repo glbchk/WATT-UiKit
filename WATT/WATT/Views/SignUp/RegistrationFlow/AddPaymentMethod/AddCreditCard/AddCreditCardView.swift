@@ -88,6 +88,7 @@ class AddCreditCardView: UIView {
     private func setupTextFields() {
         let cardNameTextFieldView = TextFieldBackgroundView(tf: cardNameTextField)
         cardNumberTextFieldView.textField = cardNumberTextField
+//        cardNumberTextFieldView.textField?.text = cardNumberTextField.inputText?.separate()
         let expiryTextFieldView = TextFieldBackgroundView(tf: expiryTextField)
         cvvTextFieldView.textField = cvvTextField
         
@@ -114,4 +115,23 @@ class AddCreditCardView: UIView {
         saveButton.anchor(top: toggle.bottomAnchor, leading: whiteBackgroundView.leadingAnchor, trailing: whiteBackgroundView.trailingAnchor, bottom: nil, padding: .init(top: 30, left: 20, bottom: 0, right: 20))
     }
     
+//    func separate(to textField: UITextField, with text: String = "") {
+//        if textField.text?.isEmpty {
+//            
+//        }
+//    }
+    
 }
+
+//extension String {
+//    func chunkFormatted(withChunkSize chunkSize: Int = 4, withSeparator separator: Character = " ") -> String {
+//        return characters.filter { $0 != separator }.chunk(n: chunkSize)
+//            .map{ String($0) }.joined(separator: String(separator))
+//    }
+//}
+
+//extension String {
+//    func separate(every stride: Int = 4, with separator: Character = " ") -> String {
+//        return String(enumerated().map { $0 > 0 && $0 % stride == 0 ? [separator, $1] : [$1]}.joined())
+//    }
+//}

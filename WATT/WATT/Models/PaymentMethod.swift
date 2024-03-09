@@ -9,21 +9,21 @@ import Foundation
 import UIKit
 
 struct PaymentMethod: Identifiable, Codable {
-    var id = UUID()
-    let provider: PaymentMethodRowType?
-    let cardName: String?
-    let cardNumber: String?
-    let expiryDate: String?
-    let cvv: String?
-    var isDefault: Bool?
+    let id = NSUUID().uuidString
+    var provider: PaymentMethodRowType?
+    var cardName: String
+    var cardNumber: String
+    var expiryDate: String
+    var cvv: String
+    var isDefault: Bool
     
     init(
         provider: PaymentMethodRowType? = nil,
-        cardName: String?,
-        cardNumber: String?,
-        expiryDate: String?,
-        cvv: String?,
-        isDefault: Bool? = nil
+        cardName: String,
+        cardNumber: String,
+        expiryDate: String,
+        cvv: String,
+        isDefault: Bool
     ) {
         self.provider = provider
         self.cardName = cardName

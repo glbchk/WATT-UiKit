@@ -46,9 +46,10 @@ class EditCreditCardView: UIView {
     let cvvTextFieldView = TextFieldBackgroundView()
     
     let defaultPaymentLabel = TextLabel(title: "Default payment method", font: .systemFont(ofSize: 15, weight: .regular), textColor: .black, numberOfLines: 0, textAlignment: .left)
-    let toggle = ToggleView()
+    var toggle = ToggleView()
     
     let saveButton = MainButton(title: "Save")
+    let deleteButton = MainButton(title: "Delete", titleColor: Asset.Colors.red, backgroundColor: .white, shadowOpacity: 0.15, shRadius: 5, shColor: .black)
     
     init() {
         super.init(frame: .zero)
@@ -65,7 +66,7 @@ class EditCreditCardView: UIView {
 //        setupLabels()
         setupWhiteFooter()
         setupTextFields()
-        setupSaveButton()
+        setupButtons()
     }
     
     private func setupBlueHeader() {
@@ -91,6 +92,13 @@ class EditCreditCardView: UIView {
         let expiryTextFieldView = TextFieldBackgroundView(tf: expiryTextField)
         cvvTextFieldView.textField = cvvTextField
         
+        cardNumberTextField.isEnabled = false
+        cardNumberTextFieldView.backgroundColor = Asset.Colors.grey3
+        cardNumberTextFieldView.textField?.textColor = Asset.Colors.darkGrey
+        expiryTextFieldView.textField?.isEnabled = false
+        expiryTextFieldView.backgroundColor = Asset.Colors.grey3
+        expiryTextFieldView.textField?.textColor = Asset.Colors.darkGrey
+        
         let cardNameStack = stack(cardNameLabel, cardNameTextFieldView, spacing: 6)
         let cardNumberStack = stack(cardNumberLabel, cardNumberTextFieldView, spacing: 6)
         let expiryStack = stack(expiryLabel, expiryTextFieldView, spacing: 6)
@@ -109,9 +117,14 @@ class EditCreditCardView: UIView {
         }
     }
     
-    private func setupSaveButton() {
-        whiteBackgroundView.addSubview(saveButton)
-        saveButton.anchor(top: toggle.bottomAnchor, leading: whiteBackgroundView.leadingAnchor, trailing: whiteBackgroundView.trailingAnchor, bottom: nil, padding: .init(top: 30, left: 20, bottom: 0, right: 20))
+    private func setupButtons() {
+        let stack = stack(saveButton, deleteButton, spacing: 20)
+        
+        whiteBackgroundView.addSubview(stack)
+        stack.anchor(top: toggle.bottomAnchor, leading: whiteBackgroundView.leadingAnchor, trailing: whiteBackgroundView.trailingAnchor, bottom: nil, padding: .init(top: 30, left: 20, bottom: 0, right: 20))
+        [saveButton, deleteButton].forEach {
+            $0.anchor(top: nil, leading: stack.leadingAnchor, trailing: stack.trailingAnchor, bottom: nil)
+        }
     }
     
 }

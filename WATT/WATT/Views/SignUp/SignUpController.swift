@@ -44,10 +44,10 @@ class SignUpController: BaseViewController {
         handleKeyboardAppearanceAction = { [weak self] keyboardAppeared, keyboardHeight in
             guard let self = self else { return }
             if keyboardAppeared {
-                contentView.frame.origin.y = -(UIScreen.main.bounds.height * 0.12)
+                view.frame.origin.y = -(UIScreen.main.bounds.height * 0.12)
                 contentView.logoView.alpha = 0
             } else {
-                contentView.frame.origin.y = 0
+                view.frame.origin.y = 0
                 contentView.logoView.alpha = 1
             }
         }

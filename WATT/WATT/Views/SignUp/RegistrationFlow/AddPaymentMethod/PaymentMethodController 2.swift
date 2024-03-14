@@ -62,10 +62,7 @@ class PaymentMethodController: UIViewController {
     }
     
     @objc private func handleCreditCardRowTap() {
-        let vc = AddCreditCardController(viewModel: paymentMethodViewModel, actionCardVerification: { [self] in
-            paymentMethodViewModel.isCardIsRepeating(cardNumber: paymentMethodViewModel.cardNumber, paymentMethods: viewModel.paymentMethods)
-            
-        }, actionToggle: { [self] in
+        let vc = AddCreditCardController(viewModel: paymentMethodViewModel, actionToggle: { [self] in
             viewModel.paymentMethods = paymentMethodViewModel.defaultMethodToggle(paymentMethods: viewModel.paymentMethods)
             
             contentView.paymentMethodsTableView.reloadData()
@@ -76,9 +73,6 @@ class PaymentMethodController: UIViewController {
         })
         if viewModel.paymentMethods.isEmpty {
             vc.contentView.toggle.isOn = true
-            paymentMethodViewModel.defaultPaymentMethod = vc.contentView.toggle.isOn
-        } else {
-            vc.contentView.toggle.isOn = false
             paymentMethodViewModel.defaultPaymentMethod = vc.contentView.toggle.isOn
         }
         
@@ -96,15 +90,10 @@ extension PaymentMethodController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "payment_method", for: indexPath) as! PaymentMethodCell
         
-        cell.selectionStyle = .none
         cell.methodLogoView.image = viewModel.paymentMethods[indexPath.item].provider?.icon
         cell.titleLabel.text = viewModel.paymentMethods[indexPath.item].cardName
-        cell.subtitleLabel.text = hideCardNumbers(card: viewModel.paymentMethods[indexPath.item].cardNumber)
-        if viewModel.paymentMethods[indexPath.item].isDefault == true {
-            cell.defaultMethodLabel.isHidden = false
-        } else {
-            cell.defaultMethodLabel.isHidden = true
-        }
+        cell.subtitleLabel.text = viewModel.paymentMethods[indexPath.item].cardNumber
+        cell.selectionStyle = .none
         
         return cell
     }
@@ -127,7 +116,7 @@ extension PaymentMethodController: UITableViewDelegate, UITableViewDataSource {
         paymentMethodViewModel.selectedPaymentMethod = selectedIndex
         
         vc.contentView.cardNameTextField.text = selectedIndex.cardName
-        vc.contentView.cardNumberTextField.text = paymentMethodViewModel.formatTextWithSpaces(text: selectedIndex.cardNumber)
+        vc.contentView.cardNumberTextField.text = selectedIndex.cardNumber
         vc.contentView.expiryTextField.text = selectedIndex.expiryDate
         vc.contentView.cvvTextField.text = selectedIndex.cvv
         vc.contentView.toggle.isOn = selectedIndex.isDefault
@@ -135,16 +124,4 @@ extension PaymentMethodController: UITableViewDelegate, UITableViewDataSource {
         self.navigationController?.pushViewController(vc, animated: true)
     }
     
-    private func hideCardNumbers(card number: String) -> String {
-        var result = ""
-        
-        let firstTwoDigits = number.prefix(2)
-        let lastFourDigits = number.suffix(4)
-        result = "\(firstTwoDigits)****\(lastFourDigits)"
-        
-        return result
-    }
-    
 }
-
-

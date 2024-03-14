@@ -21,9 +21,9 @@ class SignUpViewModel: ObservableObject {
     @Published var profilePhoto: UIImage? = nil
     
     @Published var paymentMethods: [PaymentMethod] = [
-//        PaymentMethod(provider: .americanExpress, cardName: "First method", cardNumber: "3786 3474 6736 9812", expiryDate: "12/25", cvv: "123", isDefault: true),
-//        PaymentMethod(provider: .visa, cardName: "Second method", cardNumber: "4786 3474 6736 9833", expiryDate: "12/25", cvv: "123", isDefault: false),
-//        PaymentMethod(provider: .mastercard, cardName: "Third method", cardNumber: "5664 3474 6736 9833", expiryDate: "12/27", cvv: "123", isDefault: false)
+//        PaymentMethod(provider: .americanExpress, cardName: "First method", cardNumber: "3786347467369812", expiryDate: "12/25", cvv: "123", isDefault: true),
+//        PaymentMethod(provider: .visa, cardName: "Second method", cardNumber: "4786347467369833", expiryDate: "12/25", cvv: "123", isDefault: false),
+//        PaymentMethod(provider: .mastercard, cardName: "Third method", cardNumber: "5664347467369833", expiryDate: "12/27", cvv: "123", isDefault: false)
     ]
 //    @Published var defaultPaymentMethod: Bool = false
     

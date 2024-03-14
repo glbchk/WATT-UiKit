@@ -20,6 +20,7 @@
 		06102BA32B9426140063FEC5 /* ChooseModelController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06102BA22B9426140063FEC5 /* ChooseModelController.swift */; };
 		06102BA52B9426200063FEC5 /* ChooseModelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06102BA42B9426200063FEC5 /* ChooseModelView.swift */; };
 		06102BA72B9429160063FEC5 /* Car.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06102BA62B9429160063FEC5 /* Car.swift */; };
+		0612A4242B9F929D00936B60 /* MonthYearWheelPicker in Frameworks */ = {isa = PBXBuildFile; productRef = 0612A4232B9F929D00936B60 /* MonthYearWheelPicker */; };
 		0614777C2B9551A800A585A0 /* PaymentMethodViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0614777B2B9551A800A585A0 /* PaymentMethodViewModel.swift */; };
 		0622D9042B92390700A84437 /* ToggleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0622D9032B92390700A84437 /* ToggleView.swift */; };
 		0622D9072B92393900A84437 /* PaymentMethodCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0622D9062B92393900A84437 /* PaymentMethodCell.swift */; };
@@ -191,6 +192,7 @@
 			files = (
 				06B4D8DB2B4F769300DD78CB /* FirebaseDatabaseSwift in Frameworks */,
 				062654992B4F6761007120AD /* Swinject in Frameworks */,
+				0612A4242B9F929D00936B60 /* MonthYearWheelPicker in Frameworks */,
 				062654A62B4F6A0F007120AD /* FirebaseAnalyticsWithoutAdIdSupport in Frameworks */,
 				0626549B2B4F6762007120AD /* Swinject-Dynamic in Frameworks */,
 				062654A02B4F6A0F007120AD /* FirebaseAnalytics in Frameworks */,
@@ -571,6 +573,7 @@
 				06B4D8DC2B4F769900DD78CB /* FirebaseFirestore */,
 				06B4D8DE2B4F769E00DD78CB /* FirebaseFirestoreSwift */,
 				06B4D8E02B4F76B300DD78CB /* FirebaseStorage */,
+				0612A4232B9F929D00936B60 /* MonthYearWheelPicker */,
 			);
 			productName = WATT;
 			productReference = 06A5F40B2B3A68DF000C0218 /* WATT.app */;
@@ -603,6 +606,7 @@
 			packageReferences = (
 				062654972B4F6761007120AD /* XCRemoteSwiftPackageReference "Swinject" */,
 				0626549E2B4F6A0F007120AD /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+				0612A4222B9F929D00936B60 /* XCRemoteSwiftPackageReference "MonthYearWheelPicker" */,
 			);
 			productRefGroup = 06A5F40C2B3A68DF000C0218 /* Products */;
 			projectDirPath = "";
@@ -925,6 +929,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		0612A4222B9F929D00936B60 /* XCRemoteSwiftPackageReference "MonthYearWheelPicker" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/bendodson/MonthYearWheelPicker.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.1;
+			};
+		};
 		062654972B4F6761007120AD /* XCRemoteSwiftPackageReference "Swinject" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/Swinject/Swinject.git";
@@ -944,6 +956,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		0612A4232B9F929D00936B60 /* MonthYearWheelPicker */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 0612A4222B9F929D00936B60 /* XCRemoteSwiftPackageReference "MonthYearWheelPicker" */;
+			productName = MonthYearWheelPicker;
+		};
 		062654982B4F6761007120AD /* Swinject */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 062654972B4F6761007120AD /* XCRemoteSwiftPackageReference "Swinject" */;

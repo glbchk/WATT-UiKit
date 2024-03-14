@@ -30,6 +30,14 @@ class AddCreditCardView: UIView {
         return button
     }()
     
+    let cardNumberNotificationLabel: UILabel = {
+        let label = UILabel()
+        label.textColor = Asset.Colors.green
+        label.font = .systemFont(ofSize: 15, weight: .bold)
+        
+        return label
+    }()
+    
     let titleLabel = TextLabel(title: "Credit card details", font: .systemFont(ofSize: 18, weight: .bold), textColor: .white, numberOfLines: 0)
     
     let cardNameLabel = TextFieldLabel(title: "CARD NAME")
@@ -38,7 +46,7 @@ class AddCreditCardView: UIView {
     let cvvLabel = TextFieldLabel(title: "CVV")
     
     let cardNameTextField = TextFieldWithPlaceholder("e.g. Default payment method")
-    let cardNumberTextField = TextFieldWithPlaceholder("0000  0000  0000  0000")
+    var cardNumberTextField = TextFieldWithPlaceholder("0000  0000  0000  0000")
     let expiryTextField = TextFieldWithPlaceholder("MM / YY")
     let cvvTextField = TextFieldWithPlaceholder("•••")
     
@@ -61,7 +69,7 @@ class AddCreditCardView: UIView {
     
     private func setupUI() {
         setupBlueHeader()
-        setupBackButton()
+        setupTitleAndBackButton()
 //        setupLabels()
         setupWhiteFooter()
         setupTextFields()
@@ -79,8 +87,8 @@ class AddCreditCardView: UIView {
         whiteBackgroundView.anchor(top: backButton.bottomAnchor, leading: self.leadingAnchor, trailing: self.trailingAnchor, bottom: self.bottomAnchor, padding: .init(top: 25, left: 0, bottom: 0, right: 0))
     }
     
-    private func setupBackButton() {
-        let stack = hstack(backButton, titleLabel, spacing: 60, alignment: .fill, distribution: .fill)
+    private func setupTitleAndBackButton() {
+        let stack = hstack(backButton, titleLabel, spacing: 73, alignment: .fill, distribution: .fill)
         blueBackgroundView.addSubview(stack)
         stack.anchor(top: self.safeAreaLayoutGuide.topAnchor, leading: blueBackgroundView.leadingAnchor, trailing: nil, bottom: nil, padding: .init(top: 20, left: 26, bottom: 0, right: 0))
     }
@@ -88,12 +96,13 @@ class AddCreditCardView: UIView {
     private func setupTextFields() {
         let cardNameTextFieldView = TextFieldBackgroundView(tf: cardNameTextField)
         cardNumberTextFieldView.textField = cardNumberTextField
-//        cardNumberTextFieldView.textField?.text = cardNumberTextField.inputText?.separate()
+        cardNumberTextFieldView.textField?.keyboardType = .numberPad
         let expiryTextFieldView = TextFieldBackgroundView(tf: expiryTextField)
         cvvTextFieldView.textField = cvvTextField
+        cvvTextFieldView.textField?.keyboardType = .numberPad
         
         let cardNameStack = stack(cardNameLabel, cardNameTextFieldView, spacing: 6)
-        let cardNumberStack = stack(cardNumberLabel, cardNumberTextFieldView, spacing: 6)
+        let cardNumberStack = stack(cardNumberLabel, cardNumberTextFieldView, cardNumberNotificationLabel, spacing: 6)
         let expiryStack = stack(expiryLabel, expiryTextFieldView, spacing: 6)
         let cvvStack = stack(cvvLabel, cvvTextFieldView, spacing: 6)
         let expiryCvvStack = hstack(expiryStack, cvvStack, spacing: 20, alignment: .fill, distribution: .fillEqually)
@@ -115,23 +124,6 @@ class AddCreditCardView: UIView {
         saveButton.anchor(top: toggle.bottomAnchor, leading: whiteBackgroundView.leadingAnchor, trailing: whiteBackgroundView.trailingAnchor, bottom: nil, padding: .init(top: 30, left: 20, bottom: 0, right: 20))
     }
     
-//    func separate(to textField: UITextField, with text: String = "") {
-//        if textField.text?.isEmpty {
-//            
-//        }
-//    }
-    
 }
 
-//extension String {
-//    func chunkFormatted(withChunkSize chunkSize: Int = 4, withSeparator separator: Character = " ") -> String {
-//        return characters.filter { $0 != separator }.chunk(n: chunkSize)
-//            .map{ String($0) }.joined(separator: String(separator))
-//    }
-//}
 
-//extension String {
-//    func separate(every stride: Int = 4, with separator: Character = " ") -> String {
-//        return String(enumerated().map { $0 > 0 && $0 % stride == 0 ? [separator, $1] : [$1]}.joined())
-//    }
-//}

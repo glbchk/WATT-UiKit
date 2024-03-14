@@ -8,7 +8,7 @@
 import UIKit
 import Combine
 
-class EditCreditCardController: UIViewController {
+class EditCreditCardController: UIViewController, UITextFieldDelegate {
     var cancellables = Set<AnyCancellable>()
     
     let contentView = EditCreditCardView()
@@ -35,9 +35,14 @@ class EditCreditCardController: UIViewController {
         view.addSubview(contentView)
         contentView.fillSuperview()
         
+        setupTextFieldDelegates()
         setupTargets()
         bindViewsToViewModel()
         bindCvvFieldPublisher()
+    }
+    
+    private func setupTextFieldDelegates() {
+        contentView.cvvTextField.delegate = self
     }
     
     private func setupTargets() {
@@ -74,16 +79,6 @@ class EditCreditCardController: UIViewController {
             .assign(to: \.cardName, on: viewModel)
             .store(in: &cancellables)
         
-        contentView.cardNumberTextField.textPublisher
-            .receive(on: DispatchQueue.main)
-            .assign(to: \.cardNumber, on: viewModel)
-            .store(in: &cancellables)
-        
-        contentView.expiryTextField.textPublisher
-            .receive(on: DispatchQueue.main)
-            .assign(to: \.expiry, on: viewModel)
-            .store(in: &cancellables)
-        
         contentView.cvvTextField.textPublisher
             .receive(on: DispatchQueue.main)
             .assign(to: \.cvv, on: viewModel)
@@ -94,7 +89,7 @@ class EditCreditCardController: UIViewController {
             .assign(to: \.defaultPaymentMethod, on: viewModel)
             .store(in: &cancellables)
         
-        viewModel.isCardValid
+        viewModel.isEditCardValid
             .sink { [weak self] isValid in
                 guard let self = self else { return }
                 if isValid {
@@ -121,6 +116,18 @@ class EditCreditCardController: UIViewController {
         }
         
         return result
+    }
+    
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        if textField == contentView.cvvTextField {
+            let allowedCharacters = "1234567890"
+            let allowedCharacterSet = CharacterSet(charactersIn: allowedCharacters)
+            let typedCharacterSet = CharacterSet(charactersIn: string)
+            let alphabet = allowedCharacterSet.isSuperset(of: typedCharacterSet)
+            return alphabet
+        } else {
+            return false
+        }
     }
     
 }

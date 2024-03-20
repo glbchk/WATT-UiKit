@@ -144,9 +144,11 @@ class SignInController: BaseViewController {
             .sink { [weak self] isValid in
                 guard let self = self else { return }
                 if isValid {
-                    self.contentView.signInButton.isEnabled = true
+                    contentView.signInButton.isEnabled = true
+                    contentView.signInButton.alpha = 1
                 } else {
-                    self.contentView.signInButton.isEnabled = false
+                    contentView.signInButton.isEnabled = false
+                    contentView.signInButton.alpha = 0.5
                 }
             }
             .store(in: &cancellables)
@@ -155,10 +157,39 @@ class SignInController: BaseViewController {
             .receive(on: DispatchQueue.main)
             .assign(to: \.email, on: viewModel)
             .store(in: &cancellables)
+        
+        viewModel.isValidEmailPublisher
+            .sink { [weak self] result in
+                guard let self = self else { return }
+                switch result {
+                case .success:
+                    contentView.emailErrorLabel.alpha = 0
+                case .failure(let failure):
+                    contentView.emailErrorLabel.text = failure.description
+                    contentView.emailErrorLabel.alpha = 1
+                }
+            }
+            .store(in: &cancellables)
+        
+        viewModel.isValidPasswordPublisher
+            .sink { [weak self] result in
+                guard let self = self else { return }
+                switch result {
+                case .success:
+                    contentView.passwordErrorLabel.alpha = 0
+                case .failure(let failure):
+                    contentView.passwordErrorLabel.text = failure.description
+                    contentView.passwordErrorLabel.alpha = 1
+                }
+            }
+            .store(in: &cancellables)
     }
     
     private func bindSecureFieldPublisher() {
         contentView.passwordTextFieldView.secureFieldPublisher = viewModel.sfPublisher
         contentView.passwordTextFieldView.action = { self.viewModel.showPassword.toggle() }
+        
+        contentView.emailTextFieldView.validationPublisher = viewModel.isValidEmailPublisher
+        contentView.passwordTextFieldView.validationPublisher = viewModel.isValidPasswordPublisher
     }
 }

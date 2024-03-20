@@ -22,6 +22,13 @@ class TextFieldBackgroundView: UIView {
             bindSFButton()
         }
     }
+    
+    var validationPublisher: AnyPublisher<Result<Bool, TFError>, Never>? {
+        didSet {
+            bindValidationPublisher()
+        }
+    }
+    
     var action: (() -> Void)?
     
     let sfButton = UIButton()
@@ -34,13 +41,15 @@ class TextFieldBackgroundView: UIView {
         setupUI()
     }
 
-    init(tf: UITextField?, withSecureFieldPublisher: AnyPublisher<Bool, Never>? = nil, action: @escaping (() -> Void)) {
+    init(tf: UITextField?, withSecureFieldPublisher: AnyPublisher<Bool, Never>? = nil, withValidationPublisher: AnyPublisher<Result<Bool, TFError>, Never>? = nil, action: @escaping (() -> Void)) {
         self.textField = tf
         self.secureFieldPublisher = withSecureFieldPublisher
+        self.validationPublisher = withValidationPublisher
         self.action = action
         super.init(frame: .zero)
         setupUI()
         bindSFButton()
+        bindValidationPublisher()
     }
     
     required init?(coder: NSCoder) {
@@ -80,6 +89,21 @@ class TextFieldBackgroundView: UIView {
     
     @objc private func buttonTapped() {
         action?()
+    }
+    
+    private func bindValidationPublisher() {
+        guard let validationPublisher = validationPublisher else { return }
+        
+        validationPublisher
+            .sink { result in
+                switch result {
+                case .success:
+                    self.layer.borderColor = Asset.Colors.grey3.cgColor
+                case .failure(let failure):
+                    self.layer.borderColor = Asset.Colors.red.cgColor
+                }
+            }
+            .store(in: &cancellables)
     }
     
     private func bindSFButton() {

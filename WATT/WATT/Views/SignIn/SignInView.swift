@@ -24,6 +24,9 @@ class SignInView: UIView {
     let emailTextFieldView = TextFieldBackgroundView()
     let passwordTextFieldView = TextFieldBackgroundView()
     
+    let emailErrorLabel = TextLabel(title: "Email error", font: .systemFont(ofSize: 13), textColor: Asset.Colors.red)
+    let passwordErrorLabel = TextLabel(title: "Password error", font: .systemFont(ofSize: 13), textColor: Asset.Colors.red)
+    
     let forgotButton = LinkButton(title: "Forgot password?", size: .init(width: 0, height: 20))
     
     let addPaymentMethodTempButton = LinkButton(title: "Add payment method button", size: .init(width: 0, height: 20))
@@ -71,14 +74,16 @@ class SignInView: UIView {
     }
     
     private func createTextFieldsStack() -> UIStackView {
+        emailErrorLabel.alpha = 0
+        passwordErrorLabel.alpha = 0
         
         emailTextFieldView.textField = emailTextField
         passwordTextFieldView.textField = passwordTextField
         
-        let emailStack = stack(emailLabel, emailTextFieldView, spacing: 6)
-        let passwordStack = stack(passwordLabel, passwordTextFieldView, spacing: 6)
+        let emailStack = stack(emailLabel, emailTextFieldView, emailErrorLabel, spacing: 6)
+        let passwordStack = stack(passwordLabel, passwordTextFieldView, passwordErrorLabel, spacing: 6)
         
-        let textFieldsStack = stack(emailStack, passwordStack, spacing: 20)
+        let textFieldsStack = stack(emailStack, passwordStack, spacing: 10)
         
         [emailTextFieldView, passwordTextFieldView].forEach {
             $0.anchor(top: nil, leading: textFieldsStack.leadingAnchor, trailing: textFieldsStack.trailingAnchor, bottom: nil)

@@ -127,7 +127,7 @@ extension PaymentMethodController: UITableViewDelegate, UITableViewDataSource {
         paymentMethodViewModel.selectedPaymentMethod = selectedIndex
         
         vc.contentView.cardNameTextField.text = selectedIndex.cardName
-        vc.contentView.cardNumberTextField.text = paymentMethodViewModel.formatTextWithSpaces(text: selectedIndex.cardNumber)
+        vc.contentView.cardNumberTextField.text = selectedIndex.cardNumber //paymentMethodViewModel.formatTextWithSpaces(text: selectedIndex.cardNumber)
         vc.contentView.expiryTextField.text = selectedIndex.expiryDate
         vc.contentView.cvvTextField.text = selectedIndex.cvv
         vc.contentView.toggle.isOn = selectedIndex.isDefault

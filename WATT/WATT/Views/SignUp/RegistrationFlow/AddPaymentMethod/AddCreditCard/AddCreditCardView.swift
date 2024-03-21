@@ -30,10 +30,47 @@ class AddCreditCardView: UIView {
         return button
     }()
     
+    let cardNameNotificationLabel: UILabel = {
+        let label = UILabel()
+        label.textColor = Asset.Colors.green
+        label.font = .systemFont(ofSize: 14, weight: .bold)
+        label.isHidden = true
+        
+        return label
+    }()
+    
     let cardNumberNotificationLabel: UILabel = {
         let label = UILabel()
         label.textColor = Asset.Colors.green
+        label.font = .systemFont(ofSize: 14, weight: .bold)
+        label.isHidden = true
+        
+        return label
+    }()
+    
+    let expiryDateNotificationLabel: UILabel = {
+        let label = UILabel()
+        label.textColor = Asset.Colors.green
+        label.font = .systemFont(ofSize: 14, weight: .bold)
+        label.isHidden = true
+        
+        return label
+    }()
+    
+    let cvvNotificationLabel: UILabel = {
+        let label = UILabel()
+        label.textColor = Asset.Colors.green
+        label.font = .systemFont(ofSize: 14, weight: .bold)
+        label.isHidden = true
+        
+        return label
+    }()
+    
+    let cardValidityNotificationLabel: UILabel = {
+        let label = UILabel()
+        label.textColor = Asset.Colors.green
         label.font = .systemFont(ofSize: 15, weight: .bold)
+        label.isHidden = true
         
         return label
     }()
@@ -50,7 +87,9 @@ class AddCreditCardView: UIView {
     let expiryTextField = TextFieldWithPlaceholder("MM / YY")
     let cvvTextField = TextFieldWithPlaceholder("•••")
     
+    let cardNameTextFieldView = TextFieldBackgroundView()
     let cardNumberTextFieldView = TextFieldBackgroundView()
+    let expiryTextFieldView = TextFieldBackgroundView()
     let cvvTextFieldView = TextFieldBackgroundView()
     
     let defaultPaymentLabel = TextLabel(title: "Default payment method", font: .systemFont(ofSize: 15, weight: .regular), textColor: .black, numberOfLines: 0, textAlignment: .left)
@@ -69,8 +108,8 @@ class AddCreditCardView: UIView {
     
     private func setupUI() {
         setupBlueHeader()
-        setupTitleAndBackButton()
-//        setupLabels()
+        setupBackButton()
+        setupTitleLabel()
         setupWhiteFooter()
         setupTextFields()
         setupSaveButton()
@@ -87,41 +126,64 @@ class AddCreditCardView: UIView {
         whiteBackgroundView.anchor(top: backButton.bottomAnchor, leading: self.leadingAnchor, trailing: self.trailingAnchor, bottom: self.bottomAnchor, padding: .init(top: 25, left: 0, bottom: 0, right: 0))
     }
     
-    private func setupTitleAndBackButton() {
-        let stack = hstack(backButton, titleLabel, spacing: 73, alignment: .fill, distribution: .fill)
-        blueBackgroundView.addSubview(stack)
-        stack.anchor(top: self.safeAreaLayoutGuide.topAnchor, leading: blueBackgroundView.leadingAnchor, trailing: nil, bottom: nil, padding: .init(top: 20, left: 26, bottom: 0, right: 0))
+    private func setupBackButton() {
+        blueBackgroundView.addSubview(backButton)
+        backButton.anchor(top: self.safeAreaLayoutGuide.topAnchor, leading: blueBackgroundView.leadingAnchor, trailing: nil, bottom: nil, padding: .init(top: 20, left: 26, bottom: 0, right: 0))
+    }
+    
+    private func setupTitleLabel() {
+        blueBackgroundView.addSubview(titleLabel)
+        titleLabel.anchor(top: self.safeAreaLayoutGuide.topAnchor, leading: nil, trailing: nil, bottom: nil, padding: .init(top: 20, left: 0, bottom: 0, right: 0))
+        titleLabel.centerXToSuperview()
     }
     
     private func setupTextFields() {
-        let cardNameTextFieldView = TextFieldBackgroundView(tf: cardNameTextField)
+        cardNameTextFieldView.textField = cardNameTextField
         cardNumberTextFieldView.textField = cardNumberTextField
         cardNumberTextFieldView.textField?.keyboardType = .numberPad
-        let expiryTextFieldView = TextFieldBackgroundView(tf: expiryTextField)
+        expiryTextFieldView.textField = expiryTextField
         cvvTextFieldView.textField = cvvTextField
         cvvTextFieldView.textField?.keyboardType = .numberPad
         
-        let cardNameStack = stack(cardNameLabel, cardNameTextFieldView, spacing: 6)
+        let cardNameStack = stack(cardNameLabel, cardNameTextFieldView, cardNameNotificationLabel, spacing: 6)
         let cardNumberStack = stack(cardNumberLabel, cardNumberTextFieldView, cardNumberNotificationLabel, spacing: 6)
         let expiryStack = stack(expiryLabel, expiryTextFieldView, spacing: 6)
         let cvvStack = stack(cvvLabel, cvvTextFieldView, spacing: 6)
         let expiryCvvStack = hstack(expiryStack, cvvStack, spacing: 20, alignment: .fill, distribution: .fillEqually)
-        let toggleStack = hstack(defaultPaymentLabel, toggle, spacing: 10, alignment: .fill, distribution: .fill)
+        let notificationsStack = hstack(expiryDateNotificationLabel, cvvNotificationLabel, spacing: 6, alignment: .leading)
+        let expiryCvvNotificationsStack = stack(expiryCvvStack, notificationsStack, spacing: 6, alignment: .fill)
         expiryTextFieldView.anchor(top: nil, leading: expiryStack.leadingAnchor, trailing: expiryStack.trailingAnchor, bottom: nil)
         cvvTextFieldView.anchor(top: nil, leading: cvvStack.leadingAnchor, trailing: cvvStack.trailingAnchor, bottom: nil)
+        expiryCvvStack.anchor(top: nil, leading: expiryCvvNotificationsStack.leadingAnchor, trailing: expiryCvvNotificationsStack.trailingAnchor, bottom: nil)
+        notificationsStack.anchor(top: nil, leading: expiryCvvNotificationsStack.leadingAnchor, trailing: expiryCvvNotificationsStack.trailingAnchor, bottom: nil)
+        if expiryDateNotificationLabel.isHidden == true {
+            notificationsStack.alignment = .trailing
+        } else {
+            notificationsStack.alignment = .leading
+        }
+//        cvvNotificationLabel.anchor(top: nil, leading: nil, trailing: notificationsStack.trailingAnchor, bottom: nil)
+        let toggleStack = hstack(defaultPaymentLabel, toggle, spacing: 10, alignment: .fill, distribution: .fill)
         
-        let stack = stack(cardNameStack, cardNumberStack, expiryCvvStack, toggleStack, spacing: 20)
+        let stack = stack(cardNameStack, cardNumberStack, expiryCvvNotificationsStack, toggleStack, spacing: 20)
         
         stack.anchor(top: whiteBackgroundView.topAnchor, leading: whiteBackgroundView.leadingAnchor, trailing: whiteBackgroundView.trailingAnchor, bottom: nil, padding: .allSides(20))
         
-        [cardNameTextFieldView, cardNumberTextFieldView, expiryCvvStack, toggleStack].forEach {
+        [cardNameTextFieldView, cardNumberTextFieldView, expiryCvvNotificationsStack, toggleStack].forEach {
             $0.anchor(top: nil, leading: stack.leadingAnchor, trailing: stack.trailingAnchor, bottom: nil)
         }
+        
     }
     
     private func setupSaveButton() {
-        whiteBackgroundView.addSubview(saveButton)
-        saveButton.anchor(top: toggle.bottomAnchor, leading: whiteBackgroundView.leadingAnchor, trailing: whiteBackgroundView.trailingAnchor, bottom: nil, padding: .init(top: 30, left: 20, bottom: 0, right: 20))
+        saveButton.isEnabled = false
+        saveButton.backgroundColor = Asset.Colors.grey1
+        
+        let stack = stack(saveButton, cardValidityNotificationLabel, spacing: 6, alignment: .center)
+        whiteBackgroundView.addSubview(stack)
+        stack.anchor(top: toggle.bottomAnchor, leading: whiteBackgroundView.leadingAnchor, trailing: whiteBackgroundView.trailingAnchor, bottom: nil, padding: .init(top: 30, left: 20, bottom: 0, right: 20))
+        [saveButton, cardValidityNotificationLabel].forEach {
+            $0.anchor(top: nil, leading: stack.leadingAnchor, trailing: stack.trailingAnchor, bottom: nil)
+        }
     }
     
 }

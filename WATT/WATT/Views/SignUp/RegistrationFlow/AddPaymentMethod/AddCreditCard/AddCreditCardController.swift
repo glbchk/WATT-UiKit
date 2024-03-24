@@ -9,22 +9,22 @@ import UIKit
 import Combine
 import MonthYearWheelPicker
 
-class AddCreditCardController: UIViewController, UITextFieldDelegate {
+class AddCreditCardController: BaseViewController, UITextFieldDelegate {
     var cancellables = Set<AnyCancellable>()
     
     let contentView = AddCreditCardView()
     let paymentMethodContentView = PaymentMethodView()
     private var viewModel: PaymentMethodViewModel
     
-    let actionCardVerification: (() -> Void)?
-    let actionToggle: (() -> Void)?
-    let action: (() -> Void)?
+    let toggleAction: (() -> Void)?
+    let saveAction: (() -> Void)?
     
-    init(viewModel: PaymentMethodViewModel, actionCardVerification: (() -> Void)?, actionToggle: (() -> Void)?, action: (() -> Void)?) {
+    var isCardDetailsEmpty = false
+    
+    init(viewModel: PaymentMethodViewModel, toggleAction: (() -> Void)?, saveAction: (() -> Void)?) {
         self.viewModel = viewModel
-        self.actionCardVerification = actionCardVerification
-        self.actionToggle = actionToggle
-        self.action = action
+        self.toggleAction = toggleAction
+        self.saveAction = saveAction
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -43,7 +43,13 @@ class AddCreditCardController: UIViewController, UITextFieldDelegate {
         bindViewsToViewModel()
         bindCvvFieldPublisher()
         
-        hideAllNotificationLabels()
+//        NotificationCenter.default.addObserver(forName: UIResponder.keyboardWillShowNotification, object: nil, queue: nil) { notification in
+//            if let userInfo = notification.userInfo,
+//               let keyboardFrame = userInfo[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect {
+//                let keyboardHeight = keyboardFrame.height
+//                print("Keyboard height: \(keyboardHeight)")
+//            }
+//        }
     }
     
     private func setupTextFieldDelegates() {
@@ -54,127 +60,17 @@ class AddCreditCardController: UIViewController, UITextFieldDelegate {
     }
     
     private func setupTargets() {
-        contentView.cardNameTextField.addTarget(self, action: #selector(cardNameTextFieldDidBeginEditing), for: .editingDidBegin)
-        contentView.cardNameTextField.addTarget(self, action: #selector(cardNameTextFieldDidEndEditing), for: .editingDidEnd)
-        
-        contentView.cardNumberTextField.addTarget(self, action: #selector(cardNumberTextFieldDidBeginEditing), for: .editingDidBegin)
-        contentView.cardNumberTextField.addTarget(self, action: #selector(cardNumberTextFieldDidEndEditing), for: .editingDidEnd)
         contentView.cardNumberTextField.addTarget(self, action: #selector(cardNumberTextFieldDidChange), for: .editingChanged)
+        contentView.expiryTextField.addTarget(self, action: #selector(expiryTextFieldDidBeginEditing), for: .editingDidBegin)
+        contentView.expiryTextField.addTarget(self, action: #selector(expiryTextFieldDidEndEditing), for: .editingDidEnd)
+        contentView.expiryTextField.setInputViewDatePicker(target: self, selector: #selector(expiryTextFieldDateChange))
+        contentView.cvvTextField.addTarget(self, action: #selector(cvvTextFieldEditingChange), for: .editingChanged)
         
-        contentView.expiryTextField.addTarget(self, action: #selector(expiryDateTextFieldDidBeginEditing), for: .editingDidBegin)
-        contentView.expiryTextField.addTarget(self, action: #selector(expiryDateTextFieldDidEndEditing), for: .editingDidEnd)
-        contentView.expiryTextField.setInputViewDatePicker(target: self, selector: #selector(expiryTextFieldDateChanged))
-        
-        contentView.cvvTextField.addTarget(self, action: #selector(cvvTextFieldDidBeginEditing), for: .editingDidBegin)
-        contentView.cvvTextField.addTarget(self, action: #selector(cvvTextFieldDidEndEditing), for: .editingDidEnd)
-        contentView.cvvTextField.addTarget(self, action: #selector(cvvTextFieldEditingChanged), for: .editingChanged)
+        contentView.toggle.addTarget(self, action: #selector(toggleValueDidChange), for: .valueChanged)
         
         contentView.backButton.addTarget(self, action: #selector(handleBackTap), for: .touchUpInside)
         contentView.saveButton.addTarget(self, action: #selector(saveButtonPressed), for: .touchUpInside)
-        contentView.toggle.addTarget(self, action: #selector(switchValueDidChange), for: .valueChanged)
     }
-    
-    private func hideAllNotificationLabels() {
-        self.contentView.cardNameNotificationLabel.isHidden = true
-        self.contentView.cardNumberNotificationLabel.isHidden = true
-        self.contentView.cvvNotificationLabel.isHidden = true
-        self.contentView.cardValidityNotificationLabel.isHidden = true
-    }
-    
-    @objc private func cardNameTextFieldDidBeginEditing(_ textField: UITextField) {
-        if let text = contentView.cardNameTextField.text, text.count == 0 {
-            self.contentView.cardNameNotificationLabel.isHidden = true
-        } else {
-            self.contentView.cardNameNotificationLabel.isHidden = true
-            self.contentView.cardNameTextFieldView.layer.borderColor = Asset.Colors.grey3.cgColor
-        }
-    }
-    
-    @objc private func cardNameTextFieldDidEndEditing(_ textField: UITextField) {
-
-        if let text = contentView.cardNameTextField.text, text.count <= 3 {
-            self.contentView.cardNameNotificationLabel.isHidden = false
-            self.contentView.cardNameTextFieldView.layer.borderColor = Asset.Colors.red.cgColor
-        } else {
-            self.contentView.cardNameNotificationLabel.isHidden = true
-            self.contentView.cardNameTextFieldView.layer.borderColor = Asset.Colors.grey3.cgColor
-        }
-    }
-    
-    @objc private func cardNumberTextFieldDidBeginEditing(_ textField: UITextField) {
-        
-        if let text = contentView.cardNumberTextField.text, text.count == 0 {
-            self.contentView.cardNumberNotificationLabel.isHidden = true
-        } else {
-            self.contentView.cardNumberNotificationLabel.isHidden = true
-            self.contentView.cardNumberTextFieldView.layer.borderColor = Asset.Colors.grey3.cgColor
-        }
-    }
-    
-    @objc private func cardNumberTextFieldDidEndEditing(_ textField: UITextField) {
-        
-        if let text = contentView.cardNumberTextField.text, text.count <= 18 {
-            self.contentView.cardNumberNotificationLabel.isHidden = false
-            self.contentView.cardNumberTextFieldView.layer.borderColor = Asset.Colors.red.cgColor
-        } else {
-            self.contentView.cardNumberNotificationLabel.isHidden = true
-            self.contentView.cardNumberTextFieldView.layer.borderColor = Asset.Colors.grey3.cgColor
-        }
-//        if textField == contentView.cardNumberTextField {
-//            actionCardVerification?()
-//        }
-    }
-    
-    @objc private func expiryDateTextFieldDidBeginEditing(_ textField: UITextField) {
-        
-        if let text = contentView.expiryTextField.text, text.count == 0 {
-            self.contentView.expiryDateNotificationLabel.isHidden = true
-        } else {
-            self.contentView.expiryDateNotificationLabel.isHidden = true
-            self.contentView.expiryTextFieldView.layer.borderColor = Asset.Colors.grey3.cgColor
-        }
-    }
-    
-    @objc private func expiryDateTextFieldDidEndEditing(_ textField: UITextField) {
-        
-        if let text = contentView.expiryTextField.text, text.count == 0 {
-            self.contentView.expiryDateNotificationLabel.isHidden = false
-            self.contentView.expiryTextFieldView.layer.borderColor = Asset.Colors.red.cgColor
-        } else {
-            self.contentView.expiryDateNotificationLabel.isHidden = true
-            self.contentView.expiryTextFieldView.layer.borderColor = Asset.Colors.grey3.cgColor
-        }
-    }
-    
-    @objc private func cvvTextFieldDidBeginEditing(_ textField: UITextField) {
-        
-        if let text = contentView.cvvTextField.text, text.count == 0 {
-            self.contentView.cvvNotificationLabel.isHidden = true
-        } else {
-            self.contentView.cvvNotificationLabel.isHidden = true
-            self.contentView.cvvTextFieldView.layer.borderColor = Asset.Colors.grey3.cgColor
-        }
-    }
-    
-    @objc private func cvvTextFieldDidEndEditing(_ textField: UITextField) {
-        
-        if let text = contentView.cvvTextField.text, text.count <= 2 {
-            self.contentView.cvvNotificationLabel.isHidden = false
-            self.contentView.cvvTextFieldView.layer.borderColor = Asset.Colors.red.cgColor
-        } else {
-            self.contentView.cvvNotificationLabel.isHidden = true
-            self.contentView.cvvTextFieldView.layer.borderColor = Asset.Colors.grey3.cgColor
-        }
-    }
-    
-//    @objc func cardNameTextFieldDidChange(_ textField: UITextField) {
-//        if let text = contentView.cardNameTextField.text, text.count >= 4 {
-//            self.contentView.cardNameNotificationLabel.isHidden = false
-//        }
-////        if textField == contentView.cardNumberTextField {
-////            actionCardVerification?()
-////        }
-//    }
     
     @objc func cardNumberTextFieldDidChange() {
         contentView.cardNumberTextField.text = viewModel.formatTextWithSpaces(text: contentView.cardNumberTextField.text ?? "")
@@ -182,11 +78,29 @@ class AddCreditCardController: UIViewController, UITextFieldDelegate {
         if let text = contentView.cardNumberTextField.text, text.count > 19 {
             contentView.cardNumberTextField.text = String(text.prefix(19))
         }
-        
-        actionCardVerification?()
     }
     
-    @objc func expiryTextFieldDateChanged() {
+    @objc func expiryTextFieldDidBeginEditing(_ textField: UITextField) {
+        
+        if contentView.expiryTextField.text?.count != 0 {
+            viewModel.isExpiryDateChanged = false
+        } else {
+            viewModel.isExpiryDateChanged = true
+        }
+    }
+    
+    @objc func expiryTextFieldDidEndEditing(_ textField: UITextField) {
+        
+        if contentView.expiryTextField.text?.count == 0 || viewModel.isExpiryDateChanged == false && contentView.expiryTextField.text?.count == 0 {
+            contentView.expiryDateNotificationLabel.isHidden = false
+            contentView.expiryTextFieldView.layer.borderColor = Asset.Colors.red.cgColor
+        } else {
+            contentView.expiryDateNotificationLabel.isHidden = true
+            contentView.expiryTextFieldView.layer.borderColor = Asset.Colors.grey3.cgColor
+        }
+    }
+    
+    @objc func expiryTextFieldDateChange() {
         if let expiryDatePicker = self.contentView.expiryTextField.inputView as? MonthYearWheelPicker {
             let dateFormatter = DateFormatter()
             dateFormatter.dateStyle = .medium
@@ -196,14 +110,9 @@ class AddCreditCardController: UIViewController, UITextFieldDelegate {
             
         }
         self.contentView.expiryTextField.resignFirstResponder()
-        
-//        contentView.expiryTextField.text = viewModel.formatDateWithSlash(text: contentView.expiryTextField.text ?? "")
-//        if let text = contentView.expiryTextField.text, text.count > 5 {
-//            contentView.expiryTextField.text = String(text.prefix(5))
-//        }
     }
     
-    @objc func cvvTextFieldEditingChanged() {
+    @objc func cvvTextFieldEditingChange() {
         if let text = contentView.cvvTextField.text, text.count > 3 {
             contentView.cvvTextField.text = String(text.prefix(3))
         }
@@ -213,21 +122,30 @@ class AddCreditCardController: UIViewController, UITextFieldDelegate {
         self.navigationController?.popViewController(animated: true)
     }
     
-    @objc private func saveButtonPressed() {
-//        viewModel.cardNumber = viewModel.cardNumber.replacingOccurrences(of: " ", with: "")
-
-        action?()
-        contentView.toggle.isOn = false
-        contentView.saveButton.isEnabled = false
-        contentView.saveButton.backgroundColor = Asset.Colors.grey1
-        
-        self.navigationController?.popViewController(animated: true)
+    @objc private func toggleValueDidChange() {
+        viewModel.defaultPaymentMethod = isToggleStateOn(isDefault: contentView.toggle.isOn)
+        toggleAction?()
+        print("\(viewModel.defaultPaymentMethod)")
     }
     
-    @objc private func switchValueDidChange() {
-        viewModel.defaultPaymentMethod = isToggleStateOn(isDefault: contentView.toggle.isOn)
-        actionToggle?()
-        print("\(viewModel.defaultPaymentMethod)")
+    @objc private func saveButtonPressed() {
+        
+        if !self.isCardDetailsEmpty {
+            self.contentView.cardNameNotificationLabel.isHidden = false
+            self.contentView.cardNameTextFieldView.layer.borderColor = Asset.Colors.red.cgColor
+            self.contentView.cardNumberNotificationLabel.isHidden = false
+            self.contentView.cardNumberTextFieldView.layer.borderColor = Asset.Colors.red.cgColor
+            self.contentView.expiryDateNotificationLabel.isHidden = false
+            self.contentView.expiryTextFieldView.layer.borderColor = Asset.Colors.red.cgColor
+            self.contentView.cvvNotificationLabel.isHidden = false
+            self.contentView.cvvTextFieldView.layer.borderColor = Asset.Colors.red.cgColor
+        } else {
+            self.saveAction?()
+            self.contentView.toggle.isOn = false
+            
+            self.navigationController?.popViewController(animated: true)
+        }
+        
     }
     
     private func bindViewsToViewModel() {
@@ -259,9 +177,13 @@ class AddCreditCardController: UIViewController, UITextFieldDelegate {
         viewModel.cardNamePublisher
             .sink { [weak self] isValid in
                 guard let self = self else { return }
-                if !isValid {
-                    self.contentView.cardNameNotificationLabel.text = "Card name doesn't have at least 4 symbols!"
-                    self.contentView.cardNameNotificationLabel.textColor = Asset.Colors.red
+                let contentView = self.contentView
+                if !isValid && contentView.cardNameTextField.text != "" {
+                    contentView.cardNameNotificationLabel.isHidden = false
+                    contentView.cardNameTextFieldView.layer.borderColor = Asset.Colors.red.cgColor
+                } else {
+                    contentView.cardNameNotificationLabel.isHidden = true
+                    contentView.cardNameTextFieldView.layer.borderColor = Asset.Colors.grey3.cgColor
                 }
             }
             .store(in: &cancellables)
@@ -269,72 +191,80 @@ class AddCreditCardController: UIViewController, UITextFieldDelegate {
         viewModel.cardNumberPublisher
             .sink { [weak self] isValid in
                 guard let self = self else { return }
-                if !isValid {
-                    self.contentView.cardNumberNotificationLabel.text = "Card number is not 16 digits!"
-                    self.contentView.cardNumberNotificationLabel.textColor = Asset.Colors.red
+                let contentView = self.contentView
+                if !isValid && contentView.cardNumberTextField.text != "" {
+                    contentView.cardNumberNotificationLabel.isHidden = false
+                    contentView.cardNumberTextFieldView.layer.borderColor = Asset.Colors.red.cgColor
+                } else {
+                    contentView.cardNumberNotificationLabel.isHidden = true
+                    contentView.cardNumberTextFieldView.layer.borderColor = Asset.Colors.grey3.cgColor
                 }
             }
             .store(in: &cancellables)
         
-        viewModel.expiryPublisher
-            .sink { [weak self] isValid in
-                guard let self = self else { return }
-                if !isValid {
-                    self.contentView.expiryDateNotificationLabel.text = "Date is empty!"
-                    self.contentView.expiryDateNotificationLabel.textColor = Asset.Colors.red
-                }
-            }
-            .store(in: &cancellables)
+//        viewModel.expiryPublisher
+//            .sink { [weak self] isValid in
+//                guard let self = self else { return }
+//                let contentView = self.contentView
+//                if !isValid {
+//                    contentView.expiryDateNotificationLabel.text = "Date is empty!"
+////                    contentView.expiryDateNotificationLabel.isHidden = false
+////                    contentView.expiryTextFieldView.layer.borderColor = Asset.Colors.red.cgColor
+//                } else {
+////                    contentView.expiryDateNotificationLabel.isHidden = true
+////                    contentView.expiryTextFieldView.layer.borderColor = Asset.Colors.grey3.cgColor
+//                }
+//            }
+//            .store(in: &cancellables)
         
         viewModel.cvvPublisher
             .sink { [weak self] isValid in
                 guard let self = self else { return }
-                if !isValid {
-                    self.contentView.cvvNotificationLabel.text = "Should be 3 digits!"
-                    self.contentView.cvvNotificationLabel.textColor = Asset.Colors.red
+                let contentView = self.contentView
+                if !isValid && contentView.cvvTextField.text != "" {
+                    contentView.cvvNotificationLabel.isHidden = false
+                    contentView.cvvTextFieldView.layer.borderColor = Asset.Colors.red.cgColor
+                } else {
+                    contentView.cvvNotificationLabel.isHidden = true
+                    contentView.cvvTextFieldView.layer.borderColor = Asset.Colors.grey3.cgColor
                 }
             }
             .store(in: &cancellables)
         
-        viewModel.isCardDetailsValid
-            .sink { [weak self] isValid in
+        viewModel.isCardDetailsEmptyPublisher
+            .sink { [weak self] isCardDetailsEmpty in
+                guard let self = self else { return }
+                if isCardDetailsEmpty {
+                    self.isCardDetailsEmpty = false
+                } else {
+                    self.isCardDetailsEmpty = true
+                }
+            }
+            .store(in: &cancellables)
+        
+        viewModel.isCardValidPublisher
+            .sink { [weak self] isCardValid in
                 guard let self = self else { return }
                 let contentView = self.contentView
-                if isValid {
-                    if contentView.cardValidityNotificationLabel.isHidden == true {
-                        contentView.saveButton.isEnabled = true
-                        contentView.saveButton.backgroundColor = Asset.Colors.deepBlue
-                    } else {
-                        contentView.saveButton.isEnabled = false
-                        contentView.saveButton.backgroundColor = Asset.Colors.grey1
-                    }
-//                    contentView.cardValidityNotificationLabel.isHidden = true
+                if isCardValid {
+                    contentView.saveButton.isEnabled = true
                 } else {
                     contentView.saveButton.isEnabled = false
-                    contentView.saveButton.backgroundColor = Asset.Colors.grey1
-//                    contentView.cardValidityNotificationLabel.isHidden = false
-//                    contentView.cardValidityNotificationLabel.text = "Card isn't valid!"
-//                    contentView.cardValidityNotificationLabel.textColor = Asset.Colors.red
                 }
             }
             .store(in: &cancellables)
         
-        viewModel.isCardDupblicate
-            .sink { [weak self] isCardDuplicate in
+        viewModel.isCardDuplicatePublisher
+            .sink { [weak self] isCardDublicate in
                 guard let self = self else { return }
-//                if viewModel.isCardNumberValid != "" {
-                    if isCardDuplicate {
-                        if viewModel.isCardNumberValid != "" {
-                            self.contentView.saveButton.isEnabled = false
-                            self.contentView.saveButton.backgroundColor = Asset.Colors.grey1
-                            self.contentView.cardValidityNotificationLabel.isHidden = false
-                            self.contentView.cardValidityNotificationLabel.text = "The card is already added, add another card!"
-                            self.contentView.cardValidityNotificationLabel.textColor = Asset.Colors.red
-                        }
-                    } else {
-                        self.contentView.cardValidityNotificationLabel.isHidden = true
+                let contentView = self.contentView
+                if !isCardDublicate {
+                    contentView.cardValidityNotificationLabel.isHidden = true
+                } else {
+                    if contentView.cardNumberTextField.text != "" {
+                        contentView.cardValidityNotificationLabel.isHidden = false
                     }
-//                }
+                }
             }
             .store(in: &cancellables)
     }
@@ -379,14 +309,6 @@ extension AddCreditCardController {
         }
     }
     
-    func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
-        if textField == contentView.expiryTextField {
-            self.view.endEditing(true)
-            return true
-        }
-        return true
-    }
-    
 }
 
 
@@ -395,13 +317,11 @@ extension UITextField {
     func setInputViewDatePicker(target: Any, selector: Selector) {
         let screenWidth = UIScreen.main.bounds.width
         let datePicker = MonthYearWheelPicker()
-        datePicker.frame = CGRect(x: 0.0, y: 0.0, width: screenWidth, height: 216.0)
+        datePicker.frame = CGRect(x: 0.0, y: 0.0, width: screenWidth, height: 247.0)
         datePicker.backgroundColor = .white
         datePicker.onDateSelected = { (month, year) in
-            let string = String(format: "%02d/%d", month, year)
+            _ = String(format: "%02d/%d", month, year)
         }
-        
-        datePicker.sizeToFit()
         
         self.inputView = datePicker
         
@@ -414,6 +334,8 @@ extension UITextField {
     }
     
     @objc func tapCancel() {
+        self.text = nil
+        
         self.resignFirstResponder()
     }
     

@@ -32,8 +32,9 @@ class AddCreditCardView: UIView {
     
     let cardNameNotificationLabel: UILabel = {
         let label = UILabel()
-        label.textColor = Asset.Colors.green
-        label.font = .systemFont(ofSize: 14, weight: .bold)
+        label.textColor = Asset.Colors.grey2
+        label.font = .systemFont(ofSize: 13, weight: .semibold)
+        label.text = "Card name doesn't have at least 4 symbols!"
         label.isHidden = true
         
         return label
@@ -41,8 +42,9 @@ class AddCreditCardView: UIView {
     
     let cardNumberNotificationLabel: UILabel = {
         let label = UILabel()
-        label.textColor = Asset.Colors.green
-        label.font = .systemFont(ofSize: 14, weight: .bold)
+        label.textColor = Asset.Colors.grey2
+        label.font = .systemFont(ofSize: 13, weight: .semibold)
+        label.text = "Card number is not 16 digits!"
         label.isHidden = true
         
         return label
@@ -50,8 +52,9 @@ class AddCreditCardView: UIView {
     
     let expiryDateNotificationLabel: UILabel = {
         let label = UILabel()
-        label.textColor = Asset.Colors.green
-        label.font = .systemFont(ofSize: 14, weight: .bold)
+        label.textColor = Asset.Colors.grey2
+        label.font = .systemFont(ofSize: 13, weight: .semibold)
+        label.text = "Date is empty!"
         label.isHidden = true
         
         return label
@@ -59,8 +62,9 @@ class AddCreditCardView: UIView {
     
     let cvvNotificationLabel: UILabel = {
         let label = UILabel()
-        label.textColor = Asset.Colors.green
-        label.font = .systemFont(ofSize: 14, weight: .bold)
+        label.textColor = Asset.Colors.grey2
+        label.font = .systemFont(ofSize: 13, weight: .semibold)
+        label.text = "Should be 3 digits!"
         label.isHidden = true
         
         return label
@@ -68,8 +72,9 @@ class AddCreditCardView: UIView {
     
     let cardValidityNotificationLabel: UILabel = {
         let label = UILabel()
-        label.textColor = Asset.Colors.green
-        label.font = .systemFont(ofSize: 15, weight: .bold)
+        label.textColor = Asset.Colors.red
+        label.font = .systemFont(ofSize: 13, weight: .semibold)
+        label.text = "The card is already added, add another card!"
         label.isHidden = true
         
         return label
@@ -138,6 +143,7 @@ class AddCreditCardView: UIView {
     }
     
     private func setupTextFields() {
+        
         cardNameTextFieldView.textField = cardNameTextField
         cardNumberTextFieldView.textField = cardNumberTextField
         cardNumberTextFieldView.textField?.keyboardType = .numberPad
@@ -147,36 +153,25 @@ class AddCreditCardView: UIView {
         
         let cardNameStack = stack(cardNameLabel, cardNameTextFieldView, cardNameNotificationLabel, spacing: 6)
         let cardNumberStack = stack(cardNumberLabel, cardNumberTextFieldView, cardNumberNotificationLabel, spacing: 6)
-        let expiryStack = stack(expiryLabel, expiryTextFieldView, spacing: 6)
-        let cvvStack = stack(cvvLabel, cvvTextFieldView, spacing: 6)
-        let expiryCvvStack = hstack(expiryStack, cvvStack, spacing: 20, alignment: .fill, distribution: .fillEqually)
-        let notificationsStack = hstack(expiryDateNotificationLabel, cvvNotificationLabel, spacing: 6, alignment: .leading)
-        let expiryCvvNotificationsStack = stack(expiryCvvStack, notificationsStack, spacing: 6, alignment: .fill)
-        expiryTextFieldView.anchor(top: nil, leading: expiryStack.leadingAnchor, trailing: expiryStack.trailingAnchor, bottom: nil)
-        cvvTextFieldView.anchor(top: nil, leading: cvvStack.leadingAnchor, trailing: cvvStack.trailingAnchor, bottom: nil)
-        expiryCvvStack.anchor(top: nil, leading: expiryCvvNotificationsStack.leadingAnchor, trailing: expiryCvvNotificationsStack.trailingAnchor, bottom: nil)
-        notificationsStack.anchor(top: nil, leading: expiryCvvNotificationsStack.leadingAnchor, trailing: expiryCvvNotificationsStack.trailingAnchor, bottom: nil)
-        if expiryDateNotificationLabel.isHidden == true {
-            notificationsStack.alignment = .trailing
-        } else {
-            notificationsStack.alignment = .leading
-        }
-//        cvvNotificationLabel.anchor(top: nil, leading: nil, trailing: notificationsStack.trailingAnchor, bottom: nil)
+        let expiryStack = stack(expiryLabel, expiryTextFieldView, expiryDateNotificationLabel, spacing: 6)
+        let cvvStack = stack(cvvLabel, cvvTextFieldView, cvvNotificationLabel, spacing: 6)
+        let expiryCvvStack = hstack(expiryStack, cvvStack, spacing: 20, alignment: .top, distribution: .fillEqually)
         let toggleStack = hstack(defaultPaymentLabel, toggle, spacing: 10, alignment: .fill, distribution: .fill)
         
-        let stack = stack(cardNameStack, cardNumberStack, expiryCvvNotificationsStack, toggleStack, spacing: 20)
+        expiryTextFieldView.anchor(top: nil, leading: expiryStack.leadingAnchor, trailing: expiryStack.trailingAnchor, bottom: nil)
+        cvvTextFieldView.anchor(top: nil, leading: cvvStack.leadingAnchor, trailing: cvvStack.trailingAnchor, bottom: nil)
+        
+        let stack = stack(cardNameStack, cardNumberStack, expiryCvvStack, toggleStack, spacing: 20)
         
         stack.anchor(top: whiteBackgroundView.topAnchor, leading: whiteBackgroundView.leadingAnchor, trailing: whiteBackgroundView.trailingAnchor, bottom: nil, padding: .allSides(20))
         
-        [cardNameTextFieldView, cardNumberTextFieldView, expiryCvvNotificationsStack, toggleStack].forEach {
+        [cardNameTextFieldView, cardNumberTextFieldView, expiryCvvStack, toggleStack].forEach {
             $0.anchor(top: nil, leading: stack.leadingAnchor, trailing: stack.trailingAnchor, bottom: nil)
         }
         
     }
     
     private func setupSaveButton() {
-        saveButton.isEnabled = false
-        saveButton.backgroundColor = Asset.Colors.grey1
         
         let stack = stack(saveButton, cardValidityNotificationLabel, spacing: 6, alignment: .center)
         whiteBackgroundView.addSubview(stack)

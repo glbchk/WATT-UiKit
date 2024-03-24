@@ -68,7 +68,7 @@ class AddDetailsController: BaseViewController {
     
     private func bindViewModel() {
         //add here car and payment method publishers
-        contentView.paymentMethodRow.publisher = viewModel.paymentMethodViewModel?.createPaymentMethodPublisher(methods: viewModel.paymentMethods)
+        contentView.paymentMethodRow.publisher = viewModel.paymentMethodViewModel?.createPaymentMethodPublisher()
         contentView.nameAndPhoneNumberRow.publisher = viewModel.createNameAndPhoneNumberPublisher()
     }
     

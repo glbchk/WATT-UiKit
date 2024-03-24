@@ -62,15 +62,19 @@ class PaymentMethodController: UIViewController {
     }
     
     @objc private func handleCreditCardRowTap() {
-        let vc = AddCreditCardController(viewModel: paymentMethodViewModel, actionCardVerification: { [self] in
-            paymentMethodViewModel.isCardIsRepeating(cardNumber: paymentMethodViewModel.cardNumber, paymentMethods: viewModel.paymentMethods)
-            
-        }, actionToggle: { [self] in
-            viewModel.paymentMethods = paymentMethodViewModel.defaultMethodToggle(paymentMethods: viewModel.paymentMethods)
+        let vc = AddCreditCardController(viewModel: paymentMethodViewModel, toggleAction: { [self] in
+            paymentMethodViewModel.defaultMethodToggle()
+            viewModel.paymentMethods = paymentMethodViewModel.addedPaymentMethods
             
             contentView.paymentMethodsTableView.reloadData()
-        }, action: { [self] in
-            viewModel.paymentMethods = paymentMethodViewModel.savePaymentMethod(paymentMethods: viewModel.paymentMethods)
+        }, saveAction: { [self] in
+            paymentMethodViewModel.savePaymentMethod()
+            paymentMethodViewModel.cardName = ""
+            paymentMethodViewModel.cardNumber = ""
+            paymentMethodViewModel.expiry = ""
+            paymentMethodViewModel.cvv = ""
+            
+            viewModel.paymentMethods = paymentMethodViewModel.addedPaymentMethods
             
             contentView.paymentMethodsTableView.reloadData()
         })
@@ -115,10 +119,19 @@ extension PaymentMethodController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let vc = EditCreditCardController(viewModel: paymentMethodViewModel, editAction: { [self] in
-            viewModel.paymentMethods = paymentMethodViewModel.editPaymentMethod(paymentMethods: viewModel.paymentMethods)
+            paymentMethodViewModel.editPaymentMethod()
+            viewModel.paymentMethods = paymentMethodViewModel.addedPaymentMethods
+            
+            contentView.paymentMethodsTableView.reloadData()
+        }, toggleAction: { [self] in
+            paymentMethodViewModel.defaultMethodToggle()
+            viewModel.paymentMethods = paymentMethodViewModel.addedPaymentMethods
+            
             contentView.paymentMethodsTableView.reloadData()
         }, deleteAction: { [self] in
-            viewModel.paymentMethods = paymentMethodViewModel.deletePaymentMethod(paymentMethods: viewModel.paymentMethods)
+            paymentMethodViewModel.deletePaymentMethod()
+            viewModel.paymentMethods = paymentMethodViewModel.addedPaymentMethods
+            
             contentView.paymentMethodsTableView.reloadData()
         })
         

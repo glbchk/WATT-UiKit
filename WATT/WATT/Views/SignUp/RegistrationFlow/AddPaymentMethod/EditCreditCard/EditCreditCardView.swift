@@ -30,6 +30,26 @@ class EditCreditCardView: UIView {
         return button
     }()
     
+    let cardNameNotificationLabel: UILabel = {
+        let label = UILabel()
+        label.textColor = Asset.Colors.grey2
+        label.font = .systemFont(ofSize: 13, weight: .semibold)
+        label.text = "Card name doesn't have at least 4 symbols!"
+        label.isHidden = true
+        
+        return label
+    }()
+    
+    let cvvNotificationLabel: UILabel = {
+        let label = UILabel()
+        label.textColor = Asset.Colors.grey2
+        label.font = .systemFont(ofSize: 13, weight: .semibold)
+        label.text = "Should be 3 digits!"
+        label.isHidden = true
+        
+        return label
+    }()
+    
     let titleLabel = TextLabel(title: "Edit credit card", font: .systemFont(ofSize: 18, weight: .bold), textColor: .white, numberOfLines: 0)
     
     let cardNameLabel = TextFieldLabel(title: "CARD NAME")
@@ -42,7 +62,9 @@ class EditCreditCardView: UIView {
     let expiryTextField = TextFieldWithPlaceholder("MM / YY")
     let cvvTextField = TextFieldWithPlaceholder("•••")
     
+    let cardNameTextFieldView = TextFieldBackgroundView()
     let cardNumberTextFieldView = TextFieldBackgroundView()
+    let expiryTextFieldView = TextFieldBackgroundView()
     let cvvTextFieldView = TextFieldBackgroundView()
     
     let defaultPaymentLabel = TextLabel(title: "Default payment method", font: .systemFont(ofSize: 15, weight: .regular), textColor: .black, numberOfLines: 0, textAlignment: .left)
@@ -87,10 +109,11 @@ class EditCreditCardView: UIView {
     }
     
     private func setupTextFields() {
-        let cardNameTextFieldView = TextFieldBackgroundView(tf: cardNameTextField)
+        cardNameTextFieldView.textField = cardNameTextField
         cardNumberTextFieldView.textField = cardNumberTextField
-        let expiryTextFieldView = TextFieldBackgroundView(tf: expiryTextField)
+        expiryTextFieldView.textField = expiryTextField
         cvvTextFieldView.textField = cvvTextField
+        cvvTextFieldView.textField?.keyboardType = .numberPad
         
         cardNumberTextField.isEnabled = false
         cardNumberTextFieldView.backgroundColor = Asset.Colors.grey3
@@ -99,12 +122,13 @@ class EditCreditCardView: UIView {
         expiryTextFieldView.backgroundColor = Asset.Colors.grey3
         expiryTextFieldView.textField?.textColor = Asset.Colors.darkGrey
         
-        let cardNameStack = stack(cardNameLabel, cardNameTextFieldView, spacing: 6)
+        let cardNameStack = stack(cardNameLabel, cardNameTextFieldView, cardNameNotificationLabel, spacing: 6)
         let cardNumberStack = stack(cardNumberLabel, cardNumberTextFieldView, spacing: 6)
         let expiryStack = stack(expiryLabel, expiryTextFieldView, spacing: 6)
-        let cvvStack = stack(cvvLabel, cvvTextFieldView, spacing: 6)
-        let expiryCvvStack = hstack(expiryStack, cvvStack, spacing: 20, alignment: .fill, distribution: .fillEqually)
+        let cvvStack = stack(cvvLabel, cvvTextFieldView, cvvNotificationLabel, spacing: 6)
+        let expiryCvvStack = hstack(expiryStack, cvvStack, spacing: 20, alignment: .top, distribution: .fillEqually)
         let toggleStack = hstack(defaultPaymentLabel, toggle, spacing: 10, alignment: .fill, distribution: .fill)
+        
         expiryTextFieldView.anchor(top: nil, leading: expiryStack.leadingAnchor, trailing: expiryStack.trailingAnchor, bottom: nil)
         cvvTextFieldView.anchor(top: nil, leading: cvvStack.leadingAnchor, trailing: cvvStack.trailingAnchor, bottom: nil)
         

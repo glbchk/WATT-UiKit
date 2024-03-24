@@ -70,7 +70,7 @@ class PaymentMethodView: UIView {
     
     func setupTableView() { //tableView cellsCount: Int) {
         paymentMethodsTableView.backgroundColor = .clear
-        paymentMethodsTableView.clipsToBounds = false
+        paymentMethodsTableView.clipsToBounds = true
         
         self.addSubview(paymentMethodsTableView)
         paymentMethodsTableView.anchor(top: subtitleLable.bottomAnchor, leading: self.leadingAnchor, trailing: self.trailingAnchor, bottom: self.bottomAnchor, padding: .init(top: 20, left: 20, bottom: 0, right: 20))

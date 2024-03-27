@@ -10,6 +10,7 @@ import Foundation
 enum TFError: Error {
     case invalidEmailFormat
     case invalidPasswordLength
+    case invalidRetypedPassword
     
     var description: String {
         switch self {
@@ -17,6 +18,8 @@ enum TFError: Error {
             "Invalid email format"
         case .invalidPasswordLength:
             "Password should contain at least 6 characters"
+        case .invalidRetypedPassword:
+            "Password don't match"
         }
     }
 }

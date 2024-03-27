@@ -99,7 +99,7 @@ class TextFieldBackgroundView: UIView {
                 switch result {
                 case .success:
                     self.layer.borderColor = Asset.Colors.grey3.cgColor
-                case .failure(let failure):
+                case .failure:
                     self.layer.borderColor = Asset.Colors.red.cgColor
                 }
             }

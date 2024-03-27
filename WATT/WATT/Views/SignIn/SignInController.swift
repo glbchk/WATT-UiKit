@@ -163,10 +163,10 @@ class SignInController: BaseViewController {
                 guard let self = self else { return }
                 switch result {
                 case .success:
-                    contentView.emailErrorLabel.alpha = 0
+                    contentView.emailErrorLabel.isHidden = true
                 case .failure(let failure):
                     contentView.emailErrorLabel.text = failure.description
-                    contentView.emailErrorLabel.alpha = 1
+                    contentView.emailErrorLabel.isHidden = false
                 }
             }
             .store(in: &cancellables)
@@ -176,10 +176,10 @@ class SignInController: BaseViewController {
                 guard let self = self else { return }
                 switch result {
                 case .success:
-                    contentView.passwordErrorLabel.alpha = 0
+                    contentView.passwordErrorLabel.isHidden = true
                 case .failure(let failure):
                     contentView.passwordErrorLabel.text = failure.description
-                    contentView.passwordErrorLabel.alpha = 1
+                    contentView.passwordErrorLabel.isHidden = false
                 }
             }
             .store(in: &cancellables)

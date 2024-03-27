@@ -152,33 +152,34 @@ class SignUpViewModel: ObservableObject {
             .eraseToAnyPublisher()
     }
     
-    var isValidEmailPublisher: AnyPublisher<Bool, Never> {
+    var isValidEmailPublisher: AnyPublisher<Result<Bool, TFError>, Never> {
         $email
-            .map { $0.isValidEmail }
+            .debounce(for: .seconds(1), scheduler: RunLoop.main)
+            .map { $0.isEmpty ? .success(false) : ($0.isValidEmail ? .success(true) : .failure(.invalidEmailFormat)) }
             .eraseToAnyPublisher()
     }
     
-    var isValidPhoneNumberPublisher: AnyPublisher<Bool, Never> {
-        $phoneNumber
-            .map { $0.contains("+") && $0.count >= 11 }
-            .eraseToAnyPublisher()
-    }
-    
-    var isValidPasswordPublisher: AnyPublisher<Bool, Never> {
+    var isValidPasswordPublisher: AnyPublisher<Result<Bool, TFError>, Never> {
         $password
-            .map { !$0.isEmpty && $0.count >= 6 }
+            .debounce(for: .seconds(1), scheduler: RunLoop.main)
+            .map { $0.isEmpty ? .success(false) : ($0.count < 6 ? .failure(.invalidPasswordLength) : .success(true)) }
             .eraseToAnyPublisher()
     }
     
-    var isValidRetypedPasswordPublisher: AnyPublisher<Bool, Never> {
-        $retypedPassword
-            .map { !$0.isEmpty && $0.count >= 6 }
+    var isValidRetypedPasswordPublisher: AnyPublisher<Result<Bool, TFError>, Never> {
+        Publishers.CombineLatest($password, $retypedPassword)
+            .debounce(for: .seconds(1), scheduler: RunLoop.main)
+            .map { ($0.isEmpty && $1.isEmpty) ? .success(false) : ($0 == $1 ? .success(true) : .failure(.invalidRetypedPassword)) }
             .eraseToAnyPublisher()
     }
     
     var isSignUpValid: AnyPublisher<Bool, Never> {
-        Publishers.CombineLatest(isValidPasswordPublisher, isValidRetypedPasswordPublisher)
-            .map { $0 == $1 }
+        Publishers.CombineLatest(isValidEmailPublisher, isValidRetypedPasswordPublisher)
+            .map {
+                print("email", $0)
+                print("password", $1)
+                return $0 == .success(true) && $1 == .success(true) ? true : false
+            }
             .eraseToAnyPublisher()
     }
     

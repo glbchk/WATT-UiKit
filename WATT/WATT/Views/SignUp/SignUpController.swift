@@ -88,9 +88,11 @@ class SignUpController: BaseViewController {
             .sink { [weak self] isValid in
                 guard let self = self else { return }
                 if isValid {
-                    self.contentView.signUpButton.isEnabled = true
+                    contentView.signUpButton.isEnabled = true
+                    contentView.signUpButton.alpha = 1
                 } else {
-                    self.contentView.signUpButton.isEnabled = false
+                    contentView.signUpButton.isEnabled = false
+                    contentView.signUpButton.alpha = 0.5
                 }
             }
             .store(in: &cancellables)
@@ -109,6 +111,10 @@ class SignUpController: BaseViewController {
         
         contentView.retypePasswordTextFieldView.secureFieldPublisher = viewModel.retypedPasswordPublisher
         contentView.retypePasswordTextFieldView.action = { self.viewModel.showRetyped.toggle() }
+        
+        contentView.emailTextFieldView.validationPublisher = viewModel.isValidEmailPublisher
+        contentView.passwordTextFieldView.validationPublisher = viewModel.isValidPasswordPublisher
+        contentView.retypePasswordTextFieldView.validationPublisher = viewModel.isValidRetypedPasswordPublisher
     }
     
 }

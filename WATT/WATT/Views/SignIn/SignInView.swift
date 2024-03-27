@@ -74,8 +74,8 @@ class SignInView: UIView {
     }
     
     private func createTextFieldsStack() -> UIStackView {
-        emailErrorLabel.alpha = 0
-        passwordErrorLabel.alpha = 0
+        emailErrorLabel.isHidden = true
+        passwordErrorLabel.isHidden = true
         
         emailTextFieldView.textField = emailTextField
         passwordTextFieldView.textField = passwordTextField
@@ -83,7 +83,7 @@ class SignInView: UIView {
         let emailStack = stack(emailLabel, emailTextFieldView, emailErrorLabel, spacing: 6)
         let passwordStack = stack(passwordLabel, passwordTextFieldView, passwordErrorLabel, spacing: 6)
         
-        let textFieldsStack = stack(emailStack, passwordStack, spacing: 10)
+        let textFieldsStack = stack(emailStack, passwordStack, spacing: 20)
         
         [emailTextFieldView, passwordTextFieldView].forEach {
             $0.anchor(top: nil, leading: textFieldsStack.leadingAnchor, trailing: textFieldsStack.trailingAnchor, bottom: nil)

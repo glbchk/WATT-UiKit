@@ -12,19 +12,16 @@ class EditCreditCardController: BaseViewController, UITextFieldDelegate {
     var cancellables = Set<AnyCancellable>()
     
     let contentView = EditCreditCardView()
-    let paymentMethodContentView = PaymentMethodView()
     private var viewModel: PaymentMethodViewModel
     
     let editAction: (() -> Void)?
-    let toggleAction: (() -> Void)?
     let deleteAction: (() -> Void)?
     
     var isCardDetailsEntered = false
     
-    init(viewModel: PaymentMethodViewModel, editAction: (() -> Void)?, toggleAction: (() -> Void)?, deleteAction: (() -> Void)?) {
+    init(viewModel: PaymentMethodViewModel, editAction: (() -> Void)?, deleteAction: (() -> Void)?) {
         self.viewModel = viewModel
         self.editAction = editAction
-        self.toggleAction = toggleAction
         self.deleteAction = deleteAction
         super.init(nibName: nil, bundle: nil)
     }
@@ -93,7 +90,7 @@ class EditCreditCardController: BaseViewController, UITextFieldDelegate {
     
     @objc private func toggleValueDidChange() {
         viewModel.defaultPaymentMethod = isToggleStateOn(isDefault: contentView.toggle.isOn)
-        toggleAction?()
+
         print("\(viewModel.defaultPaymentMethod)")
     }
     
@@ -118,12 +115,14 @@ class EditCreditCardController: BaseViewController, UITextFieldDelegate {
             .sink { [weak self] isValid in
                 guard let self = self else { return }
                 let contentView = self.contentView
-                if !isValid && contentView.cardNameTextField.text == "" {
-                    contentView.cardNameNotificationLabel.isHidden = false
-                    contentView.cardNameTextFieldView.layer.borderColor = Asset.Colors.red.cgColor
-                } else {
+                
+                switch isValid {
+                case .success:
                     contentView.cardNameNotificationLabel.isHidden = true
                     contentView.cardNameTextFieldView.layer.borderColor = Asset.Colors.grey3.cgColor
+                case .failure:
+                    contentView.cardNameNotificationLabel.isHidden = false
+                    contentView.cardNameTextFieldView.layer.borderColor = Asset.Colors.red.cgColor
                 }
             }
             .store(in: &cancellables)
@@ -132,12 +131,14 @@ class EditCreditCardController: BaseViewController, UITextFieldDelegate {
             .sink { [weak self] isValid in
                 guard let self = self else { return }
                 let contentView = self.contentView
-                if !isValid && contentView.cvvTextField.text == "" {
-                    contentView.cvvNotificationLabel.isHidden = false
-                    contentView.cvvTextFieldView.layer.borderColor = Asset.Colors.red.cgColor
-                } else {
+                
+                switch isValid {
+                case .success:
                     contentView.cvvNotificationLabel.isHidden = true
                     contentView.cvvTextFieldView.layer.borderColor = Asset.Colors.grey3.cgColor
+                case .failure:
+                    contentView.cvvNotificationLabel.isHidden = false
+                    contentView.cvvTextFieldView.layer.borderColor = Asset.Colors.red.cgColor
                 }
             }
             .store(in: &cancellables)
@@ -145,11 +146,10 @@ class EditCreditCardController: BaseViewController, UITextFieldDelegate {
         viewModel.isEditCardValidPublisher
             .sink { [weak self] isValid in
                 guard let self = self else { return }
+                
                 if isValid {
-                    self.contentView.saveButton.isEnabled = true
                     self.isCardDetailsEntered = true
                 } else {
-                    self.contentView.saveButton.isEnabled = false
                     self.isCardDetailsEntered = false
                 }
             }
@@ -157,7 +157,7 @@ class EditCreditCardController: BaseViewController, UITextFieldDelegate {
     }
     
     private func bindCvvFieldPublisher() {
-        contentView.cvvTextFieldView.secureFieldPublisher = viewModel.cvvPublisher
+        contentView.cvvTextFieldView.secureFieldPublisher = viewModel.cvvTogglePublisher
         contentView.cvvTextFieldView.action = { self.viewModel.showCvv.toggle() }
     }
     

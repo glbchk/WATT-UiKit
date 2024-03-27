@@ -73,11 +73,14 @@ class PaymentMethodViewModel: ObservableObject {
         for index in 0..<addedPaymentMethods.count {
             if !addedPaymentMethods.isEmpty {
                 if addedPaymentMethods[index].id == selectedPaymentMethod?.id {
-                    if addedPaymentMethods[index].isDefault == true {
-                        addedPaymentMethods[0].isDefault = true
-                    }
                     addedPaymentMethods.remove(at: index)
-                    break
+                    
+                    if addedPaymentMethods.count >= 1 {
+                        if addedPaymentMethods[0].isDefault == false {
+                            addedPaymentMethods[0].isDefault = true
+                        }
+                        break
+                    }
                 }
             }
         }
@@ -100,71 +103,48 @@ class PaymentMethodViewModel: ObservableObject {
         
         for index in 0..<addedPaymentMethods.count {
             if addedPaymentMethods[index].id == selectedPaymentMethod?.id {
-                if addedPaymentMethods[index].cardName != cardName{
+                if addedPaymentMethods[index].cardName != cardName {
                     addedPaymentMethods[index].cardName = cardName
                 }
                 if addedPaymentMethods[index].cvv != cvv {
                     addedPaymentMethods[index].cvv = cvv
                 }
-                if addedPaymentMethods[index].isDefault != defaultPaymentMethod {
+                if defaultPaymentMethod == true {
                     addedPaymentMethods[indexForDefaultPaymentMethod()].isDefault = false
-                    addedPaymentMethods[index].isDefault = defaultPaymentMethod
+                    addedPaymentMethods[index].isDefault = true
+                } else {
+                    addedPaymentMethods[indexForDefaultPaymentMethod()].isDefault = false
+                    addedPaymentMethods[0].isDefault = true
                 }
-            }
-            if addedPaymentMethods[index].isDefault == false && defaultPaymentMethod == false {
-                addedPaymentMethods[0].isDefault = true
             }
         }
     }
     
-    var cardNamePublisher: AnyPublisher<Bool, Never> {
+    var cardNamePublisher: AnyPublisher<Result<Bool, TFError.PaymentMethod>, Never> {
         $cardName
-            .debounce(for: .seconds(1), scheduler: RunLoop.main)
-            .map { cardName in
-                if cardName.count >= 4 {
-                    return true
-                } else {
-                    return false
-                }
-            }
+            .debounce(for: .seconds(0.7), scheduler: RunLoop.main)
+            .map { $0.isEmpty ? .success(false) : ($0.count >= 4 ? .success(true) : .failure(.invalidCardNameLength)) }
             .eraseToAnyPublisher()
     }
 
-    var cardNumberPublisher: AnyPublisher<Bool, Never> {
+    var cardNumberPublisher: AnyPublisher<Result<Bool, TFError.PaymentMethod>, Never> {
         $cardNumber
-            .debounce(for: .seconds(1), scheduler: RunLoop.main)
-            .map { cardNumber in
-                if cardNumber.count == 19 {
-                    return true
-                } else {
-                    return false
-                }
-            }
+            .debounce(for: .seconds(0.7), scheduler: RunLoop.main)
+            .map { $0.isEmpty ? .success(false) : ($0.count == 19 ? .success(true) : .failure(.invalidCardNumberLength)) }
             .eraseToAnyPublisher()
     }
 
-//    var expiryPublisher: AnyPublisher<Bool, Never> {
-//        $expiry
-//            .map { expiry in
-//                if !expiry.isEmpty {
-//                    return true
-//                } else {
-//                    return false
-//                }
-//            }
-//            .eraseToAnyPublisher()
-//    }
+    var expiryPublisher: AnyPublisher<Result<Bool, TFError.PaymentMethod>, Never> {
+        $expiry
+            .debounce(for: .seconds(0.7), scheduler: RunLoop.main)
+            .map { !$0.isEmpty ? .success(true) : .failure(.invalidExpiryDate) }
+            .eraseToAnyPublisher()
+    }
 
-    var cvvPublisher: AnyPublisher<Bool, Never> {
+    var cvvPublisher: AnyPublisher<Result<Bool, TFError.PaymentMethod>, Never> {
         $cvv
-            .debounce(for: .seconds(1), scheduler: RunLoop.main)
-            .map { cvv in
-                if cvv.count == 3 {
-                    return true
-                } else {
-                    return false
-                }
-            }
+            .debounce(for: .seconds(0.7), scheduler: RunLoop.main)
+            .map { $0.isEmpty ? .success(false) : ($0.count == 3 ? .success(true) : .failure(.invalidCvvLength)) }
             .eraseToAnyPublisher()
     }
     
@@ -173,22 +153,10 @@ class PaymentMethodViewModel: ObservableObject {
             .eraseToAnyPublisher()
     }
     
-    var isCardDetailsEmptyPublisher: AnyPublisher<Bool, Never> {
-        Publishers.CombineLatest4($cardName, $cardNumber, $expiry, $cvv)
-            .map { cardName, cardNumber, expiry, cvv in
-                if cardName.isEmpty && cardNumber.isEmpty && expiry.isEmpty && cvv.isEmpty {
-                    return true
-                } else {
-                    return false
-                }
-            }
-            .eraseToAnyPublisher()
-    }
-    
     var isCardDetailsValidPublisher: AnyPublisher<Bool, Never> {
-        Publishers.CombineLatest4(cardNamePublisher, cardNumberPublisher, $expiry, cvvPublisher)
+        Publishers.CombineLatest4(cardNamePublisher, cardNumberPublisher, expiryPublisher, cvvPublisher)
             .map { cardName, cardNumber, expiry, cvv in
-                if cardName == true && cardNumber == true && !expiry.isEmpty && cvv == true {
+                if cardName == .success(true) && cardNumber == .success(true) && expiry == .success(true) && cvv == .success(true) {
                     return true
                 } else {
                     return false
@@ -197,21 +165,22 @@ class PaymentMethodViewModel: ObservableObject {
             .eraseToAnyPublisher()
     }
     
-    var isCardDuplicatePublisher: AnyPublisher<Bool, Never> {
+    var isCardDuplicatePublisher: AnyPublisher<Result<Bool, TFError.PaymentMethod>, Never> {
         $cardNumber
             .map {
-                var result = false
                 
-                for index in 0..<self.addedPaymentMethods.count {
-                    if self.addedPaymentMethods[index].cardNumber == $0 {
-                        result = true
-                        break
-                    } else {
-                        result = false
+                if !self.addedPaymentMethods.isEmpty {
+                    for index in 0..<self.addedPaymentMethods.count {
+                        if self.addedPaymentMethods[index].cardNumber == $0 {
+                            return .failure(.cardIsDuplicated)
+                        }
                     }
+                    
+                } else {
+                    return .success(true)
                 }
                 
-                return result
+                return .success(true)
             }
             .eraseToAnyPublisher()
     }
@@ -219,7 +188,7 @@ class PaymentMethodViewModel: ObservableObject {
     var isCardValidPublisher: AnyPublisher<Bool, Never> {
         Publishers.CombineLatest(isCardDetailsValidPublisher, isCardDuplicatePublisher)
             .map {
-                if $0 == true && $1 == false {
+                if $0 == true && $1 == .success(true) {
                     return true
                 } else {
                     return false
@@ -228,11 +197,10 @@ class PaymentMethodViewModel: ObservableObject {
             .eraseToAnyPublisher()
     }
     
-    
     var isEditCardValidPublisher: AnyPublisher<Bool, Never> {
         Publishers.CombineLatest(cardNamePublisher, cvvPublisher)
-            .map { cardName, cvv in
-                if cardName == true, cvv == true {
+            .map {
+                if $0 == .success(true) && $1 == .success(true) {
                     return true
                 } else {
                     return false
@@ -321,5 +289,3 @@ class PaymentMethodViewModel: ObservableObject {
 //    }
     
 }
-
-

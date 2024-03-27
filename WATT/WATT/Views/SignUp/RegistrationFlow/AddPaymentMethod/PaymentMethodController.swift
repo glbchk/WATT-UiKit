@@ -62,6 +62,12 @@ class PaymentMethodController: UIViewController {
     }
     
     @objc private func handleCreditCardRowTap() {
+        
+        paymentMethodViewModel.cardName = ""
+        paymentMethodViewModel.cardNumber = ""
+        paymentMethodViewModel.expiry = ""
+        paymentMethodViewModel.cvv = ""
+        
         let vc = AddCreditCardController(viewModel: paymentMethodViewModel, toggleAction: { [self] in
             paymentMethodViewModel.defaultMethodToggle()
             viewModel.paymentMethods = paymentMethodViewModel.addedPaymentMethods
@@ -69,11 +75,6 @@ class PaymentMethodController: UIViewController {
             contentView.paymentMethodsTableView.reloadData()
         }, saveAction: { [self] in
             paymentMethodViewModel.savePaymentMethod()
-            paymentMethodViewModel.cardName = ""
-            paymentMethodViewModel.cardNumber = ""
-            paymentMethodViewModel.expiry = ""
-            paymentMethodViewModel.cvv = ""
-            
             viewModel.paymentMethods = paymentMethodViewModel.addedPaymentMethods
             
             contentView.paymentMethodsTableView.reloadData()
@@ -94,17 +95,17 @@ class PaymentMethodController: UIViewController {
 extension PaymentMethodController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return viewModel.paymentMethods.count
+        return paymentMethodViewModel.addedPaymentMethods.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "payment_method", for: indexPath) as! PaymentMethodCell
         
         cell.selectionStyle = .none
-        cell.methodLogoView.image = viewModel.paymentMethods[indexPath.item].provider?.icon
-        cell.titleLabel.text = viewModel.paymentMethods[indexPath.item].cardName
-        cell.subtitleLabel.text = hideCardNumbers(card: viewModel.paymentMethods[indexPath.item].cardNumber)
-        if viewModel.paymentMethods[indexPath.item].isDefault == true {
+        cell.methodLogoView.image = paymentMethodViewModel.addedPaymentMethods[indexPath.item].provider?.icon
+        cell.titleLabel.text = paymentMethodViewModel.addedPaymentMethods[indexPath.item].cardName
+        cell.subtitleLabel.text = hideCardNumbers(card: paymentMethodViewModel.addedPaymentMethods[indexPath.item].cardNumber)
+        if paymentMethodViewModel.addedPaymentMethods[indexPath.item].isDefault == true {
             cell.defaultMethodLabel.isHidden = false
         } else {
             cell.defaultMethodLabel.isHidden = true
@@ -123,11 +124,6 @@ extension PaymentMethodController: UITableViewDelegate, UITableViewDataSource {
             viewModel.paymentMethods = paymentMethodViewModel.addedPaymentMethods
             
             contentView.paymentMethodsTableView.reloadData()
-        }, toggleAction: { [self] in
-            paymentMethodViewModel.defaultMethodToggle()
-            viewModel.paymentMethods = paymentMethodViewModel.addedPaymentMethods
-            
-            contentView.paymentMethodsTableView.reloadData()
         }, deleteAction: { [self] in
             paymentMethodViewModel.deletePaymentMethod()
             viewModel.paymentMethods = paymentMethodViewModel.addedPaymentMethods
@@ -135,12 +131,12 @@ extension PaymentMethodController: UITableViewDelegate, UITableViewDataSource {
             contentView.paymentMethodsTableView.reloadData()
         })
         
-        let selectedIndex = viewModel.paymentMethods[indexPath.item]
+        let selectedIndex = paymentMethodViewModel.addedPaymentMethods[indexPath.item]
         
         paymentMethodViewModel.selectedPaymentMethod = selectedIndex
         
         vc.contentView.cardNameTextField.text = selectedIndex.cardName
-        vc.contentView.cardNumberTextField.text = selectedIndex.cardNumber //paymentMethodViewModel.formatTextWithSpaces(text: selectedIndex.cardNumber)
+        vc.contentView.cardNumberTextField.text = selectedIndex.cardNumber
         vc.contentView.expiryTextField.text = selectedIndex.expiryDate
         vc.contentView.cvvTextField.text = selectedIndex.cvv
         vc.contentView.toggle.isOn = selectedIndex.isDefault

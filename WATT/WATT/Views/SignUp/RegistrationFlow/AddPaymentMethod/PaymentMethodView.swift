@@ -47,8 +47,8 @@ class PaymentMethodView: UIView {
         setupBlueHeader()
         setupBackButton()
         setupLabels()
-        setupTableView()
         setupButtons()
+        setupTableView()
     }
     
     private func setupBlueHeader() {
@@ -68,12 +68,12 @@ class PaymentMethodView: UIView {
         stack.anchor(top: backButton.bottomAnchor, leading: self.leadingAnchor, trailing: self.trailingAnchor, bottom: nil, padding: .init(top: 20, left: 20, bottom: 0, right: 20))
     }
     
-    func setupTableView() { //tableView cellsCount: Int) {
+    func setupTableView() {
         paymentMethodsTableView.backgroundColor = .clear
         paymentMethodsTableView.clipsToBounds = true
         
         self.addSubview(paymentMethodsTableView)
-        paymentMethodsTableView.anchor(top: subtitleLable.bottomAnchor, leading: self.leadingAnchor, trailing: self.trailingAnchor, bottom: self.bottomAnchor, padding: .init(top: 20, left: 20, bottom: 0, right: 20))
+        paymentMethodsTableView.anchor(top: subtitleLable.bottomAnchor, leading: self.leadingAnchor, trailing: self.trailingAnchor, bottom: addCreditCardRow.topAnchor, padding: .init(top: 20, left: 20, bottom: 0, right: 20))
     }
     
     func setupButtons() {

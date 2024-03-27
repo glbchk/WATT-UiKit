@@ -34,7 +34,7 @@ class AddCreditCardView: UIView {
         let label = UILabel()
         label.textColor = Asset.Colors.grey2
         label.font = .systemFont(ofSize: 13, weight: .semibold)
-        label.text = "Card name doesn't have at least 4 symbols!"
+//        label.text = "Card name should have at least 4 symbols!"
         label.isHidden = true
         
         return label
@@ -44,7 +44,7 @@ class AddCreditCardView: UIView {
         let label = UILabel()
         label.textColor = Asset.Colors.grey2
         label.font = .systemFont(ofSize: 13, weight: .semibold)
-        label.text = "Card number is not 16 digits!"
+//        label.text = "Card number is not 16 digits!"
         label.isHidden = true
         
         return label
@@ -54,7 +54,7 @@ class AddCreditCardView: UIView {
         let label = UILabel()
         label.textColor = Asset.Colors.grey2
         label.font = .systemFont(ofSize: 13, weight: .semibold)
-        label.text = "Date is empty!"
+//        label.text = "Date isn't chosen!"
         label.isHidden = true
         
         return label
@@ -64,7 +64,7 @@ class AddCreditCardView: UIView {
         let label = UILabel()
         label.textColor = Asset.Colors.grey2
         label.font = .systemFont(ofSize: 13, weight: .semibold)
-        label.text = "Should be 3 digits!"
+//        label.text = "Should be 3 digits!"
         label.isHidden = true
         
         return label
@@ -74,7 +74,8 @@ class AddCreditCardView: UIView {
         let label = UILabel()
         label.textColor = Asset.Colors.red
         label.font = .systemFont(ofSize: 13, weight: .semibold)
-        label.text = "The card is already added, add another card!"
+//        label.text = "The card is already added, add another card!"
+        label.textAlignment = .center
         label.isHidden = true
         
         return label
@@ -145,9 +146,13 @@ class AddCreditCardView: UIView {
     private func setupTextFields() {
         
         cardNameTextFieldView.textField = cardNameTextField
+//        cardNameTextField.returnKeyType = .next
+        
         cardNumberTextFieldView.textField = cardNumberTextField
         cardNumberTextFieldView.textField?.keyboardType = .numberPad
+        
         expiryTextFieldView.textField = expiryTextField
+        
         cvvTextFieldView.textField = cvvTextField
         cvvTextFieldView.textField?.keyboardType = .numberPad
         
@@ -173,7 +178,7 @@ class AddCreditCardView: UIView {
     
     private func setupSaveButton() {
         
-        let stack = stack(saveButton, cardValidityNotificationLabel, spacing: 6, alignment: .center)
+        let stack = stack(saveButton, cardValidityNotificationLabel, spacing: 10, alignment: .center)
         whiteBackgroundView.addSubview(stack)
         stack.anchor(top: toggle.bottomAnchor, leading: whiteBackgroundView.leadingAnchor, trailing: whiteBackgroundView.trailingAnchor, bottom: nil, padding: .init(top: 30, left: 20, bottom: 0, right: 20))
         [saveButton, cardValidityNotificationLabel].forEach {

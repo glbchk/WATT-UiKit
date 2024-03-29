@@ -40,6 +40,8 @@ class SignInView: UIView {
     let signUpButton = LinkButton(title: "Sign up")
     
     let guestButton = MainButton(title: "Continue as guest", titleColor: Asset.Colors.black, backgroundColor: .white, shadowOpacity: 0.15, shRadius: 5, shColor: .black)
+    
+    let signInErrorLabel = TextLabel(title: "Sign in error", font: .systemFont(ofSize: 13), textColor: Asset.Colors.red)
 
     init() {
         super.init(frame: .zero)
@@ -77,6 +79,11 @@ class SignInView: UIView {
         emailErrorLabel.isHidden = true
         passwordErrorLabel.isHidden = true
         
+        emailTextField.keyboardType = .emailAddress
+        emailTextField.returnKeyType = .next
+        
+        passwordTextField.returnKeyType = .done
+        
         emailTextFieldView.textField = emailTextField
         passwordTextFieldView.textField = passwordTextField
         
@@ -108,8 +115,11 @@ class SignInView: UIView {
         let forgotPasswordStack = createForgotPasswordStack()
         let noAccauntStack = hstack(noAccountLabel, signUpButton, spacing: 10)
         
+        signInErrorLabel.isHidden = true
         
-        let mainStack = stack(tfStack, forgotPasswordStack, signInButton, noAccauntStack, spacing: 30, alignment: .center)
+        let signInStack = stack(signInButton, signInErrorLabel, spacing: 6)
+        
+        let mainStack = stack(tfStack, forgotPasswordStack, signInStack, noAccauntStack, spacing: 30, alignment: .center)
         
         self.addSubview(mainStack)
         

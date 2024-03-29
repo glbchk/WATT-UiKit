@@ -169,17 +169,13 @@ class SignUpViewModel: ObservableObject {
     var isValidRetypedPasswordPublisher: AnyPublisher<Result<Bool, TFError>, Never> {
         Publishers.CombineLatest($password, $retypedPassword)
             .debounce(for: .seconds(1), scheduler: RunLoop.main)
-            .map { ($0.isEmpty && $1.isEmpty) ? .success(false) : ($0 == $1 ? .success(true) : .failure(.invalidRetypedPassword)) }
+            .map { ($0.isEmpty || $1.isEmpty) ? .success(false) : ($0 == $1 ? .success(true) : .failure(.invalidRetypedPassword)) }
             .eraseToAnyPublisher()
     }
     
     var isSignUpValid: AnyPublisher<Bool, Never> {
         Publishers.CombineLatest(isValidEmailPublisher, isValidRetypedPasswordPublisher)
-            .map {
-                print("email", $0)
-                print("password", $1)
-                return $0 == .success(true) && $1 == .success(true) ? true : false
-            }
+            .map { $0 == .success(true) && $1 == .success(true) ? true : false }
             .eraseToAnyPublisher()
     }
     

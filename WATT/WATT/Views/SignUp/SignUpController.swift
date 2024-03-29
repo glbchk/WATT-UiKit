@@ -15,6 +15,8 @@ class SignUpController: BaseViewController {
     let contentView = SignUpView()
     private var viewModel: SignUpViewModel
     
+   private var isValidSignUp = false
+    
     init(viewModel: SignUpViewModel) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
@@ -30,9 +32,12 @@ class SignUpController: BaseViewController {
         contentView.fillSuperview()
         setupTargets()
         bindViewsToViewModel()
-//        bindViewModelToView()
         bindSecureFieldPublishers()
         handleKeyboardAppearance()
+        
+        contentView.emailTextField.delegate = self
+        contentView.passwordTextField.delegate = self
+        contentView.retypePasswordTextField.delegate = self
     }
     
     private func setupTargets() {
@@ -46,26 +51,54 @@ class SignUpController: BaseViewController {
             if keyboardAppeared {
                 view.frame.origin.y = -(UIScreen.main.bounds.height * 0.12)
                 contentView.logoView.alpha = 0
+                contentView.mainStack?.spacing = 10
             } else {
                 view.frame.origin.y = 0
                 contentView.logoView.alpha = 1
+                contentView.mainStack?.spacing = 30
             }
         }
     }
     
     @objc private func signInButtonPressed() {
         self.navigationController?.popViewController(animated: true)
-//        self.dismiss(animated: false, completion: nil)
     }
     
     @objc private func signUpButtonPressed() {
-        viewModel.createUser { [weak self] isActive, error in
-            DispatchQueue.main.async {
-                guard let self = self else { return }
-                let vc = AddDetailsController(viewModel: self.viewModel)
-                self.navigationController?.pushViewController(vc, animated: true)
+        
+        switch isValidSignUp {
+        case true:
+            print("sign up valid")
+            
+            //        viewModel.createUser { [weak self] isActive, error in
+            //            DispatchQueue.main.async {
+            //                guard let self = self else { return }
+            //                let vc = AddDetailsController(viewModel: self.viewModel)
+            //                self.navigationController?.pushViewController(vc, animated: true)
+            //            }
+            //        }
+        case false:
+            if viewModel.email.isEmpty {
+                contentView.emailErrorLabel.text = TFError.requiredField.description
+                contentView.emailErrorLabel.isHidden = false
             }
+            
+            if viewModel.password.isEmpty {
+                contentView.passwordErrorLabel.text = TFError.requiredField.description
+                contentView.passwordErrorLabel.isHidden = false
+            }
+            
+            if viewModel.retypedPassword.isEmpty && viewModel.password.isEmpty {
+                contentView.retypedPasswordErrorLabel.text = TFError.requiredField.description
+                contentView.retypedPasswordErrorLabel.isHidden = false
+            } else if viewModel.retypedPassword.isEmpty {
+                contentView.retypedPasswordErrorLabel.text = TFError.invalidRetypedPassword.description
+                contentView.retypedPasswordErrorLabel.isHidden = false
+            }
+            
+            shakeAnimation(of: contentView.signUpButton)
         }
+    
     }
     
     private func bindViewsToViewModel() {
@@ -84,26 +117,52 @@ class SignUpController: BaseViewController {
             .assign(to: \.retypedPassword, on: viewModel)
             .store(in: &cancellables)
         
-        viewModel.isSignUpValid
-            .sink { [weak self] isValid in
+        viewModel.isValidEmailPublisher
+            .sink { [weak self] result in
                 guard let self = self else { return }
-                if isValid {
-                    contentView.signUpButton.isEnabled = true
-                    contentView.signUpButton.alpha = 1
-                } else {
-                    contentView.signUpButton.isEnabled = false
-                    contentView.signUpButton.alpha = 0.5
+                switch result {
+                case .success:
+                    contentView.emailErrorLabel.isHidden = true
+                case .failure(let failure):
+                    contentView.emailErrorLabel.text = failure.description
+                    contentView.emailErrorLabel.isHidden = false
                 }
             }
             .store(in: &cancellables)
+        
+        viewModel.isValidPasswordPublisher
+            .sink { [weak self] result in
+                guard let self = self else { return }
+                switch result {
+                case .success:
+                    contentView.passwordErrorLabel.isHidden = true
+                case .failure(let failure):
+                    contentView.passwordErrorLabel.text = failure.description
+                    contentView.passwordErrorLabel.isHidden = false
+                }
+            }
+            .store(in: &cancellables)
+        
+        viewModel.isValidRetypedPasswordPublisher
+            .sink { [weak self] result in
+                guard let self = self else { return }
+                switch result {
+                case .success:
+                    contentView.retypedPasswordErrorLabel.isHidden = true
+                case .failure(let failure):
+                    contentView.retypedPasswordErrorLabel.text = failure.description
+                    contentView.retypedPasswordErrorLabel.isHidden = false
+                }
+            }
+            .store(in: &cancellables)
+        
+        viewModel.isSignUpValid
+            .sink { [weak self] isValid in
+                guard let self = self else { return }
+                isValidSignUp = isValid
+            }
+            .store(in: &cancellables)
     }
-    
-//    private func bindViewModelToView() {
-//        viewModel.isInputValid
-//            .receive(on: DispatchQueue.main)
-//            .assign(to: \.isEnabled, on: contentView.signUpButton)
-//            .store(in: &cancellables)
-//    }
     
     private func bindSecureFieldPublishers() {
         contentView.passwordTextFieldView.secureFieldPublisher = viewModel.passwordPublisher
@@ -111,10 +170,22 @@ class SignUpController: BaseViewController {
         
         contentView.retypePasswordTextFieldView.secureFieldPublisher = viewModel.retypedPasswordPublisher
         contentView.retypePasswordTextFieldView.action = { self.viewModel.showRetyped.toggle() }
-        
-        contentView.emailTextFieldView.validationPublisher = viewModel.isValidEmailPublisher
-        contentView.passwordTextFieldView.validationPublisher = viewModel.isValidPasswordPublisher
-        contentView.retypePasswordTextFieldView.validationPublisher = viewModel.isValidRetypedPasswordPublisher
+    }
+    
+}
+
+extension SignUpController: UITextFieldDelegate {
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        if textField == contentView.emailTextField {
+            contentView.passwordTextField.becomeFirstResponder()
+        } else if textField == contentView.passwordTextField {
+            contentView.retypePasswordTextField.becomeFirstResponder()
+        } else if textField == contentView.retypePasswordTextField {
+            signUpButtonPressed()
+            contentView.retypePasswordTextField.resignFirstResponder()
+        }
+        return true
     }
     
 }

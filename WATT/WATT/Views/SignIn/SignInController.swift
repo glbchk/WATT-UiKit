@@ -16,6 +16,8 @@ class SignInController: BaseViewController {
     var cancellables = Set<AnyCancellable>()
     
     var isAlertShown = false
+    
+    private var isValidSignIn = false
 
     init(viewModel: SignInViewModel) {
         self.viewModel = viewModel
@@ -34,6 +36,9 @@ class SignInController: BaseViewController {
         bindViewsToViewModel()
         bindSecureFieldPublisher()
         handleKeyboardAppearance()
+        
+        contentView.emailTextField.delegate = self
+        contentView.passwordTextField.delegate = self
         
         navigationController?.navigationBar.isHidden = true
     }
@@ -118,15 +123,40 @@ class SignInController: BaseViewController {
     
     @objc private func signUpButtonPressed() {
         if let signUpViewModel = viewModel.signUpViewModel {
+            
+            signUpViewModel.email = ""
+            signUpViewModel.password = ""
+            signUpViewModel.retypedPassword = ""
+            
             let vc = SignUpController(viewModel: signUpViewModel)
             navigationController?.pushViewController(vc, animated: true)
         }
     }
     
     @objc private func signInButtonPressed() {
-        viewModel.logIn { error in
-            self.viewModel.error = error
+        switch isValidSignIn {
+        case true:
+            viewModel.logIn { [weak self] error in
+                guard let self = self else { return }
+                DispatchQueue.main.async {
+                    self.contentView.signInErrorLabel.text = error
+                    self.contentView.signInErrorLabel.isHidden = false
+                }
+            }
+        case false:
+            if viewModel.email.isEmpty {
+                contentView.emailErrorLabel.text = TFError.requiredField.description
+                contentView.emailErrorLabel.isHidden = false
+            }
+            
+            if viewModel.password.isEmpty {
+                contentView.passwordErrorLabel.text = TFError.requiredField.description
+                contentView.passwordErrorLabel.isHidden = false
+            }
+            
+            shakeAnimation(of: contentView.signInButton)
         }
+        
     }
     
     private func bindViewsToViewModel() {
@@ -140,16 +170,10 @@ class SignInController: BaseViewController {
             .assign(to: \.password, on: viewModel)
             .store(in: &cancellables)
         
-        viewModel.isSubmitEnabled
+        viewModel.isSignInValid
             .sink { [weak self] isValid in
                 guard let self = self else { return }
-                if isValid {
-                    contentView.signInButton.isEnabled = true
-                    contentView.signInButton.alpha = 1
-                } else {
-                    contentView.signInButton.isEnabled = false
-                    contentView.signInButton.alpha = 0.5
-                }
+                isValidSignIn = isValid
             }
             .store(in: &cancellables)
         
@@ -168,6 +192,7 @@ class SignInController: BaseViewController {
                     contentView.emailErrorLabel.text = failure.description
                     contentView.emailErrorLabel.isHidden = false
                 }
+                contentView.signInErrorLabel.isHidden = true
             }
             .store(in: &cancellables)
         
@@ -181,6 +206,7 @@ class SignInController: BaseViewController {
                     contentView.passwordErrorLabel.text = failure.description
                     contentView.passwordErrorLabel.isHidden = false
                 }
+                contentView.signInErrorLabel.isHidden = true
             }
             .store(in: &cancellables)
     }
@@ -188,8 +214,20 @@ class SignInController: BaseViewController {
     private func bindSecureFieldPublisher() {
         contentView.passwordTextFieldView.secureFieldPublisher = viewModel.sfPublisher
         contentView.passwordTextFieldView.action = { self.viewModel.showPassword.toggle() }
-        
-        contentView.emailTextFieldView.validationPublisher = viewModel.isValidEmailPublisher
-        contentView.passwordTextFieldView.validationPublisher = viewModel.isValidPasswordPublisher
     }
+}
+
+extension SignInController: UITextFieldDelegate {
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        if textField == contentView.emailTextField {
+            contentView.passwordTextField.becomeFirstResponder()
+        } else if textField == contentView.passwordTextField {
+            signInButtonPressed()
+            contentView.passwordTextField.resignFirstResponder()
+        }
+        
+        return true
+    }
+    
 }

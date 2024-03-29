@@ -11,6 +11,7 @@ enum TFError: Error {
     case invalidEmailFormat
     case invalidPasswordLength
     case invalidRetypedPassword
+    case requiredField
     
     var description: String {
         switch self {
@@ -19,7 +20,9 @@ enum TFError: Error {
         case .invalidPasswordLength:
             "Password should contain at least 6 characters"
         case .invalidRetypedPassword:
-            "Password don't match"
+            "This field must match password field"
+        case .requiredField:
+            "This field is required"
         }
     }
 }

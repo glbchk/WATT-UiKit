@@ -95,9 +95,9 @@ class SignInViewModel: ObservableObject {
             .eraseToAnyPublisher()
     }
     
-    var isSubmitEnabled: AnyPublisher<Bool, Never> {
-        Publishers.CombineLatest($email, $password)
-            .map { $0.isValidEmail && $1.count >= 6 }
+    var isSignInValid: AnyPublisher<Bool, Never> {
+        Publishers.CombineLatest(isValidEmailPublisher, isValidPasswordPublisher)
+            .map { $0 == .success(true) && $1 == .success(true) ? true : false }
             .eraseToAnyPublisher()
     }
     

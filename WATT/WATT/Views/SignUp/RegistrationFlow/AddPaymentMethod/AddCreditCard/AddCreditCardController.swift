@@ -360,12 +360,6 @@ extension AddCreditCardController {
         let toolBar = UIToolbar(frame: CGRect(x: 0.0, y: 0.0, width: screenWidth, height: 44.0))
         let flexible = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
         
-        if textField == self.contentView.cardNameTextField {
-            let next = UIBarButtonItem(title: "Next", style: .plain, target: nil, action: #selector(tapCardNameButtonNext))
-            toolBar.setItems([flexible, next], animated: false)
-            textField.inputAccessoryView = toolBar
-        }
-        
         if textField == self.contentView.cardNumberTextField {
             let next = UIBarButtonItem(title: "Next", style: .plain, target: nil, action: #selector(tapCardNumberButtonNext))
             toolBar.setItems([flexible, next], animated: false)
@@ -377,11 +371,6 @@ extension AddCreditCardController {
             toolBar.setItems([flexible, done], animated: false)
             textField.inputAccessoryView = toolBar
         }
-    }
-    
-    @objc func tapCardNameButtonNext() {
-        
-        contentView.cardNumberTextField.becomeFirstResponder()
     }
     
     @objc func tapCardNumberButtonNext() {

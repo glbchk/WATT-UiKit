@@ -20,6 +20,8 @@ class EditCreditCardView: UIView {
         return view
     }()
     
+    var mainStack: UIStackView? = nil
+    
     let backButton: UIButton = {
         let button = UIButton()
         button.setImage(Asset.Icons.Navigation.chevronLeft, for: .normal)
@@ -32,7 +34,7 @@ class EditCreditCardView: UIView {
     
     let cardNameNotificationLabel: UILabel = {
         let label = UILabel()
-        label.textColor = Asset.Colors.grey2
+        label.textColor = Asset.Colors.red
         label.font = .systemFont(ofSize: 13, weight: .semibold)
         label.text = "Card name doesn't have at least 4 symbols!"
         label.isHidden = true
@@ -42,7 +44,7 @@ class EditCreditCardView: UIView {
     
     let cvvNotificationLabel: UILabel = {
         let label = UILabel()
-        label.textColor = Asset.Colors.grey2
+        label.textColor = Asset.Colors.red
         label.font = .systemFont(ofSize: 13, weight: .semibold)
         label.text = "Should be 3 digits!"
         label.isHidden = true
@@ -87,8 +89,8 @@ class EditCreditCardView: UIView {
         setupBackButton()
 //        setupLabels()
         setupWhiteFooter()
-        setupTextFields()
-        setupButtons()
+        setupMainStack()
+//        setupButtons()
     }
     
     private func setupBlueHeader() {
@@ -108,8 +110,9 @@ class EditCreditCardView: UIView {
         stack.anchor(top: self.safeAreaLayoutGuide.topAnchor, leading: blueBackgroundView.leadingAnchor, trailing: nil, bottom: nil, padding: .init(top: 20, left: 26, bottom: 0, right: 0))
     }
     
-    private func setupTextFields() {
+    private func setupMainStack() {
         cardNameTextFieldView.textField = cardNameTextField
+        cardNameTextField.returnKeyType = .next
         cardNumberTextFieldView.textField = cardNumberTextField
         expiryTextFieldView.textField = expiryTextField
         cvvTextFieldView.textField = cvvTextField
@@ -128,26 +131,22 @@ class EditCreditCardView: UIView {
         let cvvStack = stack(cvvLabel, cvvTextFieldView, cvvNotificationLabel, spacing: 6)
         let expiryCvvStack = hstack(expiryStack, cvvStack, spacing: 20, alignment: .top, distribution: .fillEqually)
         let toggleStack = hstack(defaultPaymentLabel, toggle, spacing: 10, alignment: .fill, distribution: .fill)
+        let buttonsStack = stack(saveButton, deleteButton, spacing: 20, alignment: .center)
         
         expiryTextFieldView.anchor(top: nil, leading: expiryStack.leadingAnchor, trailing: expiryStack.trailingAnchor, bottom: nil)
         cvvTextFieldView.anchor(top: nil, leading: cvvStack.leadingAnchor, trailing: cvvStack.trailingAnchor, bottom: nil)
         
-        let stack = stack(cardNameStack, cardNumberStack, expiryCvvStack, toggleStack, spacing: 20)
+        mainStack = stack(cardNameStack, cardNumberStack, expiryCvvStack, toggleStack, buttonsStack, spacing: 20)
+        guard let mainStack = mainStack else { return }
         
-        stack.anchor(top: whiteBackgroundView.topAnchor, leading: whiteBackgroundView.leadingAnchor, trailing: whiteBackgroundView.trailingAnchor, bottom: nil, padding: .allSides(20))
+        mainStack.anchor(top: whiteBackgroundView.topAnchor, leading: whiteBackgroundView.leadingAnchor, trailing: whiteBackgroundView.trailingAnchor, bottom: nil, padding: .allSides(20))
         
-        [cardNameTextFieldView, cardNumberTextFieldView, expiryCvvStack, toggleStack].forEach {
-            $0.anchor(top: nil, leading: stack.leadingAnchor, trailing: stack.trailingAnchor, bottom: nil)
+        [cardNameTextFieldView, cardNumberTextFieldView, expiryCvvStack, toggleStack, buttonsStack].forEach {
+            $0.anchor(top: nil, leading: mainStack.leadingAnchor, trailing: mainStack.trailingAnchor, bottom: nil)
         }
-    }
-    
-    private func setupButtons() {
-        let stack = stack(saveButton, deleteButton, spacing: 20)
         
-        whiteBackgroundView.addSubview(stack)
-        stack.anchor(top: toggle.bottomAnchor, leading: whiteBackgroundView.leadingAnchor, trailing: whiteBackgroundView.trailingAnchor, bottom: nil, padding: .init(top: 30, left: 20, bottom: 0, right: 20))
         [saveButton, deleteButton].forEach {
-            $0.anchor(top: nil, leading: stack.leadingAnchor, trailing: stack.trailingAnchor, bottom: nil)
+            $0.anchor(top: nil, leading: mainStack.leadingAnchor, trailing: mainStack.trailingAnchor, bottom: nil)
         }
     }
     

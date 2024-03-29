@@ -40,6 +40,7 @@ class EditCreditCardController: BaseViewController, UITextFieldDelegate {
         setupTargets()
         bindViewsToViewModel()
         bindCvvFieldPublisher()
+        handleKeybaordAppearance()
     }
     
     private func setupTextFieldDelegates() {
@@ -48,13 +49,34 @@ class EditCreditCardController: BaseViewController, UITextFieldDelegate {
     }
     
     private func setupTargets() {
-        contentView.cvvTextField.addTarget(self, action: #selector(cvvTextFieldEditingChange), for: .editingChanged)
+//        contentView.cvvTextField.addTarget(self, action: #selector(cvvTextFieldEditingChange), for: .editingChanged)
+        addButtonOnNumberPad(contentView.cvvTextField, target: self, selector: #selector(cvvTextFieldEditingChange))
         
         contentView.toggle.addTarget(self, action: #selector(toggleValueDidChange), for: .valueChanged)
         
         contentView.backButton.addTarget(self, action: #selector(handleBackTap), for: .touchUpInside)
         contentView.saveButton.addTarget(self, action: #selector(saveButtonPressed), for: .touchUpInside)
         contentView.deleteButton.addTarget(self, action: #selector(deleteButtonPressed), for: .touchUpInside)
+    }
+    
+    private func handleKeybaordAppearance() {
+        handleKeyboardAppearanceAction = { [weak self] keyboardAppeared, keyboardHeight in
+            guard let self = self else { return }
+            if keyboardAppeared {
+                contentView.mainStack?.spacing = 10
+            } else {
+                contentView.mainStack?.spacing = 20
+            }
+        }
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        
+        if textField == contentView.cardNameTextField {
+            contentView.cvvTextField.becomeFirstResponder()
+        }
+        
+        return true
     }
     
     @objc func cvvTextFieldEditingChange() {
@@ -76,9 +98,7 @@ class EditCreditCardController: BaseViewController, UITextFieldDelegate {
         
         if !self.isCardDetailsEntered {
             self.contentView.cardNameNotificationLabel.isHidden = false
-            self.contentView.cardNameTextFieldView.layer.borderColor = Asset.Colors.red.cgColor
             self.contentView.cvvNotificationLabel.isHidden = false
-            self.contentView.cvvTextFieldView.layer.borderColor = Asset.Colors.red.cgColor
         } else {
             self.editAction?()
             self.contentView.toggle.isOn = false
@@ -119,10 +139,9 @@ class EditCreditCardController: BaseViewController, UITextFieldDelegate {
                 switch isValid {
                 case .success:
                     contentView.cardNameNotificationLabel.isHidden = true
-                    contentView.cardNameTextFieldView.layer.borderColor = Asset.Colors.grey3.cgColor
-                case .failure:
+                case .failure(let failure):
                     contentView.cardNameNotificationLabel.isHidden = false
-                    contentView.cardNameTextFieldView.layer.borderColor = Asset.Colors.red.cgColor
+                    contentView.cardNameNotificationLabel.text = failure.description
                 }
             }
             .store(in: &cancellables)
@@ -135,10 +154,9 @@ class EditCreditCardController: BaseViewController, UITextFieldDelegate {
                 switch isValid {
                 case .success:
                     contentView.cvvNotificationLabel.isHidden = true
-                    contentView.cvvTextFieldView.layer.borderColor = Asset.Colors.grey3.cgColor
-                case .failure:
+                case .failure(let failure):
                     contentView.cvvNotificationLabel.isHidden = false
-                    contentView.cvvTextFieldView.layer.borderColor = Asset.Colors.red.cgColor
+                    contentView.cvvNotificationLabel.text = failure.description
                 }
             }
             .store(in: &cancellables)
@@ -192,6 +210,19 @@ extension EditCreditCardController {
             return alphabet
         } else {
             return false
+        }
+    }
+    
+    func addButtonOnNumberPad(_ textField: UITextField, target: Any, selector: Selector) {
+        
+        let screenWidth = UIScreen.main.bounds.width
+        let toolBar = UIToolbar(frame: CGRect(x: 0.0, y: 0.0, width: screenWidth, height: 44.0))
+        let flexible = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
+        
+        if textField == self.contentView.cvvTextField {
+            let done = UIBarButtonItem(title: "Save", style: .plain, target: nil, action: #selector(saveButtonPressed))
+            toolBar.setItems([flexible, done], animated: false)
+            textField.inputAccessoryView = toolBar
         }
     }
     

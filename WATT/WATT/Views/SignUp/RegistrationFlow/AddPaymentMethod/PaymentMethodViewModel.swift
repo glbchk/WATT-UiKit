@@ -21,7 +21,6 @@ class PaymentMethodViewModel: ObservableObject {
     @Published var defaultPaymentMethod: Bool = false
     
     @Published var showCvv = false
-    @Published var isExpiryDateChanged = false
     
     @Published var selectedPaymentMethod: PaymentMethod?
     
@@ -137,7 +136,7 @@ class PaymentMethodViewModel: ObservableObject {
     var expiryPublisher: AnyPublisher<Result<Bool, TFError.PaymentMethod>, Never> {
         $expiry
             .debounce(for: .seconds(0.7), scheduler: RunLoop.main)
-            .map { !$0.isEmpty ? .success(true) : .failure(.invalidExpiryDate) }
+            .map { $0.count == 5 ? .success(true) : .failure(.invalidExpiryDate) }
             .eraseToAnyPublisher()
     }
 

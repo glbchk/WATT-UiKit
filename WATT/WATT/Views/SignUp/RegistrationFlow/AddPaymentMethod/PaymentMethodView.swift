@@ -78,9 +78,10 @@ class PaymentMethodView: UIView {
     
     func setupButtons() {
         let stack = stack(addCreditCardRow, continueButton, spacing: 20)
+        stack.clipsToBounds = false
         
         self.addSubview(stack)
-        stack.anchor(top: nil, leading: self.leadingAnchor, trailing: self.trailingAnchor, bottom: self.bottomAnchor, padding: .init(top: 0, left: 20, bottom: 50, right: 20))
+        stack.anchor(top: nil, leading: self.leadingAnchor, trailing: self.trailingAnchor, bottom: self.bottomAnchor, padding: .init(top: 20, left: 20, bottom: 50, right: 20))
         [addCreditCardRow, continueButton].forEach {
             $0.anchor(top: nil, leading: stack.leadingAnchor, trailing: stack.trailingAnchor, bottom: nil)
         }

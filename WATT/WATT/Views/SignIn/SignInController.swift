@@ -143,6 +143,7 @@ class SignInController: BaseViewController {
                     self.contentView.signInErrorLabel.isHidden = false
                 }
             }
+            self.view.endEditing(true)
         case false:
             if viewModel.email.isEmpty {
                 contentView.emailErrorLabel.text = TFError.requiredField.description
@@ -154,6 +155,7 @@ class SignInController: BaseViewController {
                 contentView.passwordErrorLabel.isHidden = false
             }
             
+            self.view.endEditing(true)
             shakeAnimation(of: contentView.signInButton)
         }
         

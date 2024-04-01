@@ -77,6 +77,7 @@ class SignUpController: BaseViewController {
             //                self.navigationController?.pushViewController(vc, animated: true)
             //            }
             //        }
+            self.view.endEditing(true)
         case false:
             if viewModel.email.isEmpty {
                 contentView.emailErrorLabel.text = TFError.requiredField.description
@@ -96,6 +97,7 @@ class SignUpController: BaseViewController {
                 contentView.retypedPasswordErrorLabel.isHidden = false
             }
             
+            self.view.endEditing(true)
             shakeAnimation(of: contentView.signUpButton)
         }
     

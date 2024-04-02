@@ -68,7 +68,7 @@ class PaymentMethodController: UIViewController {
         paymentMethodViewModel.expiry = ""
         paymentMethodViewModel.cvv = ""
         
-        let vc = AddCreditCardController(viewModel: paymentMethodViewModel, toggleAction: { [self] in
+        let vc = AddAndEditPMController(viewModel: paymentMethodViewModel, toggleAction: { [self] in
             paymentMethodViewModel.defaultMethodToggle()
             viewModel.paymentMethods = paymentMethodViewModel.addedPaymentMethods
             
@@ -78,7 +78,12 @@ class PaymentMethodController: UIViewController {
             viewModel.paymentMethods = paymentMethodViewModel.addedPaymentMethods
             
             contentView.paymentMethodsTableView.reloadData()
+        }, deleteAction: {
+            
         })
+        
+        vc.contentView.deleteButton.isHidden = true
+        
         if viewModel.paymentMethods.isEmpty {
             vc.contentView.toggle.isOn = true
             paymentMethodViewModel.defaultPaymentMethod = vc.contentView.toggle.isOn
@@ -119,7 +124,14 @@ extension PaymentMethodController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let vc = EditCreditCardController(viewModel: paymentMethodViewModel, editAction: { [self] in
+        
+        let vc = AddAndEditPMController(viewModel: paymentMethodViewModel, toggleAction: { [self] in
+            paymentMethodViewModel.editPaymentMethod()
+            viewModel.paymentMethods = paymentMethodViewModel.addedPaymentMethods
+            
+            contentView.paymentMethodsTableView.reloadData()
+        }, saveAction: { [self] in
+            
             paymentMethodViewModel.editPaymentMethod()
             viewModel.paymentMethods = paymentMethodViewModel.addedPaymentMethods
             
@@ -140,6 +152,13 @@ extension PaymentMethodController: UITableViewDelegate, UITableViewDataSource {
         vc.contentView.expiryTextField.text = selectedIndex.expiryDate
         vc.contentView.cvvTextField.text = selectedIndex.cvv
         vc.contentView.toggle.isOn = selectedIndex.isDefault
+        
+        vc.contentView.cardNumberTextField.isEnabled = false
+        vc.contentView.cardNumberTextFieldView.backgroundColor = Asset.Colors.grey3
+        vc.contentView.cardNumberTextFieldView.textField?.textColor = Asset.Colors.darkGrey
+        vc.contentView.expiryTextFieldView.textField?.isEnabled = false
+        vc.contentView.expiryTextFieldView.backgroundColor = Asset.Colors.grey3
+        vc.contentView.expiryTextFieldView.textField?.textColor = Asset.Colors.darkGrey
         
         self.navigationController?.pushViewController(vc, animated: true)
     }

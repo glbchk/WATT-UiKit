@@ -7,7 +7,7 @@
 
 import UIKit
 
-class AddCreditCardView: UIView {
+class AddAndEditPMView: UIView {
     
     let blueBackgroundView = BlueBackgroundView()
     
@@ -21,6 +21,7 @@ class AddCreditCardView: UIView {
     }()
     
     var mainStack: UIStackView? = nil
+    var buttonsStack: UIStackView? = nil
     
     let backButton: UIButton = {
         let button = UIButton()
@@ -76,7 +77,7 @@ class AddCreditCardView: UIView {
         let label = UILabel()
         label.textColor = Asset.Colors.red
         label.font = .systemFont(ofSize: 13, weight: .semibold)
-//        label.text = "The card is already added, add another card!"
+        label.text = "The card is already added, add another card!"
         label.textAlignment = .center
         label.isHidden = true
         
@@ -104,6 +105,7 @@ class AddCreditCardView: UIView {
     let toggle = ToggleView()
     
     let saveButton = MainButton(title: "Save")
+    let deleteButton = MainButton(title: "Delete", titleColor: Asset.Colors.red, backgroundColor: .white, shadowOpacity: 0.15, shRadius: 5, shColor: .black)
     
     init() {
         super.init(frame: .zero)
@@ -164,21 +166,27 @@ class AddCreditCardView: UIView {
         let cvvStack = stack(cvvLabel, cvvTextFieldView, cvvNotificationLabel, spacing: 6)
         let expiryCvvStack = hstack(expiryStack, cvvStack, spacing: 20, alignment: .top, distribution: .fillEqually)
         let toggleStack = hstack(defaultPaymentLabel, toggle, spacing: 10, alignment: .fill, distribution: .fill)
-        let buttonStack = stack(saveButton, cardValidityNotificationLabel, spacing: 10, alignment: .center)
+        let saveButtonStack = stack(saveButton, cardValidityNotificationLabel, spacing: 10, alignment: .center)
+        buttonsStack = stack(saveButtonStack, deleteButton, spacing: 20, alignment: .center)
+        guard let buttonsStack = buttonsStack else { return }
         
         expiryTextFieldView.anchor(top: nil, leading: expiryStack.leadingAnchor, trailing: expiryStack.trailingAnchor, bottom: nil)
         cvvTextFieldView.anchor(top: nil, leading: cvvStack.leadingAnchor, trailing: cvvStack.trailingAnchor, bottom: nil)
         
-        mainStack = stack(cardNameStack, cardNumberStack, expiryCvvStack, toggleStack, buttonStack, spacing: 20)
+        mainStack = stack(cardNameStack, cardNumberStack, expiryCvvStack, toggleStack, buttonsStack, spacing: 20)
         guard let mainStack = mainStack else { return }
         
         mainStack.anchor(top: whiteBackgroundView.topAnchor, leading: whiteBackgroundView.leadingAnchor, trailing: whiteBackgroundView.trailingAnchor, bottom: nil, padding: .allSides(20))
         
-        [cardNameTextFieldView, cardNumberTextFieldView, expiryCvvStack, toggleStack, buttonStack].forEach {
+        [cardNameTextFieldView, cardNumberTextFieldView, expiryCvvStack, toggleStack, buttonsStack].forEach {
             $0.anchor(top: nil, leading: mainStack.leadingAnchor, trailing: mainStack.trailingAnchor, bottom: nil)
         }
         
         [saveButton, cardValidityNotificationLabel].forEach {
+            $0.anchor(top: nil, leading: saveButtonStack.leadingAnchor, trailing: saveButtonStack.trailingAnchor, bottom: nil)
+        }
+        
+        [saveButtonStack, deleteButton].forEach {
             $0.anchor(top: nil, leading: mainStack.leadingAnchor, trailing: mainStack.trailingAnchor, bottom: nil)
         }
         

@@ -9,22 +9,24 @@ import UIKit
 import Combine
 import MonthYearWheelPicker
 
-class AddCreditCardController: BaseViewController, UITextFieldDelegate {
+class AddAndEditPMController: BaseViewController, UITextFieldDelegate {
     var cancellables = Set<AnyCancellable>()
     
-    let contentView = AddCreditCardView()
+    let contentView = AddAndEditPMView()
     let paymentMethodContentView = PaymentMethodView()
     private var viewModel: PaymentMethodViewModel
     
     let toggleAction: (() -> Void)?
     let saveAction: (() -> Void)?
+    let deleteAction: (() -> Void)?
     
     var isCardDetailsEmpty = false
     
-    init(viewModel: PaymentMethodViewModel, toggleAction: (() -> Void)?, saveAction: (() -> Void)?) {
+    init(viewModel: PaymentMethodViewModel, toggleAction: (() -> Void)?, saveAction: (() -> Void)?, deleteAction: (() -> Void)?) {
         self.viewModel = viewModel
         self.toggleAction = toggleAction
         self.saveAction = saveAction
+        self.deleteAction = deleteAction
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -72,6 +74,7 @@ class AddCreditCardController: BaseViewController, UITextFieldDelegate {
         
         contentView.backButton.addTarget(self, action: #selector(handleBackTap), for: .touchUpInside)
         contentView.saveButton.addTarget(self, action: #selector(saveButtonPressed), for: .touchUpInside)
+        contentView.deleteButton.addTarget(self, action: #selector(deleteButtonPressed), for: .touchUpInside)
     }
     
     private func handleKeybaordAppearance() {
@@ -88,7 +91,11 @@ class AddCreditCardController: BaseViewController, UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         
         if textField == contentView.cardNameTextField {
-            contentView.cardNumberTextField.becomeFirstResponder()
+            if contentView.cardNumberTextField.isEnabled && contentView.expiryTextField.isEnabled {
+                contentView.cardNumberTextField.becomeFirstResponder()
+            } else {
+                contentView.cvvTextField.becomeFirstResponder()
+            }
         }
         
         return true
@@ -130,6 +137,12 @@ class AddCreditCardController: BaseViewController, UITextFieldDelegate {
     }
     
     @objc private func handleBackTap() {
+        
+        viewModel.cardName = ""
+        viewModel.cardNumber = ""
+        viewModel.expiry = ""
+        viewModel.cvv = ""
+        
         self.navigationController?.popViewController(animated: true)
     }
     
@@ -141,13 +154,13 @@ class AddCreditCardController: BaseViewController, UITextFieldDelegate {
     
     @objc private func saveButtonPressed() {
         
-        if self.contentView.cardValidityNotificationLabel.isHidden == false {
-            print("Field are empty")
-            bounceCardDuplicateNotificationLabel()
-            self.contentView.cvvTextField.resignFirstResponder()
-        }
-        
         if !self.isCardDetailsEmpty {
+            if self.contentView.cardValidityNotificationLabel.isHidden == false {
+                print("Fields are empty")
+                bounceCardDuplicateNotificationLabel()
+                self.contentView.cvvTextField.resignFirstResponder()
+            }
+            
             if self.contentView.cardNameTextField.text == "" && self.contentView.cardNumberTextField.text == "" && self.contentView.expiryTextField.text == "" && self.contentView.cvvTextField.text == "" {
                 print("No data")
                 self.contentView.cardNameNotificationLabel.isHidden = false
@@ -179,6 +192,11 @@ class AddCreditCardController: BaseViewController, UITextFieldDelegate {
             self.navigationController?.popViewController(animated: true)
         }
         
+    }
+    
+    @objc private func deleteButtonPressed() {
+        deleteAction?()
+        self.navigationController?.popViewController(animated: true)
     }
     
     private func bindViewsToViewModel() {
@@ -223,39 +241,6 @@ class AddCreditCardController: BaseViewController, UITextFieldDelegate {
             }
             .store(in: &cancellables)
         
-        viewModel.cardNumberPublisher
-            .sink { [weak self] isValid in
-                guard let self = self else { return }
-                let contentView = self.contentView
-                
-                switch isValid {
-                case .success:
-                    contentView.cardNumberNotificationLabel.isHidden = true
-                case .failure(let failure):
-                    contentView.cardNumberNotificationLabel.isHidden = false
-                    contentView.cardNumberNotificationLabel.text = failure.description
-                }
-            }
-            .store(in: &cancellables)
-        
-        viewModel.expiryPublisher
-            .sink { [weak self] isValid in
-                guard let self = self else { return }
-                let contentView = self.contentView
-                
-//                guard let textCount = contentView.expiryTextField.text?.count else { return }
-                
-                switch isValid {
-                case .success:
-                    contentView.expiryDateNotificationLabel.isHidden = true
-                case .failure:
-                    if contentView.expiryTextField.text != "" {
-                        contentView.expiryDateNotificationLabel.isHidden = false
-                    }
-                }
-            }
-            .store(in: &cancellables)
-        
         viewModel.cvvPublisher
             .sink { [weak self] isValid in
                 guard let self = self else { return }
@@ -271,33 +256,80 @@ class AddCreditCardController: BaseViewController, UITextFieldDelegate {
             }
             .store(in: &cancellables)
         
-        viewModel.isCardValidPublisher
-            .sink { [weak self] isCardValid in
-                guard let self = self else { return }
-                
-                if isCardValid {
-                    self.isCardDetailsEmpty = true
-                } else {
-                    self.isCardDetailsEmpty = false
-                }
-            }
-            .store(in: &cancellables)
-        
-        viewModel.isCardDuplicatePublisher
-            .sink { [weak self] isCardDublicate in
-                guard let self = self else { return }
-                let contentView = self.contentView
-                
-                switch isCardDublicate {
-                case .success:
-                    contentView.cardValidityNotificationLabel.isHidden = true
-                case .failure:
-                    if contentView.cardNumberTextField.text != "" {
-                        contentView.cardValidityNotificationLabel.isHidden = false
+        if contentView.cardNumberTextField.isEnabled && contentView.expiryTextField.isEnabled {
+            
+            viewModel.cardNumberPublisher
+                .sink { [weak self] isValid in
+                    guard let self = self else { return }
+                    let contentView = self.contentView
+                    
+                    switch isValid {
+                    case .success:
+                        contentView.cardNumberNotificationLabel.isHidden = true
+                    case .failure(let failure):
+                        contentView.cardNumberNotificationLabel.isHidden = false
+                        contentView.cardNumberNotificationLabel.text = failure.description
                     }
                 }
-            }
-            .store(in: &cancellables)
+                .store(in: &cancellables)
+            
+            viewModel.expiryPublisher
+                .sink { [weak self] isValid in
+                    guard let self = self else { return }
+                    let contentView = self.contentView
+                    
+                    switch isValid {
+                    case .success:
+                        contentView.expiryDateNotificationLabel.isHidden = true
+                    case .failure:
+                        if contentView.expiryTextField.text != "" {
+                            contentView.expiryDateNotificationLabel.isHidden = false
+                        }
+                    }
+                }
+                .store(in: &cancellables)
+            
+            viewModel.isCardValidPublisher
+                .sink { [weak self] isCardValid in
+                    guard let self = self else { return }
+                    
+                    if isCardValid {
+                        self.isCardDetailsEmpty = true
+                    } else {
+                        self.isCardDetailsEmpty = false
+                    }
+                }
+                .store(in: &cancellables)
+            
+            viewModel.isCardDuplicatePublisher
+                .sink { [weak self] isCardDublicate in
+                    guard let self = self else { return }
+                    let contentView = self.contentView
+                    
+                    switch isCardDublicate {
+                    case .success:
+                        contentView.cardValidityNotificationLabel.isHidden = true
+                    case .failure:
+                        if contentView.cardNumberTextField.text != "" {
+                            contentView.cardValidityNotificationLabel.isHidden = false
+                        }
+                    }
+                }
+                .store(in: &cancellables)
+        } else {
+            viewModel.isEditCardValidPublisher
+                .sink { [weak self] isValid in
+                    guard let self = self else { return }
+                    
+                    if isValid {
+                        self.isCardDetailsEmpty = true
+                    } else {
+                        self.isCardDetailsEmpty = false
+                    }
+                }
+                .store(in: &cancellables)
+        }
+        
     }
     
     private func bindCvvFieldPublisher() {
@@ -308,7 +340,7 @@ class AddCreditCardController: BaseViewController, UITextFieldDelegate {
 }
 
 
-extension AddCreditCardController {
+extension AddAndEditPMController {
     
     private func isToggleStateOn(isDefault: Bool) -> Bool {
         var result = false

@@ -78,8 +78,6 @@ class PaymentMethodController: UIViewController {
             viewModel.paymentMethods = paymentMethodViewModel.addedPaymentMethods
             
             contentView.paymentMethodsTableView.reloadData()
-        }, deleteAction: {
-            
         })
         
         vc.contentView.deleteButton.isHidden = true

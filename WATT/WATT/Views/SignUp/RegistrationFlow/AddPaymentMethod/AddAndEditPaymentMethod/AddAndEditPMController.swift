@@ -22,7 +22,7 @@ class AddAndEditPMController: BaseViewController, UITextFieldDelegate {
     
     var isCardDetailsEmpty = false
     
-    init(viewModel: PaymentMethodViewModel, toggleAction: (() -> Void)?, saveAction: (() -> Void)?, deleteAction: (() -> Void)?) {
+    init(viewModel: PaymentMethodViewModel, toggleAction: (() -> Void)?, saveAction: (() -> Void)?, deleteAction: (() -> Void)? = nil) {
         self.viewModel = viewModel
         self.toggleAction = toggleAction
         self.saveAction = saveAction

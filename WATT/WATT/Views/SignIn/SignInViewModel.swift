@@ -81,21 +81,23 @@ class SignInViewModel: ObservableObject {
             .eraseToAnyPublisher()
     }
     
-    var isValidEmailPublisher: AnyPublisher<Bool, Never> {
+    var isValidEmailPublisher: AnyPublisher<Result<Bool, TFError.Registration>, Never> {
         $email
-            .map { $0.isValidEmail }
+            .debounce(for: .seconds(0.7), scheduler: RunLoop.main)
+            .map { $0.isEmpty ? .success(false) : ($0.isValidEmail ? .success(true) : .failure(.invalidEmailFormat)) }
             .eraseToAnyPublisher()
     }
     
-    var isValidPasswordPublisher: AnyPublisher<Bool, Never> {
+    var isValidPasswordPublisher: AnyPublisher<Result<Bool, TFError.Registration>, Never> {
         $password
-            .map { !$0.isEmpty && $0.count >= 6 }
+            .debounce(for: .seconds(0.7), scheduler: RunLoop.main)
+            .map { $0.isEmpty ? .success(false) : ($0.count < 6 ? .failure(.invalidPasswordLength) : .success(true)) }
             .eraseToAnyPublisher()
     }
     
-    var isSubmitEnabled: AnyPublisher<Bool, Never> {
+    var isSignInValid: AnyPublisher<Bool, Never> {
         Publishers.CombineLatest(isValidEmailPublisher, isValidPasswordPublisher)
-            .map { $0 && $1 }
+            .map { $0 == .success(true) && $1 == .success(true) ? true : false }
             .eraseToAnyPublisher()
     }
     

@@ -24,6 +24,9 @@ class SignInView: UIView {
     let emailTextFieldView = TextFieldBackgroundView()
     let passwordTextFieldView = TextFieldBackgroundView()
     
+    let emailErrorLabel = TextLabel(title: "Email error", font: .systemFont(ofSize: 13), textColor: Asset.Colors.red)
+    let passwordErrorLabel = TextLabel(title: "Password error", font: .systemFont(ofSize: 13), textColor: Asset.Colors.red)
+    
     let forgotButton = LinkButton(title: "Forgot password?", size: .init(width: 0, height: 20))
     
     let addPaymentMethodTempButton = LinkButton(title: "Add payment method button", size: .init(width: 0, height: 20))
@@ -38,6 +41,8 @@ class SignInView: UIView {
     
     let guestButton = MainButton(title: "Continue as guest", titleColor: Asset.Colors.black, backgroundColor: .white, shadowOpacity: 0.15, shRadius: 5, shColor: .black)
 
+    let signInErrorLabel = TextLabel(title: "Sign in error", font: .systemFont(ofSize: 13), textColor: Asset.Colors.red)
+    
     init() {
         super.init(frame: .zero)
         backgroundColor = .white
@@ -72,11 +77,19 @@ class SignInView: UIView {
     
     private func createTextFieldsStack() -> UIStackView {
         
+        emailErrorLabel.isHidden = true
+        passwordErrorLabel.isHidden = true
+        
+        emailTextField.keyboardType = .emailAddress
+        emailTextField.returnKeyType = .next
+        
+        passwordTextField.returnKeyType = .done
+        
         emailTextFieldView.textField = emailTextField
         passwordTextFieldView.textField = passwordTextField
         
-        let emailStack = stack(emailLabel, emailTextFieldView, spacing: 6)
-        let passwordStack = stack(passwordLabel, passwordTextFieldView, spacing: 6)
+        let emailStack = stack(emailLabel, emailTextFieldView, emailErrorLabel, spacing: 6)
+        let passwordStack = stack(passwordLabel, passwordTextFieldView, passwordErrorLabel, spacing: 6)
         
         let textFieldsStack = stack(emailStack, passwordStack, spacing: 20)
         
@@ -103,8 +116,11 @@ class SignInView: UIView {
         let forgotPasswordStack = createForgotPasswordStack()
         let noAccauntStack = hstack(noAccountLabel, signUpButton, spacing: 10)
         
+        signInErrorLabel.isHidden = true
         
-        let mainStack = stack(tfStack, forgotPasswordStack, signInButton, noAccauntStack, spacing: 30, alignment: .center)
+        let signInStack = stack(signInButton, signInErrorLabel, spacing: 6)
+        
+        let mainStack = stack(tfStack, forgotPasswordStack, signInStack, noAccauntStack, spacing: 30, alignment: .center)
         
         self.addSubview(mainStack)
         

@@ -17,11 +17,14 @@ class ToggleView: UISwitch {
         }
     }
     
+    let greenTintColor = UIColor(cgColor: #colorLiteral(red: 0.2156862745, green: 0.7803921569, blue: 0.3137254902, alpha: 1))
+    let greyTintColor = UIColor(cgColor: #colorLiteral(red: 0.6823529412, green: 0.7215686275, blue: 0.7843137255, alpha: 1))
+    
     init() {
         super.init(frame: .zero)
         self.isOn = false
-        self.onTintColor = Asset.Colors.green
-        self.tintColor = Asset.Colors.grey2
+        self.onTintColor = greenTintColor
+        self.tintColor = greyTintColor
         self.toggleStatePublisher = nil
         self.constrainHeight(30)
 //        self.constrainWidth(55)

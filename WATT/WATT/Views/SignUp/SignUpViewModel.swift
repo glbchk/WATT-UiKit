@@ -21,11 +21,10 @@ class SignUpViewModel: ObservableObject {
     @Published var profilePhoto: UIImage? = nil
     
     @Published var paymentMethods: [PaymentMethod] = [
-//        PaymentMethod(provider: .americanExpress, cardName: "First method", cardNumber: "3786 3474 6736 9812", expiryDate: "12/25", cvv: "123", isDefault: true),
-//        PaymentMethod(provider: .visa, cardName: "Second method", cardNumber: "4786 3474 6736 9833", expiryDate: "12/25", cvv: "123", isDefault: false),
-//        PaymentMethod(provider: .mastercard, cardName: "Third method", cardNumber: "5664 3474 6736 9833", expiryDate: "12/27", cvv: "123", isDefault: false)
+//        PaymentMethod(provider: .americanExpress, cardName: "First method", cardNumber: "3786347467369812", expiryDate: "12/25", cvv: "123", isDefault: true),
+//        PaymentMethod(provider: .visa, cardName: "Second method", cardNumber: "4786347467369833", expiryDate: "12/25", cvv: "123", isDefault: false),
+//        PaymentMethod(provider: .mastercard, cardName: "Third method", cardNumber: "5664347467369833", expiryDate: "12/27", cvv: "123", isDefault: false)
     ]
-//    @Published var defaultPaymentMethod: Bool = false
     
     @Published var user: AppUser?
     
@@ -76,20 +75,6 @@ class SignUpViewModel: ObservableObject {
             
         }
     }
-    
-//    func checkForDefaultPaymentMethod() -> PaymentMethod {
-//        var isDefaultPaymentMethod = PaymentMethod(cardName: "", cardNumber: "", expiryDate: "", cvv: "")
-//        
-//        if !paymentMethods.isEmpty {
-//            for method in paymentMethods {
-//                if method.isDefault == true {
-//                    isDefaultPaymentMethod = method
-//                }
-//            }
-//        }
-//        
-//        return isDefaultPaymentMethod
-//    }
     
     func successfulRegistration() {
         guard let user = self.user else { return }
@@ -152,33 +137,30 @@ class SignUpViewModel: ObservableObject {
             .eraseToAnyPublisher()
     }
     
-    var isValidEmailPublisher: AnyPublisher<Bool, Never> {
-        $email
-            .map { $0.isValidEmail }
-            .eraseToAnyPublisher()
-    }
+    var isValidEmailPublisher: AnyPublisher<Result<Bool, TFError.Registration>, Never> {
+            $email
+                .debounce(for: .seconds(0.7), scheduler: RunLoop.main)
+                .map { $0.isEmpty ? .success(false) : ($0.isValidEmail ? .success(true) : .failure(.invalidEmailFormat)) }
+                .eraseToAnyPublisher()
+        }
     
-    var isValidPhoneNumberPublisher: AnyPublisher<Bool, Never> {
-        $phoneNumber
-            .map { $0.contains("+") && $0.count >= 11 }
-            .eraseToAnyPublisher()
-    }
+    var isValidPasswordPublisher: AnyPublisher<Result<Bool, TFError.Registration>, Never> {
+            $password
+                .debounce(for: .seconds(0.7), scheduler: RunLoop.main)
+                .map { $0.isEmpty ? .success(false) : ($0.count < 6 ? .failure(.invalidPasswordLength) : .success(true)) }
+                .eraseToAnyPublisher()
+        }
     
-    var isValidPasswordPublisher: AnyPublisher<Bool, Never> {
-        $password
-            .map { !$0.isEmpty && $0.count >= 6 }
-            .eraseToAnyPublisher()
-    }
-    
-    var isValidRetypedPasswordPublisher: AnyPublisher<Bool, Never> {
-        $retypedPassword
-            .map { !$0.isEmpty && $0.count >= 6 }
-            .eraseToAnyPublisher()
-    }
+    var isValidRetypedPasswordPublisher: AnyPublisher<Result<Bool, TFError.Registration>, Never> {
+            Publishers.CombineLatest($password, $retypedPassword)
+                .debounce(for: .seconds(0.7), scheduler: RunLoop.main)
+                .map { ($0.isEmpty || $1.isEmpty) ? .success(false) : ($0 == $1 ? .success(true) : .failure(.invalidRetypedPassword)) }
+                .eraseToAnyPublisher()
+        }
     
     var isSignUpValid: AnyPublisher<Bool, Never> {
-        Publishers.CombineLatest(isValidPasswordPublisher, isValidRetypedPasswordPublisher)
-            .map { $0 == $1 }
+        Publishers.CombineLatest(isValidEmailPublisher, isValidRetypedPasswordPublisher)
+            .map { $0 == .success(true) && $1 == .success(true) ? true : false }
             .eraseToAnyPublisher()
     }
     

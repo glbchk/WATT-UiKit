@@ -39,15 +39,6 @@ class PaymentMethodCell: UITableViewCell {
         return label
     }()
     
-    let defaultMethodLabel: UILabel = {
-        let label = UILabel()
-        label.text = "• Default"
-        label.font = UIFont.systemFont(ofSize: 13)
-        label.textColor = Asset.Colors.grey1
-        
-        return label
-    }()
-    
     let rightArrow: UIImageView = {
         let view = UIImageView(image: Asset.Icons.Navigation.chevronRight)
         view.contentMode = .scaleAspectFit
@@ -91,8 +82,7 @@ class PaymentMethodCell: UITableViewCell {
         titleLabel.text = "Some tempreraly text" // Need to add something decent
         subtitleLabel.text = "Card number" // Need to add something decent
         
-        let cardDetailsStack = hstack(subtitleLabel, defaultMethodLabel, spacing: 4, alignment: .leading)
-        let labelsStack = stack(titleLabel, cardDetailsStack, spacing: 6)
+        let labelsStack = stack(titleLabel, subtitleLabel, spacing: 4)
         let mainStack = hstack(imageView, labelsStack, rightArrow, spacing: 15, alignment: .center, distribution: .fill)
         
         let someView = UIView()

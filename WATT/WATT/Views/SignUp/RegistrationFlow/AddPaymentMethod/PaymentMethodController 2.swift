@@ -62,31 +62,17 @@ class PaymentMethodController: UIViewController {
     }
     
     @objc private func handleCreditCardRowTap() {
-        
-        paymentMethodViewModel.cardName = ""
-        paymentMethodViewModel.cardNumber = ""
-        paymentMethodViewModel.expiry = ""
-        paymentMethodViewModel.cvv = ""
-        
-        let vc = AddAndEditPMController(viewModel: paymentMethodViewModel, toggleAction: { [self] in
-            paymentMethodViewModel.defaultMethodToggle()
-            viewModel.paymentMethods = paymentMethodViewModel.addedPaymentMethods
+        let vc = AddCreditCardController(viewModel: paymentMethodViewModel, actionToggle: { [self] in
+            viewModel.paymentMethods = paymentMethodViewModel.defaultMethodToggle(paymentMethods: viewModel.paymentMethods)
             
             contentView.paymentMethodsTableView.reloadData()
-        }, saveAction: { [self] in
-            paymentMethodViewModel.savePaymentMethod()
-            viewModel.paymentMethods = paymentMethodViewModel.addedPaymentMethods
+        }, action: { [self] in
+            viewModel.paymentMethods = paymentMethodViewModel.savePaymentMethod(paymentMethods: viewModel.paymentMethods)
             
             contentView.paymentMethodsTableView.reloadData()
         })
-        
-        vc.contentView.deleteButton.isHidden = true
-        
         if viewModel.paymentMethods.isEmpty {
             vc.contentView.toggle.isOn = true
-            paymentMethodViewModel.defaultPaymentMethod = vc.contentView.toggle.isOn
-        } else {
-            vc.contentView.toggle.isOn = false
             paymentMethodViewModel.defaultPaymentMethod = vc.contentView.toggle.isOn
         }
         
@@ -98,21 +84,16 @@ class PaymentMethodController: UIViewController {
 extension PaymentMethodController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return paymentMethodViewModel.addedPaymentMethods.count
+        return viewModel.paymentMethods.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "payment_method", for: indexPath) as! PaymentMethodCell
         
+        cell.methodLogoView.image = viewModel.paymentMethods[indexPath.item].provider?.icon
+        cell.titleLabel.text = viewModel.paymentMethods[indexPath.item].cardName
+        cell.subtitleLabel.text = viewModel.paymentMethods[indexPath.item].cardNumber
         cell.selectionStyle = .none
-        cell.methodLogoView.image = paymentMethodViewModel.addedPaymentMethods[indexPath.item].provider?.icon
-        cell.titleLabel.text = paymentMethodViewModel.addedPaymentMethods[indexPath.item].cardName
-        cell.subtitleLabel.text = hideCardNumbers(card: paymentMethodViewModel.addedPaymentMethods[indexPath.item].cardNumber)
-        if paymentMethodViewModel.addedPaymentMethods[indexPath.item].isDefault == true {
-            cell.defaultMethodLabel.isHidden = false
-        } else {
-            cell.defaultMethodLabel.isHidden = true
-        }
         
         return cell
     }
@@ -122,26 +103,15 @@ extension PaymentMethodController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
-        let vc = AddAndEditPMController(viewModel: paymentMethodViewModel, toggleAction: { [self] in
-            paymentMethodViewModel.editPaymentMethod()
-            viewModel.paymentMethods = paymentMethodViewModel.addedPaymentMethods
-            
-            contentView.paymentMethodsTableView.reloadData()
-        }, saveAction: { [self] in
-            
-            paymentMethodViewModel.editPaymentMethod()
-            viewModel.paymentMethods = paymentMethodViewModel.addedPaymentMethods
-            
+        let vc = EditCreditCardController(viewModel: paymentMethodViewModel, editAction: { [self] in
+            viewModel.paymentMethods = paymentMethodViewModel.editPaymentMethod(paymentMethods: viewModel.paymentMethods)
             contentView.paymentMethodsTableView.reloadData()
         }, deleteAction: { [self] in
-            paymentMethodViewModel.deletePaymentMethod()
-            viewModel.paymentMethods = paymentMethodViewModel.addedPaymentMethods
-            
+            viewModel.paymentMethods = paymentMethodViewModel.deletePaymentMethod(paymentMethods: viewModel.paymentMethods)
             contentView.paymentMethodsTableView.reloadData()
         })
         
-        let selectedIndex = paymentMethodViewModel.addedPaymentMethods[indexPath.item]
+        let selectedIndex = viewModel.paymentMethods[indexPath.item]
         
         paymentMethodViewModel.selectedPaymentMethod = selectedIndex
         
@@ -151,26 +121,7 @@ extension PaymentMethodController: UITableViewDelegate, UITableViewDataSource {
         vc.contentView.cvvTextField.text = selectedIndex.cvv
         vc.contentView.toggle.isOn = selectedIndex.isDefault
         
-        vc.contentView.cardNumberTextField.isEnabled = false
-        vc.contentView.cardNumberTextFieldView.backgroundColor = Asset.Colors.grey3
-        vc.contentView.cardNumberTextFieldView.textField?.textColor = Asset.Colors.darkGrey
-        vc.contentView.expiryTextFieldView.textField?.isEnabled = false
-        vc.contentView.expiryTextFieldView.backgroundColor = Asset.Colors.grey3
-        vc.contentView.expiryTextFieldView.textField?.textColor = Asset.Colors.darkGrey
-        
         self.navigationController?.pushViewController(vc, animated: true)
     }
     
-    private func hideCardNumbers(card number: String) -> String {
-        var result = ""
-        
-        let firstTwoDigits = number.prefix(2)
-        let lastFourDigits = number.suffix(4)
-        result = "\(firstTwoDigits)****\(lastFourDigits)"
-        
-        return result
-    }
-    
 }
-
-

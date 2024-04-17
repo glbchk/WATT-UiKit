@@ -47,8 +47,8 @@ class PaymentMethodView: UIView {
         setupBlueHeader()
         setupBackButton()
         setupLabels()
-        setupButtons()
         setupTableView()
+        setupButtons()
     }
     
     private func setupBlueHeader() {
@@ -68,20 +68,19 @@ class PaymentMethodView: UIView {
         stack.anchor(top: backButton.bottomAnchor, leading: self.leadingAnchor, trailing: self.trailingAnchor, bottom: nil, padding: .init(top: 20, left: 20, bottom: 0, right: 20))
     }
     
-    func setupTableView() {
+    func setupTableView() { //tableView cellsCount: Int) {
         paymentMethodsTableView.backgroundColor = .clear
-        paymentMethodsTableView.clipsToBounds = true
+        paymentMethodsTableView.clipsToBounds = false
         
         self.addSubview(paymentMethodsTableView)
-        paymentMethodsTableView.anchor(top: subtitleLable.bottomAnchor, leading: self.leadingAnchor, trailing: self.trailingAnchor, bottom: addCreditCardRow.topAnchor, padding: .init(top: 20, left: 20, bottom: 0, right: 20))
+        paymentMethodsTableView.anchor(top: subtitleLable.bottomAnchor, leading: self.leadingAnchor, trailing: self.trailingAnchor, bottom: self.bottomAnchor, padding: .init(top: 20, left: 20, bottom: 0, right: 20))
     }
     
     func setupButtons() {
         let stack = stack(addCreditCardRow, continueButton, spacing: 20)
-        stack.clipsToBounds = false
         
         self.addSubview(stack)
-        stack.anchor(top: nil, leading: self.leadingAnchor, trailing: self.trailingAnchor, bottom: self.bottomAnchor, padding: .init(top: 20, left: 20, bottom: 50, right: 20))
+        stack.anchor(top: nil, leading: self.leadingAnchor, trailing: self.trailingAnchor, bottom: self.bottomAnchor, padding: .init(top: 0, left: 20, bottom: 50, right: 20))
         [addCreditCardRow, continueButton].forEach {
             $0.anchor(top: nil, leading: stack.leadingAnchor, trailing: stack.trailingAnchor, bottom: nil)
         }

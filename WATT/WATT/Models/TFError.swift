@@ -12,6 +12,8 @@ enum TFError: Error {
     enum Registration: Error {
         case invalidEmailFormat
         case invalidPasswordLength
+        case invalidRetypedPassword
+        case requiredField
         
         var description: String {
             switch self {
@@ -19,6 +21,10 @@ enum TFError: Error {
                 "Invalid email format"
             case .invalidPasswordLength:
                 "Password should contain at least 6 characters"
+            case .invalidRetypedPassword:
+                "This field must match password field"
+            case .requiredField:
+                "This field is required"
             }
         }
     }

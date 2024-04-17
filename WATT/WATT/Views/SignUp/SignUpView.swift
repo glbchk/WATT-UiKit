@@ -22,6 +22,10 @@ class SignUpView: UIView {
     let passwordLabel = TextFieldLabel(title: "PASSWORD")
     let retypePasswordLabel = TextFieldLabel(title: "RETYPE PASSWORD")
     
+    let emailErrorLabel = TextLabel(title: "Email error", font: .systemFont(ofSize: 13), textColor: Asset.Colors.red)
+    let passwordErrorLabel = TextLabel(title: "Password error", font: .systemFont(ofSize: 13), textColor: Asset.Colors.red)
+    let retypedPasswordErrorLabel = TextLabel(title: "Retyped password error", font: .systemFont(ofSize: 13), textColor: Asset.Colors.red)
+    
     let emailTextField = TextFieldWithPlaceholder("example@email.com")
     let passwordTextField = TextFieldWithPlaceholder("At least 6 characters")
     let retypePasswordTextField = TextFieldWithPlaceholder("Retype password here")
@@ -39,6 +43,8 @@ class SignUpView: UIView {
     let haveAccountLabel = SecondaryLabel(text: "Already have an account?")
     
     let signInButton = LinkButton(title: "Sign in")
+    
+    var mainStack: UIStackView? = nil
     
     init() {
         super.init(frame: .zero)
@@ -74,7 +80,9 @@ class SignUpView: UIView {
         let termsStack = hstack(termsLabel, termsButton, spacing: 5)
         let haveAccountStack = hstack(haveAccountLabel, signInButton, spacing: 10)
         
-        let mainStack = stack(textFieldsStack, termsStack, signUpButton, haveAccountStack, spacing: 30, alignment: .center)
+        mainStack = stack(textFieldsStack, termsStack, signUpButton, haveAccountStack, spacing: 30, alignment: .center)
+        
+        guard let mainStack = mainStack else { return }
         
         mainStack.anchor(top: blueBackgroundView.bottomAnchor, leading: self.leadingAnchor, trailing: self.trailingAnchor, bottom: nil, padding: .allSides(20))
         
@@ -88,9 +96,19 @@ class SignUpView: UIView {
         passwordTextFieldView.textField = passwordTextField
         retypePasswordTextFieldView.textField = retypePasswordTextField
         
-        let emailStack = stack(emailLabel, emailTextFieldView, spacing: 6)
-        let passwordStack = stack(passwordLabel, passwordTextFieldView, spacing: 6)
-        let retypeStack = stack(retypePasswordLabel, retypePasswordTextFieldView, spacing: 6)
+        emailTextField.keyboardType = .emailAddress
+        emailTextField.returnKeyType = .next
+        
+        passwordTextField.returnKeyType = .next
+        retypePasswordTextField.returnKeyType = .done
+        
+        emailErrorLabel.isHidden = true
+        passwordErrorLabel.isHidden = true
+        retypedPasswordErrorLabel.isHidden = true
+        
+        let emailStack = stack(emailLabel, emailTextFieldView, emailErrorLabel, spacing: 6)
+        let passwordStack = stack(passwordLabel, passwordTextFieldView, passwordErrorLabel, spacing: 6)
+        let retypeStack = stack(retypePasswordLabel, retypePasswordTextFieldView, retypedPasswordErrorLabel, spacing: 6)
         
         let stack = stack(emailStack, passwordStack, retypeStack, spacing: 20)
         

@@ -11,10 +11,12 @@ import Combine
 class ChooseModelController: UIViewController {
     
     let contentView = ChooseModelView()
-    private var viewModel: SignUpViewModel
+    private var viewModel: CarsViewModel
     var cancellables = Set<AnyCancellable>()
     
-    init(viewModel: SignUpViewModel) {
+    let cellHeight: CGFloat = 60
+    
+    init(viewModel: CarsViewModel) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
     }
@@ -26,6 +28,10 @@ class ChooseModelController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        viewModel.loadCarModels {
+            self.contentView.carModelTableView.reloadData()
+        }
+        
         view.addSubview(contentView)
         contentView.fillSuperview()
         
@@ -35,7 +41,9 @@ class ChooseModelController: UIViewController {
         
         contentView.carModelTableView.dataSource = self
         contentView.carModelTableView.delegate = self
-        contentView.carModelTableView.register(UITableViewCell.self, forCellReuseIdentifier: "model1")
+        contentView.carModelTableView.register(ChooseModelCell.self, forCellReuseIdentifier: Identifiers.TableCell.modelCell)
+        
+        contentView.titleLabel.text = viewModel.selectedBrandName
     }
     
     private func setupTargets() {
@@ -88,19 +96,32 @@ class ChooseModelController: UIViewController {
 extension ChooseModelController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return viewModel.fakeDataTable.count
+        return viewModel.allCarModels.count
     }
     
-//    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-//        return 60
-//    }
-    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "model1", for: indexPath)
+        tableView.separatorStyle = .singleLine
+        let cell = tableView.dequeueReusableCell(withIdentifier: Identifiers.TableCell.modelCell, for: indexPath) as! ChooseModelCell
+        cell.selectionStyle = .none
         
-        cell.textLabel?.text = viewModel.fakeDataTable[indexPath.item]
+        cell.titleLabel.text = viewModel.allCarModels[indexPath.item].carModel
+        cell.subTitleLabel.text = viewModel.allCarModels[indexPath.item].carVersion
         
         return cell
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return cellHeight
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let cell = contentView.carModelTableView.cellForRow(at: indexPath) as! ChooseModelCell
+        cell.updateState(true)
+    }
+    
+    func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
+        let cell = contentView.carModelTableView.cellForRow(at: indexPath) as! ChooseModelCell
+        cell.updateState(false)
     }
     
 }

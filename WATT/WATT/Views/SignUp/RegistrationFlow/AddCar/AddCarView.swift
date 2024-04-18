@@ -34,7 +34,7 @@ class AddCarView: UIView {
         return layout
     }()
     
-    var carsView: UICollectionView = {
+    var carBrandsCollectionView: UICollectionView = {
         let view = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
         
         return view
@@ -46,8 +46,6 @@ class AddCarView: UIView {
         super.init(frame: .zero)
         backgroundColor = .white
         
-        carsView.collectionViewLayout = layout
-        carsView.backgroundColor = .red
         setupUI()
     }
     
@@ -59,8 +57,8 @@ class AddCarView: UIView {
         setupBlueHeader()
         setupBackButton()
         setupLabels()
-        setupCollectionView()
         setupCompleteLeterButton()
+        setupCarBrandsCollectionView()
     }
     
     private func setupBlueHeader() {
@@ -80,9 +78,13 @@ class AddCarView: UIView {
         stack.anchor(top: backButton.bottomAnchor, leading: blueBackgroundView.leadingAnchor, trailing: blueBackgroundView.trailingAnchor, bottom: nil, padding: .init(top: 20, left: 20, bottom: 0, right: 20))
     }
     
-    private func setupCollectionView() {
-        self.addSubview(carsView)
-        carsView.anchor(top: blueBackgroundView.bottomAnchor, leading: blueBackgroundView.leadingAnchor, trailing: blueBackgroundView.trailingAnchor, bottom: self.bottomAnchor)
+    private func setupCarBrandsCollectionView() {
+        carBrandsCollectionView.collectionViewLayout = layout
+        carBrandsCollectionView.backgroundColor = .clear
+        carBrandsCollectionView.clipsToBounds = true
+        
+        self.addSubview(carBrandsCollectionView)
+        carBrandsCollectionView.anchor(top: subtitleLabel.bottomAnchor, leading: self.leadingAnchor, trailing: self.trailingAnchor, bottom: completeLaterButton.topAnchor, padding: .init(top: 20, left: 20, bottom: 0, right: 20))
         }
     
     private func setupCompleteLeterButton() {

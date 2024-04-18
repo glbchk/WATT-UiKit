@@ -39,7 +39,7 @@ class ChooseModelView: UIView {
     
     init() {
         super.init(frame: .zero)
-        carModelTableView.backgroundColor = .green
+        carModelTableView.backgroundColor = .clear
         
         setupUI()
     }
@@ -51,7 +51,7 @@ class ChooseModelView: UIView {
     private func setupUI() {
         setupBlueHeader()
         setupBackButton()
-//        setupLabels()
+        setupTitleLabel()
         setupWhiteFooter()
         setupTableView()
         setupSaveButton()
@@ -69,14 +69,18 @@ class ChooseModelView: UIView {
     }
     
     private func setupBackButton() {
-        let stack = hstack(backButton, titleLabel, spacing: 60, alignment: .fill, distribution: .fill)
-        blueBackgroundView.addSubview(stack)
-        stack.anchor(top: self.safeAreaLayoutGuide.topAnchor, leading: blueBackgroundView.leadingAnchor, trailing: nil, bottom: nil, padding: .init(top: 20, left: 26, bottom: 0, right: 0))
+        blueBackgroundView.addSubview(backButton)
+        backButton.anchor(top: self.safeAreaLayoutGuide.topAnchor, leading: blueBackgroundView.leadingAnchor, trailing: nil, bottom: nil, padding: .init(top: 20, left: 26, bottom: 0, right: 0))
+    }
+    
+    private func setupTitleLabel() {
+        blueBackgroundView.addSubview(titleLabel)
+        titleLabel.anchor(top: self.safeAreaLayoutGuide.topAnchor, leading: nil, trailing: nil, bottom: nil, padding: .init(top: 20, left: 0, bottom: 0, right: 0))
+        titleLabel.centerXToSuperview()
     }
     
     private func setupTableView() {
         self.addSubview(carModelTableView)
-//        let stack = stack(carModelTableView)
         
         carModelTableView.anchor(top: whiteBackgroundView.topAnchor, leading: whiteBackgroundView.leadingAnchor, trailing: whiteBackgroundView.trailingAnchor, bottom: whiteBackgroundView.bottomAnchor, padding: .init(top: 20, left: 0, bottom: 0, right: 0))
     }

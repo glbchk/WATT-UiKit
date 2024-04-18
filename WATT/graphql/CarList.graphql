@@ -1,0 +1,40 @@
+
+query brandListAll {
+  carList(size: 12, page: 0) {
+    id
+    naming {
+      make
+    }
+    media {
+      brand {
+        id
+        type
+        url
+        height
+        width
+      }
+    }
+  }
+}
+
+query modelListAll($brandName: String!) {
+  carList(search: $brandName) {
+    id
+    naming {
+      model
+      version
+    }
+    media {
+      image {
+        id
+        type
+        url
+        height
+        width
+        thumbnail_url
+        thumbnail_height
+        thumbnail_width
+      }
+    }
+  }
+}

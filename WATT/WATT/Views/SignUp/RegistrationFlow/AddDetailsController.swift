@@ -40,12 +40,8 @@ class AddDetailsController: BaseViewController {
         contentView.completeLaterButton.addTarget(self, action: #selector(completeLaterPressed), for: .touchUpInside)
     }
     
-    @objc private func completeLaterPressed() {
-        viewModel.successfulRegistration()
-    }
-    
-    @objc private func handleAddCarRowTap() {
-        let vc = AddCarController(viewModel: viewModel)
+    @objc private func handleNameRowTap() {
+        let vc = AddNameAndPhoneNumberController(viewModel: viewModel)
         self.navigationController?.pushViewController(vc, animated: true)
     }
     
@@ -61,9 +57,15 @@ class AddDetailsController: BaseViewController {
         self.navigationController?.pushViewController(vc, animated: true)
     }
     
-    @objc private func handleNameRowTap() {
-        let vc = AddNameAndPhoneNumberController(viewModel: viewModel)
+    @objc private func handleAddCarRowTap() {
+        guard let carsViewModel = viewModel.carsViewModel else { return }
+        let vc = AddCarController(viewModel: carsViewModel)
+        
         self.navigationController?.pushViewController(vc, animated: true)
+    }
+    
+    @objc private func completeLaterPressed() {
+        viewModel.successfulRegistration()
     }
     
     private func bindViewModel() {

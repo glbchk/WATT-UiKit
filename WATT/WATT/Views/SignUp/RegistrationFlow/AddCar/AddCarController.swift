@@ -9,12 +9,12 @@ import UIKit
 import Combine
 
 class AddCarController: UIViewController {
-    
-    let contentView = AddCarView()
-    private var viewModel: SignUpViewModel
     var cancellables = Set<AnyCancellable>()
     
-    init(viewModel: SignUpViewModel) {
+    let contentView = AddCarView()
+    private var viewModel: CarsViewModel
+    
+    init(viewModel: CarsViewModel) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
     }
@@ -23,15 +23,26 @@ class AddCarController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
+//    override func viewWillAppear(_ animated: Bool) {
+//        viewModel.loadCarBrands()
+//    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        contentView.carBrandsCollectionView.showLoading()
+        
+        viewModel.loadCarBrands {
+            self.contentView.carBrandsCollectionView.stopLoading()
+            self.contentView.carBrandsCollectionView.reloadData()
+        }
         
         view.addSubview(contentView)
         contentView.fillSuperview()
 
-        contentView.carsView.delegate = self
-        contentView.carsView.dataSource = self
-        contentView.carsView.register(UICollectionViewCell.self, forCellWithReuseIdentifier: "car1")
+        contentView.carBrandsCollectionView.delegate = self
+        contentView.carBrandsCollectionView.dataSource = self
+        contentView.carBrandsCollectionView.register(CarBrandCell.self, forCellWithReuseIdentifier: Identifiers.CollectionCell.carCell)
+//        contentView.carsCollectionView.reloadData()
         
         setupTarget()
     }
@@ -69,22 +80,41 @@ extension AddCarController: UICollectionViewDelegate, UICollectionViewDataSource
 //    }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 4
+        return viewModel.allCarBrands.count
     }
     
-//    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-//        return CGSize(width: UIScreen.main.bounds.width - 40, height: 90)
-//    }
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return CGSize(width: UIScreen.main.bounds.width - 40, height: 90)
+    }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "car1", for: indexPath)
-        cell.backgroundColor = UIColor(.black)
+//        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "car1", for: indexPath)
+//        cell.backgroundColor = UIColor(.black)
         
-//        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: Asset.Identifiers.CollectionCell.carCell, for: indexPath) as? CollectionViewCell else { return UICollectionViewCell() }
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: Identifiers.CollectionCell.carCell, for: indexPath) as? CarBrandCell else { return CarBrandCell() }
 //        cell.titleLabel.text = viewModel.fakeDataCollection[indexPath.item].title
 //        cell.squareImageView?.image = viewModel.fakeDataCollection[indexPath.item].image.image
-//
+        
+        cell.titleLabel.text = viewModel.allCarBrands[indexPath.item].brandName
+        cell.squareImageView?.loadFrom(URLAddress: viewModel.allCarBrands[indexPath.item].brandLogoURL ?? "") //UIImage(systemName: "car")
+        
+//        let url = URL(string: viewModel.brandLogoURL(of: viewModel.carBrands[indexPath.item]))
+//        DispatchQueue.global().async {
+//            let data = try? Data(contentsOf: url!)
+//            DispatchQueue.main.async {
+//                cell.squareImageView?.image = UIImage(data: data!)
+//            }
+//        }
+
         return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let vc = ChooseModelController(viewModel: viewModel)
+        
+        viewModel.selectedBrandName = viewModel.allCarBrands[indexPath.item].brandName ?? ""
+        
+        self.navigationController?.pushViewController(vc, animated: true)
     }
     
 //    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
@@ -99,3 +129,54 @@ extension AddCarController: UICollectionViewDelegate, UICollectionViewDataSource
 //        0
 //    }
 }
+
+
+extension UIImageView {
+    func loadFrom(URLAddress: String) {
+        if let url = URL(string: URLAddress) {
+        URLSession.shared.dataTask(with: url) { (data, response, error) in
+            if let error = error {
+                DispatchQueue.main.async {
+                    print(error.localizedDescription)
+                    return
+                }
+            }
+            
+            guard let imageData = data else { return }
+            
+            DispatchQueue.main.async {
+                self.image = UIImage(data: imageData)
+            }
+        }
+        .resume()
+    }
+        
+        
+    }
+}
+
+
+extension UIView {
+    static let loadingViewTag = 1938123987
+    func showLoading(style: UIActivityIndicatorView.Style = .medium) {
+        var loading = viewWithTag(UIImageView.loadingViewTag) as? UIActivityIndicatorView
+        if loading == nil {
+            loading = UIActivityIndicatorView(style: style)
+        }
+        
+        loading?.translatesAutoresizingMaskIntoConstraints = false
+        loading!.startAnimating()
+        loading!.hidesWhenStopped = true
+        loading?.tag = UIView.loadingViewTag
+        addSubview(loading!)
+        loading?.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
+        loading?.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
+    }
+
+    func stopLoading() {
+        let loading = viewWithTag(UIView.loadingViewTag) as? UIActivityIndicatorView
+        loading?.stopAnimating()
+        loading?.removeFromSuperview()
+    }
+}
+

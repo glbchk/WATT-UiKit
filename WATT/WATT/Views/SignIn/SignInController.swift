@@ -106,7 +106,7 @@ class SignInController: BaseViewController {
     }
     
     @objc private func addCarTempButtonPressed() {
-        if let signUpViewModel = viewModel.signUpViewModel {
+        if let signUpViewModel = viewModel.signUpViewModel?.carsViewModel {
             let vc = AddCarController(viewModel: signUpViewModel)
             navigationController?.pushViewController(vc, animated: true)
         }

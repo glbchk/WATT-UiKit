@@ -13,25 +13,44 @@ struct Cars: Codable {
 
 struct Car: Codable, Identifiable {
     let id: String
-    let brandLogo: String
-    let model: CarModel
-    let description: String?
+    let brandName: String?
+     let brandLogoURL: String?
+//    let brandLogoThumbnailURL: String?
+    let carModel: CarModel?
+       
+    init(
+        id: String,
+        brandName: String? = nil,
+        brandLogoURL: String? = nil,
+//        brandLogoThumbnailURL: String? = nil,
+        carModel: CarModel? = nil
+    ) {
+        self.id = id
+        self.brandName = brandName
+        self.brandLogoURL = brandLogoURL
+//        self.brandLogoThumbnailURL = brandLogoThumbnailURL
+        self.carModel = carModel
+    }
     
     enum CodingKeys: String, CodingKey {
         case id = "_id"
-        case brandLogo = "brand_logo"
-        case model = "model"
-        case description = "description"
-        
+        case brandName = "brand_name"
+        case brandLogoURL = "brand_logo_url"
+//        case brandLogoThumbnailURL = "brand_logo_thumbnail_url"
+        case carModel = "car_model"
     }
 }
 
 struct CarModel: Codable {
-    let id: String
-    let model: String
+    let carModel: String?
+    let carVersion: String?
+    let carImage: String?
+//    let carThumbnailImage: String?
     
     enum CodingKeys: String, CodingKey {
-        case id = "_id"
-        case model = "model"
+        case carModel = "car_model"
+        case carVersion = "car_version"
+        case carImage = "car_image"
+//        case carThumbnailImage = "car_thumbnail_image"
     }
 }

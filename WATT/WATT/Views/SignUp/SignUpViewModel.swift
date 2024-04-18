@@ -41,12 +41,14 @@ class SignUpViewModel: ObservableObject {
     private let loginRepo: LoginRepository
     private var userRepo: UserRepository
     let paymentMethodViewModel: PaymentMethodViewModel?
+    let carsViewModel: CarsViewModel?
     
     init(dependencies: Resolver) {
         authenticationRepo = dependencies.resolve(AuthenticationRepository.self)!
         loginRepo = dependencies.resolve(LoginRepository.self)!
         userRepo = dependencies.resolve(UserRepository.self)!
         paymentMethodViewModel = PaymentMethodViewModel(dependencies: dependencies)
+        carsViewModel = CarsViewModel(dependencies: dependencies)
     }
     
     func createUser(completion: @escaping ((Bool, String) -> Void)) {

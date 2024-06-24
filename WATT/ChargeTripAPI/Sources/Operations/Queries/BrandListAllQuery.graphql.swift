@@ -7,7 +7,7 @@ public class BrandListAllQuery: GraphQLQuery {
   public static let operationName: String = "brandListAll"
   public static let operationDocument: ApolloAPI.OperationDocument = .init(
     definition: .init(
-      #"query brandListAll { carList(size: 12, page: 0) { __typename id naming { __typename make } media { __typename brand { __typename id type url height width } } } }"#
+      #"query brandListAll { carList(size: 12, page: 0) { __typename id naming { __typename make } media { __typename brand { __typename id type thumbnail_url thumbnail_height thumbnail_width } } } }"#
     ))
 
   public init() {}
@@ -94,21 +94,21 @@ public class BrandListAllQuery: GraphQLQuery {
             .field("__typename", String.self),
             .field("id", ChargeTripAPI.ID?.self),
             .field("type", GraphQLEnum<ChargeTripAPI.CarImageType>?.self),
-            .field("url", String?.self),
-            .field("height", Int?.self),
-            .field("width", Int?.self),
+            .field("thumbnail_url", String?.self),
+            .field("thumbnail_height", Int?.self),
+            .field("thumbnail_width", Int?.self),
           ] }
 
           /// Image id.
           public var id: ChargeTripAPI.ID? { __data["id"] }
           /// Image type.
           public var type: GraphQLEnum<ChargeTripAPI.CarImageType>? { __data["type"] }
-          /// Full path URL of a large image.
-          public var url: String? { __data["url"] }
-          /// Height of a large image in pixels.
-          public var height: Int? { __data["height"] }
-          /// Width of a large image in pixels.
-          public var width: Int? { __data["width"] }
+          /// Full path URL of a thumbnail image.
+          public var thumbnail_url: String? { __data["thumbnail_url"] }
+          /// Height of a thumbnail image in pixels.
+          public var thumbnail_height: Int? { __data["thumbnail_height"] }
+          /// Width of a thumbnail image in pixels.
+          public var thumbnail_width: Int? { __data["thumbnail_width"] }
         }
       }
     }

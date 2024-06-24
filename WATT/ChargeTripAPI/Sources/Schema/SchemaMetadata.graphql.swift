@@ -27,6 +27,18 @@ public enum SchemaMetadata: ApolloAPI.SchemaMetadata {
     case "CarListNaming": return ChargeTripAPI.Objects.CarListNaming
     case "CarListMedia": return ChargeTripAPI.Objects.CarListMedia
     case "CarImage": return ChargeTripAPI.Objects.CarImage
+    case "Vehicle": return ChargeTripAPI.Objects.Vehicle
+    case "VehicleNaming": return ChargeTripAPI.Objects.VehicleNaming
+    case "VehicleConnector": return ChargeTripAPI.Objects.VehicleConnector
+    case "VehicleBattery": return ChargeTripAPI.Objects.VehicleBattery
+    case "VehicleBody": return ChargeTripAPI.Objects.VehicleBody
+    case "VehicleBodyWeight": return ChargeTripAPI.Objects.VehicleBodyWeight
+    case "VehiclePerformance": return ChargeTripAPI.Objects.VehiclePerformance
+    case "VehicleRange": return ChargeTripAPI.Objects.VehicleRange
+    case "VehicleRangeValue": return ChargeTripAPI.Objects.VehicleRangeValue
+    case "ChargetripRange": return ChargeTripAPI.Objects.ChargetripRange
+    case "VehicleMedia": return ChargeTripAPI.Objects.VehicleMedia
+    case "VehicleImage": return ChargeTripAPI.Objects.VehicleImage
     default: return nil
     }
   }

@@ -7,7 +7,7 @@ public class ModelListAllQuery: GraphQLQuery {
   public static let operationName: String = "modelListAll"
   public static let operationDocument: ApolloAPI.OperationDocument = .init(
     definition: .init(
-      #"query modelListAll($brandName: String!) { carList(search: $brandName) { __typename id naming { __typename model version } media { __typename image { __typename id type url height width thumbnail_url thumbnail_height thumbnail_width } } } }"#
+      #"query modelListAll($brandName: String!) { carList(search: $brandName) { __typename id naming { __typename make model version } media { __typename brand { __typename id type url height width } } } }"#
     ))
 
   public var brandName: String
@@ -62,10 +62,13 @@ public class ModelListAllQuery: GraphQLQuery {
         public static var __parentType: ApolloAPI.ParentType { ChargeTripAPI.Objects.CarListNaming }
         public static var __selections: [ApolloAPI.Selection] { [
           .field("__typename", String.self),
+          .field("make", String?.self),
           .field("model", String?.self),
           .field("version", String?.self),
         ] }
 
+        /// Car manufacturer name.
+        public var make: String? { __data["make"] }
         /// Car model name.
         public var model: String? { __data["model"] }
         /// Version, edition or submodel of car.
@@ -82,16 +85,16 @@ public class ModelListAllQuery: GraphQLQuery {
         public static var __parentType: ApolloAPI.ParentType { ChargeTripAPI.Objects.CarListMedia }
         public static var __selections: [ApolloAPI.Selection] { [
           .field("__typename", String.self),
-          .field("image", Image?.self),
+          .field("brand", Brand?.self),
         ] }
 
-        /// Latest image of the car.
-        public var image: Image? { __data["image"] }
+        /// Latest make logo of the car.
+        public var brand: Brand? { __data["brand"] }
 
-        /// CarList.Media.Image
+        /// CarList.Media.Brand
         ///
         /// Parent Type: `CarImage`
-        public struct Image: ChargeTripAPI.SelectionSet {
+        public struct Brand: ChargeTripAPI.SelectionSet {
           public let __data: DataDict
           public init(_dataDict: DataDict) { __data = _dataDict }
 
@@ -103,9 +106,6 @@ public class ModelListAllQuery: GraphQLQuery {
             .field("url", String?.self),
             .field("height", Int?.self),
             .field("width", Int?.self),
-            .field("thumbnail_url", String?.self),
-            .field("thumbnail_height", Int?.self),
-            .field("thumbnail_width", Int?.self),
           ] }
 
           /// Image id.
@@ -118,12 +118,6 @@ public class ModelListAllQuery: GraphQLQuery {
           public var height: Int? { __data["height"] }
           /// Width of a large image in pixels.
           public var width: Int? { __data["width"] }
-          /// Full path URL of a thumbnail image.
-          public var thumbnail_url: String? { __data["thumbnail_url"] }
-          /// Height of a thumbnail image in pixels.
-          public var thumbnail_height: Int? { __data["thumbnail_height"] }
-          /// Width of a thumbnail image in pixels.
-          public var thumbnail_width: Int? { __data["thumbnail_width"] }
         }
       }
     }

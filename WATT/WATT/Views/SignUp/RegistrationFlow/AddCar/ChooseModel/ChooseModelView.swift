@@ -33,7 +33,6 @@ class ChooseModelView: UIView {
     let titleLabel = TextLabel(title: "Choose model", font: .systemFont(ofSize: 18, weight: .bold), textColor: .white, numberOfLines: 0)
     
     let carModelTableView = UITableView()
-//    let carModelTableView = TableView(registerClass: TableViewCell.self, cellReuseIdentifier: Asset.Identifiers.TableCell.modelCell)
     
     let saveButton = MainButton(title: "Save")
     
@@ -53,8 +52,8 @@ class ChooseModelView: UIView {
         setupBackButton()
         setupTitleLabel()
         setupWhiteFooter()
-        setupTableView()
         setupSaveButton()
+        setupTableView()
     }
     
     private func setupBlueHeader() {
@@ -82,7 +81,7 @@ class ChooseModelView: UIView {
     private func setupTableView() {
         self.addSubview(carModelTableView)
         
-        carModelTableView.anchor(top: whiteBackgroundView.topAnchor, leading: whiteBackgroundView.leadingAnchor, trailing: whiteBackgroundView.trailingAnchor, bottom: whiteBackgroundView.bottomAnchor, padding: .init(top: 20, left: 0, bottom: 0, right: 0))
+        carModelTableView.anchor(top: whiteBackgroundView.topAnchor, leading: whiteBackgroundView.leadingAnchor, trailing: whiteBackgroundView.trailingAnchor, bottom: saveButton.topAnchor, padding: .init(top: 20, left: 0, bottom: 0, right: 0))
     }
     
     private func setupSaveButton() {

@@ -19,6 +19,7 @@ struct DBUser: Codable {
     let isAnonymous: Bool
     var paymentMethods: [PaymentMethod]?
     var defaultPaymentMethod: PaymentMethod?
+    var cars: [Car]?
 //    var location: UserLocation?
     
     init(user: AppUser) {
@@ -31,6 +32,7 @@ struct DBUser: Codable {
         self.isAnonymous = user.isAnonymous
         self.paymentMethods = [.init(provider: .americanExpress, cardName: "", cardNumber: "", expiryDate: "", cvv: "", isDefault: false)]
         self.defaultPaymentMethod = paymentMethods?.first
+        self.cars = [.init(id: "", brandName: "", brandThumbnailLogoURL: "", carModel: "", carVersion: "", carImage: "", fullBattery: "", usableBattery: "", plugType: "", seats: "", weight: "", width: "", height: "", bestRange: "", worstRange: "", acceleration: "", topSpeed: "", worstRangeCity: "", worstRangeHighway: "", worstRangeCombined: "", bestRangeCity: "", bestRangeHighway: "", bestRangeCombined: "")]
 //        self.location = nil
     }
     
@@ -42,7 +44,8 @@ struct DBUser: Codable {
         photoURL: String? = nil,
         isAnonymous: Bool,
         paymentMethods: [PaymentMethod]? = nil,
-        defaultPaymentMethod: PaymentMethod? = nil
+        defaultPaymentMethod: PaymentMethod? = nil,
+        cars: [Car]? = nil
     ) {
         self.uid = uid
         self.email = email
@@ -52,6 +55,7 @@ struct DBUser: Codable {
         self.isAnonymous = isAnonymous
         self.paymentMethods = paymentMethods
         self.defaultPaymentMethod = defaultPaymentMethod
+        self.cars = cars
     }
     
     enum CodingKeys: String, CodingKey {
@@ -64,6 +68,7 @@ struct DBUser: Codable {
         case isAnonymous = "is_anonymous"
         case paymentMethods = "payment_methods"
         case defaultPaymentMethod = "default_payment_method"
+        case cars = "cars"
     }
     
 }

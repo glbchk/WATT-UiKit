@@ -38,7 +38,6 @@
 		0622D9212B92431F00A84437 /* AddAndEditPMView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0622D9202B92431F00A84437 /* AddAndEditPMView.swift */; };
 		0622D9232B924D1000A84437 /* CustomTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0622D9222B924D1000A84437 /* CustomTableView.swift */; };
 		062654992B4F6761007120AD /* Swinject in Frameworks */ = {isa = PBXBuildFile; productRef = 062654982B4F6761007120AD /* Swinject */; };
-		0626549B2B4F6762007120AD /* Swinject-Dynamic in Frameworks */ = {isa = PBXBuildFile; productRef = 0626549A2B4F6762007120AD /* Swinject-Dynamic */; };
 		062654A02B4F6A0F007120AD /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 0626549F2B4F6A0F007120AD /* FirebaseAnalytics */; };
 		062654A22B4F6A0F007120AD /* FirebaseAnalyticsOnDeviceConversion in Frameworks */ = {isa = PBXBuildFile; productRef = 062654A12B4F6A0F007120AD /* FirebaseAnalyticsOnDeviceConversion */; };
 		062654A42B4F6A0F007120AD /* FirebaseAnalyticsSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 062654A32B4F6A0F007120AD /* FirebaseAnalyticsSwift */; };
@@ -46,9 +45,12 @@
 		062654AB2B4F6BEE007120AD /* DependencyInjection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 062654AA2B4F6BEE007120AD /* DependencyInjection.swift */; };
 		062654AD2B4F6F1F007120AD /* AppUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 062654AC2B4F6F1F007120AD /* AppUser.swift */; };
 		062654B22B4F74B9007120AD /* FirebaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 062654B12B4F74B9007120AD /* FirebaseManager.swift */; };
+		06420E8A2BD37105007DE844 /* CarBrandHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06420E892BD37105007DE844 /* CarBrandHeader.swift */; };
 		064A90312B79B341003E1734 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 064A90302B79B341003E1734 /* GoogleService-Info.plist */; };
 		065F72AC2B50CB8000CF9C5F /* MainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 065F72AB2B50CB8000CF9C5F /* MainViewModel.swift */; };
 		065F72AF2B50CCC900CF9C5F /* SignUpViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 065F72AE2B50CCC900CF9C5F /* SignUpViewModel.swift */; };
+		067823A82BD6F9890086E19A /* CarDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 067823A72BD6F9890086E19A /* CarDetailsView.swift */; };
+		067823AA2BD6F99A0086E19A /* CarDetailsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 067823A92BD6F99A0086E19A /* CarDetailsController.swift */; };
 		06A5A4572B6DF89A00C05BCC /* DBUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06A5A4562B6DF89A00C05BCC /* DBUser.swift */; };
 		06A5A4592B6DFB7300C05BCC /* SignInViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06A5A4582B6DFB7300C05BCC /* SignInViewModel.swift */; };
 		06A5F40F2B3A68DF000C0218 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06A5F40E2B3A68DF000C0218 /* AppDelegate.swift */; };
@@ -74,6 +76,7 @@
 		06ED5B532BD04D0400202332 /* ChooseModelCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06ED5B522BD04D0400202332 /* ChooseModelCell.swift */; };
 		06F12F492BD0403400C9AE27 /* Apollo in Frameworks */ = {isa = PBXBuildFile; productRef = 06F12F482BD0403400C9AE27 /* Apollo */; };
 		06F12F4B2BD0403F00C9AE27 /* ApolloAPI in Frameworks */ = {isa = PBXBuildFile; productRef = 06F12F4A2BD0403F00C9AE27 /* ApolloAPI */; };
+		06F5C9102BE94E0300C02377 /* EmptyHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06F5C90F2BE94E0300C02377 /* EmptyHeader.swift */; };
 		29282FAD2B8F68ED0056A185 /* SearchFieldView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29282FAC2B8F68EC0056A185 /* SearchFieldView.swift */; };
 		29282FAF2B8F811C0056A185 /* RoundedButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29282FAE2B8F811B0056A185 /* RoundedButton.swift */; };
 		29282FB22B8FBA570056A185 /* SideMenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29282FB12B8FBA570056A185 /* SideMenuView.swift */; };
@@ -112,6 +115,19 @@
 		29D8B6762B59D3DA00196543 /* ForgotPasswordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29D8B6752B59D3DA00196543 /* ForgotPasswordView.swift */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		06515E122C09557D000C89DC /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
 		060363F32B688EFB005B48ED /* AuthenticationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationManager.swift; sourceTree = "<group>"; };
 		060363F52B688F10005B48ED /* LoginRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginRepository.swift; sourceTree = "<group>"; };
@@ -145,9 +161,12 @@
 		062654AA2B4F6BEE007120AD /* DependencyInjection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DependencyInjection.swift; sourceTree = "<group>"; };
 		062654AC2B4F6F1F007120AD /* AppUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppUser.swift; sourceTree = "<group>"; };
 		062654B12B4F74B9007120AD /* FirebaseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseManager.swift; sourceTree = "<group>"; };
+		06420E892BD37105007DE844 /* CarBrandHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarBrandHeader.swift; sourceTree = "<group>"; };
 		064A90302B79B341003E1734 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		065F72AB2B50CB8000CF9C5F /* MainViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewModel.swift; sourceTree = "<group>"; };
 		065F72AE2B50CCC900CF9C5F /* SignUpViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewModel.swift; sourceTree = "<group>"; };
+		067823A72BD6F9890086E19A /* CarDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarDetailsView.swift; sourceTree = "<group>"; };
+		067823A92BD6F99A0086E19A /* CarDetailsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarDetailsController.swift; sourceTree = "<group>"; };
 		06A5A4562B6DF89A00C05BCC /* DBUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DBUser.swift; sourceTree = "<group>"; };
 		06A5A4582B6DFB7300C05BCC /* SignInViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInViewModel.swift; sourceTree = "<group>"; };
 		06A5F40B2B3A68DF000C0218 /* WATT.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WATT.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -166,6 +185,7 @@
 		06ED5B4D2BD04B0600202332 /* CarsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarsViewModel.swift; sourceTree = "<group>"; };
 		06ED5B502BD04C3D00202332 /* CarBrandCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarBrandCell.swift; sourceTree = "<group>"; };
 		06ED5B522BD04D0400202332 /* ChooseModelCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChooseModelCell.swift; sourceTree = "<group>"; };
+		06F5C90F2BE94E0300C02377 /* EmptyHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyHeader.swift; sourceTree = "<group>"; };
 		29282FAC2B8F68EC0056A185 /* SearchFieldView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchFieldView.swift; sourceTree = "<group>"; };
 		29282FAE2B8F811B0056A185 /* RoundedButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundedButton.swift; sourceTree = "<group>"; };
 		29282FB12B8FBA570056A185 /* SideMenuView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideMenuView.swift; sourceTree = "<group>"; };
@@ -214,7 +234,6 @@
 				062654992B4F6761007120AD /* Swinject in Frameworks */,
 				0612A4242B9F929D00936B60 /* MonthYearWheelPicker in Frameworks */,
 				062654A62B4F6A0F007120AD /* FirebaseAnalyticsWithoutAdIdSupport in Frameworks */,
-				0626549B2B4F6762007120AD /* Swinject-Dynamic in Frameworks */,
 				06F12F492BD0403400C9AE27 /* Apollo in Frameworks */,
 				062654A02B4F6A0F007120AD /* FirebaseAnalytics in Frameworks */,
 				062654A22B4F6A0F007120AD /* FirebaseAnalyticsOnDeviceConversion in Frameworks */,
@@ -264,6 +283,7 @@
 				06102B9D2B94259C0063FEC5 /* AddCarController.swift */,
 				06102B9F2B9425A70063FEC5 /* AddCarView.swift */,
 				06102BA12B9425D50063FEC5 /* ChooseModel */,
+				067823A62BD6F96C0086E19A /* CarDetails */,
 			);
 			path = AddCar;
 			sourceTree = "<group>";
@@ -366,6 +386,15 @@
 			path = MainScreen;
 			sourceTree = "<group>";
 		};
+		067823A62BD6F96C0086E19A /* CarDetails */ = {
+			isa = PBXGroup;
+			children = (
+				067823A92BD6F99A0086E19A /* CarDetailsController.swift */,
+				067823A72BD6F9890086E19A /* CarDetailsView.swift */,
+			);
+			path = CarDetails;
+			sourceTree = "<group>";
+		};
 		06A5F4022B3A68DF000C0218 = {
 			isa = PBXGroup;
 			children = (
@@ -447,6 +476,8 @@
 			isa = PBXGroup;
 			children = (
 				06ED5B502BD04C3D00202332 /* CarBrandCell.swift */,
+				06420E892BD37105007DE844 /* CarBrandHeader.swift */,
+				06F5C90F2BE94E0300C02377 /* EmptyHeader.swift */,
 			);
 			path = CollectionView;
 			sourceTree = "<group>";
@@ -592,6 +623,7 @@
 				06A5F4072B3A68DF000C0218 /* Sources */,
 				06A5F4082B3A68DF000C0218 /* Frameworks */,
 				06A5F4092B3A68DF000C0218 /* Resources */,
+				06515E122C09557D000C89DC /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -600,7 +632,6 @@
 			name = WATT;
 			packageProductDependencies = (
 				062654982B4F6761007120AD /* Swinject */,
-				0626549A2B4F6762007120AD /* Swinject-Dynamic */,
 				0626549F2B4F6A0F007120AD /* FirebaseAnalytics */,
 				062654A12B4F6A0F007120AD /* FirebaseAnalyticsOnDeviceConversion */,
 				062654A32B4F6A0F007120AD /* FirebaseAnalyticsSwift */,
@@ -716,6 +747,7 @@
 				29D8B66D2B599DA300196543 /* SignUpController.swift in Sources */,
 				0622D91A2B9242BC00A84437 /* PaymentMethodController.swift in Sources */,
 				29282FB22B8FBA570056A185 /* SideMenuView.swift in Sources */,
+				06420E8A2BD37105007DE844 /* CarBrandHeader.swift in Sources */,
 				298B7F2A2B6D2FDB003A36C7 /* Asset.swift in Sources */,
 				0622D9042B92390700A84437 /* ToggleView.swift in Sources */,
 				06102BA32B9426140063FEC5 /* ChooseModelController.swift in Sources */,
@@ -726,8 +758,10 @@
 				29D8B65C2B59574E00196543 /* UIView+Stacking.swift in Sources */,
 				29D8B6642B5983F700196543 /* TextFieldLabel.swift in Sources */,
 				296C27E52B67F9DB0052D350 /* TextLabel.swift in Sources */,
+				067823A82BD6F9890086E19A /* CarDetailsView.swift in Sources */,
 				2953A4462B77D1870020F8AC /* AddNameAndPhoneNumberView.swift in Sources */,
 				060364042B6892F3005B48ED /* AppViewController.swift in Sources */,
+				06F5C9102BE94E0300C02377 /* EmptyHeader.swift in Sources */,
 				06ED5B4C2BD04A0100202332 /* CellIdentifier.swift in Sources */,
 				061F68A52BAFD2FE004954DF /* TFError.swift in Sources */,
 				06ED5B4E2BD04B0600202332 /* CarsViewModel.swift in Sources */,
@@ -740,6 +774,7 @@
 				0614777C2B9551A800A585A0 /* PaymentMethodViewModel.swift in Sources */,
 				065F72AC2B50CB8000CF9C5F /* MainViewModel.swift in Sources */,
 				29D8B6542B559EE400196543 /* UIView+Layout.swift in Sources */,
+				067823AA2BD6F99A0086E19A /* CarDetailsController.swift in Sources */,
 				0622D9152B923CE900A84437 /* ProfileView.swift in Sources */,
 				060363F62B688F10005B48ED /* LoginRepository.swift in Sources */,
 				0622D9232B924D1000A84437 /* CustomTableView.swift in Sources */,
@@ -921,6 +956,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
@@ -950,6 +986,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
@@ -1031,11 +1068,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 062654972B4F6761007120AD /* XCRemoteSwiftPackageReference "Swinject" */;
 			productName = Swinject;
-		};
-		0626549A2B4F6762007120AD /* Swinject-Dynamic */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 062654972B4F6761007120AD /* XCRemoteSwiftPackageReference "Swinject" */;
-			productName = "Swinject-Dynamic";
 		};
 		0626549F2B4F6A0F007120AD /* FirebaseAnalytics */ = {
 			isa = XCSwiftPackageProductDependency;

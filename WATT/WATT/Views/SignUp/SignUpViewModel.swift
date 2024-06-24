@@ -20,22 +20,13 @@ class SignUpViewModel: ObservableObject {
     @Published var phoneNumber = ""
     @Published var profilePhoto: UIImage? = nil
     
-    @Published var paymentMethods: [PaymentMethod] = [
-//        PaymentMethod(provider: .americanExpress, cardName: "First method", cardNumber: "3786347467369812", expiryDate: "12/25", cvv: "123", isDefault: true),
-//        PaymentMethod(provider: .visa, cardName: "Second method", cardNumber: "4786347467369833", expiryDate: "12/25", cvv: "123", isDefault: false),
-//        PaymentMethod(provider: .mastercard, cardName: "Third method", cardNumber: "5664347467369833", expiryDate: "12/27", cvv: "123", isDefault: false)
-    ]
+    @Published var paymentMethods: [PaymentMethod] = []
+    @Published var cars: [Car] = []
     
     @Published var user: AppUser?
     
     @Published var showPassword = false
     @Published var showRetyped = false
-    
-    @Published var fakeDataTable = [
-        "Audi X8",
-        "BMW M9",
-        "Tesla Sport Shos..."
-    ]
     
     private let authenticationRepo: AuthenticationRepository
     private let loginRepo: LoginRepository
@@ -80,7 +71,7 @@ class SignUpViewModel: ObservableObject {
     
     func successfulRegistration() {
         guard let user = self.user else { return }
-        let dbUser = DBUser(uid: user.uid, email: email, fullName: fullName, phoneNumber: phoneNumber, isAnonymous: user.isAnonymous, paymentMethods: paymentMethods, defaultPaymentMethod: paymentMethods.first)
+        let dbUser = DBUser(uid: user.uid, email: email, fullName: fullName, phoneNumber: phoneNumber, isAnonymous: user.isAnonymous, paymentMethods: paymentMethods, defaultPaymentMethod: paymentMethods.first, cars: cars)
         Task(priority: .medium) {
             try await userRepo.createUserInDB(user: dbUser)
             authenticationRepo.success()

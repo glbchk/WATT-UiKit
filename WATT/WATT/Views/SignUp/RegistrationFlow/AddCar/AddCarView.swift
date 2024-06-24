@@ -29,7 +29,6 @@ class AddCarView: UIView {
     let layout: UICollectionViewFlowLayout = {
         let layout = UICollectionViewFlowLayout()
         layout.sectionInset = UIEdgeInsets(top: 20, left: 10, bottom: 10, right: 10)
-        layout.itemSize = CGSize(width: 60, height: 60)
         
         return layout
     }()
@@ -57,7 +56,6 @@ class AddCarView: UIView {
         setupBlueHeader()
         setupBackButton()
         setupLabels()
-        setupCompleteLeterButton()
         setupCarBrandsCollectionView()
     }
     
@@ -84,12 +82,7 @@ class AddCarView: UIView {
         carBrandsCollectionView.clipsToBounds = true
         
         self.addSubview(carBrandsCollectionView)
-        carBrandsCollectionView.anchor(top: subtitleLabel.bottomAnchor, leading: self.leadingAnchor, trailing: self.trailingAnchor, bottom: completeLaterButton.topAnchor, padding: .init(top: 20, left: 20, bottom: 0, right: 20))
+        carBrandsCollectionView.anchor(top: subtitleLabel.bottomAnchor, leading: self.leadingAnchor, trailing: self.trailingAnchor, bottom: self.bottomAnchor, padding: .init(top: 20, left: 20, bottom: 20, right: 20))
         }
-    
-    private func setupCompleteLeterButton() {
-        self.addSubview(completeLaterButton)
-        completeLaterButton.anchor(top: nil, leading: self.leadingAnchor, trailing: self.trailingAnchor, bottom: self.bottomAnchor, padding: .init(top: 0, left: 20, bottom: 50, right: 20))
-    }
     
 }

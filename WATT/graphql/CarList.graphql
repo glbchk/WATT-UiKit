@@ -9,9 +9,9 @@ query brandListAll {
       brand {
         id
         type
-        url
-        height
-        width
+        thumbnail_url
+        thumbnail_height
+        thumbnail_width
       }
     }
   }
@@ -21,8 +21,66 @@ query modelListAll($brandName: String!) {
   carList(search: $brandName) {
     id
     naming {
+      make
       model
       version
+    }
+    media {
+      brand {
+        id
+        type
+        url
+        height
+        width
+      }
+    }
+  }
+}
+
+query carDetails($vehicleId: ID!) {
+  vehicle(id: $vehicleId) {
+    id
+    naming {
+      make
+      model
+      version
+    }
+    connectors {
+      standard
+    }
+    battery {
+      usable_kwh
+      full_kwh
+    }
+    body {
+      seats
+      weight {
+        nominal
+      }
+      width
+      height
+    }
+    performance {
+      acceleration
+      top_speed
+    }
+    range {
+      provider
+      provider_is_estimated
+      worst{
+        highway
+        city
+        combined
+      }
+      best {
+        highway
+        city
+        combined
+      }
+      chargetrip_range {
+        best
+        worst
+      }
     }
     media {
       image {
@@ -31,9 +89,13 @@ query modelListAll($brandName: String!) {
         url
         height
         width
-        thumbnail_url
-        thumbnail_height
-        thumbnail_width
+      }
+        make {
+        id
+        type
+        url
+        height
+        width
       }
     }
   }

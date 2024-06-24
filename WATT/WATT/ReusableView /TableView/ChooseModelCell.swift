@@ -9,6 +9,8 @@ import UIKit
 
 class ChooseModelCell: UITableViewCell {
 
+    var modelId: String = ""
+    
     let titleLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.boldSystemFont(ofSize: 15)
@@ -25,7 +27,7 @@ class ChooseModelCell: UITableViewCell {
         return label
     }()
 
-    let radioButton = RadioButton()
+    let radioButton = CheckmarkButton()
 
     override init(style: UITableViewCell.CellStyle = .default, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -57,21 +59,21 @@ class ChooseModelCell: UITableViewCell {
 }
 
 
-class RadioButton: UIButton {
+class CheckmarkButton: UIButton {
 
     var isChecked: Bool = false {
         didSet {
             if isChecked {
-                self.setImage(Asset.Icons.Cells.CarModelCell.checkMarkActive, for: .normal)
+                self.setImage(Asset.Icons.Cells.CarModelCell.checkmarkActive, for: .normal)
                 self.tintColor = Asset.Colors.deepBlue
             } else {
-                self.setImage(Asset.Icons.Cells.CarModelCell.checkMarkInactive, for: .normal)
+                self.setImage(Asset.Icons.Cells.CarModelCell.checkmarkInactive, for: .normal)
                 self.tintColor = Asset.Colors.grey1
             }
         }
     }
     
-    init(state: Bool = false, buttonColor: UIColor = Asset.Colors.grey1, image: UIImage = Asset.Icons.Cells.CarModelCell.checkMarkInactive ?? UIImage(), size: CGSize = CGSize(width: 24, height: 24)) {
+    init(state: Bool = false, buttonColor: UIColor = Asset.Colors.grey1, image: UIImage = Asset.Icons.Cells.CarModelCell.checkmarkInactive ?? UIImage(), size: CGSize = CGSize(width: 24, height: 24)) {
         super.init(frame: .zero)
         self.setImage(image, for: .normal)
         self.tintColor = buttonColor

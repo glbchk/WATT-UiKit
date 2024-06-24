@@ -7,50 +7,82 @@
 
 import Foundation
 
-struct Cars: Codable {
-    let cars: [Car]
-}
-
-struct Car: Codable, Identifiable {
-    let id: String
-    let brandName: String?
-     let brandLogoURL: String?
-//    let brandLogoThumbnailURL: String?
-    let carModel: CarModel?
-       
-    init(
-        id: String,
-        brandName: String? = nil,
-        brandLogoURL: String? = nil,
-//        brandLogoThumbnailURL: String? = nil,
-        carModel: CarModel? = nil
-    ) {
-        self.id = id
-        self.brandName = brandName
-        self.brandLogoURL = brandLogoURL
-//        self.brandLogoThumbnailURL = brandLogoThumbnailURL
-        self.carModel = carModel
-    }
+struct CarBrand: Codable {
+    var id: String?
+    var brandName: String?
+    var brandThumbnailLogoURL: String?
     
     enum CodingKeys: String, CodingKey {
-        case id = "_id"
+        case id
         case brandName = "brand_name"
-        case brandLogoURL = "brand_logo_url"
-//        case brandLogoThumbnailURL = "brand_logo_thumbnail_url"
-        case carModel = "car_model"
+        case brandThumbnailLogoURL = "brand_thumbnail_logo_url"
     }
 }
 
 struct CarModel: Codable {
-    let carModel: String?
-    let carVersion: String?
-    let carImage: String?
-//    let carThumbnailImage: String?
+    var id: String?
+    var carModel: String?
+    var carVersion: String?
+    var brandLogoURL: String?
     
     enum CodingKeys: String, CodingKey {
+        case id = "_id"
+        case carModel = "car_model"
+        case carVersion = "car_version"
+        case brandLogoURL = "brand_logo_url"
+    }
+}
+
+struct Car: Codable {
+    var id: String?
+    var brandName: String?
+    var brandThumbnailLogoURL: String?
+    var carModel: String?
+    var carVersion: String?
+    var carImage: String?
+    var fullBattery: String?
+    var usableBattery: String?
+    var plugType: String?
+    var seats: String?
+    var weight: String?
+    var width: String?
+    var height: String?
+    var bestRange: String?
+    var worstRange: String?
+    var acceleration: String?
+    var topSpeed: String?
+    var worstRangeCity: String?
+    var worstRangeHighway: String?
+    var worstRangeCombined: String?
+    var bestRangeCity: String?
+    var bestRangeHighway: String?
+    var bestRangeCombined: String?
+    
+    enum CodingKeys: String, CodingKey {
+        case id = "_id"
+        case brandName = "brand_name"
+        case brandThumbnailLogoURL = "brand_thumbnail_logo_url"
         case carModel = "car_model"
         case carVersion = "car_version"
         case carImage = "car_image"
-//        case carThumbnailImage = "car_thumbnail_image"
+        case fullBattery = "full_battery"
+        case usableBattery = "usable_battery"
+        case plugType = "plug_type"
+        case seats = "seats"
+        case weight = "weight"
+        case width = "width"
+        case height = "height"
+        case bestRange = "best_range"
+        case worstRange = "worst_range"
+        case acceleration = "acceleration"
+        case topSpeed = "top_speed"
+        case worstRangeCity = "worst_range_city"
+        case worstRangeHighway = "worst_range_highway"
+        case worstRangeCombined = "worst_range_combined"
+        case bestRangeCity = "best_range_city"
+        case bestRangeHighway = "best_range_highway"
+        case bestRangeCombined = "best_range_combined"
     }
 }
+
+

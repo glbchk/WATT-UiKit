@@ -56,6 +56,10 @@ class CarBrandCell: UICollectionViewCell {
         return view
     }()
 
+    override func willTransition(from oldLayout: UICollectionViewLayout, to newLayout: UICollectionViewLayout) {
+        super.willTransition(from: oldLayout, to: newLayout)
+    }
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         

@@ -8,14 +8,24 @@
 import UIKit
 import Combine
 
+enum Sections {
+    case addedCars
+    case allBrands
+}
+    
 class AddCarController: UIViewController {
     var cancellables = Set<AnyCancellable>()
     
     let contentView = AddCarView()
     private var viewModel: CarsViewModel
     
-    init(viewModel: CarsViewModel) {
+    private var sections: [Sections] = [.allBrands]
+    
+    let action: (() -> Void)?
+    
+    init(viewModel: CarsViewModel, action: (() -> Void)?) {
         self.viewModel = viewModel
+        self.action = action
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -23,15 +33,11 @@ class AddCarController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
-//    override func viewWillAppear(_ animated: Bool) {
-//        viewModel.loadCarBrands()
-//    }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         contentView.carBrandsCollectionView.showLoading()
         
-        viewModel.loadCarBrands {
+        viewModel.loadBrands {
             self.contentView.carBrandsCollectionView.stopLoading()
             self.contentView.carBrandsCollectionView.reloadData()
         }
@@ -42,45 +48,36 @@ class AddCarController: UIViewController {
         contentView.carBrandsCollectionView.delegate = self
         contentView.carBrandsCollectionView.dataSource = self
         contentView.carBrandsCollectionView.register(CarBrandCell.self, forCellWithReuseIdentifier: Identifiers.CollectionCell.carCell)
-//        contentView.carsCollectionView.reloadData()
+        contentView.carBrandsCollectionView.register(CarBrandHeader.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: Identifiers.CollectionCell.header)
+        contentView.carBrandsCollectionView.register(EmptyHeader.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: Identifiers.CollectionCell.emptyHeader)
         
         setupTarget()
     }
     
-//    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
-//        super.viewWillTransition(to: size, with: coordinator)
-//        self.contentView.carsView.layoutIfNeeded()
-//    }
-    
     private func setupTarget() {
         contentView.backButton.addTarget(self, action: #selector(handleBackTap), for: .touchUpInside)
-        contentView.completeLaterButton.addTarget(self, action: #selector(handleCompleteLater), for: .touchUpInside)
-    }
-    
-    @objc private func handleCompleteLater() {
-        let vc = ChooseModelController(viewModel: viewModel)
-        self.navigationController?.pushViewController(vc, animated: true)
     }
     
     @objc private func handleBackTap() {
+        action?()
         self.navigationController?.popViewController(animated: true)
     }
-    
-//    @objc private func handleRowTap() {
-//        let vc = PaymentMethodController(viewModel: viewModel)
-//        self.navigationController?.pushViewController(vc, animated: true)
-//    }
     
 }
 
 extension AddCarController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
-
-//    func numberOfSections(in collectionView: UICollectionView) -> Int {
-//        return 1
-//    }
+    
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
+        return self.sections.count
+    }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return viewModel.allCarBrands.count
+        switch self.sections[section] {
+        case .addedCars:
+            return self.viewModel.cars.count
+        case .allBrands:
+            return self.viewModel.allCarBrands.count
+        }
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
@@ -88,33 +85,116 @@ extension AddCarController: UICollectionViewDelegate, UICollectionViewDataSource
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-//        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "car1", for: indexPath)
-//        cell.backgroundColor = UIColor(.black)
         
+        switch sections[indexPath.section] {
+            case .addedCars:
+                return addedCarsViewCell(collectionView, cellForItemAt: indexPath)
+            case .allBrands:
+                return allBrandsViewCell(collectionView, cellForItemAt: indexPath)
+        }
+    }
+    
+    func addedCarsViewCell(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: Identifiers.CollectionCell.carCell, for: indexPath) as? CarBrandCell else { return CarBrandCell() }
-//        cell.titleLabel.text = viewModel.fakeDataCollection[indexPath.item].title
-//        cell.squareImageView?.image = viewModel.fakeDataCollection[indexPath.item].image.image
         
-        cell.titleLabel.text = viewModel.allCarBrands[indexPath.item].brandName
-        cell.squareImageView?.loadFrom(URLAddress: viewModel.allCarBrands[indexPath.item].brandLogoURL ?? "") //UIImage(systemName: "car")
+        cell.titleLabel.text = viewModel.cars[indexPath.item].brandName
+        cell.squareImageView?.loadFrom(URLAddress: viewModel.cars[indexPath.item].brandThumbnailLogoURL ?? "")
         
-//        let url = URL(string: viewModel.brandLogoURL(of: viewModel.carBrands[indexPath.item]))
-//        DispatchQueue.global().async {
-//            let data = try? Data(contentsOf: url!)
-//            DispatchQueue.main.async {
-//                cell.squareImageView?.image = UIImage(data: data!)
-//            }
-//        }
-
         return cell
     }
     
+    func allBrandsViewCell(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: Identifiers.CollectionCell.carCell, for: indexPath) as? CarBrandCell else { return CarBrandCell() }
+        
+        cell.titleLabel.text = viewModel.allCarBrands[indexPath.item].brandName
+        cell.squareImageView?.loadFrom(URLAddress: viewModel.allCarBrands[indexPath.item].brandThumbnailLogoURL ?? "")
+        
+        return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+        
+        if kind == UICollectionView.elementKindSectionHeader {
+            if sections[indexPath.section] == .allBrands && !viewModel.cars.isEmpty {
+                let headerView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: Identifiers.CollectionCell.header, for: indexPath) as! CarBrandHeader
+                
+                return headerView
+            }
+        }
+        
+        let emptyView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: Identifiers.CollectionCell.emptyHeader, for: indexPath) as! EmptyHeader
+        return emptyView
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
+        if sections[section] == .allBrands && !viewModel.cars.isEmpty {
+            return CGSize(width: collectionView.bounds.width, height: 40)
+        } else {
+            return CGSize(width: collectionView.bounds.width, height: 0)
+        }
+    }
+    
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let vc = ChooseModelController(viewModel: viewModel)
         
-        viewModel.selectedBrandName = viewModel.allCarBrands[indexPath.item].brandName ?? ""
-        
-        self.navigationController?.pushViewController(vc, animated: true)
+        switch sections[indexPath.section] {
+            case .addedCars:
+            let vc = CarDetailsController(viewModel: viewModel, deleteAction: { [weak self] in
+                guard let self = self else { return }
+                
+                self.viewModel.deleteCars(carID: self.viewModel.cars[indexPath.item].id ?? "")
+                
+                if self.viewModel.cars.count == 0 {
+                    self.sections.remove(at: 0)
+                }
+                
+                self.contentView.carBrandsCollectionView.reloadData()
+            })
+                //Top Section
+                vc.contentView.topSection.logoView.loadFrom(URLAddress: viewModel.cars[indexPath.item].brandThumbnailLogoURL ?? "")
+                vc.contentView.topSection.brandNameLabel.text = viewModel.cars[indexPath.item].brandName
+                vc.contentView.topSection.modelLabel.text = viewModel.cars[indexPath.item].carModel
+                vc.contentView.topSection.versionLabel.text = viewModel.cars[indexPath.item].carVersion
+                vc.contentView.topSection.idLabel.text = viewModel.cars[indexPath.item].id
+            
+                //General Section
+                vc.contentView.realRangeRow.detailsLabel.text = viewModel.cars[indexPath.item].worstRange
+                vc.contentView.fullBatteryRow.detailsLabel.text = viewModel.cars[indexPath.item].fullBattery
+                vc.contentView.usableBatteryRow.detailsLabel.text = viewModel.cars[indexPath.item].usableBattery
+                vc.contentView.plugTypeRow.detailsLabel.text = viewModel.cars[indexPath.item].plugType
+            
+                //Range Section
+                vc.contentView.cityRange.secondLabel.text = viewModel.cars[indexPath.item].bestRangeCity
+                vc.contentView.cityRange.thirdLabel.text = viewModel.cars[indexPath.item].worstRangeCity
+                vc.contentView.highwayRange.secondLabel.text = viewModel.cars[indexPath.item].bestRangeHighway
+                vc.contentView.highwayRange.thirdLabel.text = viewModel.cars[indexPath.item].worstRangeHighway
+                vc.contentView.combinedRange.secondLabel.text = viewModel.cars[indexPath.item].bestRangeCombined
+                vc.contentView.combinedRange.thirdLabel.text = viewModel.cars[indexPath.item].worstRangeCombined
+            
+                //Performance Section
+                vc.contentView.accelerationRow.detailsLabel.text = viewModel.cars[indexPath.item].acceleration
+                vc.contentView.topSpeedRow.detailsLabel.text = viewModel.cars[indexPath.item].topSpeed
+                
+                self.navigationController?.pushViewController(vc, animated: true)
+                
+            case .allBrands:
+                let vc = ChooseModelController(viewModel: viewModel, action: { [self] in
+
+                    viewModel.loadCarDetails {
+                        
+                        self.viewModel.cars.insert(self.viewModel.selectedCar, at: 0)
+                        if self.viewModel.cars.count == 1 {
+                            self.sections.insert(.addedCars, at: 0)
+                        }
+                        
+                        self.contentView.carBrandsCollectionView.reloadData()
+                    }
+                    
+                })
+            
+                viewModel.selectedBrandName = viewModel.allCarBrands[indexPath.item].brandName ?? "No name"
+                
+                self.navigationController?.pushViewController(vc, animated: true)
+        }
     }
     
 //    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {

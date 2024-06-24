@@ -75,7 +75,7 @@ final class FirebaseManager {
         ])
     }
     
-    func updatePaymentMethods(card: PaymentMethod, actionType: ActionType) async throws {
+    func updatePaymentMethod(card: PaymentMethod, actionType: ActionType) async throws {
         guard let user = authentication.currentUser else { return }
         let cardData = try Firestore.Encoder().encode(card)
         if actionType == .add {
@@ -89,11 +89,20 @@ final class FirebaseManager {
         }
     }
     
-    func updateSelectedPaymentMethods(_ paymentMethod: PaymentMethod) async throws {
+    func updateSelectedPaymentMethod(_ paymentMethod: PaymentMethod) async throws {
         guard let user = authentication.currentUser else { return }
         let paymentMethod = try Firestore.Encoder().encode(paymentMethod)
         try await firestore.collection(FirebaseConstants.users).document(user.uid).updateData([
             "payment_methods" : paymentMethod
+        ])
+    }
+    
+    func updateCarInfo(_ car: Car) async throws {
+        guard let uid = authentication.currentUser?.uid else { return }
+        
+        let carData = try Firestore.Encoder().encode(car)
+        try await firestore.collection(FirebaseConstants.users).document(uid).updateData([
+            "cars" : FieldValue.arrayUnion([carData])
         ])
     }
     

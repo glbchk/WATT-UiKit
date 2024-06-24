@@ -10,6 +10,8 @@ import Foundation
 public enum Identifiers {
     public enum CollectionCell {
         static let carCell = "car"
+        static let header = "header"
+        static let emptyHeader = "empty"
     }
     public enum TableCell {
         static let modelCell = "model"

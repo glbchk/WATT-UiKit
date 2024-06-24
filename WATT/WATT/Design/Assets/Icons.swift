@@ -56,8 +56,8 @@ extension Asset {
         
         public enum Cells {
             public enum CarModelCell {
-                static let checkMarkInactive = UIImage(systemName: "circle")
-                static let checkMarkActive = UIImage(systemName: "checkmark.circle.fill")
+                static let checkmarkInactive = UIImage(systemName: "circle")
+                static let checkmarkActive = UIImage(systemName: "checkmark.circle.fill")
             }
             public enum CollectioViewnCell {
 //                static let discover = UIImage(named: "ic_discover")

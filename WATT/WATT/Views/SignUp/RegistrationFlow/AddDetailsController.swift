@@ -59,7 +59,9 @@ class AddDetailsController: BaseViewController {
     
     @objc private func handleAddCarRowTap() {
         guard let carsViewModel = viewModel.carsViewModel else { return }
-        let vc = AddCarController(viewModel: carsViewModel)
+        let vc = AddCarController(viewModel: carsViewModel, action: {
+            self.viewModel.cars = carsViewModel.cars
+        })
         
         self.navigationController?.pushViewController(vc, animated: true)
     }
@@ -70,6 +72,7 @@ class AddDetailsController: BaseViewController {
     
     private func bindViewModel() {
         //add here car and payment method publishers
+//        contentView.carRow.publisher = viewModel.carsViewModel.
         contentView.paymentMethodRow.publisher = viewModel.paymentMethodViewModel?.createPaymentMethodPublisher()
         contentView.nameAndPhoneNumberRow.publisher = viewModel.createNameAndPhoneNumberPublisher()
     }

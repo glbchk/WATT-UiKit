@@ -9,15 +9,19 @@ import UIKit
 import Combine
 
 class ChooseModelController: UIViewController {
+    var cancellables = Set<AnyCancellable>()
     
     let contentView = ChooseModelView()
     private var viewModel: CarsViewModel
-    var cancellables = Set<AnyCancellable>()
     
     let cellHeight: CGFloat = 60
     
-    init(viewModel: CarsViewModel) {
+    var isModelChosen = false
+    let action: (() -> Void)?
+    
+    init(viewModel: CarsViewModel, action: (() -> Void)?) {
         self.viewModel = viewModel
+        self.action = action
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -36,8 +40,6 @@ class ChooseModelController: UIViewController {
         contentView.fillSuperview()
         
         setupTargets()
-        bindViewsToViewModel()
-        bindCvvFieldPublisher()
         
         contentView.carModelTableView.dataSource = self
         contentView.carModelTableView.delegate = self
@@ -56,39 +58,14 @@ class ChooseModelController: UIViewController {
     }
     
     @objc private func saveButtonPressed() {
-        self.navigationController?.popViewController(animated: true)
-    }
-    
-    private func bindViewsToViewModel() {
-//        contentView.cardNameTextField.textPublisher
-//            .receive(on: DispatchQueue.main)
-//            .assign(to: \.cardName, on: viewModel)
-//            .store(in: &cancellables)
-//
-//        contentView.cardNumberTextField.textPublisher
-//            .receive(on: DispatchQueue.main)
-//            .assign(to: \.cardNumber, on: viewModel)
-//            .store(in: &cancellables)
-//
-//        contentView.expiryTextField.textPublisher
-//            .receive(on: DispatchQueue.main)
-//            .assign(to: \.expiry, on: viewModel)
-//            .store(in: &cancellables)
-//
-//        contentView.cvvTextField.textPublisher
-//            .receive(on: DispatchQueue.main)
-//            .assign(to: \.cvv, on: viewModel)
-//            .store(in: &cancellables)
-//
-//        contentView.toggle.toggleStatePublisher?
-//            .receive(on: DispatchQueue.main)
-//            .assign(to: \.defaultPaymentMethod, on: viewModel)
-//            .store(in: &cancellables)
-    }
-    
-    private func bindCvvFieldPublisher() {
-//        contentView.cvvTextFieldView.secureFieldPublisher = viewModel.cvvPublisher
-//        contentView.cvvTextFieldView.action = { self.viewModel.showCvv.toggle() }
+
+        if isModelChosen {
+            action?()
+            self.navigationController?.popViewController(animated: true)
+        } else {
+            print("You didn't choose any model")
+        }
+        
     }
     
 }
@@ -117,11 +94,17 @@ extension ChooseModelController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let cell = contentView.carModelTableView.cellForRow(at: indexPath) as! ChooseModelCell
         cell.updateState(true)
+        isModelChosen = true
+        
+        viewModel.selectedCarModelID = viewModel.allCarModels[indexPath.item].id ?? "No ID"
     }
     
     func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
         let cell = contentView.carModelTableView.cellForRow(at: indexPath) as! ChooseModelCell
         cell.updateState(false)
+        isModelChosen = false
+        
+        viewModel.selectedCarModelID = ""
     }
     
 }

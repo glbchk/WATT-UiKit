@@ -35,32 +35,59 @@ class AddCarController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        contentView.carBrandsCollectionView.showLoading()
+        bindToViewModel()
+        
+        if !viewModel.cars.isEmpty && sections.count == 1 {
+            sections.insert(.addedCars, at: 0)
+        }
+        
+        contentView.carsCollectionView.showLoading()
         
         viewModel.loadBrands {
-            self.contentView.carBrandsCollectionView.stopLoading()
-            self.contentView.carBrandsCollectionView.reloadData()
+            self.contentView.carsCollectionView.stopLoading()
+            self.contentView.carsCollectionView.reloadData()
         }
         
         view.addSubview(contentView)
         contentView.fillSuperview()
 
-        contentView.carBrandsCollectionView.delegate = self
-        contentView.carBrandsCollectionView.dataSource = self
-        contentView.carBrandsCollectionView.register(CarBrandCell.self, forCellWithReuseIdentifier: Identifiers.CollectionCell.carCell)
-        contentView.carBrandsCollectionView.register(CarBrandHeader.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: Identifiers.CollectionCell.header)
-        contentView.carBrandsCollectionView.register(EmptyHeader.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: Identifiers.CollectionCell.emptyHeader)
+        contentView.carsCollectionView.delegate = self
+        contentView.carsCollectionView.dataSource = self
+        contentView.carsCollectionView.register(CarBrandCell.self, forCellWithReuseIdentifier: Identifiers.CollectionCell.carCell)
+        contentView.carsCollectionView.register(CarBrandHeader.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: Identifiers.CollectionCell.header)
+        contentView.carsCollectionView.register(EmptyHeader.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: Identifiers.CollectionCell.emptyHeader)
         
         setupTarget()
     }
     
     private func setupTarget() {
         contentView.backButton.addTarget(self, action: #selector(handleBackTap), for: .touchUpInside)
+        contentView.saveCarsButton.addTarget(self, action: #selector(saveCarsPressed), for: .touchUpInside)
     }
     
     @objc private func handleBackTap() {
         action?()
         self.navigationController?.popViewController(animated: true)
+    }
+    
+    @objc private func saveCarsPressed() {
+        action?()
+        self.navigationController?.popViewController(animated: true)
+    }
+    
+    func bindToViewModel() {
+        viewModel.$cars
+            .sink { [weak self] cars in
+                guard let self = self else { return }
+                if cars.isEmpty {
+                    contentView.bgSaveCarButton.isHidden = true
+                    contentView.carsCollectionBottomSize = 0
+                } else if viewModel.cars.isEmpty {
+                    contentView.bgSaveCarButton.isHidden = false
+                    contentView.carsCollectionBottomSize = 250
+                }
+            }
+            .store(in: &cancellables)
     }
     
 }
@@ -97,7 +124,10 @@ extension AddCarController: UICollectionViewDelegate, UICollectionViewDataSource
     func addedCarsViewCell(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: Identifiers.CollectionCell.carCell, for: indexPath) as? CarBrandCell else { return CarBrandCell() }
         
-        cell.titleLabel.text = viewModel.cars[indexPath.item].brandName
+        cell.subtitleLabel.textColor = Asset.Colors.deepBlue
+        
+        cell.titleLabel.text = "\(viewModel.cars[indexPath.item].brandName ?? ""), \(viewModel.cars[indexPath.item].carModel ?? "")"
+        cell.subtitleLabel.text = "Connected"
         cell.squareImageView?.loadFrom(URLAddress: viewModel.cars[indexPath.item].brandThumbnailLogoURL ?? "")
         
         return cell
@@ -106,7 +136,10 @@ extension AddCarController: UICollectionViewDelegate, UICollectionViewDataSource
     func allBrandsViewCell(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: Identifiers.CollectionCell.carCell, for: indexPath) as? CarBrandCell else { return CarBrandCell() }
         
+        cell.subtitleLabel.textColor = Asset.Colors.grey1
+        
         cell.titleLabel.text = viewModel.allCarBrands[indexPath.item].brandName
+        cell.subtitleLabel.text = viewModel.allCarBrands[indexPath.item].modelName
         cell.squareImageView?.loadFrom(URLAddress: viewModel.allCarBrands[indexPath.item].brandThumbnailLogoURL ?? "")
         
         return cell
@@ -134,6 +167,10 @@ extension AddCarController: UICollectionViewDelegate, UICollectionViewDataSource
         }
     }
     
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForFooterInSection section: Int) -> CGSize {
+        return .zero
+    }
+    
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
         switch sections[indexPath.section] {
@@ -143,11 +180,11 @@ extension AddCarController: UICollectionViewDelegate, UICollectionViewDataSource
                 
                 self.viewModel.deleteCars(carID: self.viewModel.cars[indexPath.item].id ?? "")
                 
-                if self.viewModel.cars.count == 0 {
+                if self.viewModel.cars.isEmpty {
                     self.sections.remove(at: 0)
                 }
                 
-                self.contentView.carBrandsCollectionView.reloadData()
+                self.contentView.carsCollectionView.reloadData()
             })
                 //Top Section
                 vc.contentView.topSection.logoView.loadFrom(URLAddress: viewModel.cars[indexPath.item].brandThumbnailLogoURL ?? "")
@@ -177,16 +214,17 @@ extension AddCarController: UICollectionViewDelegate, UICollectionViewDataSource
                 self.navigationController?.pushViewController(vc, animated: true)
                 
             case .allBrands:
-                let vc = ChooseModelController(viewModel: viewModel, action: { [self] in
-
-                    viewModel.loadCarDetails {
+                let vc = ChooseModelController(viewModel: viewModel, action: {
+                    
+                    self.viewModel.loadCarDetails { [self] in
                         
-                        self.viewModel.cars.insert(self.viewModel.selectedCar, at: 0)
-                        if self.viewModel.cars.count == 1 {
-                            self.sections.insert(.addedCars, at: 0)
+                        viewModel.cars.insert(viewModel.selectedCar, at: 0)
+                        if viewModel.cars.count >= 1 && sections.count == 1 {
+                            sections.insert(.addedCars, at: 0)
                         }
+                        viewModel.selectedCar = Car()
                         
-                        self.contentView.carBrandsCollectionView.reloadData()
+                        contentView.carsCollectionView.reloadData()
                     }
                     
                 })
@@ -196,18 +234,7 @@ extension AddCarController: UICollectionViewDelegate, UICollectionViewDataSource
                 self.navigationController?.pushViewController(vc, animated: true)
         }
     }
-    
-//    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-//        .init(top: 0, left: 0, bottom: 0, right: 0) //.zero
-//    }
-//
-//    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
-//        0
-//    }
-//
-//    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-//        0
-//    }
+
 }
 
 

@@ -49,6 +49,7 @@
 		064A90312B79B341003E1734 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 064A90302B79B341003E1734 /* GoogleService-Info.plist */; };
 		065F72AC2B50CB8000CF9C5F /* MainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 065F72AB2B50CB8000CF9C5F /* MainViewModel.swift */; };
 		065F72AF2B50CCC900CF9C5F /* SignUpViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 065F72AE2B50CCC900CF9C5F /* SignUpViewModel.swift */; };
+		066376112C30C546007BC9CA /* ErrorAddedCarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 066376102C30C546007BC9CA /* ErrorAddedCarView.swift */; };
 		067823A82BD6F9890086E19A /* CarDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 067823A72BD6F9890086E19A /* CarDetailsView.swift */; };
 		067823AA2BD6F99A0086E19A /* CarDetailsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 067823A92BD6F99A0086E19A /* CarDetailsController.swift */; };
 		06A5A4572B6DF89A00C05BCC /* DBUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06A5A4562B6DF89A00C05BCC /* DBUser.swift */; };
@@ -165,6 +166,7 @@
 		064A90302B79B341003E1734 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		065F72AB2B50CB8000CF9C5F /* MainViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewModel.swift; sourceTree = "<group>"; };
 		065F72AE2B50CCC900CF9C5F /* SignUpViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewModel.swift; sourceTree = "<group>"; };
+		066376102C30C546007BC9CA /* ErrorAddedCarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorAddedCarView.swift; sourceTree = "<group>"; };
 		067823A72BD6F9890086E19A /* CarDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarDetailsView.swift; sourceTree = "<group>"; };
 		067823A92BD6F99A0086E19A /* CarDetailsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarDetailsController.swift; sourceTree = "<group>"; };
 		06A5A4562B6DF89A00C05BCC /* DBUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DBUser.swift; sourceTree = "<group>"; };
@@ -293,6 +295,7 @@
 			children = (
 				06102BA22B9426140063FEC5 /* ChooseModelController.swift */,
 				06102BA42B9426200063FEC5 /* ChooseModelView.swift */,
+				066376102C30C546007BC9CA /* ErrorAddedCarView.swift */,
 			);
 			path = ChooseModel;
 			sourceTree = "<group>";
@@ -753,6 +756,7 @@
 				06102BA32B9426140063FEC5 /* ChooseModelController.swift in Sources */,
 				06B4D8E32B4F7BD300DD78CB /* AutenticationRepository.swift in Sources */,
 				298B7F212B697DA2003A36C7 /* AddDetailsController.swift in Sources */,
+				066376112C30C546007BC9CA /* ErrorAddedCarView.swift in Sources */,
 				0622D9072B92393900A84437 /* PaymentMethodCell.swift in Sources */,
 				298B7F1F2B697B47003A36C7 /* AddDetailsView.swift in Sources */,
 				29D8B65C2B59574E00196543 /* UIView+Stacking.swift in Sources */,

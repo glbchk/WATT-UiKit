@@ -25,6 +25,8 @@ class CarsViewModel: ObservableObject {
     
     @Published var cars: [Car] = []
     
+    @Published var isModelChosen = false
+    
     init(dependencies: Resolver) {
     
     }
@@ -47,6 +49,21 @@ class CarsViewModel: ObservableObject {
         }
     }
     
+    func isCarAdded(carId: String) -> Bool {
+        var result = false
+        
+        for index in 0..<cars.count {
+            if selectedCarModelID != cars[index].id {
+                result = false
+            } else {
+                result = true
+                break
+            }
+        }
+        
+        return result
+    }
+    
     func loadCarDetails(completion: @escaping () -> Void) {
         networkManager.loadCarDetails(carModelID: selectedCarModelID) { [weak self] in
             guard let self = self else { return }
@@ -62,9 +79,39 @@ class CarsViewModel: ObservableObject {
             if !cars.isEmpty {
                 if cars[index].id == carID {
                     cars.remove(at: index)
+                    break
                 }
             }
         }
+    }
+    
+    func createCarPublisher() -> AnyPublisher<String, Never> {
+        
+        var carPublisher: AnyPublisher<String, Never> {
+            $cars
+                .map { allCars in
+                    if !allCars.isEmpty {
+                        return "\(allCars[0].brandName ?? ""), \(allCars[0].carModel ?? "No model name")"
+                    } else {
+                        return ""
+                    }
+                }
+                .eraseToAnyPublisher()
+        }
+        
+        return carPublisher
+    }
+    
+    var isModelChosenPublisher: AnyPublisher<Bool, Never> {
+        $isModelChosen
+            .map {
+                if $0 == true {
+                    return true
+                } else {
+                    return false
+                }
+            }
+            .eraseToAnyPublisher()
     }
     
 }

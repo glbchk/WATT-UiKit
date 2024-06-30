@@ -4,6 +4,7 @@ query brandListAll {
     id
     naming {
       make
+      model
     }
     media {
       brand {

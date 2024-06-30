@@ -142,6 +142,7 @@ class AddAndEditPMController: BaseViewController, UITextFieldDelegate {
         viewModel.cardNumber = ""
         viewModel.expiry = ""
         viewModel.cvv = ""
+        viewModel.cardProvider = .unknown
         
         self.navigationController?.popViewController(animated: true)
     }

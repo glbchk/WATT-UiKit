@@ -39,7 +39,7 @@ class NetworkManager {
         
         for brand in brands {
             if checkBrand != brand.naming?.make {
-                sortedBrands.append(CarBrand(id: brand.id, brandName: brand.naming?.make, brandThumbnailLogoURL: brand.media?.brand?.thumbnail_url))
+                sortedBrands.append(CarBrand(id: brand.id, brandName: brand.naming?.make, modelName: brand.naming?.model, brandThumbnailLogoURL: brand.media?.brand?.thumbnail_url))
                 checkBrand = brand.naming?.make
             }
         }

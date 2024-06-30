@@ -35,7 +35,7 @@ class PaymentMethodViewModel: ObservableObject {
     
     func savePaymentMethod() {
         
-        let cardProvider = checkBankProvider(number: cardNumber)
+        cardProvider = checkBankProvider(number: cardNumber)
         let savedPaymentMethod = PaymentMethod(provider: cardProvider, cardName: cardName, cardNumber: cardNumber, expiryDate: expiry, cvv: cvv, isDefault: defaultPaymentMethod)
         
         addedPaymentMethods.append(savedPaymentMethod)
@@ -211,22 +211,16 @@ class PaymentMethodViewModel: ObservableObject {
     func createPaymentMethodPublisher() -> AnyPublisher<String, Never> {
         
         var paymentMethodPublisher: AnyPublisher<String, Never> {
-            $cardProvider
-                .map { _ in
-                    var result: String = ""
-                    
-                    for method in self.addedPaymentMethods {
-                        if !self.addedPaymentMethods.isEmpty {
-                            result = "\(method.provider?.title ?? "") credit card"
-                            if self.addedPaymentMethods.count <= 2 {
-                                result += ", \(method.provider?.title ?? "") credit card"
-                            } else if self.addedPaymentMethods.count >= 3 {
-                                
-                            }
-                            return result
-                        }
+            $addedPaymentMethods
+                .map { paymentMethods in
+                    if !paymentMethods.isEmpty {
+                        let cardNumber = self.hideCardNumbers(card: paymentMethods[0].cardNumber)
+                        let provider = paymentMethods[0].provider?.title
+                        
+                        return "\(cardNumber), \(provider ?? "credit card")"
+                    } else {
+                        return ""
                     }
-                    return result
                 }
                 .eraseToAnyPublisher()
         }
@@ -268,6 +262,16 @@ class PaymentMethodViewModel: ObservableObject {
         }
         
         return formattedText
+    }
+    
+    func hideCardNumbers(card number: String) -> String {
+        var result = ""
+        
+        let firstTwoDigits = number.prefix(2)
+        let lastFourDigits = number.suffix(4)
+        result = "\(firstTwoDigits)****\(lastFourDigits)"
+        
+        return result
     }
     
 //    func formatDateWithSlash(text: String) -> String {

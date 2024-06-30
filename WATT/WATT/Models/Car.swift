@@ -10,6 +10,7 @@ import Foundation
 struct CarBrand: Codable {
     var id: String?
     var brandName: String?
+    var modelName: String?
     var brandThumbnailLogoURL: String?
     
     enum CodingKeys: String, CodingKey {

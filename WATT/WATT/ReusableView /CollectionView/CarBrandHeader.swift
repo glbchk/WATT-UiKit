@@ -24,7 +24,7 @@ class CarBrandHeader: UICollectionReusableView {
         let header = TextFieldLabel(title: "ADD ANOTHER CAR")
         
         self.addSubview(header)
-        header.anchor(top: nil, leading: self.leadingAnchor, trailing: self.trailingAnchor, bottom: self.bottomAnchor)
+        header.anchor(top: nil, leading: self.leadingAnchor, trailing: self.trailingAnchor, bottom: self.bottomAnchor, padding: .init(top: 0, left: 20, bottom: 0, right: 0))
     }
 
 }

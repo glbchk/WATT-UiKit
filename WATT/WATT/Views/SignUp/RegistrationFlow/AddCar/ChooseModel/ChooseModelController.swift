@@ -12,11 +12,15 @@ class ChooseModelController: UIViewController {
     var cancellables = Set<AnyCancellable>()
     
     let contentView = ChooseModelView()
+    let errorAddedCarView = ErrorAddedCarView()
     private var viewModel: CarsViewModel
     
     let cellHeight: CGFloat = 60
     
-    var isModelChosen = false
+//    var isModelChosen = false
+    
+    var isAlertShown = false
+    
     let action: (() -> Void)?
     
     init(viewModel: CarsViewModel, action: (() -> Void)?) {
@@ -38,6 +42,7 @@ class ChooseModelController: UIViewController {
         
         view.addSubview(contentView)
         contentView.fillSuperview()
+        bindViewToVieModel()
         
         setupTargets()
         
@@ -54,18 +59,54 @@ class ChooseModelController: UIViewController {
     }
     
     @objc private func handleBackTap() {
+        viewModel.isModelChosen = false
         self.navigationController?.popViewController(animated: true)
     }
     
     @objc private func saveButtonPressed() {
-
-        if isModelChosen {
+        
+        let isCarAdded = viewModel.isCarAdded(carId: viewModel.selectedCar.id ?? "")
+        
+        if !isCarAdded {
             action?()
+            
             self.navigationController?.popViewController(animated: true)
         } else {
-            print("You didn't choose any model")
+            showAlertIsCarDuplicated()
         }
         
+    }
+    
+    @objc private func showAlertIsCarDuplicated() {
+        let vc = AlertController(contentView: errorAddedCarView, buttonTitle: "Understood", height: UIScreen.main.bounds.height / 3) {
+            print("Ok!")
+            self.dismiss(animated: true)
+            self.isAlertShown = false
+        } completionClose: {
+            self.isAlertShown = false
+        }
+        
+        isAlertShown = true
+        vc.closeButton.isHidden = true
+        vc.modalPresentationStyle = .overFullScreen
+        vc.modalTransitionStyle = .crossDissolve
+        navigationController?.present(vc, animated: true)
+    }
+    
+    private func bindViewToVieModel() {
+        viewModel.isModelChosenPublisher
+            .sink { [weak self] isModelChosen in
+                guard let self = self else { return }
+                
+                if isModelChosen {
+                    contentView.saveButton.backgroundColor = Asset.Colors.deepBlue
+                    contentView.saveButton.isEnabled = true
+                } else {
+                    contentView.saveButton.backgroundColor = Asset.Colors.grey1
+                    contentView.saveButton.isEnabled = false
+                }
+            }
+            .store(in: &cancellables)
     }
     
 }
@@ -94,7 +135,7 @@ extension ChooseModelController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let cell = contentView.carModelTableView.cellForRow(at: indexPath) as! ChooseModelCell
         cell.updateState(true)
-        isModelChosen = true
+        viewModel.isModelChosen = true
         
         viewModel.selectedCarModelID = viewModel.allCarModels[indexPath.item].id ?? "No ID"
     }
@@ -102,7 +143,7 @@ extension ChooseModelController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
         let cell = contentView.carModelTableView.cellForRow(at: indexPath) as! ChooseModelCell
         cell.updateState(false)
-        isModelChosen = false
+        viewModel.isModelChosen = false
         
         viewModel.selectedCarModelID = ""
     }

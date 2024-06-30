@@ -7,7 +7,7 @@ public class BrandListAllQuery: GraphQLQuery {
   public static let operationName: String = "brandListAll"
   public static let operationDocument: ApolloAPI.OperationDocument = .init(
     definition: .init(
-      #"query brandListAll { carList(size: 12, page: 0) { __typename id naming { __typename make } media { __typename brand { __typename id type thumbnail_url thumbnail_height thumbnail_width } } } }"#
+      #"query brandListAll { carList(size: 12, page: 0) { __typename id naming { __typename make model } media { __typename brand { __typename id type thumbnail_url thumbnail_height thumbnail_width } } } }"#
     ))
 
   public init() {}
@@ -60,10 +60,13 @@ public class BrandListAllQuery: GraphQLQuery {
         public static var __selections: [ApolloAPI.Selection] { [
           .field("__typename", String.self),
           .field("make", String?.self),
+          .field("model", String?.self),
         ] }
 
         /// Car manufacturer name.
         public var make: String? { __data["make"] }
+        /// Car model name.
+        public var model: String? { __data["model"] }
       }
 
       /// CarList.Media

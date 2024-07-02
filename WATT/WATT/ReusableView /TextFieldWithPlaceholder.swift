@@ -17,7 +17,7 @@ class TextFieldWithPlaceholder: UITextField {
 
     init(_ placeholder: String, inputText: String? = nil) {
         super.init(frame: .zero)
-        self.placeholder = placeholder
+        self.attributedPlaceholder = .init(string: placeholder, attributes: [NSAttributedString.Key.foregroundColor : Asset.Colors.grey2])
         self.inputText = inputText
     }
     

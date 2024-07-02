@@ -81,7 +81,6 @@
 		298B7F302B6E968A003A36C7 /* AddDetailRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 298B7F2F2B6E968A003A36C7 /* AddDetailRow.swift */; };
 		298B7F322B6E96C7003A36C7 /* DetailsRowType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 298B7F312B6E96C7003A36C7 /* DetailsRowType.swift */; };
 		29AC8DAD2C34648900A60B0D /* Swinject in Frameworks */ = {isa = PBXBuildFile; productRef = 29AC8DAC2C34648900A60B0D /* Swinject */; };
-		29AC8DAF2C34648900A60B0D /* Swinject-Dynamic in Frameworks */ = {isa = PBXBuildFile; productRef = 29AC8DAE2C34648900A60B0D /* Swinject-Dynamic */; };
 		29D8B64C2B5567DF00196543 /* SignInController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29D8B64B2B5567DF00196543 /* SignInController.swift */; };
 		29D8B64F2B557DFB00196543 /* TextFieldBackgroundView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29D8B64E2B557DFB00196543 /* TextFieldBackgroundView.swift */; };
 		29D8B6542B559EE400196543 /* UIView+Layout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29D8B6532B559EE400196543 /* UIView+Layout.swift */; };
@@ -206,7 +205,6 @@
 				062654A62B4F6A0F007120AD /* FirebaseAnalyticsWithoutAdIdSupport in Frameworks */,
 				062654A02B4F6A0F007120AD /* FirebaseAnalytics in Frameworks */,
 				062654A22B4F6A0F007120AD /* FirebaseAnalyticsOnDeviceConversion in Frameworks */,
-				29AC8DAF2C34648900A60B0D /* Swinject-Dynamic in Frameworks */,
 				06B4D8D92B4F768A00DD78CB /* FirebaseDatabase in Frameworks */,
 				06B4D8E12B4F76B300DD78CB /* FirebaseStorage in Frameworks */,
 				062654A42B4F6A0F007120AD /* FirebaseAnalyticsSwift in Frameworks */,
@@ -576,7 +574,6 @@
 				06B4D8E02B4F76B300DD78CB /* FirebaseStorage */,
 				0612A4232B9F929D00936B60 /* MonthYearWheelPicker */,
 				29AC8DAC2C34648900A60B0D /* Swinject */,
-				29AC8DAE2C34648900A60B0D /* Swinject-Dynamic */,
 			);
 			productName = WATT;
 			productReference = 06A5F40B2B3A68DF000C0218 /* WATT.app */;
@@ -952,7 +949,7 @@
 			repositoryURL = "https://github.com/Swinject/Swinject";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 2.9.1;
+				minimumVersion = 2.8.4;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
@@ -1017,11 +1014,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 29AC8DAB2C34648800A60B0D /* XCRemoteSwiftPackageReference "Swinject" */;
 			productName = Swinject;
-		};
-		29AC8DAE2C34648900A60B0D /* Swinject-Dynamic */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 29AC8DAB2C34648800A60B0D /* XCRemoteSwiftPackageReference "Swinject" */;
-			productName = "Swinject-Dynamic";
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

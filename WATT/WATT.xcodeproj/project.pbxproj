@@ -38,7 +38,6 @@
 		0622D9212B92431F00A84437 /* AddAndEditPMView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0622D9202B92431F00A84437 /* AddAndEditPMView.swift */; };
 		0622D9232B924D1000A84437 /* CustomTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0622D9222B924D1000A84437 /* CustomTableView.swift */; };
 		062654992B4F6761007120AD /* Swinject in Frameworks */ = {isa = PBXBuildFile; productRef = 062654982B4F6761007120AD /* Swinject */; };
-		0626549B2B4F6762007120AD /* Swinject-Dynamic in Frameworks */ = {isa = PBXBuildFile; productRef = 0626549A2B4F6762007120AD /* Swinject-Dynamic */; };
 		062654A02B4F6A0F007120AD /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 0626549F2B4F6A0F007120AD /* FirebaseAnalytics */; };
 		062654A22B4F6A0F007120AD /* FirebaseAnalyticsOnDeviceConversion in Frameworks */ = {isa = PBXBuildFile; productRef = 062654A12B4F6A0F007120AD /* FirebaseAnalyticsOnDeviceConversion */; };
 		062654A42B4F6A0F007120AD /* FirebaseAnalyticsSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 062654A32B4F6A0F007120AD /* FirebaseAnalyticsSwift */; };
@@ -192,7 +191,6 @@
 				062654992B4F6761007120AD /* Swinject in Frameworks */,
 				0612A4242B9F929D00936B60 /* MonthYearWheelPicker in Frameworks */,
 				062654A62B4F6A0F007120AD /* FirebaseAnalyticsWithoutAdIdSupport in Frameworks */,
-				0626549B2B4F6762007120AD /* Swinject-Dynamic in Frameworks */,
 				062654A02B4F6A0F007120AD /* FirebaseAnalytics in Frameworks */,
 				062654A22B4F6A0F007120AD /* FirebaseAnalyticsOnDeviceConversion in Frameworks */,
 				06B4D8D92B4F768A00DD78CB /* FirebaseDatabase in Frameworks */,
@@ -551,7 +549,6 @@
 			name = WATT;
 			packageProductDependencies = (
 				062654982B4F6761007120AD /* Swinject */,
-				0626549A2B4F6762007120AD /* Swinject-Dynamic */,
 				0626549F2B4F6A0F007120AD /* FirebaseAnalytics */,
 				062654A12B4F6A0F007120AD /* FirebaseAnalyticsOnDeviceConversion */,
 				062654A32B4F6A0F007120AD /* FirebaseAnalyticsSwift */,
@@ -953,11 +950,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 062654972B4F6761007120AD /* XCRemoteSwiftPackageReference "Swinject" */;
 			productName = Swinject;
-		};
-		0626549A2B4F6762007120AD /* Swinject-Dynamic */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 062654972B4F6761007120AD /* XCRemoteSwiftPackageReference "Swinject" */;
-			productName = "Swinject-Dynamic";
 		};
 		0626549F2B4F6A0F007120AD /* FirebaseAnalytics */ = {
 			isa = XCSwiftPackageProductDependency;

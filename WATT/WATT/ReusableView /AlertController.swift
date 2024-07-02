@@ -22,7 +22,9 @@ class AlertController: BaseViewController {
     
     let submitButtonTitle: String
     
-    init(contentView: UIView, buttonTitle: String, height: CGFloat = UIScreen.main.bounds.height / 2, completionSubmit: (() -> Void)? = nil, completionClose: (() -> Void)? = nil) {
+    private var keyboardIsShown: Bool = false
+    
+    init(contentView: UIView, buttonTitle: String, height: CGFloat, completionSubmit: (() -> Void)? = nil, completionClose: (() -> Void)? = nil) {
         self.contentView = contentView
         self.height = height
         self.completionSubmit = completionSubmit
@@ -39,6 +41,21 @@ class AlertController: BaseViewController {
         super.viewDidLoad()
         setupUI()
         handleKeyboardAppearance()
+        
+        view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(outsideAlertAreaPressed)))
+    }
+    
+    @objc private func outsideAlertAreaPressed(sender: UITapGestureRecognizer) {
+        let tapPoint = sender.location(in: self.view)
+        if tapPoint.y > (UIScreen.main.bounds.height / 2 - height / 2) && tapPoint.y < (UIScreen.main.bounds.height / 2 + height / 2) {
+            view.endEditing(true)
+        } else if tapPoint.y < (UIScreen.main.bounds.height / 2 - height / 2) || tapPoint.y > (UIScreen.main.bounds.height / 2 + height / 2) {
+            if keyboardIsShown {
+                view.endEditing(true)
+            } else {
+                closeClicked()
+            }
+        }
     }
     
     private func submitClicked() {
@@ -68,7 +85,6 @@ class AlertController: BaseViewController {
         
         containerView.addSubview(contentView)
         contentView.anchor(top: containerView.topAnchor, leading: containerView.leadingAnchor, trailing: containerView.trailingAnchor, bottom: sbmButton.topAnchor, padding: .allSides(20))
-//        contentView.centerInSuperview()
     }
     
     private func setupCloseButton() {
@@ -104,8 +120,10 @@ class AlertController: BaseViewController {
             guard let self = self else { return }
             if keyboardAppeared {
                 view.frame.origin.y = -keyboardHeight / 2.5
+                self.keyboardIsShown = true
             } else {
                 view.frame.origin.y = 0
+                self.keyboardIsShown = false
             }
         }
     }

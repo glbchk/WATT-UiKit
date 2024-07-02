@@ -37,8 +37,6 @@
 		0622D91F2B92431600A84437 /* AddAndEditPMController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0622D91E2B92431600A84437 /* AddAndEditPMController.swift */; };
 		0622D9212B92431F00A84437 /* AddAndEditPMView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0622D9202B92431F00A84437 /* AddAndEditPMView.swift */; };
 		0622D9232B924D1000A84437 /* CustomTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0622D9222B924D1000A84437 /* CustomTableView.swift */; };
-		062654992B4F6761007120AD /* Swinject in Frameworks */ = {isa = PBXBuildFile; productRef = 062654982B4F6761007120AD /* Swinject */; };
-		0626549B2B4F6762007120AD /* Swinject-Dynamic in Frameworks */ = {isa = PBXBuildFile; productRef = 0626549A2B4F6762007120AD /* Swinject-Dynamic */; };
 		062654A02B4F6A0F007120AD /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 0626549F2B4F6A0F007120AD /* FirebaseAnalytics */; };
 		062654A22B4F6A0F007120AD /* FirebaseAnalyticsOnDeviceConversion in Frameworks */ = {isa = PBXBuildFile; productRef = 062654A12B4F6A0F007120AD /* FirebaseAnalyticsOnDeviceConversion */; };
 		062654A42B4F6A0F007120AD /* FirebaseAnalyticsSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 062654A32B4F6A0F007120AD /* FirebaseAnalyticsSwift */; };
@@ -82,6 +80,8 @@
 		298B7F2E2B6D301E003A36C7 /* Icons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 298B7F2D2B6D301E003A36C7 /* Icons.swift */; };
 		298B7F302B6E968A003A36C7 /* AddDetailRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 298B7F2F2B6E968A003A36C7 /* AddDetailRow.swift */; };
 		298B7F322B6E96C7003A36C7 /* DetailsRowType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 298B7F312B6E96C7003A36C7 /* DetailsRowType.swift */; };
+		29AC8DAD2C34648900A60B0D /* Swinject in Frameworks */ = {isa = PBXBuildFile; productRef = 29AC8DAC2C34648900A60B0D /* Swinject */; };
+		29AC8DAF2C34648900A60B0D /* Swinject-Dynamic in Frameworks */ = {isa = PBXBuildFile; productRef = 29AC8DAE2C34648900A60B0D /* Swinject-Dynamic */; };
 		29D8B64C2B5567DF00196543 /* SignInController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29D8B64B2B5567DF00196543 /* SignInController.swift */; };
 		29D8B64F2B557DFB00196543 /* TextFieldBackgroundView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29D8B64E2B557DFB00196543 /* TextFieldBackgroundView.swift */; };
 		29D8B6542B559EE400196543 /* UIView+Layout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29D8B6532B559EE400196543 /* UIView+Layout.swift */; };
@@ -99,6 +99,19 @@
 		29D8B6722B59BBD200196543 /* AlertController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29D8B6712B59BBD200196543 /* AlertController.swift */; };
 		29D8B6762B59D3DA00196543 /* ForgotPasswordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29D8B6752B59D3DA00196543 /* ForgotPasswordView.swift */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		29AC8DA42C34402B00A60B0D /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		060363F32B688EFB005B48ED /* AuthenticationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationManager.swift; sourceTree = "<group>"; };
@@ -189,18 +202,18 @@
 			buildActionMask = 2147483647;
 			files = (
 				06B4D8DB2B4F769300DD78CB /* FirebaseDatabaseSwift in Frameworks */,
-				062654992B4F6761007120AD /* Swinject in Frameworks */,
 				0612A4242B9F929D00936B60 /* MonthYearWheelPicker in Frameworks */,
 				062654A62B4F6A0F007120AD /* FirebaseAnalyticsWithoutAdIdSupport in Frameworks */,
-				0626549B2B4F6762007120AD /* Swinject-Dynamic in Frameworks */,
 				062654A02B4F6A0F007120AD /* FirebaseAnalytics in Frameworks */,
 				062654A22B4F6A0F007120AD /* FirebaseAnalyticsOnDeviceConversion in Frameworks */,
+				29AC8DAF2C34648900A60B0D /* Swinject-Dynamic in Frameworks */,
 				06B4D8D92B4F768A00DD78CB /* FirebaseDatabase in Frameworks */,
 				06B4D8E12B4F76B300DD78CB /* FirebaseStorage in Frameworks */,
 				062654A42B4F6A0F007120AD /* FirebaseAnalyticsSwift in Frameworks */,
 				06B4D8DD2B4F769900DD78CB /* FirebaseFirestore in Frameworks */,
 				06B4D8D72B4F767800DD78CB /* FirebaseAuth in Frameworks */,
 				06B4D8DF2B4F769E00DD78CB /* FirebaseFirestoreSwift in Frameworks */,
+				29AC8DAD2C34648900A60B0D /* Swinject in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -543,6 +556,7 @@
 				06A5F4072B3A68DF000C0218 /* Sources */,
 				06A5F4082B3A68DF000C0218 /* Frameworks */,
 				06A5F4092B3A68DF000C0218 /* Resources */,
+				29AC8DA42C34402B00A60B0D /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -550,8 +564,6 @@
 			);
 			name = WATT;
 			packageProductDependencies = (
-				062654982B4F6761007120AD /* Swinject */,
-				0626549A2B4F6762007120AD /* Swinject-Dynamic */,
 				0626549F2B4F6A0F007120AD /* FirebaseAnalytics */,
 				062654A12B4F6A0F007120AD /* FirebaseAnalyticsOnDeviceConversion */,
 				062654A32B4F6A0F007120AD /* FirebaseAnalyticsSwift */,
@@ -563,6 +575,8 @@
 				06B4D8DE2B4F769E00DD78CB /* FirebaseFirestoreSwift */,
 				06B4D8E02B4F76B300DD78CB /* FirebaseStorage */,
 				0612A4232B9F929D00936B60 /* MonthYearWheelPicker */,
+				29AC8DAC2C34648900A60B0D /* Swinject */,
+				29AC8DAE2C34648900A60B0D /* Swinject-Dynamic */,
 			);
 			productName = WATT;
 			productReference = 06A5F40B2B3A68DF000C0218 /* WATT.app */;
@@ -593,9 +607,9 @@
 			);
 			mainGroup = 06A5F4022B3A68DF000C0218;
 			packageReferences = (
-				062654972B4F6761007120AD /* XCRemoteSwiftPackageReference "Swinject" */,
 				0626549E2B4F6A0F007120AD /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 				0612A4222B9F929D00936B60 /* XCRemoteSwiftPackageReference "MonthYearWheelPicker" */,
+				29AC8DAB2C34648800A60B0D /* XCRemoteSwiftPackageReference "Swinject" */,
 			);
 			productRefGroup = 06A5F40C2B3A68DF000C0218 /* Products */;
 			projectDirPath = "";
@@ -925,20 +939,20 @@
 				minimumVersion = 1.0.1;
 			};
 		};
-		062654972B4F6761007120AD /* XCRemoteSwiftPackageReference "Swinject" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/Swinject/Swinject.git";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 2.8.4;
-			};
-		};
 		0626549E2B4F6A0F007120AD /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
 			requirement = {
 				kind = upToNextMajorVersion;
 				minimumVersion = 10.19.1;
+			};
+		};
+		29AC8DAB2C34648800A60B0D /* XCRemoteSwiftPackageReference "Swinject" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Swinject/Swinject";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.9.1;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
@@ -948,16 +962,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 0612A4222B9F929D00936B60 /* XCRemoteSwiftPackageReference "MonthYearWheelPicker" */;
 			productName = MonthYearWheelPicker;
-		};
-		062654982B4F6761007120AD /* Swinject */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 062654972B4F6761007120AD /* XCRemoteSwiftPackageReference "Swinject" */;
-			productName = Swinject;
-		};
-		0626549A2B4F6762007120AD /* Swinject-Dynamic */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 062654972B4F6761007120AD /* XCRemoteSwiftPackageReference "Swinject" */;
-			productName = "Swinject-Dynamic";
 		};
 		0626549F2B4F6A0F007120AD /* FirebaseAnalytics */ = {
 			isa = XCSwiftPackageProductDependency;
@@ -1008,6 +1012,16 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 0626549E2B4F6A0F007120AD /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseStorage;
+		};
+		29AC8DAC2C34648900A60B0D /* Swinject */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 29AC8DAB2C34648800A60B0D /* XCRemoteSwiftPackageReference "Swinject" */;
+			productName = Swinject;
+		};
+		29AC8DAE2C34648900A60B0D /* Swinject-Dynamic */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 29AC8DAB2C34648800A60B0D /* XCRemoteSwiftPackageReference "Swinject" */;
+			productName = "Swinject-Dynamic";
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

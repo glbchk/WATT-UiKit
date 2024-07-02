@@ -8,7 +8,6 @@
 import UIKit
 import Combine
 
-
 class SignUpController: BaseViewController {
     var cancellables = Set<AnyCancellable>()
     
@@ -66,38 +65,38 @@ class SignUpController: BaseViewController {
     
     @objc private func signUpButtonPressed() {
         switch isValidSignUp {
-            case true:
-                print("sign up valid")
-                
-                //        viewModel.createUser { [weak self] isActive, error in
-                //            DispatchQueue.main.async {
-                //                guard let self = self else { return }
-                //                let vc = AddDetailsController(viewModel: self.viewModel)
-                //                self.navigationController?.pushViewController(vc, animated: true)
-                //            }
-                //        }
-                self.view.endEditing(true)
-            case false:
-                if viewModel.email.isEmpty {
-                    contentView.emailErrorLabel.text = TFError.Registration.requiredField.description
-                    contentView.emailErrorLabel.isHidden = false
+        case true:
+            print("sign up valid")
+            
+            viewModel.createUser { [weak self] isActive, error in
+                DispatchQueue.main.async {
+                    guard let self = self else { return }
+                    let vc = AddDetailsController(viewModel: self.viewModel)
+                    self.navigationController?.pushViewController(vc, animated: true)
                 }
-                
-                if viewModel.password.isEmpty {
-                    contentView.passwordErrorLabel.text = TFError.Registration.requiredField.description
-                    contentView.passwordErrorLabel.isHidden = false
-                }
-                
-                if viewModel.retypedPassword.isEmpty && viewModel.password.isEmpty {
-                    contentView.retypedPasswordErrorLabel.text = TFError.Registration.requiredField.description
-                    contentView.retypedPasswordErrorLabel.isHidden = false
-                } else if viewModel.retypedPassword.isEmpty {
-                    contentView.retypedPasswordErrorLabel.text = TFError.Registration.invalidRetypedPassword.description
-                    contentView.retypedPasswordErrorLabel.isHidden = false
-                }
-                
-                self.view.endEditing(true)
-                shakeAnimation(of: contentView.signUpButton)
+            }
+            self.view.endEditing(true)
+        case false:
+            if viewModel.email.isEmpty {
+                contentView.emailErrorLabel.text = TFError.Registration.requiredField.description
+                contentView.emailErrorLabel.isHidden = false
+            }
+            
+            if viewModel.password.isEmpty {
+                contentView.passwordErrorLabel.text = TFError.Registration.requiredField.description
+                contentView.passwordErrorLabel.isHidden = false
+            }
+            
+            if viewModel.retypedPassword.isEmpty && viewModel.password.isEmpty {
+                contentView.retypedPasswordErrorLabel.text = TFError.Registration.requiredField.description
+                contentView.retypedPasswordErrorLabel.isHidden = false
+            } else if viewModel.retypedPassword.isEmpty {
+                contentView.retypedPasswordErrorLabel.text = TFError.Registration.invalidRetypedPassword.description
+                contentView.retypedPasswordErrorLabel.isHidden = false
+            }
+            
+            self.view.endEditing(true)
+            shakeAnimation(of: contentView.signUpButton)
         }
         
     }

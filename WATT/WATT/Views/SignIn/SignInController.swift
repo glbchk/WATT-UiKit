@@ -85,7 +85,7 @@ class SignInController: BaseViewController {
     }
     
     @objc private func forgotPasswordButtonPressed() {
-        let vc = AlertController(contentView: ForgotPasswordView(), buttonTitle: "Reset") {
+        let vc = AlertController(contentView: ForgotPasswordView(), buttonTitle: "Reset", height: 300) {
             Task {
                 self.viewModel.sendPasswordReset(email: self.viewModel.email) { error in
                     if !error {
@@ -99,6 +99,7 @@ class SignInController: BaseViewController {
             self.isAlertShown = false
         }
         
+        self.view.endEditing(true)
         isAlertShown = true
         vc.modalPresentationStyle = .overFullScreen
         vc.modalTransitionStyle = .crossDissolve

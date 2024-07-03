@@ -81,10 +81,10 @@ class AddCarController: UIViewController {
                 guard let self = self else { return }
                 if cars.isEmpty {
                     contentView.bgSaveCarButton.isHidden = true
-                    contentView.carsCollectionBottomSize = 0
+//                    contentView.carsCollectionStackBottomSize = 0
                 } else if viewModel.cars.isEmpty {
                     contentView.bgSaveCarButton.isHidden = false
-                    contentView.carsCollectionBottomSize = 250
+//                    contentView.carsCollectionStackBottomSize = 250
                 }
             }
             .store(in: &cancellables)
@@ -127,6 +127,7 @@ extension AddCarController: UICollectionViewDelegate, UICollectionViewDataSource
         cell.subtitleLabel.textColor = Asset.Colors.deepBlue
         
         cell.titleLabel.text = "\(viewModel.cars[indexPath.item].brandName ?? ""), \(viewModel.cars[indexPath.item].carModel ?? "")"
+        cell.subtitleLabel.isHidden = false
         cell.subtitleLabel.text = "Connected"
         cell.squareImageView?.loadFrom(URLAddress: viewModel.cars[indexPath.item].brandThumbnailLogoURL ?? "")
         
@@ -139,7 +140,7 @@ extension AddCarController: UICollectionViewDelegate, UICollectionViewDataSource
         cell.subtitleLabel.textColor = Asset.Colors.grey1
         
         cell.titleLabel.text = viewModel.allCarBrands[indexPath.item].brandName
-        cell.subtitleLabel.text = viewModel.allCarBrands[indexPath.item].modelName
+        cell.subtitleLabel.isHidden = true
         cell.squareImageView?.loadFrom(URLAddress: viewModel.allCarBrands[indexPath.item].brandThumbnailLogoURL ?? "")
         
         return cell
@@ -219,6 +220,7 @@ extension AddCarController: UICollectionViewDelegate, UICollectionViewDataSource
                     self.viewModel.loadCarDetails { [self] in
                         
                         viewModel.cars.insert(viewModel.selectedCar, at: 0)
+                        
                         if viewModel.cars.count >= 1 && sections.count == 1 {
                             sections.insert(.addedCars, at: 0)
                         }

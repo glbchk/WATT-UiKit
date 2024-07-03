@@ -103,7 +103,7 @@ class PaymentMethodCell: UITableViewCell {
         
         self.addSubview(someView)
         mainStack.anchor(top: someView.topAnchor, leading: someView.leadingAnchor, trailing: someView.trailingAnchor, bottom: someView.bottomAnchor, padding: .allSides(15))
-        someView.fillSuperview(padding: .init(top: 5, left: 0, bottom: 5, right: 0))
+        someView.fillSuperview(padding: .init(top: 5, left: 20, bottom: 5, right: 20))
     }
 
 }

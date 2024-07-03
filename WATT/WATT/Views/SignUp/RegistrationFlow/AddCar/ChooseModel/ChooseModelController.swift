@@ -70,17 +70,21 @@ class ChooseModelController: UIViewController {
         if !isCarAdded {
             action?()
             
+            viewModel.isModelChosen = false
             self.navigationController?.popViewController(animated: true)
         } else {
             showAlertIsCarDuplicated()
         }
-        
+ 
     }
     
     @objc private func showAlertIsCarDuplicated() {
         let vc = AlertController(contentView: errorAddedCarView, buttonTitle: "Understood", height: UIScreen.main.bounds.height / 3) {
             print("Ok!")
             self.dismiss(animated: true)
+            if self.viewModel.allCarModels.count == 1 {
+                self.navigationController?.popViewController(animated: true)
+            }
             self.isAlertShown = false
         } completionClose: {
             self.isAlertShown = false

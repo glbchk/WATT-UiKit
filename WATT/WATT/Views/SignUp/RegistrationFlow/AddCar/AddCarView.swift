@@ -84,10 +84,11 @@ class AddCarView: UIView {
         carsCollectionView.collectionViewLayout = layout
         carsCollectionView.backgroundColor = .clear
         carsCollectionView.clipsToBounds = true
+        carsCollectionView.contentInset.bottom = 120
         
         self.addSubview(carsCollectionView)
         
-        carsCollectionView.anchor(top: subtitleLabel.bottomAnchor, leading: self.leadingAnchor, trailing: self.trailingAnchor, bottom: self.bottomAnchor, padding: .init(top: 0, left: 0, bottom: carsCollectionBottomSize, right: 0))
+        carsCollectionView.anchor(top: subtitleLabel.bottomAnchor, leading: self.leadingAnchor, trailing: self.trailingAnchor, bottom: self.bottomAnchor, padding: .init(top: 0, left: 0, bottom: 0, right: 0))
         }
     
     private func saveAddedCarsButton() {

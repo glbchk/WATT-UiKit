@@ -73,7 +73,7 @@ class PaymentMethodView: UIView {
         paymentMethodsTableView.clipsToBounds = true
         
         self.addSubview(paymentMethodsTableView)
-        paymentMethodsTableView.anchor(top: subtitleLable.bottomAnchor, leading: self.leadingAnchor, trailing: self.trailingAnchor, bottom: addCreditCardRow.topAnchor, padding: .init(top: 20, left: 20, bottom: 0, right: 20))
+        paymentMethodsTableView.anchor(top: subtitleLable.bottomAnchor, leading: self.leadingAnchor, trailing: self.trailingAnchor, bottom: addCreditCardRow.topAnchor, padding: .init(top: 20, left: 0, bottom: 0, right: 0))
     }
     
     func setupButtons() {

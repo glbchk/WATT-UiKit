@@ -9,7 +9,7 @@ import UIKit
 
 class ErrorAddedCarView: UIView {
     
-    let titleLabel = TextLabel(title: "This car is already added!", font: .systemFont(ofSize: 22, weight: .bold), textColor:  Asset.Colors.black)
+    let titleLabel = TextLabel(title: "This model is already added!", font: .systemFont(ofSize: 22, weight: .bold), textColor:  Asset.Colors.black)
     
     let subtitleLabel = TextLabel(title: "Select another brand or another model of the chosen brand", font: .systemFont(ofSize: 15), textColor: Asset.Colors.darkGrey, numberOfLines: 0, textAlignment: .center)
     

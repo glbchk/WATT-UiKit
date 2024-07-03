@@ -32,11 +32,13 @@ class CarsViewModel: ObservableObject {
     }
     
     func loadBrands(completion: @escaping () -> Void) {
-        networkManager.loadCarBrands { [weak self] in
-            guard let self = self else { return }
-            self.allCarBrands = networkManager.allCarBrands
-            
-            completion()
+        if allCarBrands.isEmpty {
+            networkManager.loadCarBrands { [weak self] in
+                guard let self = self else { return }
+                self.allCarBrands = networkManager.allCarBrands
+                
+                completion()
+            }
         }
     }
     

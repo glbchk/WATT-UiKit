@@ -44,8 +44,6 @@ class SignInController: BaseViewController {
     }
     
     private func setupTargets() {
-//        contentView.carDetailsTempButton.addTarget(self, action: #selector(addCarDetailsButtonPressed), for: .touchUpInside)
-        contentView.addCarTempButton.addTarget(self, action: #selector(addCarTempButtonPressed), for: .touchUpInside)
         contentView.addPaymentMethodTempButton.addTarget(self, action: #selector(addPaymentMethodTempButtonPressed), for: .touchUpInside)
         contentView.forgotButton.addTarget(self, action: #selector(forgotPasswordButtonPressed), for: .touchUpInside)
         contentView.signUpButton.addTarget(self, action: #selector(signUpButtonPressed), for: .touchUpInside)
@@ -106,13 +104,7 @@ class SignInController: BaseViewController {
         navigationController?.present(vc, animated: true)
     }
     
-    @objc private func addCarTempButtonPressed() {
-        if let signUpViewModel = viewModel.signUpViewModel?.carsViewModel {
-//            let vc = AddCarController(viewModel: signUpViewModel)
-//            navigationController?.pushViewController(vc, animated: true)
-        }
-    }
-    
+    //TO BE DELETED
     @objc private func addPaymentMethodTempButtonPressed() {
         if let paymentMethodViewModel = viewModel.signUpViewModel?.paymentMethodViewModel, let signUpViewModel = viewModel.signUpViewModel {
             let vc = PaymentMethodController(viewModel: signUpViewModel, paymentMethodViewModel: paymentMethodViewModel, action: {
@@ -121,14 +113,6 @@ class SignInController: BaseViewController {
             navigationController?.pushViewController(vc, animated: true)
         }
     }
-    
-//    @objc private func addCarDetailsButtonPressed() {
-//        if let carsViewModel = viewModel.signUpViewModel?.carsViewModel {
-//            let vc = CarDetailsController(viewModel: carsViewModel)
-//            
-//            navigationController?.pushViewController(vc, animated: true)
-//        }
-//    }
     
     @objc private func signUpButtonPressed() {
         if let signUpViewModel = viewModel.signUpViewModel {

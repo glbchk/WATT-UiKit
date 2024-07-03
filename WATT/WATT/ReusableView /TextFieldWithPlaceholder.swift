@@ -7,6 +7,10 @@
 
 import UIKit
 
+enum TextFieldType {
+    case email, password, phoneNumber, numbers, regular
+}
+
 class TextFieldWithPlaceholder: UITextField {
     
     var inputText: String? {
@@ -15,10 +19,32 @@ class TextFieldWithPlaceholder: UITextField {
         }
     }
 
-    init(_ placeholder: String, inputText: String? = nil) {
+    init(_ placeholder: String, inputText: String? = nil, textFieldType: TextFieldType = .regular, keyboardType: UIKeyboardType = .default, returnKeyType: UIReturnKeyType = .default) {
         super.init(frame: .zero)
-        self.attributedPlaceholder = .init(string: placeholder, attributes: [NSAttributedString.Key.foregroundColor : Asset.Colors.grey2])
+        self.placeholder = placeholder
         self.inputText = inputText
+        self.keyboardType = keyboardType
+        self.returnKeyType = returnKeyType
+        
+        switch textFieldType {
+        case .email:
+            self.autocapitalizationType = .none
+            self.autocorrectionType = .no
+            self.spellCheckingType = .no
+            self.keyboardType = .emailAddress
+        case .password:
+            self.autocapitalizationType = .none
+            self.autocorrectionType = .no
+            self.spellCheckingType = .no
+        case .numbers:
+            self.keyboardType = .numberPad
+        case .regular:
+            self.autocapitalizationType = .sentences
+            self.autocorrectionType = .no
+            self.spellCheckingType = .yes
+        case .phoneNumber:
+            self.keyboardType = .phonePad
+        }
     }
     
     required init?(coder: NSCoder) {

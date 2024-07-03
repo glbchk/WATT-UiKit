@@ -36,7 +36,7 @@ class AddNameAndPhoneNumberView: UIView {
     let phoneNumberLabel = TextFieldLabel(title: "PHONE NUMBER")
     
     let nameTextField = TextFieldWithPlaceholder("e.g. John Doe")
-    let phoneNumberTextField = TextFieldWithPlaceholder("+380")
+    let phoneNumberTextField = TextFieldWithPlaceholder("+380", textFieldType: .phoneNumber)
     
     let saveButton = MainButton(title: "Save")
     

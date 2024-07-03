@@ -91,10 +91,10 @@ class AddAndEditPMView: UIView {
     let expiryLabel = TextFieldLabel(title: "EXPIRY")
     let cvvLabel = TextFieldLabel(title: "CVV")
     
-    let cardNameTextField = TextFieldWithPlaceholder("e.g. Default payment method")
-    var cardNumberTextField = TextFieldWithPlaceholder("0000  0000  0000  0000")
+    let cardNameTextField = TextFieldWithPlaceholder("e.g. Default payment method", returnKeyType: .next)
+    var cardNumberTextField = TextFieldWithPlaceholder("0000  0000  0000  0000", textFieldType: .numbers)
     let expiryTextField = TextFieldWithPlaceholder("MM / YY")
-    let cvvTextField = TextFieldWithPlaceholder("•••")
+    let cvvTextField = TextFieldWithPlaceholder("•••", textFieldType: .numbers)
     
     let cardNameTextFieldView = TextFieldBackgroundView()
     let cardNumberTextFieldView = TextFieldBackgroundView()
@@ -150,15 +150,12 @@ class AddAndEditPMView: UIView {
     private func setupMainStack() {
         
         cardNameTextFieldView.textField = cardNameTextField
-        cardNameTextField.returnKeyType = .next
         
         cardNumberTextFieldView.textField = cardNumberTextField
-        cardNumberTextFieldView.textField?.keyboardType = .numberPad
         
         expiryTextFieldView.textField = expiryTextField
         
         cvvTextFieldView.textField = cvvTextField
-        cvvTextFieldView.textField?.keyboardType = .numberPad
         
         let cardNameStack = stack(cardNameLabel, cardNameTextFieldView, cardNameNotificationLabel, spacing: 6)
         let cardNumberStack = stack(cardNumberLabel, cardNumberTextFieldView, cardNumberNotificationLabel, spacing: 6)

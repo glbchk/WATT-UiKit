@@ -45,18 +45,27 @@ class AddNameAndPhoneNumberController: BaseViewController {
     
     @objc private func saveButtonPressed() {
         self.navigationController?.popViewController(animated: true)
+        
+        if let name = contentView.nameTextField.text {
+            viewModel.fullName = name
+        }
+        
+        if let phoneNumber = contentView.phoneNumberTextField.text {
+            viewModel.phoneNumber = phoneNumber
+        }
+        
     }
     
     private func bindViewsToViewModel() {
-        contentView.nameTextField.textPublisher
-            .receive(on: DispatchQueue.main)
-            .assign(to: \.fullName, on: viewModel)
-            .store(in: &cancellables)
-        
-        contentView.phoneNumberTextField.textPublisher
-            .receive(on: DispatchQueue.main)
-            .assign(to: \.phoneNumber, on: viewModel)
-            .store(in: &cancellables)
+//        contentView.nameTextField.textPublisher
+//            .receive(on: DispatchQueue.main)
+//            .assign(to: \.fullName, on: viewModel)
+//            .store(in: &cancellables)
+//        
+//        contentView.phoneNumberTextField.textPublisher
+//            .receive(on: DispatchQueue.main)
+//            .assign(to: \.phoneNumber, on: viewModel)
+//            .store(in: &cancellables)
         
         contentView.nameTextField.inputText = viewModel.fullName
         contentView.phoneNumberTextField.inputText = viewModel.phoneNumber

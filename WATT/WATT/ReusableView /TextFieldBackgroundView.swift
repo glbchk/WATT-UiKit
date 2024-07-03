@@ -60,9 +60,6 @@ class TextFieldBackgroundView: UIView {
     
     private func setupTextField() {
         guard let textField = textField else { return }
-        textField.autocorrectionType = .no
-        textField.autocapitalizationType = .none
-        textField.spellCheckingType = .no
         
         addSubview(textField)
         

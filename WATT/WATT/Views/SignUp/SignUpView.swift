@@ -26,9 +26,9 @@ class SignUpView: UIView {
     let passwordErrorLabel = TextLabel(title: "Password error", font: .systemFont(ofSize: 13), textColor: Asset.Colors.red)
     let retypedPasswordErrorLabel = TextLabel(title: "Retyped password error", font: .systemFont(ofSize: 13), textColor: Asset.Colors.red)
     
-    let emailTextField = TextFieldWithPlaceholder("example@email.com")
-    let passwordTextField = TextFieldWithPlaceholder("At least 6 characters")
-    let retypePasswordTextField = TextFieldWithPlaceholder("Retype password here")
+    let emailTextField = TextFieldWithPlaceholder("example@email.com", textFieldType: .email, returnKeyType: .next)
+    let passwordTextField = TextFieldWithPlaceholder("At least 6 characters", textFieldType: .password, returnKeyType: .next)
+    let retypePasswordTextField = TextFieldWithPlaceholder("Retype password here", textFieldType: .password, returnKeyType: .done)
     
     let emailTextFieldView = TextFieldBackgroundView()
     let passwordTextFieldView = TextFieldBackgroundView()
@@ -95,12 +95,6 @@ class SignUpView: UIView {
         emailTextFieldView.textField = emailTextField
         passwordTextFieldView.textField = passwordTextField
         retypePasswordTextFieldView.textField = retypePasswordTextField
-        
-        emailTextField.keyboardType = .emailAddress
-        emailTextField.returnKeyType = .next
-        
-        passwordTextField.returnKeyType = .next
-        retypePasswordTextField.returnKeyType = .done
         
         emailErrorLabel.isHidden = true
         passwordErrorLabel.isHidden = true

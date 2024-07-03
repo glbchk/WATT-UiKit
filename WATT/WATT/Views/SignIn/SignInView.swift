@@ -18,8 +18,8 @@ class SignInView: UIView {
     let emailLabel = TextFieldLabel(title: "EMAIL")
     let passwordLabel = TextFieldLabel(title: "PASSWORD")
     
-    let emailTextField = TextFieldWithPlaceholder("example@email.com")
-    let passwordTextField = TextFieldWithPlaceholder("Type password here")
+    let emailTextField = TextFieldWithPlaceholder("example@email.com", textFieldType: .email, returnKeyType: .next)
+    let passwordTextField = TextFieldWithPlaceholder("Type password here", textFieldType: .password, returnKeyType: .done)
     
     let emailTextFieldView = TextFieldBackgroundView()
     let passwordTextFieldView = TextFieldBackgroundView()
@@ -79,11 +79,6 @@ class SignInView: UIView {
         
         emailErrorLabel.isHidden = true
         passwordErrorLabel.isHidden = true
-        
-        emailTextField.keyboardType = .emailAddress
-        emailTextField.returnKeyType = .next
-        
-        passwordTextField.returnKeyType = .done
         
         emailTextFieldView.textField = emailTextField
         passwordTextFieldView.textField = passwordTextField

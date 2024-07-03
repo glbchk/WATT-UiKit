@@ -15,7 +15,7 @@ class ForgotPasswordView: UIView {
     
     let emailLabel = TextFieldLabel(title: "EMAIL")
     
-    let emailTextField = TextFieldWithPlaceholder("Type email here")
+    let emailTextField = TextFieldWithPlaceholder("Type email here", textFieldType: .email, returnKeyType: .continue)
     
     init() {
         super.init(frame: .zero)

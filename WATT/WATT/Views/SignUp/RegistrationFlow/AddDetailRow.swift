@@ -40,7 +40,7 @@ class AddDetailRow: UIView {
         label.font = .systemFont(ofSize: 13)
         label.textColor = Asset.Colors.grey1
         label.adjustsFontSizeToFitWidth = true
-        label.minimumScaleFactor = 0.5
+        label.minimumScaleFactor = 1
         return label
     }()
     

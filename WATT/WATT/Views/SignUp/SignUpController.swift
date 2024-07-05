@@ -163,6 +163,20 @@ class SignUpController: BaseViewController {
                 isValidSignUp = isValid
             }
             .store(in: &cancellables)
+        
+        viewModel.signUpInProgressPublisher
+            .sink { [weak self] currentSigningUp in
+                guard let self = self else { return }
+                DispatchQueue.main.async {
+                    switch currentSigningUp {
+                    case true:
+                        self.contentView.signUpButton.activityIndicator.startAnimating()
+                    case false:
+                        self.contentView.signUpButton.activityIndicator.stopAnimating()
+                    }
+                }
+            }
+            .store(in: &cancellables)
     }
     
     private func bindSecureFieldPublishers() {

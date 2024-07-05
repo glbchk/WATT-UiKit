@@ -31,6 +31,8 @@ class SignUpViewModel: ObservableObject {
     @Published var showPassword = false
     @Published var showRetyped = false
     
+    @Published private var signUpInProgress = false
+    
     @Published var fakeDataTable = [
         "Audi X8",
         "BMW M9",
@@ -52,14 +54,17 @@ class SignUpViewModel: ObservableObject {
     func createUser(completion: @escaping ((Bool, String) -> Void)) {
         Task(priority: .medium) { [loginRepo] in
             do {
+                signUpInProgress = true
                 let user = try await loginRepo.createUser(email: email, password: password)
                 DispatchQueue.main.async { [weak self] in
                     self?.user = user
                 }
                 completion(true, "")
+                signUpInProgress = false
             } catch {
                 print("Error:", error)
                 completion(false, error.localizedDescription)
+                signUpInProgress = false
             }
             
         }
@@ -125,6 +130,11 @@ class SignUpViewModel: ObservableObject {
         }
         
         return nameAndPhoneNumberPublisher
+    }
+    
+    var signUpInProgressPublisher: AnyPublisher<Bool, Never> {
+        $signUpInProgress
+            .eraseToAnyPublisher()
     }
 
     var passwordPublisher: AnyPublisher<Bool, Never> {

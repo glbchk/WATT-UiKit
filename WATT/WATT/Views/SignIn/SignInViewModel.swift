@@ -18,6 +18,8 @@ class SignInViewModel: ObservableObject {
     @Published var user: AppUser?
     
     @Published var showPassword = false
+    @Published private var loginInProgress = false
+    @Published private var guestLoginInProgress = false
     
     private let authRepo: AuthenticationRepository
     private let loginRepo: LoginRepository
@@ -34,11 +36,14 @@ class SignInViewModel: ObservableObject {
     func logIn(completion: @escaping ((String) -> Void)) {
         Task(priority: .medium) { [authRepo, loginRepo] in
             do {
+                loginInProgress = true
                 _ = try await loginRepo.logIn(email: email, password: password)
                 authRepo.success()
+                loginInProgress = false
             } catch {
                 print("Error:", error.localizedDescription)
-                completion(error.localizedDescription)
+                completion("Wrong email or password")
+                loginInProgress = false
             }
             
         }
@@ -47,14 +52,17 @@ class SignInViewModel: ObservableObject {
     func signInAnonymously(completion: @escaping ((Result<Bool, Error>) async throws -> Void)) async throws {
         Task(priority: .medium) { [loginRepo] in
             do {
+                guestLoginInProgress = true
                 let user = try await loginRepo.signInAnonymously()
                 DispatchQueue.main.async {
                     self.user = user
                 }
                 try await completion(.success(true))
+                guestLoginInProgress = false
             } catch {
                 print("Error:", error)
                 try await completion(.failure(error))
+                guestLoginInProgress = false
             }
         }
     }
@@ -78,6 +86,16 @@ class SignInViewModel: ObservableObject {
     
     var sfPublisher: AnyPublisher<Bool, Never> {
         $showPassword
+            .eraseToAnyPublisher()
+    }
+    
+    var loginInProgressPublisher: AnyPublisher<Bool, Never> {
+        $loginInProgress
+            .eraseToAnyPublisher()
+    }
+    
+    var guestLoginInProgressPublisher: AnyPublisher<Bool, Never> {
+        $guestLoginInProgress
             .eraseToAnyPublisher()
     }
     

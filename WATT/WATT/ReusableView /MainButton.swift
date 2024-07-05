@@ -9,6 +9,8 @@ import UIKit
 
 class MainButton: UIButton {
     
+    let activityIndicator = UIActivityIndicatorView()
+    
     init(title: String, font: UIFont = .systemFont(ofSize: 18, weight: .bold), titleColor: UIColor = .white, backgroundColor: UIColor = Asset.Colors.deepBlue, cornerRadius: CGFloat = 15, size: CGSize = .init(width: 0, height: 60), shadowOpacity: Float = 0, shRadius: CGFloat = 0, shOffset: CGSize = .zero, shColor: UIColor = Asset.Colors.deepBlue) {
         super.init(frame: .zero)
         self.setTitle(title, for: .normal)
@@ -23,6 +25,7 @@ class MainButton: UIButton {
             self.constrainHeight(size.height)
         }
         self.setupShadow(opacity: shadowOpacity, radius: shRadius, offset: shOffset, color: shColor)
+        setupActivityIndicator(titleColor: titleColor)
     }
     
     init(image: UIImage, backgroundColor: UIColor = .white, cornerRadius: CGFloat = 15, size: CGSize = .init(width: 0, height: 60), shadowOpacity: Float = 0, shRadius: CGFloat = 0, shOffset: CGSize = .zero, shColor: UIColor = Asset.Colors.deepBlue) {
@@ -37,6 +40,7 @@ class MainButton: UIButton {
             self.constrainHeight(size.height)
         }
         self.setupShadow(opacity: shadowOpacity, radius: shRadius, offset: shOffset, color: shColor)
+//        setupActivityIndicator(titleColor: titleColor)
     }
     
     
@@ -57,6 +61,23 @@ class MainButton: UIButton {
             self.constrainHeight(size.height)
         }
         self.setupShadow(opacity: shadowOpacity, radius: shRadius, offset: shOffset, color: shColor)
+        setupActivityIndicator(titleColor: titleColor)
+    }
+    
+    private func setupActivityIndicator(titleColor: UIColor) {
+        activityIndicator.style = .medium
+        switch titleColor {
+        case UIColor.white:
+            activityIndicator.color = .white
+        case Asset.Colors.black:
+            activityIndicator.color = Asset.Colors.black
+        default:
+            activityIndicator.color = .white
+        }
+        activityIndicator.hidesWhenStopped = true
+        
+        self.addSubview(activityIndicator)
+        activityIndicator.anchor(top: self.topAnchor, leading: self.titleLabel?.trailingAnchor, trailing: nil, bottom: self.bottomAnchor, padding: .allSides(10))
     }
     
     

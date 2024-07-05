@@ -112,6 +112,7 @@ class SignInView: UIView {
         let noAccauntStack = hstack(noAccountLabel, signUpButton, spacing: 10)
         
         signInErrorLabel.isHidden = true
+        signInErrorLabel.textAlignment = .center
         
         let signInStack = stack(signInButton, signInErrorLabel, spacing: 6)
         
@@ -122,6 +123,8 @@ class SignInView: UIView {
         mainStack.anchor(top: blueBackgroundView.bottomAnchor, leading: self.leadingAnchor, trailing: self.trailingAnchor, bottom: nil, padding: .allSides(20))
         
         tfStack.anchor(top: nil, leading: mainStack.leadingAnchor, trailing: mainStack.trailingAnchor, bottom: nil)
+        
+        signInErrorLabel.anchor(top: nil, leading: signInStack.leadingAnchor, trailing: signInStack.trailingAnchor, bottom: nil)
         
         signInButton.anchor(top: nil, leading: mainStack.leadingAnchor, trailing: mainStack.trailingAnchor, bottom: nil)
     }

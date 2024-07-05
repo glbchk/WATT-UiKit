@@ -214,6 +214,34 @@ class SignInController: BaseViewController {
             }
             .store(in: &cancellables)
         
+        viewModel.loginInProgressPublisher
+            .sink { [weak self] currentLoging in
+                guard let self = self else { return }
+                DispatchQueue.main.async {
+                    switch currentLoging {
+                    case true:
+                        self.contentView.signInButton.activityIndicator.startAnimating()
+                    case false:
+                        self.contentView.signInButton.activityIndicator.stopAnimating()
+                    }
+                }
+            }
+            .store(in: &cancellables)
+        
+        viewModel.guestLoginInProgressPublisher
+            .sink { [weak self] currentLoging in
+                guard let self = self else { return }
+                DispatchQueue.main.async {
+                    switch currentLoging {
+                    case true:
+                        self.contentView.guestButton.activityIndicator.startAnimating()
+                    case false:
+                        self.contentView.guestButton.activityIndicator.stopAnimating()
+                    }
+                }
+            }
+            .store(in: &cancellables)
+        
     }
     
     private func bindSecureFieldPublisher() {

@@ -30,8 +30,8 @@ class AddDetailRow: UIView {
         let label = UILabel()
         label.font = .boldSystemFont(ofSize: 15)
         label.textColor = Asset.Colors.black
-        label.adjustsFontSizeToFitWidth = true
-        label.minimumScaleFactor = 0.5
+        label.adjustsFontSizeToFitWidth = false
+        label.minimumScaleFactor = 1.0
         return label
     }()
     
@@ -39,8 +39,8 @@ class AddDetailRow: UIView {
         let label = UILabel()
         label.font = .systemFont(ofSize: 13)
         label.textColor = Asset.Colors.grey1
-        label.adjustsFontSizeToFitWidth = true
-        label.minimumScaleFactor = 0.5
+        label.adjustsFontSizeToFitWidth = false
+        label.minimumScaleFactor = 1.0
         return label
     }()
     

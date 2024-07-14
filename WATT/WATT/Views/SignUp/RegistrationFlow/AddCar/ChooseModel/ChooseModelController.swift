@@ -12,12 +12,12 @@ class ChooseModelController: UIViewController {
     var cancellables = Set<AnyCancellable>()
     
     let contentView = ChooseModelView()
-    let errorAddedCarView = ErrorAddedCarView()
+    let addCarNameView = AddCarNameView()
     private var viewModel: CarsViewModel
     
     let cellHeight: CGFloat = 60
     
-//    var isModelChosen = false
+    var isCarNamed = false
     
     var isAlertShown = false
     
@@ -55,62 +55,71 @@ class ChooseModelController: UIViewController {
     
     private func setupTargets() {
         contentView.backButton.addTarget(self, action: #selector(handleBackTap), for: .touchUpInside)
-        contentView.saveButton.addTarget(self, action: #selector(saveButtonPressed), for: .touchUpInside)
+        addCarNameView.saveButton.addTarget(self, action: #selector(saveButtonPressed), for: .touchUpInside)
     }
     
     @objc private func handleBackTap() {
-        viewModel.isModelChosen = false
         self.navigationController?.popViewController(animated: true)
     }
     
     @objc private func saveButtonPressed() {
         
-        let isCarAdded = viewModel.isCarAdded(carId: viewModel.selectedCar.id ?? "")
-        
-        if !isCarAdded {
-            action?()
+        switch isCarNamed {
+            case true:
+                action?()
+                
+                self.navigationController?.popViewController(animated: true)
+                dismiss(animated: true)
+                isAlertShown = false
+            case false:
+                if viewModel.carName.isEmpty {
+                    addCarNameView.carErrorNameLabel.text = TFError.AddCar.carNameIsAlreadyUsed.description
+                    addCarNameView.carErrorNameLabel.isHidden = false
+                }
             
-            viewModel.isModelChosen = false
-            self.navigationController?.popViewController(animated: true)
-        } else {
-            showAlertIsCarDuplicated()
+                self.view.endEditing(true)
+//            shakeAnimation(of: contentView.signUpButton)
         }
- 
+        
     }
     
-    @objc private func showAlertIsCarDuplicated() {
-        let vc = AlertController(contentView: errorAddedCarView, buttonTitle: "Understood", height: UIScreen.main.bounds.height / 3) {
-            print("Ok!")
-            self.dismiss(animated: true)
-            if self.viewModel.allCarModels.count == 1 {
-                self.navigationController?.popViewController(animated: true)
-            }
-            self.isAlertShown = false
-        } completionClose: {
-            self.isAlertShown = false
-        }
+    @objc private func showTextFieldAndButton() {
+        let vc = SlideUpPanelController(contentView: addCarNameView, height: UIScreen.main.bounds.height / 3.5)
         
         isAlertShown = true
-        vc.closeButton.isHidden = true
         vc.modalPresentationStyle = .overFullScreen
         vc.modalTransitionStyle = .crossDissolve
         navigationController?.present(vc, animated: true)
     }
     
     private func bindViewToVieModel() {
-        viewModel.isModelChosenPublisher
-            .sink { [weak self] isModelChosen in
+            
+        addCarNameView.carNameTextField.textPublisher
+            .receive(on: DispatchQueue.main)
+            .assign(to: \.carName, on: viewModel)
+            .store(in: &cancellables)
+        
+        viewModel.isCarNameAddedPublisher
+            .sink { [weak self] result in
                 guard let self = self else { return }
-                
-                if isModelChosen {
-                    contentView.saveButton.backgroundColor = Asset.Colors.deepBlue
-                    contentView.saveButton.isEnabled = true
-                } else {
-                    contentView.saveButton.backgroundColor = Asset.Colors.grey1
-                    contentView.saveButton.isEnabled = false
-                }
+                switch result {
+                    case .success:
+                        addCarNameView.carErrorNameLabel.isHidden = true
+                        addCarNameView.saveButton.backgroundColor = Asset.Colors.deepBlue
+                        addCarNameView.saveButton.isEnabled = true
+                    
+                        isCarNamed = true
+                    case .failure(let failure):
+                        addCarNameView.carErrorNameLabel.text = failure.description
+                        addCarNameView.carErrorNameLabel.isHidden = false
+                        addCarNameView.saveButton.backgroundColor = Asset.Colors.grey1
+                        addCarNameView.saveButton.isEnabled = false
+                    
+                        isCarNamed = false
+                    }
             }
             .store(in: &cancellables)
+        
     }
     
 }
@@ -139,7 +148,7 @@ extension ChooseModelController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let cell = contentView.carModelTableView.cellForRow(at: indexPath) as! ChooseModelCell
         cell.updateState(true)
-        viewModel.isModelChosen = true
+        showTextFieldAndButton()
         
         viewModel.selectedCarModelID = viewModel.allCarModels[indexPath.item].id ?? "No ID"
     }
@@ -147,7 +156,6 @@ extension ChooseModelController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
         let cell = contentView.carModelTableView.cellForRow(at: indexPath) as! ChooseModelCell
         cell.updateState(false)
-        viewModel.isModelChosen = false
         
         viewModel.selectedCarModelID = ""
     }

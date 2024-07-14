@@ -40,9 +40,10 @@ class AddCarController: UIViewController {
         if !viewModel.cars.isEmpty && sections.count == 1 {
             sections.insert(.addedCars, at: 0)
         }
-        
-        contentView.carsCollectionView.showLoading()
-        
+        if viewModel.cars.isEmpty {
+            contentView.carsCollectionView.showLoading()
+        }
+            
         viewModel.loadBrands {
             self.contentView.carsCollectionView.stopLoading()
             self.contentView.carsCollectionView.reloadData()
@@ -124,9 +125,9 @@ extension AddCarController: UICollectionViewDelegate, UICollectionViewDataSource
     func addedCarsViewCell(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: Identifiers.CollectionCell.carCell, for: indexPath) as? CarBrandCell else { return CarBrandCell() }
         
-        cell.subtitleLabel.textColor = Asset.Colors.deepBlue
-        
         cell.titleLabel.text = "\(viewModel.cars[indexPath.item].brandName ?? ""), \(viewModel.cars[indexPath.item].carModel ?? "")"
+        cell.topLabel.isHidden = false
+        cell.topLabel.text = "\(viewModel.cars[indexPath.item].carName ?? "")"
         cell.subtitleLabel.isHidden = false
         cell.subtitleLabel.text = "Connected"
         cell.squareImageView?.loadFrom(URLAddress: viewModel.cars[indexPath.item].brandThumbnailLogoURL ?? "")
@@ -137,10 +138,7 @@ extension AddCarController: UICollectionViewDelegate, UICollectionViewDataSource
     func allBrandsViewCell(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: Identifiers.CollectionCell.carCell, for: indexPath) as? CarBrandCell else { return CarBrandCell() }
         
-        cell.subtitleLabel.textColor = Asset.Colors.grey1
-        
         cell.titleLabel.text = viewModel.allCarBrands[indexPath.item].brandName
-        cell.subtitleLabel.isHidden = true
         cell.squareImageView?.loadFrom(URLAddress: viewModel.allCarBrands[indexPath.item].brandThumbnailLogoURL ?? "")
         
         return cell
@@ -187,44 +185,25 @@ extension AddCarController: UICollectionViewDelegate, UICollectionViewDataSource
                 
                 self.contentView.carsCollectionView.reloadData()
             })
-                //Top Section
-                vc.contentView.topSection.logoView.loadFrom(URLAddress: viewModel.cars[indexPath.item].brandThumbnailLogoURL ?? "")
-                vc.contentView.topSection.brandNameLabel.text = viewModel.cars[indexPath.item].brandName
-                vc.contentView.topSection.modelLabel.text = viewModel.cars[indexPath.item].carModel
-                vc.contentView.topSection.versionLabel.text = viewModel.cars[indexPath.item].carVersion
-                vc.contentView.topSection.idLabel.text = viewModel.cars[indexPath.item].id
             
-                //General Section
-                vc.contentView.realRangeRow.detailsLabel.text = viewModel.cars[indexPath.item].worstRange
-                vc.contentView.fullBatteryRow.detailsLabel.text = viewModel.cars[indexPath.item].fullBattery
-                vc.contentView.usableBatteryRow.detailsLabel.text = viewModel.cars[indexPath.item].usableBattery
-                vc.contentView.plugTypeRow.detailsLabel.text = viewModel.cars[indexPath.item].plugType
-            
-                //Range Section
-                vc.contentView.cityRange.secondLabel.text = viewModel.cars[indexPath.item].bestRangeCity
-                vc.contentView.cityRange.thirdLabel.text = viewModel.cars[indexPath.item].worstRangeCity
-                vc.contentView.highwayRange.secondLabel.text = viewModel.cars[indexPath.item].bestRangeHighway
-                vc.contentView.highwayRange.thirdLabel.text = viewModel.cars[indexPath.item].worstRangeHighway
-                vc.contentView.combinedRange.secondLabel.text = viewModel.cars[indexPath.item].bestRangeCombined
-                vc.contentView.combinedRange.thirdLabel.text = viewModel.cars[indexPath.item].worstRangeCombined
-            
-                //Performance Section
-                vc.contentView.accelerationRow.detailsLabel.text = viewModel.cars[indexPath.item].acceleration
-                vc.contentView.topSpeedRow.detailsLabel.text = viewModel.cars[indexPath.item].topSpeed
+            vc.selectedAddedCarID = indexPath.item
                 
-                self.navigationController?.pushViewController(vc, animated: true)
+            self.navigationController?.pushViewController(vc, animated: true)
                 
             case .allBrands:
                 let vc = ChooseModelController(viewModel: viewModel, action: {
                     
                     self.viewModel.loadCarDetails { [self] in
                         
-                        viewModel.cars.insert(viewModel.selectedCar, at: 0)
+                        viewModel.selectedCar?.carName = viewModel.carName
+                        guard let selectedCar = viewModel.selectedCar else { return }
+                        viewModel.cars.insert(selectedCar, at: 0)
                         
                         if viewModel.cars.count >= 1 && sections.count == 1 {
                             sections.insert(.addedCars, at: 0)
                         }
-                        viewModel.selectedCar = Car()
+                        viewModel.selectedCar = nil
+                        viewModel.carName = ""
                         
                         contentView.carsCollectionView.reloadData()
                     }

@@ -32,7 +32,7 @@ struct DBUser: Codable {
         self.isAnonymous = user.isAnonymous
         self.paymentMethods = [.init(provider: .americanExpress, cardName: "", cardNumber: "", expiryDate: "", cvv: "", isDefault: false)]
         self.defaultPaymentMethod = paymentMethods?.first
-        self.cars = [.init(id: "", brandName: "", brandThumbnailLogoURL: "", carModel: "", carVersion: "", carImage: "", fullBattery: "", usableBattery: "", plugType: "", seats: "", weight: "", width: "", height: "", bestRange: "", worstRange: "", acceleration: "", topSpeed: "", worstRangeCity: "", worstRangeHighway: "", worstRangeCombined: "", bestRangeCity: "", bestRangeHighway: "", bestRangeCombined: "")]
+        self.cars = nil
 //        self.location = nil
     }
     

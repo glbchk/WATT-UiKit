@@ -34,6 +34,10 @@ class ChooseModelView: UIView {
     
     let carModelTableView = UITableView()
     
+    let carNameLabel = TextFieldLabel(title: "CAR NAME")
+    let carNameTextField = TextFieldWithPlaceholder("Lucy's car...")
+    
+    let bgSaveCarButton = UIView()
     let saveButton = MainButton(title: "Save")
     
     init() {
@@ -52,7 +56,7 @@ class ChooseModelView: UIView {
         setupBackButton()
         setupTitleLabel()
         setupWhiteFooter()
-        setupSaveButton()
+//        setupSaveButton()
         setupTableView()
     }
     
@@ -81,12 +85,29 @@ class ChooseModelView: UIView {
     private func setupTableView() {
         self.addSubview(carModelTableView)
         
-        carModelTableView.anchor(top: whiteBackgroundView.topAnchor, leading: whiteBackgroundView.leadingAnchor, trailing: whiteBackgroundView.trailingAnchor, bottom: saveButton.topAnchor, padding: .init(top: 20, left: 0, bottom: 0, right: 0))
+        carModelTableView.anchor(top: whiteBackgroundView.topAnchor, leading: whiteBackgroundView.leadingAnchor, trailing: whiteBackgroundView.trailingAnchor, bottom: whiteBackgroundView.bottomAnchor, padding: .init(top: 20, left: 0, bottom: 0, right: 0))
     }
     
-    private func setupSaveButton() {
-        whiteBackgroundView.addSubview(saveButton)
-        saveButton.anchor(top: nil, leading: self.leadingAnchor, trailing: self.trailingAnchor, bottom: self.bottomAnchor, padding: .init(top: 0, left: 20, bottom: 50, right: 20))
-    }
+//    private func setupSaveButton() {
+//        whiteBackgroundView.addSubview(saveButton)
+//        saveButton.anchor(top: nil, leading: self.leadingAnchor, trailing: self.trailingAnchor, bottom: self.bottomAnchor, padding: .init(top: 0, left: 20, bottom: 50, right: 20))
+//    }
+//    
+//    private func saveAddedCarsButton() {
+//        let carNameTextFieldView = TextFieldBackgroundView(tf: carNameTextField)
+//        let nameStack = stack(carNameLabel, carNameTextFieldView, spacing: 6)
+//        
+//        bgSaveCarButton.backgroundColor = .white
+//        bgSaveCarButton.heightAnchor.constraint(equalToConstant: 224).isActive = true
+//        bgSaveCarButton.setupShadow(opacity: 0.1, radius: 30, color: .black)
+//        
+//        let stack = stack(nameStack, saveButton, spacing: 12)
+//        
+//        bgSaveCarButton.addSubview(stack)
+//        
+//        whiteBackgroundView.addSubview(bgSaveCarButton)
+//        bgSaveCarButton.anchor(top: nil, leading: self.leadingAnchor, trailing: self.trailingAnchor, bottom: self.bottomAnchor, padding: .init(top: 0, left: 0, bottom: 0, right: 0))
+//        stack.anchor(top: bgSaveCarButton.topAnchor, leading: bgSaveCarButton.leadingAnchor, trailing: bgSaveCarButton.trailingAnchor, bottom: nil, padding: .init(top: 20, left: 20, bottom: 0, right: 20))
+//    }
     
 }

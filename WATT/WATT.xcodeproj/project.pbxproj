@@ -49,7 +49,7 @@
 		064A90312B79B341003E1734 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 064A90302B79B341003E1734 /* GoogleService-Info.plist */; };
 		065F72AC2B50CB8000CF9C5F /* MainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 065F72AB2B50CB8000CF9C5F /* MainViewModel.swift */; };
 		065F72AF2B50CCC900CF9C5F /* SignUpViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 065F72AE2B50CCC900CF9C5F /* SignUpViewModel.swift */; };
-		066376112C30C546007BC9CA /* ErrorAddedCarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 066376102C30C546007BC9CA /* ErrorAddedCarView.swift */; };
+		066376112C30C546007BC9CA /* AddCarNameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 066376102C30C546007BC9CA /* AddCarNameView.swift */; };
 		067823A82BD6F9890086E19A /* CarDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 067823A72BD6F9890086E19A /* CarDetailsView.swift */; };
 		067823AA2BD6F99A0086E19A /* CarDetailsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 067823A92BD6F99A0086E19A /* CarDetailsController.swift */; };
 		06A5A4572B6DF89A00C05BCC /* DBUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06A5A4562B6DF89A00C05BCC /* DBUser.swift */; };
@@ -78,6 +78,7 @@
 		06F12F492BD0403400C9AE27 /* Apollo in Frameworks */ = {isa = PBXBuildFile; productRef = 06F12F482BD0403400C9AE27 /* Apollo */; };
 		06F12F4B2BD0403F00C9AE27 /* ApolloAPI in Frameworks */ = {isa = PBXBuildFile; productRef = 06F12F4A2BD0403F00C9AE27 /* ApolloAPI */; };
 		06F5C9102BE94E0300C02377 /* EmptyHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06F5C90F2BE94E0300C02377 /* EmptyHeader.swift */; };
+		06F8D4FB2C364EF10002D4A1 /* SlideUpPanelController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06F8D4FA2C364EF10002D4A1 /* SlideUpPanelController.swift */; };
 		29282FAD2B8F68ED0056A185 /* SearchFieldView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29282FAC2B8F68EC0056A185 /* SearchFieldView.swift */; };
 		29282FAF2B8F811C0056A185 /* RoundedButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29282FAE2B8F811B0056A185 /* RoundedButton.swift */; };
 		29282FB22B8FBA570056A185 /* SideMenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29282FB12B8FBA570056A185 /* SideMenuView.swift */; };
@@ -166,7 +167,7 @@
 		064A90302B79B341003E1734 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		065F72AB2B50CB8000CF9C5F /* MainViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewModel.swift; sourceTree = "<group>"; };
 		065F72AE2B50CCC900CF9C5F /* SignUpViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewModel.swift; sourceTree = "<group>"; };
-		066376102C30C546007BC9CA /* ErrorAddedCarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorAddedCarView.swift; sourceTree = "<group>"; };
+		066376102C30C546007BC9CA /* AddCarNameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddCarNameView.swift; sourceTree = "<group>"; };
 		067823A72BD6F9890086E19A /* CarDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarDetailsView.swift; sourceTree = "<group>"; };
 		067823A92BD6F99A0086E19A /* CarDetailsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarDetailsController.swift; sourceTree = "<group>"; };
 		06A5A4562B6DF89A00C05BCC /* DBUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DBUser.swift; sourceTree = "<group>"; };
@@ -188,6 +189,7 @@
 		06ED5B502BD04C3D00202332 /* CarBrandCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarBrandCell.swift; sourceTree = "<group>"; };
 		06ED5B522BD04D0400202332 /* ChooseModelCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChooseModelCell.swift; sourceTree = "<group>"; };
 		06F5C90F2BE94E0300C02377 /* EmptyHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyHeader.swift; sourceTree = "<group>"; };
+		06F8D4FA2C364EF10002D4A1 /* SlideUpPanelController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlideUpPanelController.swift; sourceTree = "<group>"; };
 		29282FAC2B8F68EC0056A185 /* SearchFieldView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchFieldView.swift; sourceTree = "<group>"; };
 		29282FAE2B8F811B0056A185 /* RoundedButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundedButton.swift; sourceTree = "<group>"; };
 		29282FB12B8FBA570056A185 /* SideMenuView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideMenuView.swift; sourceTree = "<group>"; };
@@ -295,7 +297,7 @@
 			children = (
 				06102BA22B9426140063FEC5 /* ChooseModelController.swift */,
 				06102BA42B9426200063FEC5 /* ChooseModelView.swift */,
-				066376102C30C546007BC9CA /* ErrorAddedCarView.swift */,
+				066376102C30C546007BC9CA /* AddCarNameView.swift */,
 			);
 			path = ChooseModel;
 			sourceTree = "<group>";
@@ -576,6 +578,7 @@
 				29D8B6672B5992F800196543 /* BlueBackgroundView.swift */,
 				29D8B66E2B59AB5800196543 /* TextFieldWithPlaceholder.swift */,
 				29D8B6712B59BBD200196543 /* AlertController.swift */,
+				06F8D4FA2C364EF10002D4A1 /* SlideUpPanelController.swift */,
 				296C27E22B67F7930052D350 /* SuccessfulAlertView.swift */,
 				29282FAC2B8F68EC0056A185 /* SearchFieldView.swift */,
 				29282FAE2B8F811B0056A185 /* RoundedButton.swift */,
@@ -756,7 +759,7 @@
 				06102BA32B9426140063FEC5 /* ChooseModelController.swift in Sources */,
 				06B4D8E32B4F7BD300DD78CB /* AutenticationRepository.swift in Sources */,
 				298B7F212B697DA2003A36C7 /* AddDetailsController.swift in Sources */,
-				066376112C30C546007BC9CA /* ErrorAddedCarView.swift in Sources */,
+				066376112C30C546007BC9CA /* AddCarNameView.swift in Sources */,
 				0622D9072B92393900A84437 /* PaymentMethodCell.swift in Sources */,
 				298B7F1F2B697B47003A36C7 /* AddDetailsView.swift in Sources */,
 				29D8B65C2B59574E00196543 /* UIView+Stacking.swift in Sources */,
@@ -772,6 +775,7 @@
 				06ED5B532BD04D0400202332 /* ChooseModelCell.swift in Sources */,
 				060363FD2B688FF3005B48ED /* UserRemoteSource.swift in Sources */,
 				06A5A4572B6DF89A00C05BCC /* DBUser.swift in Sources */,
+				06F8D4FB2C364EF10002D4A1 /* SlideUpPanelController.swift in Sources */,
 				0622D9172B923CF700A84437 /* ProfileRow.swift in Sources */,
 				29282FAF2B8F811C0056A185 /* RoundedButton.swift in Sources */,
 				06ED5B4A2BD049EA00202332 /* NetworkInterceptorProvider.swift in Sources */,

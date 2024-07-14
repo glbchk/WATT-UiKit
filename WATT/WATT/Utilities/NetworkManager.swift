@@ -12,9 +12,9 @@ import ChargeTripAPI
 
 class NetworkManager {
     
-//    static let shared = Network()
-//    
-//    private init() {}
+    static let shared = NetworkManager()
+    
+    private init() {}
     
     let store = ApolloStore()
     private(set) lazy var apollo: ApolloClient = {
@@ -25,38 +25,14 @@ class NetworkManager {
         return ApolloClient(networkTransport: networkTransport, store: store)
     }()
     
-    @Published var allCarBrands: [CarBrand] = []
-    @Published var allCarModels: [CarModel] = []
-    
-    @Published var selectedCar = Car()
-    
-    
-    func removeBrandDuplicates(brands: [BrandListAllQuery.Data.CarList]) -> [CarBrand] {
-        
-        var sortedBrands: [CarBrand] = []
-        
-        var checkBrand: String?
-        
-        for brand in brands {
-            if checkBrand != brand.naming?.make {
-                sortedBrands.append(CarBrand(id: brand.id, brandName: brand.naming?.make, modelName: brand.naming?.model, brandThumbnailLogoURL: brand.media?.brand?.thumbnail_url))
-                checkBrand = brand.naming?.make
-            }
-        }
-        
-        return sortedBrands
-    }
-    
-    func loadCarBrands(completion: @escaping () -> Void) { //(completion: @escaping () -> Void)
-        apollo.fetch(query: BrandListAllQuery()) { [weak self] result in
-            guard let self = self else { return }
+    func loadCarBrands(completion: @escaping ([BrandListAllQuery.Data.CarList]) -> Void) { //(completion: @escaping () -> Void)
+        apollo.fetch(query: BrandListAllQuery()) { result in
             
             switch result {
             case .success(let graphQLResult):
                 let brands = graphQLResult.data?.carList as! [BrandListAllQuery.Data.CarList]
                 
-                self.allCarBrands = removeBrandDuplicates(brands: brands)
-                completion()
+                completion(brands)
                 
                 if let errors = graphQLResult.errors {
                     print(errors)
@@ -68,33 +44,14 @@ class NetworkManager {
         }
     }
     
-    
-    func removeModelDuplicates(models: [ModelListAllQuery.Data.CarList]) -> [CarModel] {
-        
-        var sortedModels: [CarModel] = []
-        
-        var checkModel: String?
-        
-        for model in models {
-            if checkModel != model.naming?.model {
-                sortedModels.append(CarModel(id: model.id, carModel: model.naming?.model, carVersion: model.naming?.version, brandLogoURL: model.media?.brand?.url))
-                checkModel = model.naming?.model
-            }
-        }
-        
-        return sortedModels
-    }
-    
-    func loadCarModels(brandName: String, completion: @escaping () -> Void) {
-        apollo.fetch(query: ModelListAllQuery(brandName: brandName)) { [weak self] result in
-            guard let self = self else { return }
+    func loadCarModels(brandName: String, completion: @escaping ([ModelListAllQuery.Data.CarList]) -> Void) {
+        apollo.fetch(query: ModelListAllQuery(brandName: brandName)) { result in
             
             switch result {
             case .success(let graphQLResult):
                 let models = graphQLResult.data?.carList as! [ModelListAllQuery.Data.CarList]
                 
-                self.allCarModels = removeModelDuplicates(models: models)
-                completion()
+                completion(models)
                 
                 if let errors = graphQLResult.errors {
                     print(errors)
@@ -106,17 +63,15 @@ class NetworkManager {
         }
     }
     
-    func loadCarDetails(carModelID: String, completion: @escaping () -> Void) { //(completion: @escaping () -> Void)
-        apollo.fetch(query: CarDetailsQuery(vehicleId: carModelID)) { [weak self] result in
-            guard let self = self else { return }
+    func loadCarDetails(carModelID: String, completion: @escaping (Car) -> Void) { //(completion: @escaping () -> Void)
+        apollo.fetch(query: CarDetailsQuery(vehicleId: carModelID)) { result in
             
             switch result {
             case .success(let graphQLResult):
-                let car = graphQLResult.data?.vehicle as? CarDetailsQuery.Data.Vehicle
+                guard let car = graphQLResult.data?.vehicle else { return }
+                let convertedCar = Car(graphQLResult: car)
 
-                self.selectedCar = Car(id: car?.id, brandName: car?.naming.make, brandThumbnailLogoURL: car?.media.make.url, carModel: car?.naming.model, carVersion: car?.naming.version, carImage: car!.media.image.url, fullBattery: car?.battery.full_kwh.description, usableBattery: car?.battery.usable_kwh.description, plugType: car?.connectors.first?.standard.value?.rawValue, seats: car?.body.seats.description, weight: car!.body.weight.nominal?.description, width: car?.body.width.description, height: car?.body.height.description, bestRange: car?.range.chargetrip_range.best?.description, worstRange: car?.range.chargetrip_range.worst?.description, acceleration: car?.performance?.acceleration?.description, topSpeed: car?.performance?.top_speed?.description, worstRangeCity: car?.range.worst.city.description, worstRangeHighway: car?.range.worst.highway.description, worstRangeCombined: car?.range.worst.combined.description, bestRangeCity: car?.range.best.city.description, bestRangeHighway: car?.range.best.highway.description, bestRangeCombined: car?.range.best.combined.description)
-
-                completion()
+                completion(convertedCar)
                 
                 if let errors = graphQLResult.errors {
                     print(errors)

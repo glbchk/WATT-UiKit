@@ -31,6 +31,14 @@ class CarBrandCell: UICollectionViewCell {
     }()
 
 
+    let topLabel: UILabel = {
+        let label = UILabel()
+        label.font = UIFont.systemFont(ofSize: 11, weight: .bold)
+        label.textColor = Asset.Colors.grey1
+        
+        return label
+    }()
+    
     let titleLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 15, weight: .bold)
@@ -83,7 +91,10 @@ class CarBrandCell: UICollectionViewCell {
         squareView.addSubview(image)
         image.centerInSuperview()
         
-        let labelsStack = stack(titleLabel, subtitleLabel, spacing: 4)
+        topLabel.isHidden = true
+        subtitleLabel.isHidden = true
+        
+        let labelsStack = stack(topLabel, titleLabel, subtitleLabel, spacing: 3)
         let stack = hstack(squareView, labelsStack, rightArrow, spacing: 15)
         
         self.addSubview(stack)

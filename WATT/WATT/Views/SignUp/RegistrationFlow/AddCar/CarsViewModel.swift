@@ -9,11 +9,10 @@ import UIKit
 import Foundation
 import Combine
 import Swinject
+import ChargeTripAPI
 
 class CarsViewModel: ObservableObject {
     private var cancellables = Set<AnyCancellable>()
-    
-    private var networkManager = NetworkManager()
     
     @Published var selectedBrandName: String = ""
     @Published var selectedCarModelID: String = ""
@@ -21,11 +20,13 @@ class CarsViewModel: ObservableObject {
     @Published var allCarBrands: [CarBrand] = []
     @Published var allCarModels: [CarModel] = []
 
-    @Published var selectedCar = Car()
+    var selectedCar: Car? = nil
     
     @Published var cars: [Car] = []
     
-    @Published var isModelChosen = false
+    @Published var carName = ""
+    
+    @Published var isCarValid = false
     
     init(dependencies: Resolver) {
     
@@ -33,9 +34,21 @@ class CarsViewModel: ObservableObject {
     
     func loadBrands(completion: @escaping () -> Void) {
         if allCarBrands.isEmpty {
-            networkManager.loadCarBrands { [weak self] in
-                guard let self = self else { return }
-                self.allCarBrands = networkManager.allCarBrands
+            NetworkManager.shared.loadCarBrands { carBrands in
+                
+                var sortedBrands: [CarBrand] = []
+                
+                var checkBrand: String?
+                
+                //Remove dublicates
+                for brand in carBrands {
+                    if checkBrand != brand.naming?.make {
+                        sortedBrands.append(CarBrand(id: brand.id, brandName: brand.naming?.make, modelName: brand.naming?.model, brandThumbnailLogoURL: brand.media?.brand?.thumbnail_url))
+                        checkBrand = brand.naming?.make
+                    }
+                }
+                
+                self.allCarBrands = sortedBrands
                 
                 completion()
             }
@@ -43,33 +56,30 @@ class CarsViewModel: ObservableObject {
     }
     
     func loadCarModels(completion: @escaping () -> Void) {
-        networkManager.loadCarModels(brandName: selectedBrandName) { [weak self] in
-            guard let self = self else { return }
-            self.allCarModels = networkManager.allCarModels
+        NetworkManager.shared.loadCarModels(brandName: selectedBrandName) { carModels in
+            
+            var sortedModels: [CarModel] = []
+            
+            var checkModel: String?
+            
+            //Remove dublicates
+            for model in carModels {
+                if checkModel != model.naming?.model {
+                    sortedModels.append(CarModel(id: model.id, carModel: model.naming?.model, carVersion: model.naming?.version, brandLogoURL: model.media?.brand?.url))
+                    checkModel = model.naming?.model
+                }
+            }
+            
+            self.allCarModels = sortedModels
             
             completion()
         }
     }
     
-    func isCarAdded(carId: String) -> Bool {
-        var result = false
-        
-        for index in 0..<cars.count {
-            if selectedCarModelID != cars[index].id {
-                result = false
-            } else {
-                result = true
-                break
-            }
-        }
-        
-        return result
-    }
-    
     func loadCarDetails(completion: @escaping () -> Void) {
-        networkManager.loadCarDetails(carModelID: selectedCarModelID) { [weak self] in
-            guard let self = self else { return }
-            self.selectedCar = networkManager.selectedCar
+        NetworkManager.shared.loadCarDetails(carModelID: selectedCarModelID) { car in
+            
+            self.selectedCar = car
             
             completion()
         }
@@ -93,7 +103,14 @@ class CarsViewModel: ObservableObject {
             $cars
                 .map { allCars in
                     if !allCars.isEmpty {
-                        return "\(allCars[0].brandName ?? ""), \(allCars[0].carModel ?? "No model name")"
+                        var title = ""
+                        
+                        for car in allCars {
+                            title.append("\(car.brandName ?? ""), ")
+                        }
+                        let cutComma = title.dropLast(2)
+
+                        return "\(cutComma)"
                     } else {
                         return ""
                     }
@@ -104,16 +121,12 @@ class CarsViewModel: ObservableObject {
         return carPublisher
     }
     
-    var isModelChosenPublisher: AnyPublisher<Bool, Never> {
-        $isModelChosen
-            .map {
-                if $0 == true {
-                    return true
-                } else {
-                    return false
-                }
-            }
+    var isCarNameAddedPublisher: AnyPublisher<Result<Bool, TFError.AddCar>, Never> {
+        $carName
+            .debounce(for: .seconds(0.7), scheduler: RunLoop.main)
+            .map { $0.isEmpty ? .success(false) : ($0.count < 3 ? .failure(.invalidCarNameLength) : .success(true)) }
             .eraseToAnyPublisher()
     }
+    
     
 }

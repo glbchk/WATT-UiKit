@@ -14,6 +14,8 @@ class CarDetailsController: BaseViewController, UITextFieldDelegate {
     let contentView = CarDetailsView()
     private var viewModel: CarsViewModel
     
+    var selectedAddedCarID: Int = 0
+    
     let deleteAction: (() -> Void)?
     
     init(viewModel: CarsViewModel, deleteAction: (() -> Void)?) {
@@ -32,7 +34,37 @@ class CarDetailsController: BaseViewController, UITextFieldDelegate {
         view.addSubview(contentView)
         contentView.fillSuperview()
         
+        setupData()
+        
         setupTargets()
+    }
+    
+    private func setupData() {
+        
+        //Top Section
+        contentView.topSection.logoView.loadFrom(URLAddress: viewModel.cars[selectedAddedCarID].brandThumbnailLogoURL ?? "")
+        contentView.topSection.brandNameLabel.text = viewModel.cars[selectedAddedCarID].brandName
+        contentView.topSection.modelLabel.text = viewModel.cars[selectedAddedCarID].carModel
+        contentView.topSection.versionLabel.text = viewModel.cars[selectedAddedCarID].carVersion
+        contentView.topSection.idLabel.text = viewModel.cars[selectedAddedCarID].id
+        
+        //General Section
+        contentView.realRangeRow.detailsLabel.text = viewModel.cars[selectedAddedCarID].worstRange
+        contentView.fullBatteryRow.detailsLabel.text = viewModel.cars[selectedAddedCarID].fullBattery
+        contentView.usableBatteryRow.detailsLabel.text = viewModel.cars[selectedAddedCarID].usableBattery
+        contentView.plugTypeRow.detailsLabel.text = viewModel.cars[selectedAddedCarID].plugType
+        
+        //Range Section
+        contentView.cityRange.secondLabel.text = viewModel.cars[selectedAddedCarID].bestRangeCity
+        contentView.cityRange.thirdLabel.text = viewModel.cars[selectedAddedCarID].worstRangeCity
+        contentView.highwayRange.secondLabel.text = viewModel.cars[selectedAddedCarID].bestRangeHighway
+        contentView.highwayRange.thirdLabel.text = viewModel.cars[selectedAddedCarID].worstRangeHighway
+        contentView.combinedRange.secondLabel.text = viewModel.cars[selectedAddedCarID].bestRangeCombined
+        contentView.combinedRange.thirdLabel.text = viewModel.cars[selectedAddedCarID].worstRangeCombined
+        
+        //Performance Section
+        contentView.accelerationRow.detailsLabel.text = viewModel.cars[selectedAddedCarID].acceleration
+        contentView.topSpeedRow.detailsLabel.text = viewModel.cars[selectedAddedCarID].topSpeed
     }
     
     private func setupTargets() {

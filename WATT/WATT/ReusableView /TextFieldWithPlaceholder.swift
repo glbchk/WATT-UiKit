@@ -21,8 +21,9 @@ class TextFieldWithPlaceholder: UITextField {
 
     init(_ placeholder: String, inputText: String? = nil, textFieldType: TextFieldType = .regular, keyboardType: UIKeyboardType = .default, returnKeyType: UIReturnKeyType = .default) {
         super.init(frame: .zero)
-        self.placeholder = placeholder
+        self.attributedPlaceholder = .init(string: placeholder, attributes: [NSAttributedString.Key.foregroundColor : Asset.Colors.grey2])
         self.inputText = inputText
+        self.textColor = .black
         self.keyboardType = keyboardType
         self.returnKeyType = returnKeyType
         

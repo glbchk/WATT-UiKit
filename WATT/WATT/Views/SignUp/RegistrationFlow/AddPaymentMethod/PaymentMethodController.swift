@@ -67,6 +67,7 @@ class PaymentMethodController: UIViewController {
         paymentMethodViewModel.cardNumber = ""
         paymentMethodViewModel.expiry = ""
         paymentMethodViewModel.cvv = ""
+        paymentMethodViewModel.cardProvider = .unknown
         
         let vc = AddAndEditPMController(viewModel: paymentMethodViewModel, toggleAction: { [self] in
             paymentMethodViewModel.defaultMethodToggle()
@@ -107,7 +108,7 @@ extension PaymentMethodController: UITableViewDelegate, UITableViewDataSource {
         cell.selectionStyle = .none
         cell.methodLogoView.image = paymentMethodViewModel.addedPaymentMethods[indexPath.item].provider?.icon
         cell.titleLabel.text = paymentMethodViewModel.addedPaymentMethods[indexPath.item].cardName
-        cell.subtitleLabel.text = hideCardNumbers(card: paymentMethodViewModel.addedPaymentMethods[indexPath.item].cardNumber)
+        cell.subtitleLabel.text = paymentMethodViewModel.hideCardNumbers(card: paymentMethodViewModel.addedPaymentMethods[indexPath.item].cardNumber)
         if paymentMethodViewModel.addedPaymentMethods[indexPath.item].isDefault == true {
             cell.defaultMethodLabel.isHidden = false
         } else {
@@ -159,16 +160,6 @@ extension PaymentMethodController: UITableViewDelegate, UITableViewDataSource {
         vc.contentView.expiryTextFieldView.textField?.textColor = Asset.Colors.darkGrey
         
         self.navigationController?.pushViewController(vc, animated: true)
-    }
-    
-    private func hideCardNumbers(card number: String) -> String {
-        var result = ""
-        
-        let firstTwoDigits = number.prefix(2)
-        let lastFourDigits = number.suffix(4)
-        result = "\(firstTwoDigits)****\(lastFourDigits)"
-        
-        return result
     }
     
 }

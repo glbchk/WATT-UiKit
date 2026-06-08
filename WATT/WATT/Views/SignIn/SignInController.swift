@@ -44,7 +44,6 @@ class SignInController: BaseViewController {
     }
     
     private func setupTargets() {
-        contentView.addCarTempButton.addTarget(self, action: #selector(addCarTempButtonPressed), for: .touchUpInside)
         contentView.addPaymentMethodTempButton.addTarget(self, action: #selector(addPaymentMethodTempButtonPressed), for: .touchUpInside)
         contentView.forgotButton.addTarget(self, action: #selector(forgotPasswordButtonPressed), for: .touchUpInside)
         contentView.signUpButton.addTarget(self, action: #selector(signUpButtonPressed), for: .touchUpInside)
@@ -105,13 +104,7 @@ class SignInController: BaseViewController {
         navigationController?.present(vc, animated: true)
     }
     
-    @objc private func addCarTempButtonPressed() {
-        if let signUpViewModel = viewModel.signUpViewModel {
-            let vc = AddCarController(viewModel: signUpViewModel)
-            navigationController?.pushViewController(vc, animated: true)
-        }
-    }
-    
+    //TO BE DELETED
     @objc private func addPaymentMethodTempButtonPressed() {
         if let paymentMethodViewModel = viewModel.signUpViewModel?.paymentMethodViewModel, let signUpViewModel = viewModel.signUpViewModel {
             let vc = PaymentMethodController(viewModel: signUpViewModel, paymentMethodViewModel: paymentMethodViewModel, action: {

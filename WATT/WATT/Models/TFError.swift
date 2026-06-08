@@ -51,4 +51,18 @@ enum TFError: Error {
             }
         }
     }
+    
+    enum AddCar: Error {
+        case invalidCarNameLength
+        case carNameIsAlreadyUsed
+        
+        var description: String {
+            switch self {
+            case .invalidCarNameLength:
+                "Car name should have at least 3 symbols!"
+            case .carNameIsAlreadyUsed:
+                "Car name is used already!"
+            }
+        }
+    }
 }

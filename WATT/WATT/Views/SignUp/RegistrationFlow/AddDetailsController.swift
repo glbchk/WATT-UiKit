@@ -40,12 +40,8 @@ class AddDetailsController: BaseViewController {
         contentView.completeLaterButton.addTarget(self, action: #selector(completeLaterPressed), for: .touchUpInside)
     }
     
-    @objc private func completeLaterPressed() {
-        viewModel.successfulRegistration()
-    }
-    
-    @objc private func handleAddCarRowTap() {
-        let vc = AddCarController(viewModel: viewModel)
+    @objc private func handleNameRowTap() {
+        let vc = AddNameAndPhoneNumberController(viewModel: viewModel)
         self.navigationController?.pushViewController(vc, animated: true)
     }
     
@@ -61,13 +57,22 @@ class AddDetailsController: BaseViewController {
         self.navigationController?.pushViewController(vc, animated: true)
     }
     
-    @objc private func handleNameRowTap() {
-        let vc = AddNameAndPhoneNumberController(viewModel: viewModel)
+    @objc private func handleAddCarRowTap() {
+        guard let carsViewModel = viewModel.carsViewModel else { return }
+        let vc = AddCarController(viewModel: carsViewModel, action: {
+            self.viewModel.cars = carsViewModel.cars
+        })
+        
         self.navigationController?.pushViewController(vc, animated: true)
+    }
+    
+    @objc private func completeLaterPressed() {
+        viewModel.successfulRegistration()
     }
     
     private func bindViewModel() {
         //add here car and payment method publishers
+        contentView.carRow.publisher = viewModel.carsViewModel?.createCarPublisher()
         contentView.paymentMethodRow.publisher = viewModel.paymentMethodViewModel?.createPaymentMethodPublisher()
         contentView.nameAndPhoneNumberRow.publisher = viewModel.createNameAndPhoneNumberPublisher()
     }

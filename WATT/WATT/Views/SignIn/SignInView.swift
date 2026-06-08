@@ -29,9 +29,8 @@ class SignInView: UIView {
     
     let forgotButton = LinkButton(title: "Forgot password?", size: .init(width: 0, height: 20))
     
+    //TO BE DELETED
     let addPaymentMethodTempButton = LinkButton(title: "Add payment method button", size: .init(width: 0, height: 20))
-    
-    let addCarTempButton = LinkButton(title: "Add car button", size: .init(width: 0, height: 20))
     
     let signInButton = MainButton(title: "Sign In", shadowOpacity: 0.3, shRadius: 5, shColor: Asset.Colors.deepBlue)
     
@@ -104,7 +103,7 @@ class SignInView: UIView {
         let underline = UIView()
         underline.backgroundColor = Asset.Colors.deepBlue
         underline.constrainHeight(1)
-        let stack = stack(forgotButton, underline, addPaymentMethodTempButton, addCarTempButton, spacing: 2)
+        let stack = stack(forgotButton, underline, addPaymentMethodTempButton, spacing: 2)
         
         underline.anchor(top: nil, leading: stack.leadingAnchor, trailing: stack.trailingAnchor, bottom: nil)
         

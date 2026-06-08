@@ -33,13 +33,16 @@ class ChooseModelView: UIView {
     let titleLabel = TextLabel(title: "Choose model", font: .systemFont(ofSize: 18, weight: .bold), textColor: .white, numberOfLines: 0)
     
     let carModelTableView = UITableView()
-//    let carModelTableView = TableView(registerClass: TableViewCell.self, cellReuseIdentifier: Asset.Identifiers.TableCell.modelCell)
     
+    let carNameLabel = TextFieldLabel(title: "CAR NAME")
+    let carNameTextField = TextFieldWithPlaceholder("Lucy's car...")
+    
+    let bgSaveCarButton = UIView()
     let saveButton = MainButton(title: "Save")
     
     init() {
         super.init(frame: .zero)
-        carModelTableView.backgroundColor = .green
+        carModelTableView.backgroundColor = .clear
         
         setupUI()
     }
@@ -51,10 +54,10 @@ class ChooseModelView: UIView {
     private func setupUI() {
         setupBlueHeader()
         setupBackButton()
-//        setupLabels()
+        setupTitleLabel()
         setupWhiteFooter()
+//        setupSaveButton()
         setupTableView()
-        setupSaveButton()
     }
     
     private func setupBlueHeader() {
@@ -69,21 +72,42 @@ class ChooseModelView: UIView {
     }
     
     private func setupBackButton() {
-        let stack = hstack(backButton, titleLabel, spacing: 60, alignment: .fill, distribution: .fill)
-        blueBackgroundView.addSubview(stack)
-        stack.anchor(top: self.safeAreaLayoutGuide.topAnchor, leading: blueBackgroundView.leadingAnchor, trailing: nil, bottom: nil, padding: .init(top: 20, left: 26, bottom: 0, right: 0))
+        blueBackgroundView.addSubview(backButton)
+        backButton.anchor(top: self.safeAreaLayoutGuide.topAnchor, leading: blueBackgroundView.leadingAnchor, trailing: nil, bottom: nil, padding: .init(top: 20, left: 26, bottom: 0, right: 0))
+    }
+    
+    private func setupTitleLabel() {
+        blueBackgroundView.addSubview(titleLabel)
+        titleLabel.anchor(top: self.safeAreaLayoutGuide.topAnchor, leading: nil, trailing: nil, bottom: nil, padding: .init(top: 20, left: 0, bottom: 0, right: 0))
+        titleLabel.centerXToSuperview()
     }
     
     private func setupTableView() {
         self.addSubview(carModelTableView)
-//        let stack = stack(carModelTableView)
         
         carModelTableView.anchor(top: whiteBackgroundView.topAnchor, leading: whiteBackgroundView.leadingAnchor, trailing: whiteBackgroundView.trailingAnchor, bottom: whiteBackgroundView.bottomAnchor, padding: .init(top: 20, left: 0, bottom: 0, right: 0))
     }
     
-    private func setupSaveButton() {
-        whiteBackgroundView.addSubview(saveButton)
-        saveButton.anchor(top: nil, leading: self.leadingAnchor, trailing: self.trailingAnchor, bottom: self.bottomAnchor, padding: .init(top: 0, left: 20, bottom: 50, right: 20))
-    }
+//    private func setupSaveButton() {
+//        whiteBackgroundView.addSubview(saveButton)
+//        saveButton.anchor(top: nil, leading: self.leadingAnchor, trailing: self.trailingAnchor, bottom: self.bottomAnchor, padding: .init(top: 0, left: 20, bottom: 50, right: 20))
+//    }
+//    
+//    private func saveAddedCarsButton() {
+//        let carNameTextFieldView = TextFieldBackgroundView(tf: carNameTextField)
+//        let nameStack = stack(carNameLabel, carNameTextFieldView, spacing: 6)
+//        
+//        bgSaveCarButton.backgroundColor = .white
+//        bgSaveCarButton.heightAnchor.constraint(equalToConstant: 224).isActive = true
+//        bgSaveCarButton.setupShadow(opacity: 0.1, radius: 30, color: .black)
+//        
+//        let stack = stack(nameStack, saveButton, spacing: 12)
+//        
+//        bgSaveCarButton.addSubview(stack)
+//        
+//        whiteBackgroundView.addSubview(bgSaveCarButton)
+//        bgSaveCarButton.anchor(top: nil, leading: self.leadingAnchor, trailing: self.trailingAnchor, bottom: self.bottomAnchor, padding: .init(top: 0, left: 0, bottom: 0, right: 0))
+//        stack.anchor(top: bgSaveCarButton.topAnchor, leading: bgSaveCarButton.leadingAnchor, trailing: bgSaveCarButton.trailingAnchor, bottom: nil, padding: .init(top: 20, left: 20, bottom: 0, right: 20))
+//    }
     
 }

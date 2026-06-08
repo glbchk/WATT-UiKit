@@ -67,15 +67,15 @@ class SignUpController: BaseViewController {
     @objc private func signUpButtonPressed() {
         switch isValidSignUp {
             case true:
-                print("sign up valid")
+//                print("sign up valid")
                 
-                //        viewModel.createUser { [weak self] isActive, error in
-                //            DispatchQueue.main.async {
-                //                guard let self = self else { return }
-                //                let vc = AddDetailsController(viewModel: self.viewModel)
-                //                self.navigationController?.pushViewController(vc, animated: true)
-                //            }
-                //        }
+                        viewModel.createUser { [weak self] isActive, error in
+                            DispatchQueue.main.async {
+                                guard let self = self else { return }
+                                let vc = AddDetailsController(viewModel: self.viewModel)
+                                self.navigationController?.pushViewController(vc, animated: true)
+                            }
+                        }
                 self.view.endEditing(true)
             case false:
                 if viewModel.email.isEmpty {

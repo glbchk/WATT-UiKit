@@ -19,6 +19,7 @@ protocol UserRepository {
     func editPhoneNumberInDB(phoneNumber: String) async throws
     func updatePaymentMethods(card: PaymentMethod, actionType: ActionType) async throws
     func updateSelectedPaymentMethods(_ paymentMethod: PaymentMethod) async throws
+    func updateCarInfo(_ car: Car) async throws
 }
 
 final class UserRepositoryImpl: UserRepository {
@@ -71,6 +72,10 @@ final class UserRepositoryImpl: UserRepository {
     
     func updateSelectedPaymentMethods(_ paymentMethod: PaymentMethod) async throws {
         try await remoteSource.updateSelectedPaymentMethods(paymentMethod)
+    }
+    
+    func updateCarInfo(_ car: Car) async throws {
+        try await remoteSource.updateCarInfo(car)
     }
     
 }

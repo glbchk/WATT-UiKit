@@ -16,6 +16,7 @@ protocol UserRemoteSource {
     func editPhoneNumberInDB(phoneNumber: String) async throws
     func updatePaymentMethods(card: PaymentMethod, actionType: ActionType) async throws
     func updateSelectedPaymentMethods(_ paymentMethod: PaymentMethod) async throws
+    func updateCarInfo(_ car: Car) async throws
 }
 
 final class UserRemoteSourceImpl: UserRemoteSource {
@@ -47,13 +48,16 @@ final class UserRemoteSourceImpl: UserRemoteSource {
     }
     
     func updatePaymentMethods(card: PaymentMethod, actionType: ActionType) async throws {
-        try await firebaseManager.updatePaymentMethods(card: card, actionType: actionType)
+        try await firebaseManager.updatePaymentMethod(card: card, actionType: actionType)
     }
     
     func updateSelectedPaymentMethods(_ paymentMethod: PaymentMethod) async throws {
-        try await firebaseManager.updateSelectedPaymentMethods(paymentMethod)
+        try await firebaseManager.updateSelectedPaymentMethod(paymentMethod)
     }
     
+    func updateCarInfo(_ car: Car) async throws {
+        try await firebaseManager.updateCarInfo(car)
+    }
     
 }
 

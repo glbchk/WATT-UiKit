@@ -29,25 +29,24 @@ class AddCarView: UIView {
     let layout: UICollectionViewFlowLayout = {
         let layout = UICollectionViewFlowLayout()
         layout.sectionInset = UIEdgeInsets(top: 20, left: 10, bottom: 10, right: 10)
-        layout.itemSize = CGSize(width: 60, height: 60)
         
         return layout
     }()
     
-    var carsView: UICollectionView = {
+    var carsCollectionView: UICollectionView = {
         let view = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
         
         return view
     }()
+    var carsCollectionBottomSize: CGFloat = 0
     
-    let completeLaterButton = MainButton(title: "Complete later", titleColor: Asset.Colors.black, backgroundColor: .white, shadowOpacity: 0.15, shRadius: 5, shColor: .black)
+    let bgSaveCarButton = UIView()
+    let saveCarsButton = MainButton(title: "Save", titleColor: .white, backgroundColor: Asset.Colors.deepBlue, shadowOpacity: 0.15, shRadius: 5, shColor: .black)
     
     init() {
         super.init(frame: .zero)
         backgroundColor = .white
         
-        carsView.collectionViewLayout = layout
-        carsView.backgroundColor = .red
         setupUI()
     }
     
@@ -59,8 +58,9 @@ class AddCarView: UIView {
         setupBlueHeader()
         setupBackButton()
         setupLabels()
-        setupCollectionView()
-        setupCompleteLeterButton()
+        
+        setupCarBrandsCollectionView()
+        saveAddedCarsButton()
     }
     
     private func setupBlueHeader() {
@@ -80,14 +80,26 @@ class AddCarView: UIView {
         stack.anchor(top: backButton.bottomAnchor, leading: blueBackgroundView.leadingAnchor, trailing: blueBackgroundView.trailingAnchor, bottom: nil, padding: .init(top: 20, left: 20, bottom: 0, right: 20))
     }
     
-    private func setupCollectionView() {
-        self.addSubview(carsView)
-        carsView.anchor(top: blueBackgroundView.bottomAnchor, leading: blueBackgroundView.leadingAnchor, trailing: blueBackgroundView.trailingAnchor, bottom: self.bottomAnchor)
+    private func setupCarBrandsCollectionView() {
+        carsCollectionView.collectionViewLayout = layout
+        carsCollectionView.backgroundColor = .clear
+        carsCollectionView.clipsToBounds = true
+        carsCollectionView.contentInset.bottom = 120
+        
+        self.addSubview(carsCollectionView)
+        
+        carsCollectionView.anchor(top: subtitleLabel.bottomAnchor, leading: self.leadingAnchor, trailing: self.trailingAnchor, bottom: self.bottomAnchor, padding: .init(top: 0, left: 0, bottom: 0, right: 0))
         }
     
-    private func setupCompleteLeterButton() {
-        self.addSubview(completeLaterButton)
-        completeLaterButton.anchor(top: nil, leading: self.leadingAnchor, trailing: self.trailingAnchor, bottom: self.bottomAnchor, padding: .init(top: 0, left: 20, bottom: 50, right: 20))
+    private func saveAddedCarsButton() {
+        bgSaveCarButton.backgroundColor = .white
+        bgSaveCarButton.heightAnchor.constraint(equalToConstant: 124).isActive = true
+        bgSaveCarButton.setupShadow(opacity: 0.1, radius: 30, color: .black)
+        bgSaveCarButton.addSubview(saveCarsButton)
+        
+        self.addSubview(bgSaveCarButton)
+        bgSaveCarButton.anchor(top: nil, leading: self.leadingAnchor, trailing: self.trailingAnchor, bottom: self.bottomAnchor, padding: .init(top: 0, left: 0, bottom: 0, right: 0))
+        saveCarsButton.anchor(top: bgSaveCarButton.topAnchor, leading: bgSaveCarButton.leadingAnchor, trailing: bgSaveCarButton.trailingAnchor, bottom: nil, padding: .init(top: 20, left: 20, bottom: 0, right: 20))
     }
     
 }

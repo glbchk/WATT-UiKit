@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 56;
+	objectVersion = 60;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -45,9 +45,13 @@
 		062654AB2B4F6BEE007120AD /* DependencyInjection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 062654AA2B4F6BEE007120AD /* DependencyInjection.swift */; };
 		062654AD2B4F6F1F007120AD /* AppUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 062654AC2B4F6F1F007120AD /* AppUser.swift */; };
 		062654B22B4F74B9007120AD /* FirebaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 062654B12B4F74B9007120AD /* FirebaseManager.swift */; };
+		06420E8A2BD37105007DE844 /* CarBrandHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06420E892BD37105007DE844 /* CarBrandHeader.swift */; };
 		064A90312B79B341003E1734 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 064A90302B79B341003E1734 /* GoogleService-Info.plist */; };
 		065F72AC2B50CB8000CF9C5F /* MainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 065F72AB2B50CB8000CF9C5F /* MainViewModel.swift */; };
 		065F72AF2B50CCC900CF9C5F /* SignUpViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 065F72AE2B50CCC900CF9C5F /* SignUpViewModel.swift */; };
+		066376112C30C546007BC9CA /* AddCarNameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 066376102C30C546007BC9CA /* AddCarNameView.swift */; };
+		067823A82BD6F9890086E19A /* CarDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 067823A72BD6F9890086E19A /* CarDetailsView.swift */; };
+		067823AA2BD6F99A0086E19A /* CarDetailsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 067823A92BD6F99A0086E19A /* CarDetailsController.swift */; };
 		06A5A4572B6DF89A00C05BCC /* DBUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06A5A4562B6DF89A00C05BCC /* DBUser.swift */; };
 		06A5A4592B6DFB7300C05BCC /* SignInViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06A5A4582B6DFB7300C05BCC /* SignInViewModel.swift */; };
 		06A5F40F2B3A68DF000C0218 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06A5F40E2B3A68DF000C0218 /* AppDelegate.swift */; };
@@ -61,6 +65,20 @@
 		06B4D8DF2B4F769E00DD78CB /* FirebaseFirestoreSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 06B4D8DE2B4F769E00DD78CB /* FirebaseFirestoreSwift */; };
 		06B4D8E12B4F76B300DD78CB /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = 06B4D8E02B4F76B300DD78CB /* FirebaseStorage */; };
 		06B4D8E32B4F7BD300DD78CB /* AutenticationRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06B4D8E22B4F7BD300DD78CB /* AutenticationRepository.swift */; };
+		06ED5B3E2BD0489200202332 /* CarList.graphql in Resources */ = {isa = PBXBuildFile; fileRef = 06ED5B3D2BD0489200202332 /* CarList.graphql */; };
+		06ED5B412BD048FF00202332 /* ChargeTripAPI in Frameworks */ = {isa = PBXBuildFile; productRef = 06ED5B402BD048FF00202332 /* ChargeTripAPI */; };
+		06ED5B442BD0498600202332 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06ED5B432BD0498600202332 /* NetworkManager.swift */; };
+		06ED5B462BD049A800202332 /* AuthorizationKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06ED5B452BD049A800202332 /* AuthorizationKeys.swift */; };
+		06ED5B482BD049C500202332 /* AuthorizationInterceptor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06ED5B472BD049C500202332 /* AuthorizationInterceptor.swift */; };
+		06ED5B4A2BD049EA00202332 /* NetworkInterceptorProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06ED5B492BD049EA00202332 /* NetworkInterceptorProvider.swift */; };
+		06ED5B4C2BD04A0100202332 /* CellIdentifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06ED5B4B2BD04A0100202332 /* CellIdentifier.swift */; };
+		06ED5B4E2BD04B0600202332 /* CarsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06ED5B4D2BD04B0600202332 /* CarsViewModel.swift */; };
+		06ED5B512BD04C3D00202332 /* CarBrandCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06ED5B502BD04C3D00202332 /* CarBrandCell.swift */; };
+		06ED5B532BD04D0400202332 /* ChooseModelCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06ED5B522BD04D0400202332 /* ChooseModelCell.swift */; };
+		06F12F492BD0403400C9AE27 /* Apollo in Frameworks */ = {isa = PBXBuildFile; productRef = 06F12F482BD0403400C9AE27 /* Apollo */; };
+		06F12F4B2BD0403F00C9AE27 /* ApolloAPI in Frameworks */ = {isa = PBXBuildFile; productRef = 06F12F4A2BD0403F00C9AE27 /* ApolloAPI */; };
+		06F5C9102BE94E0300C02377 /* EmptyHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06F5C90F2BE94E0300C02377 /* EmptyHeader.swift */; };
+		06F8D4FB2C364EF10002D4A1 /* SlideUpPanelController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06F8D4FA2C364EF10002D4A1 /* SlideUpPanelController.swift */; };
 		29282FAD2B8F68ED0056A185 /* SearchFieldView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29282FAC2B8F68EC0056A185 /* SearchFieldView.swift */; };
 		29282FAF2B8F811C0056A185 /* RoundedButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29282FAE2B8F811B0056A185 /* RoundedButton.swift */; };
 		29282FB22B8FBA570056A185 /* SideMenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29282FB12B8FBA570056A185 /* SideMenuView.swift */; };
@@ -99,6 +117,19 @@
 		29D8B6762B59D3DA00196543 /* ForgotPasswordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29D8B6752B59D3DA00196543 /* ForgotPasswordView.swift */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		06515E122C09557D000C89DC /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
 		060363F32B688EFB005B48ED /* AuthenticationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationManager.swift; sourceTree = "<group>"; };
 		060363F52B688F10005B48ED /* LoginRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginRepository.swift; sourceTree = "<group>"; };
@@ -132,9 +163,13 @@
 		062654AA2B4F6BEE007120AD /* DependencyInjection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DependencyInjection.swift; sourceTree = "<group>"; };
 		062654AC2B4F6F1F007120AD /* AppUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppUser.swift; sourceTree = "<group>"; };
 		062654B12B4F74B9007120AD /* FirebaseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseManager.swift; sourceTree = "<group>"; };
+		06420E892BD37105007DE844 /* CarBrandHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarBrandHeader.swift; sourceTree = "<group>"; };
 		064A90302B79B341003E1734 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		065F72AB2B50CB8000CF9C5F /* MainViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewModel.swift; sourceTree = "<group>"; };
 		065F72AE2B50CCC900CF9C5F /* SignUpViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewModel.swift; sourceTree = "<group>"; };
+		066376102C30C546007BC9CA /* AddCarNameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddCarNameView.swift; sourceTree = "<group>"; };
+		067823A72BD6F9890086E19A /* CarDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarDetailsView.swift; sourceTree = "<group>"; };
+		067823A92BD6F99A0086E19A /* CarDetailsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarDetailsController.swift; sourceTree = "<group>"; };
 		06A5A4562B6DF89A00C05BCC /* DBUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DBUser.swift; sourceTree = "<group>"; };
 		06A5A4582B6DFB7300C05BCC /* SignInViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInViewModel.swift; sourceTree = "<group>"; };
 		06A5F40B2B3A68DF000C0218 /* WATT.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WATT.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -144,6 +179,17 @@
 		06A5F41A2B3A68E4000C0218 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		06A5F41C2B3A68E4000C0218 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		06B4D8E22B4F7BD300DD78CB /* AutenticationRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutenticationRepository.swift; sourceTree = "<group>"; };
+		06ED5B3D2BD0489200202332 /* CarList.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; name = CarList.graphql; path = graphql/CarList.graphql; sourceTree = SOURCE_ROOT; };
+		06ED5B432BD0498600202332 /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
+		06ED5B452BD049A800202332 /* AuthorizationKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthorizationKeys.swift; sourceTree = "<group>"; };
+		06ED5B472BD049C500202332 /* AuthorizationInterceptor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthorizationInterceptor.swift; sourceTree = "<group>"; };
+		06ED5B492BD049EA00202332 /* NetworkInterceptorProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkInterceptorProvider.swift; sourceTree = "<group>"; };
+		06ED5B4B2BD04A0100202332 /* CellIdentifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CellIdentifier.swift; sourceTree = "<group>"; };
+		06ED5B4D2BD04B0600202332 /* CarsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarsViewModel.swift; sourceTree = "<group>"; };
+		06ED5B502BD04C3D00202332 /* CarBrandCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarBrandCell.swift; sourceTree = "<group>"; };
+		06ED5B522BD04D0400202332 /* ChooseModelCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChooseModelCell.swift; sourceTree = "<group>"; };
+		06F5C90F2BE94E0300C02377 /* EmptyHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyHeader.swift; sourceTree = "<group>"; };
+		06F8D4FA2C364EF10002D4A1 /* SlideUpPanelController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlideUpPanelController.swift; sourceTree = "<group>"; };
 		29282FAC2B8F68EC0056A185 /* SearchFieldView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchFieldView.swift; sourceTree = "<group>"; };
 		29282FAE2B8F811B0056A185 /* RoundedButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundedButton.swift; sourceTree = "<group>"; };
 		29282FB12B8FBA570056A185 /* SideMenuView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideMenuView.swift; sourceTree = "<group>"; };
@@ -187,13 +233,16 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				06ED5B412BD048FF00202332 /* ChargeTripAPI in Frameworks */,
 				06B4D8DB2B4F769300DD78CB /* FirebaseDatabaseSwift in Frameworks */,
 				062654992B4F6761007120AD /* Swinject in Frameworks */,
 				0612A4242B9F929D00936B60 /* MonthYearWheelPicker in Frameworks */,
 				062654A62B4F6A0F007120AD /* FirebaseAnalyticsWithoutAdIdSupport in Frameworks */,
+				06F12F492BD0403400C9AE27 /* Apollo in Frameworks */,
 				062654A02B4F6A0F007120AD /* FirebaseAnalytics in Frameworks */,
 				062654A22B4F6A0F007120AD /* FirebaseAnalyticsOnDeviceConversion in Frameworks */,
 				06B4D8D92B4F768A00DD78CB /* FirebaseDatabase in Frameworks */,
+				06F12F4B2BD0403F00C9AE27 /* ApolloAPI in Frameworks */,
 				06B4D8E12B4F76B300DD78CB /* FirebaseStorage in Frameworks */,
 				062654A42B4F6A0F007120AD /* FirebaseAnalyticsSwift in Frameworks */,
 				06B4D8DD2B4F769900DD78CB /* FirebaseFirestore in Frameworks */,
@@ -234,9 +283,11 @@
 		06102B9C2B9425530063FEC5 /* AddCar */ = {
 			isa = PBXGroup;
 			children = (
+				06ED5B4D2BD04B0600202332 /* CarsViewModel.swift */,
 				06102B9D2B94259C0063FEC5 /* AddCarController.swift */,
 				06102B9F2B9425A70063FEC5 /* AddCarView.swift */,
 				06102BA12B9425D50063FEC5 /* ChooseModel */,
+				067823A62BD6F96C0086E19A /* CarDetails */,
 			);
 			path = AddCar;
 			sourceTree = "<group>";
@@ -246,6 +297,7 @@
 			children = (
 				06102BA22B9426140063FEC5 /* ChooseModelController.swift */,
 				06102BA42B9426200063FEC5 /* ChooseModelView.swift */,
+				066376102C30C546007BC9CA /* AddCarNameView.swift */,
 			);
 			path = ChooseModel;
 			sourceTree = "<group>";
@@ -255,6 +307,7 @@
 			children = (
 				0622D9222B924D1000A84437 /* CustomTableView.swift */,
 				0622D9062B92393900A84437 /* PaymentMethodCell.swift */,
+				06ED5B522BD04D0400202332 /* ChooseModelCell.swift */,
 			);
 			path = TableView;
 			sourceTree = "<group>";
@@ -338,6 +391,15 @@
 			path = MainScreen;
 			sourceTree = "<group>";
 		};
+		067823A62BD6F96C0086E19A /* CarDetails */ = {
+			isa = PBXGroup;
+			children = (
+				067823A92BD6F99A0086E19A /* CarDetailsController.swift */,
+				067823A72BD6F9890086E19A /* CarDetailsView.swift */,
+			);
+			path = CarDetails;
+			sourceTree = "<group>";
+		};
 		06A5F4022B3A68DF000C0218 = {
 			isa = PBXGroup;
 			children = (
@@ -359,6 +421,7 @@
 			isa = PBXGroup;
 			children = (
 				298B7F222B6D2F56003A36C7 /* Design */,
+				06ED5B422BD0496000202332 /* Utilities */,
 				29D8B6522B559ED000196543 /* Extensions */,
 				29D8B64D2B557DC300196543 /* ReusableView  */,
 				29282FBD2B98B6C90056A185 /* BaseElements */,
@@ -374,6 +437,7 @@
 				06A5F4172B3A68E4000C0218 /* Assets.xcassets */,
 				06A5F4192B3A68E4000C0218 /* LaunchScreen.storyboard */,
 				06A5F41C2B3A68E4000C0218 /* Info.plist */,
+				06ED5B3D2BD0489200202332 /* CarList.graphql */,
 			);
 			path = WATT;
 			sourceTree = "<group>";
@@ -399,6 +463,28 @@
 				061F68A42BAFD2FE004954DF /* TFError.swift */,
 			);
 			path = Models;
+			sourceTree = "<group>";
+		};
+		06ED5B422BD0496000202332 /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+				06ED5B452BD049A800202332 /* AuthorizationKeys.swift */,
+				06ED5B432BD0498600202332 /* NetworkManager.swift */,
+				06ED5B472BD049C500202332 /* AuthorizationInterceptor.swift */,
+				06ED5B492BD049EA00202332 /* NetworkInterceptorProvider.swift */,
+				06ED5B4B2BD04A0100202332 /* CellIdentifier.swift */,
+			);
+			path = Utilities;
+			sourceTree = "<group>";
+		};
+		06ED5B4F2BD04C1A00202332 /* CollectionView */ = {
+			isa = PBXGroup;
+			children = (
+				06ED5B502BD04C3D00202332 /* CarBrandCell.swift */,
+				06420E892BD37105007DE844 /* CarBrandHeader.swift */,
+				06F5C90F2BE94E0300C02377 /* EmptyHeader.swift */,
+			);
+			path = CollectionView;
 			sourceTree = "<group>";
 		};
 		29282FB02B8FBA240056A185 /* SideMenu */ = {
@@ -492,10 +578,12 @@
 				29D8B6672B5992F800196543 /* BlueBackgroundView.swift */,
 				29D8B66E2B59AB5800196543 /* TextFieldWithPlaceholder.swift */,
 				29D8B6712B59BBD200196543 /* AlertController.swift */,
+				06F8D4FA2C364EF10002D4A1 /* SlideUpPanelController.swift */,
 				296C27E22B67F7930052D350 /* SuccessfulAlertView.swift */,
 				29282FAC2B8F68EC0056A185 /* SearchFieldView.swift */,
 				29282FAE2B8F811B0056A185 /* RoundedButton.swift */,
 				0622D9032B92390700A84437 /* ToggleView.swift */,
+				06ED5B4F2BD04C1A00202332 /* CollectionView */,
 				0622D9052B92392000A84437 /* TableView */,
 			);
 			path = "ReusableView ";
@@ -541,6 +629,7 @@
 				06A5F4072B3A68DF000C0218 /* Sources */,
 				06A5F4082B3A68DF000C0218 /* Frameworks */,
 				06A5F4092B3A68DF000C0218 /* Resources */,
+				06515E122C09557D000C89DC /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -560,6 +649,9 @@
 				06B4D8DE2B4F769E00DD78CB /* FirebaseFirestoreSwift */,
 				06B4D8E02B4F76B300DD78CB /* FirebaseStorage */,
 				0612A4232B9F929D00936B60 /* MonthYearWheelPicker */,
+				06F12F482BD0403400C9AE27 /* Apollo */,
+				06F12F4A2BD0403F00C9AE27 /* ApolloAPI */,
+				06ED5B402BD048FF00202332 /* ChargeTripAPI */,
 			);
 			productName = WATT;
 			productReference = 06A5F40B2B3A68DF000C0218 /* WATT.app */;
@@ -593,6 +685,8 @@
 				062654972B4F6761007120AD /* XCRemoteSwiftPackageReference "Swinject" */,
 				0626549E2B4F6A0F007120AD /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 				0612A4222B9F929D00936B60 /* XCRemoteSwiftPackageReference "MonthYearWheelPicker" */,
+				06F12F472BD0400700C9AE27 /* XCRemoteSwiftPackageReference "apollo-ios" */,
+				06ED5B3F2BD048FF00202332 /* XCLocalSwiftPackageReference "ChargeTripAPI" */,
 			);
 			productRefGroup = 06A5F40C2B3A68DF000C0218 /* Products */;
 			projectDirPath = "";
@@ -608,6 +702,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				06ED5B3E2BD0489200202332 /* CarList.graphql in Resources */,
 				06A5F41B2B3A68E4000C0218 /* LaunchScreen.storyboard in Resources */,
 				298B7F282B6D2FB6003A36C7 /* Images.xcassets in Resources */,
 				064A90312B79B341003E1734 /* GoogleService-Info.plist in Resources */,
@@ -627,10 +722,13 @@
 				0622D90D2B923AB800A84437 /* PaymentProviders.swift in Sources */,
 				062654B22B4F74B9007120AD /* FirebaseManager.swift in Sources */,
 				298B7F2E2B6D301E003A36C7 /* Icons.swift in Sources */,
+				06ED5B462BD049A800202332 /* AuthorizationKeys.swift in Sources */,
 				0622D91F2B92431600A84437 /* AddAndEditPMController.swift in Sources */,
 				065F72AF2B50CCC900CF9C5F /* SignUpViewModel.swift in Sources */,
 				0622D90B2B923A9800A84437 /* PaymentMethodRowType.swift in Sources */,
 				29D8B6662B5984DE00196543 /* SecondaryLabel.swift in Sources */,
+				06ED5B482BD049C500202332 /* AuthorizationInterceptor.swift in Sources */,
+				06ED5B512BD04C3D00202332 /* CarBrandCell.swift in Sources */,
 				298B7F2C2B6D2FF8003A36C7 /* Colors.swift in Sources */,
 				0622D9212B92431F00A84437 /* AddAndEditPMView.swift in Sources */,
 				29D8B6722B59BBD200196543 /* AlertController.swift in Sources */,
@@ -655,30 +753,41 @@
 				29D8B66D2B599DA300196543 /* SignUpController.swift in Sources */,
 				0622D91A2B9242BC00A84437 /* PaymentMethodController.swift in Sources */,
 				29282FB22B8FBA570056A185 /* SideMenuView.swift in Sources */,
+				06420E8A2BD37105007DE844 /* CarBrandHeader.swift in Sources */,
 				298B7F2A2B6D2FDB003A36C7 /* Asset.swift in Sources */,
 				0622D9042B92390700A84437 /* ToggleView.swift in Sources */,
 				06102BA32B9426140063FEC5 /* ChooseModelController.swift in Sources */,
 				06B4D8E32B4F7BD300DD78CB /* AutenticationRepository.swift in Sources */,
 				298B7F212B697DA2003A36C7 /* AddDetailsController.swift in Sources */,
+				066376112C30C546007BC9CA /* AddCarNameView.swift in Sources */,
 				0622D9072B92393900A84437 /* PaymentMethodCell.swift in Sources */,
 				298B7F1F2B697B47003A36C7 /* AddDetailsView.swift in Sources */,
 				29D8B65C2B59574E00196543 /* UIView+Stacking.swift in Sources */,
 				29D8B6642B5983F700196543 /* TextFieldLabel.swift in Sources */,
 				296C27E52B67F9DB0052D350 /* TextLabel.swift in Sources */,
+				067823A82BD6F9890086E19A /* CarDetailsView.swift in Sources */,
 				2953A4462B77D1870020F8AC /* AddNameAndPhoneNumberView.swift in Sources */,
 				060364042B6892F3005B48ED /* AppViewController.swift in Sources */,
+				06F5C9102BE94E0300C02377 /* EmptyHeader.swift in Sources */,
+				06ED5B4C2BD04A0100202332 /* CellIdentifier.swift in Sources */,
 				061F68A52BAFD2FE004954DF /* TFError.swift in Sources */,
+				06ED5B4E2BD04B0600202332 /* CarsViewModel.swift in Sources */,
+				06ED5B532BD04D0400202332 /* ChooseModelCell.swift in Sources */,
 				060363FD2B688FF3005B48ED /* UserRemoteSource.swift in Sources */,
 				06A5A4572B6DF89A00C05BCC /* DBUser.swift in Sources */,
+				06F8D4FB2C364EF10002D4A1 /* SlideUpPanelController.swift in Sources */,
 				0622D9172B923CF700A84437 /* ProfileRow.swift in Sources */,
 				29282FAF2B8F811C0056A185 /* RoundedButton.swift in Sources */,
+				06ED5B4A2BD049EA00202332 /* NetworkInterceptorProvider.swift in Sources */,
 				0614777C2B9551A800A585A0 /* PaymentMethodViewModel.swift in Sources */,
 				065F72AC2B50CB8000CF9C5F /* MainViewModel.swift in Sources */,
 				29D8B6542B559EE400196543 /* UIView+Layout.swift in Sources */,
+				067823AA2BD6F99A0086E19A /* CarDetailsController.swift in Sources */,
 				0622D9152B923CE900A84437 /* ProfileView.swift in Sources */,
 				060363F62B688F10005B48ED /* LoginRepository.swift in Sources */,
 				0622D9232B924D1000A84437 /* CustomTableView.swift in Sources */,
 				06A5F40F2B3A68DF000C0218 /* AppDelegate.swift in Sources */,
+				06ED5B442BD0498600202332 /* NetworkManager.swift in Sources */,
 				060363FB2B688FD9005B48ED /* UserRepository.swift in Sources */,
 				060364062B689304005B48ED /* AppViewModel.swift in Sources */,
 				29282FAD2B8F68ED0056A185 /* SearchFieldView.swift in Sources */,
@@ -855,6 +964,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
@@ -884,6 +994,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
@@ -913,6 +1024,13 @@
 		};
 /* End XCConfigurationList section */
 
+/* Begin XCLocalSwiftPackageReference section */
+		06ED5B3F2BD048FF00202332 /* XCLocalSwiftPackageReference "ChargeTripAPI" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = ChargeTripAPI;
+		};
+/* End XCLocalSwiftPackageReference section */
+
 /* Begin XCRemoteSwiftPackageReference section */
 		0612A4222B9F929D00936B60 /* XCRemoteSwiftPackageReference "MonthYearWheelPicker" */ = {
 			isa = XCRemoteSwiftPackageReference;
@@ -936,6 +1054,14 @@
 			requirement = {
 				kind = upToNextMajorVersion;
 				minimumVersion = 10.19.1;
+			};
+		};
+		06F12F472BD0400700C9AE27 /* XCRemoteSwiftPackageReference "apollo-ios" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/apollographql/apollo-ios.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.10.0;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
@@ -1000,6 +1126,20 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 0626549E2B4F6A0F007120AD /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseStorage;
+		};
+		06ED5B402BD048FF00202332 /* ChargeTripAPI */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = ChargeTripAPI;
+		};
+		06F12F482BD0403400C9AE27 /* Apollo */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 06F12F472BD0400700C9AE27 /* XCRemoteSwiftPackageReference "apollo-ios" */;
+			productName = Apollo;
+		};
+		06F12F4A2BD0403F00C9AE27 /* ApolloAPI */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 06F12F472BD0400700C9AE27 /* XCRemoteSwiftPackageReference "apollo-ios" */;
+			productName = ApolloAPI;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

@@ -1,34 +1,44 @@
-# Delivery App (iOS)
-An iOS application designed to streamline the delivery experience by connecting users, couriers, and delivery management in a simple and efficient workflow. The app supports the full delivery lifecycle, from authentication and order creation to tracking and completion, all within a modern and intuitive SwiftUI interface.
+# WATT
+An iOS application designed to simplify electric vehicle charging and provide users with access to charging stations in a seamless and intuitive way. The app supports the full user journey from account creation to vehicle management and charging station interaction, all within a clean mobile interface.
 
 # Features
 - Secure authentication system
   - Sign in
   - Sign up
   - Password recovery
-- User onboarding experience
-  - Profile setup
-  - Address configuration
-- Order management
-  - Create delivery requests
-  - View and track active orders
-  - Order history
-- Delivery tracking
-  - Real-time delivery status updates
-  - Live location tracking on map
-  - Estimated arrival time
+  - Guest access
+- Guided onboarding experience
+  - User profile setup
+  - Vehicle registration
+  - Charging station configuration
+  - Payment method setup
+- Vehicle management
+  - Add and edit vehicles
+  - Support for multiple vehicle brands
+- Charging station management
+  - Add and edit charging stations
+  - Support of multiple charging station brands
+  - Configuration of dates and times for booking charging stations
+- Payment Method management
+  - Add and edit credit cards
 - Location services
   - Google Maps integration
-  - Pickup and delivery point selection
+  - Charging station discovery
+  - Location-based functionality
+- Charging Station booking
+  - Time selection to book a charging station
+  - Charging stage of booking
 
 # Tech Stack
-- SwiftUI
+- UiKit
 - Swift
 - Combine
 - Firebase Authentication
 - Cloud Firestore
+- Google Maps API
 
 # Architecture
-This project represents an early attempt at building a production-style iOS application using SwiftUI. The architecture was designed with scalability and maintainability in mind, emphasizing a clear separation of concerns across features and services.
+This project represents my first attempt at building a production-style iOS application. The architecture was designed with scalability and maintainability in mind, applying clean separation of concerns across features and services.
 
-Reactive state management was implemented using Combine, ensuring smooth UI updates and efficient data flow throughout the app.
+# Purpose
+This project was created to explore and implement a complete electric vehicle user journey on iOS, including authentication, onboarding, vehicle management, and map-based services, while applying modern iOS development practices using Swift, UiKit, and Combine.

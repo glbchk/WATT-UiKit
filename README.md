@@ -30,7 +30,7 @@ An iOS application designed to simplify electric vehicle charging and provide us
   - Charging stage of booking
 
 # Tech Stack
-- SwiftUI
+- UiKit
 - Swift
 - Combine
 - Firebase Authentication
@@ -41,4 +41,4 @@ An iOS application designed to simplify electric vehicle charging and provide us
 This project represents my first attempt at building a production-style iOS application. The architecture was designed with scalability and maintainability in mind, applying clean separation of concerns across features and services.
 
 # Purpose
-This project was created to explore and implement a complete electric vehicle user journey on iOS, including authentication, onboarding, vehicle management, and map-based services, while applying modern iOS development practices using Swift, SwiftUI, and Combine.
+This project was created to explore and implement a complete electric vehicle user journey on iOS, including authentication, onboarding, vehicle management, and map-based services, while applying modern iOS development practices using Swift, UiKit, and Combine.
